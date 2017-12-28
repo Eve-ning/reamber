@@ -1,4 +1,5 @@
 #include "svTool.h"
+#include "ui_svTool.h"
 #include <QApplication>
 #include <QDialog>
 #include <QTabWidget>

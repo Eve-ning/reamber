@@ -20,9 +20,19 @@ public:
 
 private slots:
 
-    void on_home_timingPointButton_clicked();
-
     void on_home_validateButton_clicked();
+
+    void on_stutter_initSVSlider_valueChanged(int value);
+
+    void on_stutter_initSVSpinBox_valueChanged(double arg1);
+
+    void on_stutter_thresholdSlider_valueChanged(int value);
+
+    void on_stutter_thresholdSpinBox_valueChanged(double arg1);
+
+    void on_pushButton_clicked();
+
+    void on_stutter_averageSVSpinBox_valueChanged(double arg1);
 
 private:
     Ui::svTool *ui;
