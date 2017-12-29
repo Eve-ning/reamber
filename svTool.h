@@ -18,7 +18,7 @@ class svTool : public QMainWindow
 public:
     explicit svTool(QWidget *parent = 0);
     ~svTool();
-    void compileProcOutput(QTextBrowser boxObject);
+    void compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject);
 
 private slots:
 

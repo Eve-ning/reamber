@@ -7,25 +7,29 @@
 #include <QStringList>
 #include <QRegExp>
 #include <QList>
+#include <QTextBrowser>
 
 /* osu!mania FORMATTING REF
- *
- * Long Note: 402,192,73,128,0,388:0:0:0:0:
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
- *
+ * Long Note: 402,192,73,128,0,388:0:0:0:0:
+ * BPM Line: 517,600,4,3,0,20,1,0
+ * SV Line: 517,-100,4,3,0,20,0,0
+ */
+/* DEFAULT EXTENSIONS
+ * Normal Note: ,1,0,0:0:0:0:
+ * Long Note: :0:0:0:0:
+ * BPM Line: ,4,3,0,20,1,0
+ * SV Line: ,4,3,0,20,0,0
  */
 /* BASIC FORMATTING
  * Format to use:
- *
  * hitObject/editorHitObject:
      * HITOBJECT|NO_OF_KEYS|OFFSET|KEY|LN_END_OFFSET
      * NO_OF_KEYS: 1 - 18
-
  * timingPoint:
      * TIMINGPOINT|OFFSET|VALUE|TYPE
      * VALUE: The processed value of BPM or SV
      * TYPE: SV/BPM
- *
  */
 svTool::svTool(QWidget *parent) :
     QMainWindow(parent),
@@ -39,33 +43,77 @@ svTool::~svTool()
     delete ui;
 }
 
-void svTool::compileProcOutput(QTextBrowser boxObject)
+void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject)
 {
     QStringList partVector, rawOutputVector;
-    QString partString, rawOutputString;
+    QString rawOutputString;
+    double columnCode, timingPointCode;
+
+    //Clear outputBox
+    outputBoxObject->clear();
 
     //Load procOutput into Vector
-    rawOutputVector = boxObject.toPlainText().split("\n");
+    rawOutputVector = inputBoxObject->toPlainText().split("\n");
 
     foreach(rawOutputString, rawOutputVector){
         partVector = rawOutputString.split("|",QString::SkipEmptyParts);
 
-        if (QString::compare(partVector.at(1),QString("HITOBJECT"),Qt::CaseInsensitive) == 0)
+         /* DEBUG
+          * ui->console_consoleBox->append(QString("RAW"));
+          * ui->console_consoleBox->append(QString(partVector.at(0)));
+          * ui->console_consoleBox->append(QString("HITOBJECT Compare"));
+          * ui->console_consoleBox->append(QString::number(QString::compare(partVector.at(0),QString("HITOBJECT"),Qt::CaseInsensitive)));
+          * ui->console_consoleBox->append(QString("TIMINGPOINT Compare"));
+          * ui->console_consoleBox->append(QString::number(QString::compare(partVector.at(0),QString("TIMINGPOINT"),Qt::CaseInsensitive)));
+          */
+
+        if (QString::compare(partVector.at(0),QString("HITOBJECT"),Qt::CaseInsensitive) == 0)
         {
             //hitObjectOutput
-            ui->stutter_outputBox->append(QString(""));
 
-        } else if (QString::compare(partVector.at(1),QString("TIMINGPOINT"),Qt::CaseInsensitive) == 0)
+            //Calculation of ColumnCode
+            columnCode = ((partVector.at(3).toDouble() + 1) * 2 - 1) / 2 * 512 / partVector.at(1).toDouble();
+            if (QString::compare(partVector.at(4),QString("-1"),Qt::CaseInsensitive) == 0)
+            {
+                //Normal Note
+                outputBoxObject->append(QString::number(columnCode)
+                                      .append(QString(",192,"))
+                                      .append(partVector.at(2))
+                                      .append(ui->settings_nnExtensionLine->text()));
+            } else
+            {
+                //Long Note
+                outputBoxObject->append(QString::number(columnCode)
+                                      .append(QString(",192,"))
+                                      .append(partVector.at(2))
+                                      .append(QString(",128,0,"))
+                                      .append(partVector.at(4))
+                                      .append(ui->settings_lnExtensionLine->text()));
+            }
+
+
+
+        } else if (QString::compare(partVector.at(0),QString("TIMINGPOINT"),Qt::CaseInsensitive) == 0)
         {
             //timingPointOutput
             if (QString::compare(partVector.at(3),QString("BPM"),Qt::CaseInsensitive) == 0)
             {
-                //timingPointOutput::BPM
+                timingPointCode = 60000 / partVector.at(2).toDouble();
 
+                //timingPointOutput::BPM
+                outputBoxObject->append(QString(partVector.at(1))
+                                      .append(QString(","))
+                                      .append(QString::number(timingPointCode))
+                                      .append(ui->settings_bpmExtensionLine->text()));
             } else if (QString::compare(partVector.at(3),QString("SV"),Qt::CaseInsensitive) == 0)
             {
-                //timingPointOutput::SV
+                timingPointCode = -100 / partVector.at(2).toDouble();
 
+                //timingPointOutput::SV
+                outputBoxObject->append(QString(partVector.at(1))
+                                      .append(QString(","))
+                                      .append(QString::number(timingPointCode))
+                                      .append(ui->settings_svExtensionLine->text()));
             }
 
         } else
@@ -423,10 +471,10 @@ void svTool::on_stutter_generateButton_clicked()
     // Generate all SVs in basic format
     int offsetListCounter = 0;
 
-    while (offsetListCounter < uniqueOffsetList.length() - 2)
+    while (offsetListCounter < uniqueOffsetList.length() - 1)
     {
         initOffset = uniqueOffsetList.at(offsetListCounter);
-        secondOffset = (uniqueOffsetList.at(offsetListCounter + 1) - initOffset * threshold) + initOffset;
+        secondOffset = (uniqueOffsetList.at(offsetListCounter + 1) - initOffset) * threshold + initOffset;
 
         //initSV append
         ui->stutter_procOutputBox->append(QString("TIMINGPOINT|")
@@ -448,10 +496,11 @@ void svTool::on_stutter_generateButton_clicked()
 
     //normalizeSV append
     ui->stutter_procOutputBox->append(QString("TIMINGPOINT|")
-                             .append(QString::number(secondOffset))
+                             .append(QString::number(endOffset))
                              .append(QString("|"))
-                             .append(QString::number(secondSV))
+                             .append(QString::number(averageSV))
                              .append(QString("|SV")));
 
+    svTool::compileProcOutput(ui->stutter_procOutputBox, ui->stutter_outputBox);
 
 }
