@@ -30,9 +30,9 @@ private slots:
 
     void on_stutter_thresholdSpinBox_valueChanged(double arg1);
 
-    void on_pushButton_clicked();
-
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
+
+    void on_stutter_generateButton_clicked();
 
 private:
     Ui::svTool *ui;

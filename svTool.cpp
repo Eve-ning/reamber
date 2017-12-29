@@ -8,6 +8,21 @@
 #include <QRegExp>
 #include <QList>
 
+/* BASIC FORMATTING
+ * Format to use:
+ *
+ * hitObject/editorHitObject:
+     * HITOBJECT|NO_OF_KEYS|OFFSET|KEY|LN_END_OFFSET
+     * NO_OF_KEYS: 1 - 18
+
+ * timingPoint:
+     * TIMINGPOINT|OFFSET|VALUE|TYPE
+     * VALUE: The processed value of BPM or SV
+     * TYPE: SV/BPM
+ *
+ */
+
+
 svTool::svTool(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::svTool)
@@ -21,35 +36,35 @@ svTool::~svTool()
     delete ui;
 }
 
-//Validation Button
+// Validation Button
 void svTool::on_home_validateButton_clicked()
 {
-    //Copy over to Debug
+    // Copy over to Debug
     ui->debug_rawInputBox->setPlainText(ui->home_rawInputBox->toPlainText());
 
     QStringList partVector, rawInputVector;
     QString partString, rawInputString;
     QString noOfKeys;
 
-    //validateType indicates the input type
+    // validateType indicates the input type
     enum class inputType
     {
-        nullInput, //0
-        editorHitObjectInput, //1
-        hitObjectInput, //2
-        timingPointInput  //3
+        nullInput, // 0
+        editorHitObjectInput, // 1
+        hitObjectInput, // 2
+        timingPointInput  // 3
     };
     inputType validateType;
     validateType = inputType::nullInput;
 
-    //Set keys
+    // Set keys
     noOfKeys = ui->home_keysSpinBox->text();
     ui->debug_procInputBox->append(ui->home_keysSpinBox->text());
 
-    //Splits the rawInputBox input into a Vector
+    // Splits the rawInputBox input into a Vector
     rawInputVector = ui->home_rawInputBox->toPlainText().split("\n");
 
-    //Clears the procInputBox
+    // Clears the procInputBox
     ui->debug_procInputBox->clear();
 
     /*
@@ -59,7 +74,7 @@ void svTool::on_home_validateButton_clicked()
      * rawInputLine.count(QRegExp(",")) <= 5) <TRUE: Hit Object Input>
      */
 
-    //Detect Input
+    // Detect Input
     if ((rawInputVector.at(0)).indexOf("(", 1) != -1 &&
         (rawInputVector.at(0)).indexOf(")",1) != -1)
     {
@@ -67,8 +82,8 @@ void svTool::on_home_validateButton_clicked()
         ui->home_statusLabel->setText("STATUS: Editor Hit Object Format detected.");
         ui->home_statusLabel->setStyleSheet("QLabel { color:green; }");
 
-        //.count = 4: Normal Note
-        //.count = 5: Long Note
+        // .count = 4: Normal Note
+        // .count = 5: Long Note
     } else if (((rawInputVector.at(0)).count(QRegExp(",")) == 4 ||
                 (rawInputVector.at(0)).count(QRegExp(",")) == 5) &&
                 (rawInputVector.at(0)).indexOf("|",1) == -1)
@@ -91,41 +106,28 @@ void svTool::on_home_validateButton_clicked()
         ui->home_statusLabel->setStyleSheet("QLabel { color:red; }");
     }
 
-    //Switch to generate all data
-    /*
-     * Format to use:
-     *
-     * hitObject/editorHitObject:
-         * HITOBJECT|NO_OF_KEYS|OFFSET|KEY|LN_END_OFFSET
-         * NO_OF_KEYS: 1 - 18
-
-     * timingPoint:
-         * TIMINGPOINT|OFFSET|VALUE|TYPE
-         * VALUE: The processed value of BPM or SV
-         * TYPE: SV/BPM
-     *
-     */
+    // Switch to generate all data
     switch (validateType){
 
     case inputType::nullInput:
         break;
 
     case inputType::editorHitObjectInput:
-        //Reads each line from the rawInputVector
+        // Reads each line from the rawInputVector
         foreach (rawInputString, rawInputVector) {
 
-            //Skips any blank lines
+            // Skips any blank lines
             if(rawInputString.isEmpty()){
                 continue;
             }
 
-            //Mid trims the current line from '(' and ')'
-            //Split then splits them by ',' into different notes
+            // Mid trims the current line from '(' and ')'
+            // Split then splits them by ',' into different notes
             partVector = rawInputString.mid(rawInputString.indexOf("(",1) + 1,
                                           rawInputString.indexOf(")",1) - rawInputString.indexOf("(",1) - 1
                                           ).split(",", QString::SkipEmptyParts);
 
-            //For each note append according to format
+            // For each note append according to format
             foreach (partString, partVector){
                 ui->debug_procInputBox->append(
                             QString("HITOBJECT|")
@@ -139,26 +141,26 @@ void svTool::on_home_validateButton_clicked()
         }
         break;
     case inputType::hitObjectInput:
-        //Reads each line from the rawInputVector
+        // Reads each line from the rawInputVector
         foreach (rawInputString, rawInputVector) {
 
-            //Skips any blank lines
+            // Skips any blank lines
             if(rawInputString.isEmpty()){
                 continue;
             }
 
-            //Splits them into parameters
+            // Splits them into parameters
             partVector = rawInputString.split(",",QString::SkipEmptyParts);
 
             double keyColumn;
 
-            //Gets the key column through calculation and rounds to 0 D.P.
+            // Gets the key column through calculation and rounds to 0 D.P.
             keyColumn = round((partVector.at(0).toDouble() / 512 * noOfKeys.toDouble() * 2 + 1) / 2) - 1;
 
             if(rawInputString.count(QRegExp(",")) == 4){
 
-                //Detected as Normal Note
-                //For each note append according to format
+                // Detected as Normal Note
+                // For each note append according to format
                 ui->debug_procInputBox->append(
                             QString("HITOBJECT|")
                             .append(QString(noOfKeys))
@@ -172,8 +174,8 @@ void svTool::on_home_validateButton_clicked()
 
             } else if (rawInputString.count(QRegExp(",")) == 5){
 
-                //Detected as Long Note
-                //For each note append according to format
+                // Detected as Long Note
+                // For each note append according to format
                 ui->debug_procInputBox->append(
                             QString("HITOBJECT|")
                             .append(QString(noOfKeys))
@@ -189,32 +191,32 @@ void svTool::on_home_validateButton_clicked()
         break;
 
     case inputType::timingPointInput:
-        //Reads each line from the rawInputVector
+        // Reads each line from the rawInputVector
         foreach (rawInputString, rawInputVector)
         {
 
-            //Skips any blank lines
+            // Skips any blank lines
             if(rawInputString.isEmpty())
                 continue;
 
-            //Splits them into parameters
+            // Splits them into parameters
             partVector = rawInputString.split(",",QString::SkipEmptyParts);
 
             QString timingPointValue;
 
-            //Check Type and calculate timingPointValue
+            // Check Type and calculate timingPointValue
             if (partVector.at(6) == QString("0"))
             {
-                //Detected as an SV Timing Point
+                // Detected as an SV Timing Point
                 timingPointValue = QString::number(-100.0 / partVector.at(1).toDouble());
             } else if (partVector.at(6) == QString("1"))
             {
-                //Detected as a BPM Timing Point
+                // Detected as a BPM Timing Point
                 timingPointValue = QString::number(60000.0 / partVector.at(1).toDouble());
             }
 
-            //Detected as Normal Note
-            //For each note append according to format
+            // Detected as Normal Note
+            // For each note append according to format
             ui->debug_procInputBox->append(
                         QString("TIMINGPOINT|")
                         .append(partVector.at(0))
@@ -226,47 +228,109 @@ void svTool::on_home_validateButton_clicked()
         break;
     }
 
-    //Copy over to other boxes
+    // Copy over to other boxes
     ui->stutter_procInputBox->setPlainText(ui->debug_procInputBox->toPlainText());
 }
 
-//Connect Widgets
+// Connect Widgets
 void svTool::on_stutter_initSVSlider_valueChanged(int value)
 {
-    ui->stutter_initSVSpinBox->setValue((double) value / 100);
+    ui->stutter_initSVSpinBox->setValue(((double) value) / 100);
 }
+
 void svTool::on_stutter_thresholdSlider_valueChanged(int value)
 {
-    ui->stutter_thresholdSpinBox->setValue((double) value * 100);
+    ui->stutter_thresholdSpinBox->setValue((double) value);
 }
 
 void svTool::on_stutter_initSVSpinBox_valueChanged(double arg1)
 {
-    ui->stutter_initSVSlider->setValue((int) arg1);
-
-
-
+    ui->stutter_initSVSlider->setValue((int) (arg1 * 100));
 }
 
 void svTool::on_stutter_thresholdSpinBox_valueChanged(double arg1)
 {
-    ui->stutter_thresholdSlider->setValue((int) arg1);
+    ui->stutter_thresholdSlider->setValue((int) (arg1));
 
-    //averageSV = initialSV * threshold + secondSV * (1 - threshold);
-    //initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
+    // averageSV = initSV * threshold + secondSV * (1 - threshold);
+    // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
+
+    double maxInitSV, minInitSV, secondSV;
+    double currentAverageSV, currentThreshold;
+
+    currentAverageSV = ui->stutter_averageSVSpinBox->value();
+    currentThreshold = arg1 / 100;
+
+    /* initSV CALCULATION
+     * solve for mininitSV by substitution;
+     *
+     * find initSV in terms of secondSV and threshold
+     * averageSV = initSV * threshold + (secondSV - secondSV * threshold)
+     * initSV = [ averageSV - secondSV * ( 100 - threshold ) ] / threshold
+     *
+     * (ave) = (th) * in + (1 - th) * sec
+     * (ave) = (th)(in) + (sec) - (th)(sec)
+     * [(ave) - (sec) + (th)(sec)] / (th) = (in)
+     */
+
+    /* TERNARY CALCULATION
+     * Assume secondSV is the minimum and maximum value possible to see the limits of initSV
+     * If the calculation of initSV exceeds 0.1 - 10.0, it'll be bound in the limit
+     */
+
+    // Where secondSV = 0.1
+    secondSV = 0.1;
+    maxInitSV = (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold > 10.0
+                   ? 10.0
+                   : (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold;
+
+
+
+    // Where secondSV = 10.0
+    secondSV = 10.0;
+    minInitSV = (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold < 0.1
+                   ? 0.1
+                   : (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold;
+
+
+    // Set Maximum and Minimum
+    ui->stutter_initSVSlider->setMaximum((int) (maxInitSV * 100));
+    ui->stutter_initSVSpinBox->setMaximum(maxInitSV);
+
+    ui->stutter_initSVSlider->setMinimum((int) (minInitSV * 100));
+    ui->stutter_initSVSpinBox->setMinimum(minInitSV);
+
+    /* DEBUG
+    ui->stutter_procOutputBox->append(QString("maxinit ").append(QString::number((int) (maxInitSV * 100))));
+    ui->stutter_procOutputBox->append(QString::number(ui->stutter_initSVSlider->singleStep()));
+    ui->stutter_procOutputBox->append(QString::number(maxInitSV).append(" maxInit"));
+    ui->stutter_procOutputBox->append(QString::number(minInitSV).append(" minInit"));
+    */
+
+}
+
+void svTool::on_stutter_averageSVSpinBox_valueChanged(double arg1)
+{
+    // averageSV = initSV * threshold + secondSV * (1 - threshold);
+    // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
 
     double maxInitSV, minInitSV;
     double currentAverageSV, currentThreshold;
 
-    currentAverageSV = ui->stutter_averageSVSpinBox->value();
-    currentThreshold = ui->stutter_thresholdSpinBox->value();
+    currentAverageSV = arg1;
+    currentThreshold = ui->stutter_thresholdSpinBox->value() / 100;
 
-    /* INITIALSV CALCULATION
-     * solve for minInitialSV by substitution;
+    /* initSV CALCULATION
+     * solve for mininitSV by substitution;
      *
-     * find initialSV in terms of secondSV and threshold
-     * averageSV = initialSV * threshold + (secondSV - secondSV * threshold)
-     * initialSV = [ averageSV - secondSV * ( 1 - threshold ) ] / threshold
+     * find initSV in terms of secondSV and threshold
+     * averageSV = initSV * threshold + (secondSV - secondSV * threshold)
+     * initSV = [ averageSV - secondSV * ( 1 - threshold ) ] / threshold
+     */
+
+    /* TERNARY CALCULATION
+     * Assume secondSV is the minimum and maximum value possible to see the limits of initSV
+     * If the calculation of initSV exceeds 0.1 - 10.0, it'll be bound in the limit
      */
 
     // Where secondSV = 0.1
@@ -279,37 +343,36 @@ void svTool::on_stutter_thresholdSpinBox_valueChanged(double arg1)
                    ? 10.0
                    : (currentAverageSV - 0.1 * (1 - currentThreshold)) / currentThreshold;
 
-    // STOPPED
-    ui->stutter_initSVSlider->setMaximum(maxInitSV * 100);
+    // Set Maximum and Minimum
+    ui->stutter_initSVSlider->setMaximum(maxInitSV * 10);
     ui->stutter_initSVSpinBox->setMaximum(maxInitSV);
 
-    ui->stutter_initSVSlider->setMinimum(minInitSV * 100);
+    ui->stutter_initSVSlider->setMinimum(minInitSV * 10);
     ui->stutter_initSVSpinBox->setMinimum(minInitSV);
 
 }
 
-void svTool::on_stutter_averageSVSpinBox_valueChanged(double arg1)
-{
-
-}
-
-
-
-//Stutter Generate Button
-void svTool::on_pushButton_clicked()
+// Stutter Generate Button
+void svTool::on_stutter_generateButton_clicked()
 {
     QStringList partVector, rawInputVector;
-    QString partString, rawInputString;
+    QString rawInputString;
     QList<double> uniqueOffsetList;
-    double uniqueOffset;
 
-    //Clears the procOutputBox
+    double threshold, initSV, secondSV, averageSV, initOffset, secondOffset, endOffset;
+
+    threshold = ui->stutter_thresholdSpinBox->value() / 100;
+    initSV = ui->stutter_initSVSpinBox->value();
+    averageSV = ui->stutter_averageSVSpinBox->value();
+    secondSV = (averageSV - (initSV * threshold)) / (1 - threshold);
+
+    // Clears the procOutputBox
     ui->stutter_procOutputBox->clear();
 
-    //Set input vector
+    // Set input vector
     rawInputVector = ui->debug_procInputBox->toPlainText().split("\n");
 
-    //Set up uniqueOffsetList
+    // Set up uniqueOffsetList
     foreach (rawInputString, rawInputVector)
     {
         partVector = rawInputString.split("|");
@@ -317,43 +380,36 @@ void svTool::on_pushButton_clicked()
             uniqueOffsetList.append(partVector.at(2).toDouble());
     }
 
-    foreach (uniqueOffset, uniqueOffsetList)
+    // Generate all SVs in basic format
+    int offsetListCounter = 0;
+
+    while (offsetListCounter < uniqueOffsetList.length() - 2)
     {
-        double rThreshold, pThreshold, minThreshold, maxThreshold;
-        double initialSV, secondSV, minInitialSV, maxInitialSV;
+        initOffset = uniqueOffsetList.at(offsetListCounter);
+        secondOffset = (uniqueOffsetList.at(offsetListCounter + 1) - initOffset * threshold) + initOffset;
 
-        /* THRESHOLD CALCULATION
-         * solve for threshold
-         * 1 = 10 * threshold + (0.1 - 0.1 * threshold)
-         * 0.9 = 9.9 * threshold
-         * 0.09090909090909090909090909090909 = threshold
-         * threshold min: 9.09, threshold max: 90.90, range: 81.81
-         *
-         * convert from raw threshold to proc threshold:
-         * pThreshold = (rThreshold / 100 * 81.81) + 9.09
-         */
-
-
-        rThreshold = ui->stutter_thresholdSpinBox->value();
-        minThreshold = 9.09;
-        maxThreshold = 90.9;
-
-        //Calculate Processed Threshold
-        pThreshold = (rThreshold / 100 * (maxThreshold - minThreshold)) + minThreshold;
-
-        //Find minInitialSV and maxInitialSV
-
-
-
-        maxInitialSV = (1 - 0.1 * (1 - pThreshold)) / pThreshold > 10.0
-                       ? 10.0
-                       : (1 - 0.1 * (1 - pThreshold)) / pThreshold;
-        minInitialSV = (1 - 10.0 * (1 - pThreshold)) / pThreshold < 0.1
-                       ? 0.1
-                       : (1 - 10.0 * (1 - pThreshold)) / pThreshold;
-
-
+        //initSV append
+        ui->stutter_procOutputBox->append(QString("TIMINGPOINT|")
+                                 .append(QString::number(initOffset))
+                                 .append(QString("|"))
+                                 .append(QString::number(initSV))
+                                 .append(QString("|SV")));
+        //secondSV append
+        ui->stutter_procOutputBox->append(QString("TIMINGPOINT|")
+                                 .append(QString::number(secondOffset))
+                                 .append(QString("|"))
+                                 .append(QString::number(secondSV))
+                                 .append(QString("|SV")));
+        offsetListCounter += 1;
     }
+
+    //End SV for normalization
+    endOffset = uniqueOffsetList.at(uniqueOffsetList.length() - 1);
+
+    //normalizeSV append
+    ui->stutter_procOutputBox->append(QString("TIMINGPOINT|")
+                             .append(QString::number(secondOffset))
+                             .append(QString("|"))
+                             .append(QString::number(secondSV))
+                             .append(QString("|SV")));
 }
-
-
