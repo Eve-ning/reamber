@@ -8,6 +8,12 @@
 #include <QRegExp>
 #include <QList>
 
+/* osu!mania FORMATTING REF
+ *
+ * Long Note: 402,192,73,128,0,388:0:0:0:0:
+ * Normal Note: 109,192,1020,1,0,0:0:0:0:
+ *
+ */
 /* BASIC FORMATTING
  * Format to use:
  *
@@ -21,8 +27,6 @@
      * TYPE: SV/BPM
  *
  */
-
-
 svTool::svTool(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::svTool)
@@ -30,10 +34,46 @@ svTool::svTool(QWidget *parent) :
     ui->setupUi(this);
 }
 
-
 svTool::~svTool()
 {
     delete ui;
+}
+
+void svTool::compileProcOutput(QTextBrowser boxObject)
+{
+    QStringList partVector, rawOutputVector;
+    QString partString, rawOutputString;
+
+    //Load procOutput into Vector
+    rawOutputVector = boxObject.toPlainText().split("\n");
+
+    foreach(rawOutputString, rawOutputVector){
+        partVector = rawOutputString.split("|",QString::SkipEmptyParts);
+
+        if (QString::compare(partVector.at(1),QString("HITOBJECT"),Qt::CaseInsensitive) == 0)
+        {
+            //hitObjectOutput
+            ui->stutter_outputBox->append(QString(""));
+
+        } else if (QString::compare(partVector.at(1),QString("TIMINGPOINT"),Qt::CaseInsensitive) == 0)
+        {
+            //timingPointOutput
+            if (QString::compare(partVector.at(3),QString("BPM"),Qt::CaseInsensitive) == 0)
+            {
+                //timingPointOutput::BPM
+
+            } else if (QString::compare(partVector.at(3),QString("SV"),Qt::CaseInsensitive) == 0)
+            {
+                //timingPointOutput::SV
+
+            }
+
+        } else
+        {
+            //nullOutput
+            continue;
+        }
+    }
 }
 
 // Validation Button
@@ -412,4 +452,6 @@ void svTool::on_stutter_generateButton_clicked()
                              .append(QString("|"))
                              .append(QString::number(secondSV))
                              .append(QString("|SV")));
+
+
 }

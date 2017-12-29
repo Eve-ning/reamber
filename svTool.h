@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QStringList>
 #include <QString>
+#include <QTextBrowser>
 
 
 namespace Ui {
@@ -17,6 +18,7 @@ class svTool : public QMainWindow
 public:
     explicit svTool(QWidget *parent = 0);
     ~svTool();
+    void compileProcOutput(QTextBrowser boxObject);
 
 private slots:
 
