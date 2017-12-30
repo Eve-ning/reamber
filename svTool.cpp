@@ -24,7 +24,7 @@
 /* BASIC FORMATTING
  * Format to use:
  * hitObject/editorHitObject:
-     * HITOBJECT|NO_OF_KEYS|OFFSET|KEY|LN_END_OFFSET
+     * HITOBJECT|NO_OF_KEYS|OFFSET|COLUMN|LN_END_OFFSET
      * NO_OF_KEYS: 1 - 18
  * timingPoint:
      * TIMINGPOINT|OFFSET|VALUE|TYPE
@@ -43,6 +43,144 @@ svTool::~svTool()
     delete ui;
 }
 
+//DEFAULT ARGUMENTS
+QString def_xAxis            = "256"
+       ,def_yAxis            = "192"
+       ,def_offset           = "0"
+       ,def_lnParameter      = "128,0"
+       ,def_lnOffset         = "-1"
+       ,def_bpmCode          = "600"
+       ,def_svCode           = "-100"
+       ,def_bpmValue         = "100"
+       ,def_svValue          = "1"
+       ,def_column           = "0"
+       ,def_noOfKeys         = "4"
+       ,def_timingPointLabel = "TIMINGPOINT"
+       ,def_hitObjectLabel   = "HITOBJECT"
+       ,def_nnExtension      = "1,0,0:0:0:0:"
+       ,def_lnExtesion       = ":0:0:0:0:"
+       ,def_bpmExtension     = "4,3,0,20,1,0"
+       ,def_svExtension      = "4,3,0,20,0,0"
+       ,def_timingPointType  = "SV"
+;
+
+//Compiles QString for Normal Note in OSU!MANIA FORMATTING
+QString svTool::compileOMFormatting_NN(QString xAxis,
+                                       QString offset,
+                                       QString yAxis,
+                                       QString extension)
+{
+    QString output;
+    /* Normal Note: xAxis,yAxis,offset,extension */
+    output = xAxis
+            .append(",")
+            .append(yAxis)
+            .append(",")
+            .append(offset)
+            .append(",")
+            .append(extension);
+    return output;
+}
+//Compiles QString for Long Note in OSU!MANIA FORMATTING
+QString svTool::compileOMFormatting_LN(QString xAxis,
+                                       QString offset,
+                                       QString lnOffset,
+                                       QString yAxis,
+                                       QString lnParameter,
+                                       QString extension)
+{
+    QString output;
+    /* Long Note: xAxis,yAxis,offset,parameter,lnOffset&extension */
+    output = xAxis
+            .append(",")
+            .append(yAxis)
+            .append(",")
+            .append(offset)
+            .append(",")
+            .append(lnParameter)
+            .append(",")
+            .append(lnOffset)
+            .append(extension);
+    return output;
+}
+//Compiles QString for BPM Timing Point in OSU!MANIA FORMATTING
+QString svTool::compileOMFormatting_BPM(QString offset,
+                                        QString bpmCode,
+                                        QString extension)
+{
+    QString output;
+    /* BPM Line: offset,code,extension */
+    output = offset
+            .append(",")
+            .append(bpmCode)
+            .append(",")
+            .append(extension);
+    return output;
+}
+//Compiles QString for SV Timing Point in OSU!MANIA FORMATTING
+QString svTool::compileOMFormatting_SV(QString offset,
+                                       QString svCode,
+                                       QString extension)
+{
+    QString output;
+    /* SV Line: offset,code,extension */
+    output = offset
+            .append(",")
+            .append(svCode)
+            .append(",")
+            .append(extension);
+    return output;
+}
+//Compiles QString for Long Note in BASIC FORMATTING
+QString svTool::compileBASICFormatting_hitObject(QString noOfKeys,
+                                                 QString offset,
+                                                 QString column,
+                                                 QString lnOffset,
+                                                 QString label)
+{
+    QString output;
+    /* HITOBJECT: HITOBJECT|NO_OF_KEYS|OFFSET|COLUMN|LN_OFFSET */
+    output = label
+            .append("|")
+            .append(noOfKeys)
+            .append("|")
+            .append(offset)
+            .append("|")
+            .append(column)
+            .append("|")
+            .append(lnOffset);
+    return output;
+}
+//Compiles QString for BPM Timing Point in BASIC FORMATTING
+QString svTool::compileBASICFormatting_timingPoint(QString offset,
+                                                   QString value,
+                                                   QString timingPointType,
+                                                   QString label)
+{
+    QString output;
+    /* TIMINGPOINT: TIMINGPOINT|OFFSET|VALUE|TYPE */
+    output = label
+            .append("|")
+            .append(offset)
+            .append("|")
+            .append(value)
+            .append("|")
+            .append(timingPointType);
+    return output;
+}
+
+double svTool::convertColumnCodeToColumnKey(double columnCode, double noOfKeys)
+{
+    columnKey = round(((columnCode / 512 * noOfKeys * 2 + 1) / 2) - 1);
+}
+
+double svTool::convertColumnKeyToColumnCode(double columnKey, double noOfKeys)
+{
+    columnCode = round(((columnKey + 1) * 2 - 1) / 2 * 512 / noOfKeys);
+}
+//Converts columnCode to columnKey
+
+//Converts data from BASIC FORMATTING to OSU!MANIA FORMATTING
 void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject)
 {
     QStringList partVector, rawOutputVector;
@@ -70,52 +208,32 @@ void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outpu
         if (QString::compare(partVector.at(0),QString("HITOBJECT"),Qt::CaseInsensitive) == 0)
         {
             //hitObjectOutput
-
             //Calculation of ColumnCode
-            columnCode = ((partVector.at(3).toDouble() + 1) * 2 - 1) / 2 * 512 / partVector.at(1).toDouble();
+            columnCode = svTool::convertColumnKeyToColumnCode(partVector.at(1).toDouble(), partVector.at(3).toDouble());
             if (QString::compare(partVector.at(4),QString("-1"),Qt::CaseInsensitive) == 0)
             {
-                //Normal Note
-                outputBoxObject->append(QString::number(columnCode)
-                                      .append(QString(",192,"))
-                                      .append(partVector.at(2))
-                                      .append(ui->settings_nnExtensionLine->text()));
+                //Normal Note Compile
+                outputBoxObject->append(svTool::compileOMFormatting_NN(QString::number(columnCode),partVector.at(2)));
             } else
             {
-                //Long Note
-                outputBoxObject->append(QString::number(columnCode)
-                                      .append(QString(",192,"))
-                                      .append(partVector.at(2))
-                                      .append(QString(",128,0,"))
-                                      .append(partVector.at(4))
-                                      .append(ui->settings_lnExtensionLine->text()));
+                //Long Note Compile
+                outputBoxObject->append(svTool::compileOMFormatting_LN(QString::number(columnCode),partVector.at(2),partVector.at(4)));
             }
-
-
 
         } else if (QString::compare(partVector.at(0),QString("TIMINGPOINT"),Qt::CaseInsensitive) == 0)
         {
             //timingPointOutput
             if (QString::compare(partVector.at(3),QString("BPM"),Qt::CaseInsensitive) == 0)
             {
+                //BPM Compile
                 timingPointCode = 60000 / partVector.at(2).toDouble();
-
-                //timingPointOutput::BPM
-                outputBoxObject->append(QString(partVector.at(1))
-                                      .append(QString(","))
-                                      .append(QString::number(timingPointCode))
-                                      .append(ui->settings_bpmExtensionLine->text()));
+                outputBoxObject->append(svTool::compileOMFormatting_BPM(QString(partVector.at(1)),QString::number(timingPointCode)));
             } else if (QString::compare(partVector.at(3),QString("SV"),Qt::CaseInsensitive) == 0)
             {
+                //SV Compile
                 timingPointCode = -100 / partVector.at(2).toDouble();
-
-                //timingPointOutput::SV
-                outputBoxObject->append(QString(partVector.at(1))
-                                      .append(QString(","))
-                                      .append(QString::number(timingPointCode))
-                                      .append(ui->settings_svExtensionLine->text()));
+                outputBoxObject->append(svTool::compileOMFormatting_SV(QString(partVector.at(1)),QString::number(timingPointCode)));
             }
-
         } else
         {
             //nullOutput
@@ -123,6 +241,7 @@ void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outpu
         }
     }
 }
+
 
 // Validation Button
 void svTool::on_home_validateButton_clicked()
@@ -240,40 +359,27 @@ void svTool::on_home_validateButton_clicked()
             // Splits them into parameters
             partVector = rawInputString.split(",",QString::SkipEmptyParts);
 
-            double keyColumn;
+            double columnKey;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            keyColumn = round((partVector.at(0).toDouble() / 512 * noOfKeys.toDouble() * 2 + 1) / 2) - 1;
+            columnKey = svTool::convertColumnCodeToColumnKey(partVector.at(0).toDouble(), noOfKeys.toDouble());
 
             if(rawInputString.count(QRegExp(",")) == 4){
-
                 // Detected as Normal Note
                 // For each note append according to format
                 ui->debug_procInputBox->append(
-                            QString("HITOBJECT|")
-                            .append(QString(noOfKeys))
-                            .append(QString("|"))
-                            .append(partVector.at(2))
-                            .append(QString("|"))
-                            .append(QString::number(keyColumn))
-                            .append(QString("|"))
-                            // -1 represents Normal Note
-                            .append(QString("-1")));
+                            svTool::compileBASICFormatting_hitObject(
+                                noOfKeys,partVector.at(2),
+                                QString::number(columnKey)));
 
             } else if (rawInputString.count(QRegExp(",")) == 5){
-
                 // Detected as Long Note
                 // For each note append according to format
                 ui->debug_procInputBox->append(
-                            QString("HITOBJECT|")
-                            .append(QString(noOfKeys))
-                            .append(QString("|"))
-                            .append(partVector.at(2))
-                            .append(QString("|"))
-                            .append(QString::number(keyColumn))
-                            .append(QString("|"))
-                            .append(partVector.at(5)
-                                    .mid(0,partVector.at(5).indexOf(":",1))));
+                            svTool::compileBASICFormatting_hitObject(
+                                noOfKeys,partVector.at(2),
+                                QString::number(columnKey),
+                                partVector.at(5).mid(0,partVector.at(5).indexOf(":",1))));
             }
         }
         break;
@@ -306,12 +412,11 @@ void svTool::on_home_validateButton_clicked()
             // Detected as Normal Note
             // For each note append according to format
             ui->debug_procInputBox->append(
-                        QString("TIMINGPOINT|")
-                        .append(partVector.at(0))
-                        .append(QString("|"))
-                        .append(timingPointValue)
-                        .append(QString("|"))
-                        .append(partVector.at(6) == QString("0") ? QString("SV") : QString("BPM")));
+                        svTool::compileBASICFormatting_timingPoint(
+                            partVector.at(0),
+                            timingPointValue,
+                            partVector.at(6) == QString("0") ? QString("SV") : QString("BPM")));
+
         }
         break;
     }
