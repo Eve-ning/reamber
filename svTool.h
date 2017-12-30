@@ -42,8 +42,7 @@ public:
     ~svTool();
     void compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject);
 
-
-
+    //COMPILERS
     QString compileOMFormatting_NN(QString xAxis = def_xAxis,
                                    QString offset = def_offset,
                                    QString yAxis = def_yAxis,
@@ -74,6 +73,12 @@ public:
                                        QString value = def_bpmValue,
                                        QString timingPointType = def_timingPointType,
                                        QString label = def_timingPointLabel);
+    //CONVERTERS
+    double convertColumnCodeToColumnKey(double columnCode,
+                                        double noOfKeys);
+    double convertColumnKeyToColumnCode(double columnKey,
+                                        double noOfKeys);
+
 
 private slots:
 

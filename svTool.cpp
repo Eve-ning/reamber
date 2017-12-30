@@ -171,12 +171,12 @@ QString svTool::compileBASICFormatting_timingPoint(QString offset,
 
 double svTool::convertColumnCodeToColumnKey(double columnCode, double noOfKeys)
 {
-    columnKey = round(((columnCode / 512 * noOfKeys * 2 + 1) / 2) - 1);
+    return round(((columnCode / 512 * noOfKeys * 2 + 1) / 2) - 1);
 }
 
 double svTool::convertColumnKeyToColumnCode(double columnKey, double noOfKeys)
 {
-    columnCode = round(((columnKey + 1) * 2 - 1) / 2 * 512 / noOfKeys);
+    return round(((columnKey + 1) * 2 - 1) / 2 * 512 / noOfKeys);
 }
 //Converts columnCode to columnKey
 
@@ -241,7 +241,6 @@ void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outpu
         }
     }
 }
-
 
 // Validation Button
 void svTool::on_home_validateButton_clicked()
