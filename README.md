@@ -25,3 +25,7 @@ Priority List:
 - Cleaned up the code a bit
 - Set Default values
 - Added MIT License
+
+5/1/17 :
+- Added Copier
+- Renamed Home Tab to Input
