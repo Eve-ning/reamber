@@ -244,10 +244,10 @@ void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outpu
 }
 
 // Validation Button
-void svTool::on_home_validateButton_clicked()
+void svTool::on_input_validateButton_clicked()
 {
     // Copy over to Debug
-    ui->debug_rawInputBox->setPlainText(ui->home_rawInputBox->toPlainText());
+    ui->debug_rawInputBox->setPlainText(ui->input_rawInputBox->toPlainText());
 
     QStringList partVector, rawInputVector;
     QString partString, rawInputString;
@@ -265,11 +265,11 @@ void svTool::on_home_validateButton_clicked()
     validateType = inputType::nullInput;
 
     // Set keys
-    noOfKeys = ui->home_keysSpinBox->text();
-    ui->debug_procInputBox->append(ui->home_keysSpinBox->text());
+    noOfKeys = ui->input_keysSpinBox->text();
+    ui->debug_procInputBox->append(ui->input_keysSpinBox->text());
 
     // Splits the rawInputBox input into a Vector
-    rawInputVector = ui->home_rawInputBox->toPlainText().split("\n");
+    rawInputVector = ui->input_rawInputBox->toPlainText().split("\n");
 
     // Clears the procInputBox
     ui->debug_procInputBox->clear();
@@ -286,8 +286,8 @@ void svTool::on_home_validateButton_clicked()
         (rawInputVector.at(0)).indexOf(")",1) != -1)
     {
         validateType = inputType::editorHitObjectInput;
-        ui->home_statusLabel->setText("STATUS: Editor Hit Object Format detected.");
-        ui->home_statusLabel->setStyleSheet("QLabel { color:green; }");
+        ui->input_statusLabel->setText("STATUS: Editor Hit Object Format detected.");
+        ui->input_statusLabel->setStyleSheet("QLabel { color:green; }");
 
         // .count = 4: Normal Note
         // .count = 5: Long Note
@@ -296,21 +296,21 @@ void svTool::on_home_validateButton_clicked()
                 (rawInputVector.at(0)).indexOf("|",1) == -1)
     {
         validateType = inputType::hitObjectInput;
-        ui->home_statusLabel->setText("STATUS: Hit Object Format detected.");
-        ui->home_statusLabel->setStyleSheet("QLabel { color:green; }");
+        ui->input_statusLabel->setText("STATUS: Hit Object Format detected.");
+        ui->input_statusLabel->setStyleSheet("QLabel { color:green; }");
 
     } else if ((rawInputVector.at(0)).count(QRegExp(",")) == 7 &&
                (rawInputVector.at(0)).indexOf("|",1) == -1)
     {
         validateType = inputType::timingPointInput;
-        ui->home_statusLabel->setText("STATUS: Timing Point Format detected.");
-        ui->home_statusLabel->setStyleSheet("QLabel { color:green; }");
+        ui->input_statusLabel->setText("STATUS: Timing Point Format detected.");
+        ui->input_statusLabel->setStyleSheet("QLabel { color:green; }");
 
     } else
     {
         validateType = inputType::nullInput;
-        ui->home_statusLabel->setText("STATUS: No Format detected.");
-        ui->home_statusLabel->setStyleSheet("QLabel { color:red; }");
+        ui->input_statusLabel->setText("STATUS: No Format detected.");
+        ui->input_statusLabel->setStyleSheet("QLabel { color:red; }");
     }
 
     // Switch to generate all data
@@ -427,10 +427,10 @@ void svTool::on_home_validateButton_clicked()
 }
 
 // Validation Button 2
-void svTool::on_home_validateButton_2_clicked()
+void svTool::on_input_validateButton_2_clicked()
 {
     // Copy over to Debug
-    ui->debug_rawInputBox_2->setPlainText(ui->home_rawInputBox_2->toPlainText());
+    ui->debug_rawInputBox_2->setPlainText(ui->input_rawInputBox_2->toPlainText());
 
     QStringList partVector, rawInputVector;
     QString partString, rawInputString;
@@ -448,11 +448,11 @@ void svTool::on_home_validateButton_2_clicked()
     validateType = inputType::nullInput;
 
     // Set keys
-    noOfKeys = ui->home_keysSpinBox_2->text();
-    ui->debug_procInputBox_2->append(ui->home_keysSpinBox_2->text());
+    noOfKeys = ui->input_keysSpinBox_2->text();
+    ui->debug_procInputBox_2->append(ui->input_keysSpinBox_2->text());
 
     // Splits the rawInputBox input into a Vector
-    rawInputVector = ui->home_rawInputBox_2->toPlainText().split("\n");
+    rawInputVector = ui->input_rawInputBox_2->toPlainText().split("\n");
 
     // Clears the procInputBox
     ui->debug_procInputBox_2->clear();
@@ -469,8 +469,8 @@ void svTool::on_home_validateButton_2_clicked()
         (rawInputVector.at(0)).indexOf(")",1) != -1)
     {
         validateType = inputType::editorHitObjectInput;
-        ui->home_statusLabel_2->setText("STATUS: Editor Hit Object Format detected.");
-        ui->home_statusLabel_2->setStyleSheet("QLabel { color:green; }");
+        ui->input_statusLabel_2->setText("STATUS: Editor Hit Object Format detected.");
+        ui->input_statusLabel_2->setStyleSheet("QLabel { color:green; }");
 
         // .count = 4: Normal Note
         // .count = 5: Long Note
@@ -479,21 +479,21 @@ void svTool::on_home_validateButton_2_clicked()
                 (rawInputVector.at(0)).indexOf("|",1) == -1)
     {
         validateType = inputType::hitObjectInput;
-        ui->home_statusLabel_2->setText("STATUS: Hit Object Format detected.");
-        ui->home_statusLabel_2->setStyleSheet("QLabel { color:green; }");
+        ui->input_statusLabel_2->setText("STATUS: Hit Object Format detected.");
+        ui->input_statusLabel_2->setStyleSheet("QLabel { color:green; }");
 
     } else if ((rawInputVector.at(0)).count(QRegExp(",")) == 7 &&
                (rawInputVector.at(0)).indexOf("|",1) == -1)
     {
         validateType = inputType::timingPointInput;
-        ui->home_statusLabel_2->setText("STATUS: Timing Point Format detected.");
-        ui->home_statusLabel_2->setStyleSheet("QLabel { color:green; }");
+        ui->input_statusLabel_2->setText("STATUS: Timing Point Format detected.");
+        ui->input_statusLabel_2->setStyleSheet("QLabel { color:green; }");
 
     } else
     {
         validateType = inputType::nullInput;
-        ui->home_statusLabel_2->setText("STATUS: No Format detected.");
-        ui->home_statusLabel_2->setStyleSheet("QLabel { color:red; }");
+        ui->input_statusLabel_2->setText("STATUS: No Format detected.");
+        ui->input_statusLabel_2->setStyleSheet("QLabel { color:red; }");
     }
 
     // Switch to generate all data
@@ -796,7 +796,7 @@ void svTool::on_stutter_generateButton_clicked()
     }
 }
 
-
+// Copier Generate Button
 void svTool::on_copier_generateButton_clicked()
 {
     try {
@@ -897,3 +897,4 @@ void svTool::on_copier_generateButton_clicked()
         //Generate Error Report
     }
 }
+

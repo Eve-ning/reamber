@@ -82,7 +82,7 @@ public:
 
 private slots:
 
-    void on_home_validateButton_clicked();
+    void on_input_validateButton_clicked();
 
     void on_stutter_initSVSlider_valueChanged(int value);
 
@@ -96,7 +96,7 @@ private slots:
 
     void on_stutter_generateButton_clicked();
 
-    void on_home_validateButton_2_clicked();
+    void on_input_validateButton_2_clicked();
 
     void on_copier_generateButton_clicked();
 

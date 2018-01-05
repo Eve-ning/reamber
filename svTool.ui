@@ -30,37 +30,37 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
     </property>
-    <widget class="QWidget" name="tabHome">
+    <widget class="QWidget" name="tabInput">
      <attribute name="title">
-      <string>Home</string>
+      <string>Input</string>
      </attribute>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <layout class="QGridLayout" name="home_rawInputGroup">
+       <layout class="QGridLayout" name="input_rawInputGroup">
         <item row="0" column="0">
-         <widget class="QLabel" name="home_rawInputLabel">
+         <widget class="QLabel" name="input_rawInputLabel">
           <property name="text">
            <string>Input</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPlainTextEdit" name="home_rawInputBox"/>
+         <widget class="QPlainTextEdit" name="input_rawInputBox"/>
         </item>
        </layout>
       </item>
       <item row="0" column="2">
-       <layout class="QGridLayout" name="home_rawInputGroup_2">
+       <layout class="QGridLayout" name="input_rawInputGroup_2">
         <item row="1" column="0">
-         <widget class="QPlainTextEdit" name="home_rawInputBox_2"/>
+         <widget class="QPlainTextEdit" name="input_rawInputBox_2"/>
         </item>
         <item row="0" column="0">
-         <widget class="QLabel" name="home_rawInputLabel_2">
+         <widget class="QLabel" name="input_rawInputLabel_2">
           <property name="text">
            <string>Input 2</string>
           </property>
@@ -69,30 +69,30 @@
        </layout>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="home_statusLabel">
+       <widget class="QLabel" name="input_statusLabel">
         <property name="text">
          <string>STATUS:</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <layout class="QGridLayout" name="home_typeGroup">
+       <layout class="QGridLayout" name="input_typeGroup">
         <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="home_typeLabel">
+         <widget class="QLabel" name="input_typeLabel">
           <property name="text">
            <string>Input Type</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0" colspan="2">
-         <widget class="QPushButton" name="home_validateButton">
+         <widget class="QPushButton" name="input_validateButton">
           <property name="text">
            <string>Validate Input</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLabel" name="home_keysLabel">
+         <widget class="QLabel" name="input_keysLabel">
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
@@ -102,7 +102,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QSpinBox" name="home_keysSpinBox">
+         <widget class="QSpinBox" name="input_keysSpinBox">
           <property name="buttonSymbols">
            <enum>QAbstractSpinBox::UpDownArrows</enum>
           </property>
@@ -120,23 +120,23 @@
        </layout>
       </item>
       <item row="2" column="2">
-       <layout class="QGridLayout" name="home_typeGroup_2">
+       <layout class="QGridLayout" name="input_typeGroup_2">
         <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="home_typeLabel_2">
+         <widget class="QLabel" name="input_typeLabel_2">
           <property name="text">
            <string>Input 2 Type</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0" colspan="2">
-         <widget class="QPushButton" name="home_validateButton_2">
+         <widget class="QPushButton" name="input_validateButton_2">
           <property name="text">
            <string>Validate Input</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLabel" name="home_keysLabel_2">
+         <widget class="QLabel" name="input_keysLabel_2">
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
@@ -146,7 +146,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QSpinBox" name="home_keysSpinBox_2">
+         <widget class="QSpinBox" name="input_keysSpinBox_2">
           <property name="buttonSymbols">
            <enum>QAbstractSpinBox::UpDownArrows</enum>
           </property>
@@ -164,7 +164,7 @@
        </layout>
       </item>
       <item row="1" column="2">
-       <widget class="QLabel" name="home_statusLabel_2">
+       <widget class="QLabel" name="input_statusLabel_2">
         <property name="text">
          <string>STATUS 2:</string>
         </property>
@@ -483,6 +483,11 @@
        </layout>
       </item>
      </layout>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Page</string>
+     </attribute>
     </widget>
     <widget class="QWidget" name="tabConsole">
      <attribute name="title">
