@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>968</width>
-    <height>418</height>
+    <width>1090</width>
+    <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>961</width>
+      <width>1074</width>
       <height>353</height>
      </rect>
     </property>
@@ -39,12 +39,9 @@
      <attribute name="title">
       <string>Home</string>
      </attribute>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
        <layout class="QGridLayout" name="home_rawInputGroup">
-        <item row="1" column="0">
-         <widget class="QPlainTextEdit" name="home_rawInputBox"/>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="home_rawInputLabel">
           <property name="text">
@@ -52,16 +49,33 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QPlainTextEdit" name="home_rawInputBox"/>
+        </item>
        </layout>
       </item>
-      <item>
+      <item row="0" column="2">
+       <layout class="QGridLayout" name="home_rawInputGroup_2">
+        <item row="1" column="0">
+         <widget class="QPlainTextEdit" name="home_rawInputBox_2"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="home_rawInputLabel_2">
+          <property name="text">
+           <string>Input 2</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
        <widget class="QLabel" name="home_statusLabel">
         <property name="text">
          <string>STATUS:</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="2" column="0">
        <layout class="QGridLayout" name="home_typeGroup">
         <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="home_typeLabel">
@@ -105,6 +119,57 @@
         </item>
        </layout>
       </item>
+      <item row="2" column="2">
+       <layout class="QGridLayout" name="home_typeGroup_2">
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="home_typeLabel_2">
+          <property name="text">
+           <string>Input 2 Type</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QPushButton" name="home_validateButton_2">
+          <property name="text">
+           <string>Validate Input</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="home_keysLabel_2">
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Keys</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QSpinBox" name="home_keysSpinBox_2">
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::UpDownArrows</enum>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>18</number>
+          </property>
+          <property name="value">
+           <number>4</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="home_statusLabel_2">
+        <property name="text">
+         <string>STATUS 2:</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QWidget" name="tabDebug">
@@ -137,6 +202,34 @@
         </item>
         <item row="1" column="0">
          <widget class="QTextBrowser" name="debug_procInputBox"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="debug_rawInputGroup_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="debug_rawInputLabel_2">
+          <property name="text">
+           <string>Raw Input 2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="debug_rawInputBox_2"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="debug_procInputGroup_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="debug_procInputLabel_2">
+          <property name="text">
+           <string>Processed Input 2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="debug_procInputBox_2"/>
         </item>
        </layout>
       </item>
@@ -314,16 +407,82 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="tabSettings">
+    <widget class="QWidget" name="tabCopier">
      <attribute name="title">
-      <string>Settings</string>
+      <string>Copier</string>
      </attribute>
-     <layout class="QGridLayout" name="gridLayout"/>
-    </widget>
-    <widget class="QWidget" name="tabDevSettings">
-     <attribute name="title">
-      <string>Developer Settings</string>
-     </attribute>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="3">
+       <layout class="QGridLayout" name="copier_procOutputGroup">
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="copier_procOutputBox"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="copier_procOutputLabel">
+          <property name="text">
+           <string>Processed Output</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" rowspan="2">
+       <layout class="QGridLayout" name="copier_procInputGroup">
+        <item row="0" column="0">
+         <widget class="QLabel" name="copier_procInputLabel">
+          <property name="text">
+           <string>Processed Input</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="copier_procInputBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" rowspan="2">
+       <layout class="QGridLayout" name="copier_procInputGroup_2">
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="copier_procInputBox_2"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="copier_procInputLabel_2">
+          <property name="text">
+           <string>Processed Input 2</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="4">
+       <layout class="QGridLayout" name="copier_outputGroup">
+        <item row="3" column="0">
+         <widget class="QPushButton" name="copier_generateButton">
+          <property name="text">
+           <string>Generate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="copier_outputLabel">
+          <property name="text">
+           <string>Output</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="copier_outputBox"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="coper_outputStatusLabel">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
     <widget class="QWidget" name="tabConsole">
      <attribute name="title">
@@ -342,7 +501,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>968</width>
+     <width>1090</width>
      <height>21</height>
     </rect>
    </property>

@@ -96,6 +96,10 @@ private slots:
 
     void on_stutter_generateButton_clicked();
 
+    void on_home_validateButton_2_clicked();
+
+    void on_copier_generateButton_clicked();
+
 private:
     Ui::svTool *ui;
 };
