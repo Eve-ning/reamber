@@ -7,6 +7,7 @@
 #include <QTextBrowser>
 
 
+
 namespace Ui {
 class svTool;
 }
@@ -79,6 +80,17 @@ public:
     double convertColumnKeyToColumnCode(double columnKey,
                                         double noOfKeys);
 
+    QList<double> convertEditorHitObjectToOffsetList(QString editorHitObject);
+    QList<int> convertEditorHitObjectToColumnList(QString editorHitObject);
+    QList<double> convertHitObjectToOffsetList(QStringList hitObjectList);
+    QList<int> convertHitObjectToColumnList(QStringList hitObjectList, int keyCount);
+    QList<double> convertTimingPointToOffsetList(QStringList timingPointList);
+    QList<double> convertTimingPointToCodeList(QStringList timingPointList);
+
+    //CHECKS
+    bool checkEditorHitObject(QString editorHitObject);
+    bool checkHitObject(QString hitObject);
+    bool checkTimingPoint(QString timingPoint);
 
 private slots:
 
@@ -99,7 +111,21 @@ private slots:
     void on_input_validateButton_2_clicked();
 
     void on_copier_generateButton_clicked();
-
+    
+    void on_TPF_valueASlider_valueChanged(int value);
+    
+    void on_TPF_valueASpinBox_valueChanged(double arg1);
+    
+    void on_TPF_valueBSlider_valueChanged(int value);
+    
+    void on_TPF_valueBSpinBox_valueChanged(double arg1);
+    
+    void on_TPF_valueCSlider_valueChanged(int value);
+    
+    void on_TPF_valueCSpinBox_valueChanged(double arg1);
+    
+    void on_TPF_generateButton_clicked();
+    
 private:
     Ui::svTool *ui;
 };

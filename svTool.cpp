@@ -36,6 +36,8 @@ svTool::svTool(QWidget *parent) :
     ui(new Ui::svTool)
 {
     ui->setupUi(this);
+
+    
 }
 
 svTool::~svTool()
@@ -64,7 +66,9 @@ QString def_xAxis            = "256"
        ,def_timingPointType  = "SV"
 ;
 
-//Compiles QString for Normal Note in OSU!MANIA FORMATTING
+// ------------------------------------- GENERAL -------------------------------------
+
+//Compilers
 QString svTool::compileOMFormatting_NN(QString xAxis,
                                        QString offset,
                                        QString yAxis,
@@ -81,7 +85,6 @@ QString svTool::compileOMFormatting_NN(QString xAxis,
             .append(extension);
     return output;
 }
-//Compiles QString for Long Note in OSU!MANIA FORMATTING
 QString svTool::compileOMFormatting_LN(QString xAxis,
                                        QString offset,
                                        QString lnOffset,
@@ -103,7 +106,6 @@ QString svTool::compileOMFormatting_LN(QString xAxis,
             .append(extension);
     return output;
 }
-//Compiles QString for BPM Timing Point in OSU!MANIA FORMATTING
 QString svTool::compileOMFormatting_BPM(QString offset,
                                         QString bpmCode,
                                         QString extension)
@@ -117,7 +119,6 @@ QString svTool::compileOMFormatting_BPM(QString offset,
             .append(extension);
     return output;
 }
-//Compiles QString for SV Timing Point in OSU!MANIA FORMATTING
 QString svTool::compileOMFormatting_SV(QString offset,
                                        QString svCode,
                                        QString extension)
@@ -131,7 +132,6 @@ QString svTool::compileOMFormatting_SV(QString offset,
             .append(extension);
     return output;
 }
-//Compiles QString for Long Note in BASIC FORMATTING
 QString svTool::compileBASICFormatting_hitObject(QString noOfKeys,
                                                  QString offset,
                                                  QString column,
@@ -151,7 +151,6 @@ QString svTool::compileBASICFormatting_hitObject(QString noOfKeys,
             .append(lnOffset);
     return output;
 }
-//Compiles QString for BPM Timing Point in BASIC FORMATTING
 QString svTool::compileBASICFormatting_timingPoint(QString offset,
                                                    QString value,
                                                    QString timingPointType,
@@ -168,18 +167,169 @@ QString svTool::compileBASICFormatting_timingPoint(QString offset,
             .append(timingPointType);
     return output;
 }
-
-//Converts columnCode to columnKey
+//Converts
 double svTool::convertColumnCodeToColumnKey(double columnCode, double noOfKeys)
 {
     return round(((columnCode / 512 * noOfKeys * 2 + 1) / 2) - 1);
 }
-
-//Converts columnKey to columnCode
 double svTool::convertColumnKeyToColumnCode(double columnKey, double noOfKeys)
 {
     return round(((columnKey + 1) * 2 - 1) / 2 * 512 / noOfKeys);
 }
+QList<double> svTool::convertEditorHitObjectToOffsetList(QString editorHitObject)
+{
+    QList<double> offsetList;
+    QStringList parameterList;
+    QString parameter;
+
+    if (svTool::checkEditorHitObject(editorHitObject))
+    {
+        parameterList = editorHitObject.mid(editorHitObject.indexOf("(",1) + 1,
+                                              editorHitObject.indexOf(")",1) - editorHitObject.indexOf("(",1) - 1
+                                              ).split(",", QString::SkipEmptyParts);
+        foreach(parameter, parameterList)
+        {
+            offsetList.append(parameter.split("|").at(0).toDouble());
+        }
+        return offsetList;
+    } else
+    {
+        offsetList.append(0.0);
+        return offsetList;
+    }
+    return offsetList;
+}
+QList<int> svTool::convertEditorHitObjectToColumnList(QString editorHitObject)
+{
+    QList<int> columnList;
+    QStringList parameterList;
+    QString parameter;
+
+    if (svTool::checkEditorHitObject(editorHitObject))
+    {
+        parameterList = editorHitObject.mid(editorHitObject.indexOf("(",1) + 1,
+                                              editorHitObject.indexOf(")",1) - editorHitObject.indexOf("(",1) - 1
+                                              ).split(",", QString::SkipEmptyParts);
+        foreach(parameter, parameterList)
+        {
+            columnList.append(parameter.split("|").at(1).toInt());
+        }
+        return columnList;
+    } else
+    {
+        columnList.append(0);
+        return columnList;
+    }
+
+}
+QList<double> svTool::convertHitObjectToOffsetList(QStringList hitObjectList)
+{
+    QList<double> offsetList;
+    QString hitObject;
+
+    if (svTool::checkHitObject(hitObjectList.at(0)))
+    {
+        foreach(hitObject, hitObjectList)
+        {
+            offsetList.append(hitObject.split(",").at(2).toDouble());
+        }
+        return offsetList;
+    } else
+    {
+        offsetList.append(0.0);
+        return offsetList;
+    }
+}
+QList<int> svTool::convertHitObjectToColumnList(QStringList hitObjectList, int keyCount)
+{
+    QList<int> columnList;
+    QString hitObject;
+
+    if (svTool::checkHitObject(hitObjectList.at(0)))
+    {
+        foreach(hitObject, hitObjectList)
+        {
+            columnList.append(svTool::convertColumnCodeToColumnKey(
+                              hitObject.split(",").at(2).toInt(), (double) keyCount));
+        }
+        return columnList;
+    } else
+    {
+        columnList.append(0);
+        return columnList;
+    }
+}
+QList<double> svTool::convertTimingPointToOffsetList(QStringList timingPointList)
+{
+    QList<double> offsetList;
+    QString timingPoint;
+
+    if (svTool::checkTimingPoint(timingPointList.at(0)))
+    {
+        foreach(timingPoint, timingPointList)
+        {
+            offsetList.append(timingPoint.split(",").at(0).toDouble());
+        }
+        return offsetList;
+    } else
+    {
+        offsetList.append(0.0);
+        return offsetList;
+    }
+}
+QList<double> svTool::convertTimingPointToCodeList(QStringList timingPointList)
+{
+    QList<double> codeList;
+    QString timingPoint;
+
+    if (svTool::checkTimingPoint(timingPointList.at(0)))
+    {
+        foreach(timingPoint, timingPointList)
+        {
+            codeList.append(timingPoint.split(",").at(1).toDouble());
+        }
+        return codeList;
+    } else
+    {
+        codeList.append(0.0);
+        return codeList;
+    }
+}
+
+//Checks
+bool svTool::checkEditorHitObject(QString editorHitObject)
+{
+    bool returnFlag;
+    returnFlag = editorHitObject.contains("(") &&
+                 editorHitObject.contains(")") &&
+                 editorHitObject.contains("|") &&
+                 editorHitObject.contains("-");
+    return returnFlag;
+}
+bool svTool::checkHitObject(QString hitObject)
+{
+    bool returnFlag;
+    returnFlag = (hitObject.count(QRegExp(",")) == 5) &&
+                !(hitObject.contains("(") &&
+                  hitObject.contains(")") &&
+                  hitObject.contains("|") &&
+                  hitObject.contains("-"));
+    return returnFlag;
+}
+bool svTool::checkTimingPoint(QString timingPoint)
+{
+    bool returnFlag;
+    returnFlag = (timingPoint.count(QRegExp(",")) == 7) &&
+                !(timingPoint.contains("(") &&
+                  timingPoint.contains(")") &&
+                  timingPoint.contains("|") &&
+                  timingPoint.contains("-"));
+    return returnFlag;
+}
+
+//Convert OM editorHitObject Input to QList<double>
+
+
 
 //Converts data from BASIC FORMATTING to OSU!MANIA FORMATTING
 void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject)
@@ -243,6 +393,8 @@ void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outpu
     }
 }
 
+// -------------------------------------- INPUT --------------------------------------
+
 // Validation Button
 void svTool::on_input_validateButton_clicked()
 {
@@ -282,30 +434,21 @@ void svTool::on_input_validateButton_clicked()
      */
 
     // Detect Input
-    if ((rawInputVector.at(0)).indexOf("(", 1) != -1 &&
-        (rawInputVector.at(0)).indexOf(")",1) != -1)
+    if (svTool::checkEditorHitObject(rawInputVector.at(0)))
     {
         validateType = inputType::editorHitObjectInput;
         ui->input_statusLabel->setText("STATUS: Editor Hit Object Format detected.");
         ui->input_statusLabel->setStyleSheet("QLabel { color:green; }");
-
-        // .count = 4: Normal Note
-        // .count = 5: Long Note
-    } else if (((rawInputVector.at(0)).count(QRegExp(",")) == 4 ||
-                (rawInputVector.at(0)).count(QRegExp(",")) == 5) &&
-                (rawInputVector.at(0)).indexOf("|",1) == -1)
+    } else if (svTool::checkHitObject(rawInputVector.at(0)))
     {
         validateType = inputType::hitObjectInput;
         ui->input_statusLabel->setText("STATUS: Hit Object Format detected.");
         ui->input_statusLabel->setStyleSheet("QLabel { color:green; }");
-
-    } else if ((rawInputVector.at(0)).count(QRegExp(",")) == 7 &&
-               (rawInputVector.at(0)).indexOf("|",1) == -1)
+    } else if (svTool::checkTimingPoint(rawInputVector.at(0)))
     {
         validateType = inputType::timingPointInput;
         ui->input_statusLabel->setText("STATUS: Timing Point Format detected.");
         ui->input_statusLabel->setStyleSheet("QLabel { color:green; }");
-
     } else
     {
         validateType = inputType::nullInput;
@@ -608,22 +751,21 @@ void svTool::on_input_validateButton_2_clicked()
     ui->copier_procInputBox_2->setPlainText(ui->debug_procInputBox_2->toPlainText());
 }
 
-// Connect Widgets
+// ------------------------------------- STUTTER -------------------------------------
+
+// Connect Stutter Widgets
 void svTool::on_stutter_initSVSlider_valueChanged(int value)
 {
     ui->stutter_initSVSpinBox->setValue(((double) value) / 100);
 }
-
 void svTool::on_stutter_thresholdSlider_valueChanged(int value)
 {
     ui->stutter_thresholdSpinBox->setValue((double) value);
 }
-
 void svTool::on_stutter_initSVSpinBox_valueChanged(double arg1)
 {
     ui->stutter_initSVSlider->setValue((int) (arg1 * 100));
 }
-
 void svTool::on_stutter_thresholdSpinBox_valueChanged(double arg1)
 {
     ui->stutter_thresholdSlider->setValue((int) (arg1));
@@ -684,7 +826,6 @@ void svTool::on_stutter_thresholdSpinBox_valueChanged(double arg1)
     */
 
 }
-
 void svTool::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 {
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
@@ -796,6 +937,8 @@ void svTool::on_stutter_generateButton_clicked()
     }
 }
 
+// ------------------------------------- COPIER -------------------------------------
+
 // Copier Generate Button
 void svTool::on_copier_generateButton_clicked()
 {
@@ -832,6 +975,8 @@ void svTool::on_copier_generateButton_clicked()
             boxType1 = inputBoxType::timingPoint;
         } else
         {
+            ui->copier_statusLabel->setText("STATUS: Input Box 1 is neither HITOBJECT nor TIMINGPOINT.");
+            ui->copier_statusLabel->setStyleSheet("QLabel { color:red; }");
             return;
         }
 
@@ -847,12 +992,16 @@ void svTool::on_copier_generateButton_clicked()
             boxType2 = inputBoxType::timingPoint;
         } else
         {
+            ui->copier_statusLabel->setText("STATUS: Input Box 2 is neither HITOBJECT nor TIMINGPOINT.");
+            ui->copier_statusLabel->setStyleSheet("QLabel { color:red; }");
             return;
         }
 
         if ((boxType1 == inputBoxType::hitObject && boxType2 == inputBoxType::hitObject) ||
                 (boxType2 == inputBoxType::timingPoint && boxType1 == inputBoxType::timingPoint))
         {
+            ui->copier_statusLabel->setText("STATUS: Make sure that both Inputs are different in type.");
+            ui->copier_statusLabel->setStyleSheet("QLabel { color:red; }");
             return;
         }
 
@@ -892,9 +1041,123 @@ void svTool::on_copier_generateButton_clicked()
 
         //Converts format
         svTool::compileProcOutput(ui->copier_procOutputBox, ui->copier_outputBox);
+        
+        ui->copier_statusLabel->setText("STATUS: Convert Successful.");
+        ui->copier_statusLabel->setStyleSheet("QLabel { color:green; }");
 
     } catch (...){
         //Generate Error Report
     }
 }
+
+// ------------------------------ TWO POINT FUNCTION ---------------------------------
+
+void svTool::on_TPF_valueASlider_valueChanged(int value)
+{
+    ui->TPF_valueASpinBox->setValue(((double) value) / 100);
+}
+void svTool::on_TPF_valueASpinBox_valueChanged(double arg1)
+{
+    ui->TPF_valueASlider->setValue((int) (arg1 * 100));
+}
+void svTool::on_TPF_valueBSlider_valueChanged(int value)
+{
+    ui->TPF_valueBSpinBox->setValue(((double) value) / 100);
+}
+void svTool::on_TPF_valueBSpinBox_valueChanged(double arg1)
+{
+    ui->TPF_valueBSlider->setValue((int) (arg1 * 100));
+}
+void svTool::on_TPF_valueCSlider_valueChanged(int value)
+{
+    ui->TPF_valueCSpinBox->setValue(((double) value) / 100);
+}
+void svTool::on_TPF_valueCSpinBox_valueChanged(double arg1)
+{
+    ui->TPF_valueCSlider->setValue((int) (arg1 * 100));
+}
+
+void svTool::on_TPF_generateButton_clicked()
+{
+    enum class graphType{
+        linearType, //0
+        quadraticType, //1
+    };
+    
+    double aValue, bValue, cValue;
+    double startOffset, endOffset;
+    QTextBrowser *statusBox;
+    QLabel *statusLabel;
+    graphType functionType;
+    
+    aValue = ui->TPF_valueASpinBox->value();
+    bValue = ui->TPF_valueBSpinBox->value();
+    cValue = ui->TPF_valueCSpinBox->value();
+    
+    statusLabel = ui->TPF_statusLabel;
+    statusBox = ui->TPF_statusBox;
+
+    statusBox->clear();
+
+    QString debugText = ui->TPF_editorInputLine->text();
+    QList<double> debugTextList = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text());
+    
+    //Set startOffset and endOffset
+    if (ui->TPF_editorInputLine->text().isEmpty())
+    {
+        statusLabel->setText("STATUS: No Input detected");
+        statusLabel->setStyleSheet("QLabel { color:red; }");
+        return;
+    } else if (svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).length() == 2)
+    {
+        startOffset = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(0);
+        endOffset = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(1);
+
+        statusLabel->setText("STATUS: Detected Editor Hit Object Input");
+        statusLabel->setStyleSheet("QLabel { color:green; }");
+    } else {
+        statusLabel->setText("STATUS: Make sure you input 2 Editor Hit Objects in the Input.");
+        statusLabel->setStyleSheet("QLabel { color:red; }");
+        return;
+    }
+
+    //Set function type with ternary
+    functionType = ui->TPF_linearRadio->isChecked() ? graphType::linearType : graphType::quadraticType;
+    
+    switch (functionType)
+    {
+    case graphType::linearType:
+        statusBox->append(QString("RANGE: ")
+                          .append(QString::number(startOffset))
+                          .append(" ~ ")
+                          .append(QString::number(endOffset)));
+        statusBox->append(QString("FUNCTION: ")
+                          .append("f(x) = ")
+                          .append(QString::number(aValue))
+                          .append("x + ")
+                          .append(QString::number(bValue)));
+        break;
+    case graphType::quadraticType:
+        statusBox->append(QString("RANGE: ")
+                          .append(QString::number(startOffset))
+                          .append(" ~ ")
+                          .append(QString::number(endOffset)));
+        statusBox->append(QString("FUNCTION: ")
+                          .append("f(x) = ")
+                          .append(QString::number(aValue))
+                          .append("x^2 + ")
+                          .append(QString::number(bValue))
+                          .append("x + ")
+                          .append(QString::number(cValue)));
+        break;
+    default:
+        break;
+    }
+
+}
+
+/* Function Checks
+ * - Check if empty (return)
+ * - Check if incorrect format (status warning & return)
+ */
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1101</width>
-    <height>417</height>
+    <width>1100</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       <x>9</x>
       <y>9</y>
       <width>1074</width>
-      <height>353</height>
+      <height>380</height>
      </rect>
     </property>
     <property name="tabShape">
@@ -488,233 +488,215 @@
      <attribute name="title">
       <string>2-Point Function</string>
      </attribute>
-     <widget class="QCustomPlot" name="widget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>740</x>
-        <y>10</y>
-        <width>271</width>
-        <height>301</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>10</y>
-        <width>211</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="TPF_valueGroup">
-       <item row="1" column="0">
-        <layout class="QGridLayout" name="TPF_valueBGroup">
-         <item row="0" column="0">
-          <widget class="QLabel" name="TPF_valueBLabel">
-           <property name="text">
-            <string>Value b:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSlider" name="TPF_valueBSlider">
-           <property name="minimum">
-            <number>10</number>
-           </property>
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="value">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" rowspan="2" colspan="3">
-          <widget class="QDoubleSpinBox" name="TPF_valueBSpinBox">
-           <property name="minimum">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>10.000000000000000</double>
-           </property>
-           <property name="value">
-            <double>1.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="TPF_valueCGroup">
-         <item row="0" column="0">
-          <widget class="QLabel" name="TPF_valueCLabel">
-           <property name="text">
-            <string>Value c:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSlider" name="TPF_valueCSlider">
-           <property name="minimum">
-            <number>10</number>
-           </property>
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="value">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" rowspan="3" colspan="2">
-          <widget class="QDoubleSpinBox" name="TPF_valueCSpinBox">
-           <property name="minimum">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>10.000000000000000</double>
-           </property>
-           <property name="value">
-            <double>1.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="0">
-        <layout class="QGridLayout" name="TPF_valueAGroup">
-         <item row="0" column="0">
-          <widget class="QLabel" name="TPF_valueALabel">
-           <property name="text">
-            <string>Value a:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSlider" name="TPF_valueASlider">
-           <property name="minimum">
-            <number>10</number>
-           </property>
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="value">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" rowspan="2" colspan="2">
-          <widget class="QDoubleSpinBox" name="TPF_valueASpinBox">
-           <property name="minimum">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>10.000000000000000</double>
-           </property>
-           <property name="value">
-            <double>1.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>194</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="TPF_formulaGroup">
-       <item row="2" column="0">
-        <widget class="QLabel" name="TPF_editorInput">
-         <property name="text">
-          <string>Editor Input (2 Notes)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QRadioButton" name="TPF_linearRadio">
-         <property name="text">
-          <string>Linear &lt;f(x) = ax + b&gt;</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLineEdit" name="TPF_editorInputLine"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="TPF_statusLabel">
-         <property name="text">
-          <string>STATUS:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QTextBrowser" name="TPF_statusBox"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="TPF_statusBoxLabel">
-         <property name="text">
-          <string>Status Box</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QRadioButton" name="TPF_quadraticRadio">
-         <property name="text">
-          <string>Quadratic &lt;f(x) = ax^2 + bx + c&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="TPF_generateButton">
-         <property name="text">
-          <string>Generate</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>10</y>
-        <width>251</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="TPF_outputGroup">
-       <item row="0" column="0">
-        <widget class="QLabel" name="TPF_outputLabel">
-         <property name="text">
-          <string>Output</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QTextBrowser" name="TPF_outputBox"/>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0" rowspan="2">
+         <layout class="QGridLayout" name="TPF_formulaGroup">
+          <item row="2" column="0">
+           <widget class="QLabel" name="TPF_editorInput">
+            <property name="text">
+             <string>Editor Input (2 Notes)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="TPF_linearRadio">
+            <property name="text">
+             <string>Linear &lt;f(x) = ax + b&gt;</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLineEdit" name="TPF_editorInputLine"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QTextBrowser" name="TPF_statusBox"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="TPF_statusBoxLabel">
+            <property name="text">
+             <string>Status Box</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="TPF_quadraticRadio">
+            <property name="text">
+             <string>Quadratic &lt;f(x) = ax^2 + bx + c&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QPushButton" name="TPF_generateButton">
+            <property name="text">
+             <string>Generate</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <layout class="QGridLayout" name="TPF_valueGroup">
+          <item row="1" column="0">
+           <layout class="QGridLayout" name="TPF_valueBGroup">
+            <item row="0" column="0">
+             <widget class="QLabel" name="TPF_valueBLabel">
+              <property name="text">
+               <string>Value b:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="TPF_valueBSlider">
+              <property name="minimum">
+               <number>10</number>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="2" colspan="3">
+             <widget class="QDoubleSpinBox" name="TPF_valueBSpinBox">
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <layout class="QGridLayout" name="TPF_valueCGroup">
+            <item row="0" column="0">
+             <widget class="QLabel" name="TPF_valueCLabel">
+              <property name="text">
+               <string>Value c:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="TPF_valueCSlider">
+              <property name="minimum">
+               <number>10</number>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="3" colspan="2">
+             <widget class="QDoubleSpinBox" name="TPF_valueCSpinBox">
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="TPF_valueAGroup">
+            <item row="0" column="0">
+             <widget class="QLabel" name="TPF_valueALabel">
+              <property name="text">
+               <string>Value a:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="TPF_valueASlider">
+              <property name="minimum">
+               <number>10</number>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="2" colspan="2">
+             <widget class="QDoubleSpinBox" name="TPF_valueASpinBox">
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="2">
+         <layout class="QGridLayout" name="TPF_outputGroup">
+          <item row="0" column="0">
+           <widget class="QLabel" name="TPF_outputLabel">
+            <property name="text">
+             <string>Output</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextBrowser" name="TPF_outputBox"/>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QLabel" name="TPF_statusLabel">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCustomPlot" name="widget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
     <widget class="QWidget" name="tabConsole">
      <attribute name="title">
@@ -733,7 +715,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1101</width>
+     <width>1100</width>
      <height>21</height>
     </rect>
    </property>
