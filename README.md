@@ -26,6 +26,12 @@ Priority List:
 - Set Default values
 - Added MIT License
 
-5/1/17 :
+5/1/18 :
 - Added Copier
 - Renamed Home Tab to Input
+
+6/1/18 :
+- Added documentation.txt
+- Added QCustomPlot 
+- Added Two Point Function (TPF) Frame
+- Added 6 more converter Functions
