@@ -35,3 +35,7 @@ Priority List:
 - Added QCustomPlot 
 - Added Two Point Function (TPF) Frame
 - Added 6 more converter Functions
+
+8/1/18 :
+- Added Graph
+- Added more problems tbh :(
