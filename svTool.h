@@ -95,37 +95,36 @@ public:
 private slots:
 
     void on_input_validateButton_clicked();
-
     void on_stutter_initSVSlider_valueChanged(int value);
-
     void on_stutter_initSVSpinBox_valueChanged(double arg1);
-
     void on_stutter_thresholdSlider_valueChanged(int value);
-
     void on_stutter_thresholdSpinBox_valueChanged(double arg1);
-
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
-
     void on_stutter_generateButton_clicked();
-
     void on_input_validateButton_2_clicked();
-
     void on_copier_generateButton_clicked();
-    
     void on_TPF_valueASlider_valueChanged(int value);
-    
     void on_TPF_valueASpinBox_valueChanged(double arg1);
-    
     void on_TPF_valueBSlider_valueChanged(int value);
-    
     void on_TPF_valueBSpinBox_valueChanged(double arg1);
-    
     void on_TPF_valueCSlider_valueChanged(int value);
-    
     void on_TPF_valueCSpinBox_valueChanged(double arg1);
-    
     void on_TPF_generateButton_clicked();
-    
+    void on_TPF_initialSVSpinBox_valueChanged(double arg1);
+    void on_TPF_endSVSpinBox_valueChanged(double arg1);
+    void on_TPF_initialSVSlider_valueChanged(int value);
+    void on_TPF_endSVSlider_valueChanged(int value);
+
+
+
+    void on_TPF_valueA2Slider_valueChanged(int value);
+
+    void on_TPF_valueA2SpinBox_valueChanged(double arg1);
+
+    void on_TPF_linearRadio_clicked();
+
+    void on_TPF_quadraticRadio_clicked();
+
 private:
     Ui::svTool *ui;
 };

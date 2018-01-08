@@ -8,6 +8,8 @@
 #include <QRegExp>
 #include <QList>
 #include <QTextBrowser>
+#include <QPen>
+#include <QBrush>
 
 /* osu!mania FORMATTING REF
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
@@ -326,9 +328,6 @@ bool svTool::checkTimingPoint(QString timingPoint)
                   timingPoint.contains("-"));
     return returnFlag;
 }
-
-//Convert OM editorHitObject Input to QList<double>
-
 
 
 //Converts data from BASIC FORMATTING to OSU!MANIA FORMATTING
@@ -1059,6 +1058,25 @@ void svTool::on_TPF_valueASlider_valueChanged(int value)
 void svTool::on_TPF_valueASpinBox_valueChanged(double arg1)
 {
     ui->TPF_valueASlider->setValue((int) (arg1 * 100));
+
+    double initialSV, endSV;
+    double aValue, bValue, cValue;
+
+    aValue = arg1;
+    bValue = ui->TPF_valueBSpinBox->value();
+    cValue = ui->TPF_valueCSpinBox->value();
+
+    if (ui->TPF_linearRadio->isChecked())
+    {
+        initialSV = bValue;
+        endSV = aValue + bValue;
+    } else if (ui->TPF_quadraticRadio->isChecked())
+    {
+        initialSV = cValue;
+        endSV = aValue + bValue + cValue;
+    } else {
+        return;
+    }
 }
 void svTool::on_TPF_valueBSlider_valueChanged(int value)
 {
@@ -1067,6 +1085,24 @@ void svTool::on_TPF_valueBSlider_valueChanged(int value)
 void svTool::on_TPF_valueBSpinBox_valueChanged(double arg1)
 {
     ui->TPF_valueBSlider->setValue((int) (arg1 * 100));
+    double initialSV, endSV;
+    double aValue, bValue, cValue;
+
+    aValue = ui->TPF_valueASpinBox->value();
+    bValue = arg1;
+    cValue = ui->TPF_valueCSpinBox->value();
+
+    if (ui->TPF_linearRadio->isChecked())
+    {
+        initialSV = bValue;
+        endSV = aValue + bValue;
+    } else if (ui->TPF_quadraticRadio->isChecked())
+    {
+        initialSV = cValue;
+        endSV = aValue + bValue + cValue;
+    } else {
+        return;
+    }
 }
 void svTool::on_TPF_valueCSlider_valueChanged(int value)
 {
@@ -1075,8 +1111,90 @@ void svTool::on_TPF_valueCSlider_valueChanged(int value)
 void svTool::on_TPF_valueCSpinBox_valueChanged(double arg1)
 {
     ui->TPF_valueCSlider->setValue((int) (arg1 * 100));
+    double initialSV, endSV;
+    double aValue, bValue, cValue;
+
+    aValue = ui->TPF_valueASpinBox->value();
+    bValue = ui->TPF_valueBSpinBox->value();
+    cValue = arg1;
+
+    if (ui->TPF_linearRadio->isChecked())
+    {
+        initialSV = bValue;
+        endSV = aValue + bValue;
+    } else if (ui->TPF_quadraticRadio->isChecked())
+    {
+        initialSV = cValue;
+        endSV = aValue + bValue + cValue;
+    } else {
+        return;
+    }
+}
+void svTool::on_TPF_initialSVSlider_valueChanged(int value)
+{
+    ui->TPF_initialSVSpinBox->setValue(((double) value) / 100);
+}
+void svTool::on_TPF_initialSVSpinBox_valueChanged(double arg1)
+{
+    ui->TPF_initialSVSlider->setValue((int) (arg1 * 100));
+    double initialSV, endSV;
+    double aValue, bValue, cValue;
+
+    initialSV = arg1;
+    endSV = ui->TPF_endSVSpinBox->value();
+    cValue = ui->TPF_valueCSpinBox->value();
+
+    if (ui->TPF_linearRadio->isChecked())
+    {
+        aValue = endSV - initialSV;
+        bValue = initialSV;
+    } else if (ui->TPF_quadraticRadio->isChecked())
+    {
+        aValue = ui->TPF_valueA2SpinBox->value();
+        bValue = endSV - initialSV - aValue;
+        cValue = initialSV;
+    } else {
+        return;
+    }
+}
+void svTool::on_TPF_endSVSlider_valueChanged(int value)
+{
+    ui->TPF_endSVSpinBox->setValue(((double) value) / 100);
+}
+void svTool::on_TPF_endSVSpinBox_valueChanged(double arg1)
+{
+    ui->TPF_endSVSlider->setValue((int) (arg1 * 100));
+    double initialSV, endSV;
+    double aValue, bValue, cValue;
+
+    initialSV = ui->TPF_initialSVSpinBox->value();
+    endSV = arg1;
+    cValue = ui->TPF_valueCSpinBox->value();
+
+    if (ui->TPF_linearRadio->isChecked())
+    {
+        aValue = endSV - initialSV;
+        bValue = initialSV;
+    } else if (ui->TPF_quadraticRadio->isChecked())
+    {
+        aValue = ui->TPF_valueA2SpinBox->value();
+        bValue = endSV - initialSV - aValue;
+        cValue = initialSV;
+    } else {
+        return;
+    }
+}
+void svTool::on_TPF_valueA2Slider_valueChanged(int value)
+{
+    ui->TPF_valueA2Slider->setValue(((double) value) / 100);
+}
+void svTool::on_TPF_valueA2SpinBox_valueChanged(double arg1)
+{
+    ui->TPF_valueA2Slider->setValue((int) (arg1 * 100));
 }
 
+
+// TPF Generate Button
 void svTool::on_TPF_generateButton_clicked()
 {
     enum class graphType{
@@ -1098,9 +1216,6 @@ void svTool::on_TPF_generateButton_clicked()
     statusBox = ui->TPF_statusBox;
 
     statusBox->clear();
-
-    QString debugText = ui->TPF_editorInputLine->text();
-    QList<double> debugTextList = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text());
     
     //Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
@@ -1127,6 +1242,7 @@ void svTool::on_TPF_generateButton_clicked()
     switch (functionType)
     {
     case graphType::linearType:
+    {
         statusBox->append(QString("RANGE: ")
                           .append(QString::number(startOffset))
                           .append(" ~ ")
@@ -1136,8 +1252,30 @@ void svTool::on_TPF_generateButton_clicked()
                           .append(QString::number(aValue))
                           .append("x + ")
                           .append(QString::number(bValue)));
+
+        QVector<double> x(101), y(101);
+        for(int i=0; i<101; ++i)
+        {
+            x[i] = (i * (endOffset - startOffset)) / 100 + startOffset;
+            //ax + b
+            y[i] = aValue * ((double) i / 100) + bValue;
+        }
+
+        ui->TPF_customPlot->addGraph();
+        ui->TPF_customPlot->graph(0)->setData(x,y);
+        ui->TPF_customPlot->graph(0)->setPen(QPen(Qt::black));
+        ui->TPF_customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
+        ui->TPF_customPlot->xAxis->setLabel("Offset");
+        ui->TPF_customPlot->yAxis->setLabel("SV");
+        ui->TPF_customPlot->xAxis->setRange(startOffset, endOffset);
+        ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
+        ui->TPF_customPlot->replot();
+
+
         break;
+    }
     case graphType::quadraticType:
+    {
         statusBox->append(QString("RANGE: ")
                           .append(QString::number(startOffset))
                           .append(" ~ ")
@@ -1150,8 +1288,11 @@ void svTool::on_TPF_generateButton_clicked()
                           .append("x + ")
                           .append(QString::number(cValue)));
         break;
+    }
     default:
+    {
         break;
+    }
     }
 
 }
@@ -1161,3 +1302,16 @@ void svTool::on_TPF_generateButton_clicked()
  * - Check if incorrect format (status warning & return)
  */
 
+void svTool::on_TPF_linearRadio_clicked()
+{
+    svTool::on_TPF_valueASpinBox_valueChanged(ui->TPF_valueASpinBox->value());
+    svTool::on_TPF_valueBSpinBox_valueChanged(ui->TPF_valueBSpinBox->value());
+    svTool::on_TPF_valueCSpinBox_valueChanged(ui->TPF_valueCSpinBox->value());
+}
+
+void svTool::on_TPF_quadraticRadio_clicked()
+{
+    svTool::on_TPF_valueASpinBox_valueChanged(ui->TPF_valueASpinBox->value());
+    svTool::on_TPF_valueBSpinBox_valueChanged(ui->TPF_valueBSpinBox->value());
+    svTool::on_TPF_valueCSpinBox_valueChanged(ui->TPF_valueCSpinBox->value());
+}
