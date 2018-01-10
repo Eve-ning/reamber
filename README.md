@@ -1,7 +1,7 @@
 # maniaMultiTool
 idk i just put whatever is useful here, who cares
 
-wip
+expected to be completed midyear
 
 Priority List:
 1. Remake what was once the sv-tool
@@ -41,4 +41,5 @@ Priority List:
 
 10/1/18 :
 - Rewrote TPF
+![progress](http://puu.sh/yYlqk/1b1623fa53.png)
 
