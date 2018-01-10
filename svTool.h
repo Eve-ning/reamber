@@ -103,27 +103,21 @@ private slots:
     void on_stutter_generateButton_clicked();
     void on_input_validateButton_2_clicked();
     void on_copier_generateButton_clicked();
-    void on_TPF_valueASlider_valueChanged(int value);
-    void on_TPF_valueASpinBox_valueChanged(double arg1);
-    void on_TPF_valueBSlider_valueChanged(int value);
-    void on_TPF_valueBSpinBox_valueChanged(double arg1);
-    void on_TPF_valueCSlider_valueChanged(int value);
-    void on_TPF_valueCSpinBox_valueChanged(double arg1);
     void on_TPF_generateButton_clicked();
     void on_TPF_initialSVSpinBox_valueChanged(double arg1);
-    void on_TPF_endSVSpinBox_valueChanged(double arg1);
     void on_TPF_initialSVSlider_valueChanged(int value);
+    void on_TPF_endSVSpinBox_valueChanged(double arg1);
     void on_TPF_endSVSlider_valueChanged(int value);
-
-
-
-    void on_TPF_valueA2Slider_valueChanged(int value);
-
-    void on_TPF_valueA2SpinBox_valueChanged(double arg1);
-
+    void on_TPF_offsetSlider_valueChanged(int value);
+    void on_TPF_offsetSpinBox_valueChanged(int arg1);
+    void on_TPF_frequencySpinBox_valueChanged(int arg1);
+    void on_TPF_frequencySlider_valueChanged(int value);
+    void on_TPF_amplitudeSlider_valueChanged(int value);
+    void on_TPF_amplitudeSpinBox_valueChanged(int arg1);
     void on_TPF_linearRadio_clicked();
-
     void on_TPF_quadraticRadio_clicked();
+    void resetTPF();
+
 
 private:
     Ui::svTool *ui;

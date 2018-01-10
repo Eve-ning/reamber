@@ -26,14 +26,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         svTool.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
 
 HEADERS += \
         svTool.h \
     qcustomplot.h
 
 FORMS += \
-        svTool.ui
+        svTool.ui \
 
 DISTFILES += \
     documentation

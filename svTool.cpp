@@ -10,6 +10,7 @@
 #include <QTextBrowser>
 #include <QPen>
 #include <QBrush>
+#include <QtMath>
 
 /* osu!mania FORMATTING REF
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
@@ -39,7 +40,6 @@ svTool::svTool(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    
 }
 
 svTool::~svTool()
@@ -1051,85 +1051,6 @@ void svTool::on_copier_generateButton_clicked()
 
 // ------------------------------ TWO POINT FUNCTION ---------------------------------
 
-void svTool::on_TPF_valueASlider_valueChanged(int value)
-{
-    ui->TPF_valueASpinBox->setValue(((double) value) / 100);
-}
-void svTool::on_TPF_valueASpinBox_valueChanged(double arg1)
-{
-    ui->TPF_valueASlider->setValue((int) (arg1 * 100));
-
-    double initialSV, endSV;
-    double aValue, bValue, cValue;
-
-    aValue = arg1;
-    bValue = ui->TPF_valueBSpinBox->value();
-    cValue = ui->TPF_valueCSpinBox->value();
-
-    if (ui->TPF_linearRadio->isChecked())
-    {
-        initialSV = bValue;
-        endSV = aValue + bValue;
-    } else if (ui->TPF_quadraticRadio->isChecked())
-    {
-        initialSV = cValue;
-        endSV = aValue + bValue + cValue;
-    } else {
-        return;
-    }
-}
-void svTool::on_TPF_valueBSlider_valueChanged(int value)
-{
-    ui->TPF_valueBSpinBox->setValue(((double) value) / 100);
-}
-void svTool::on_TPF_valueBSpinBox_valueChanged(double arg1)
-{
-    ui->TPF_valueBSlider->setValue((int) (arg1 * 100));
-    double initialSV, endSV;
-    double aValue, bValue, cValue;
-
-    aValue = ui->TPF_valueASpinBox->value();
-    bValue = arg1;
-    cValue = ui->TPF_valueCSpinBox->value();
-
-    if (ui->TPF_linearRadio->isChecked())
-    {
-        initialSV = bValue;
-        endSV = aValue + bValue;
-    } else if (ui->TPF_quadraticRadio->isChecked())
-    {
-        initialSV = cValue;
-        endSV = aValue + bValue + cValue;
-    } else {
-        return;
-    }
-}
-void svTool::on_TPF_valueCSlider_valueChanged(int value)
-{
-    ui->TPF_valueCSpinBox->setValue(((double) value) / 100);
-}
-void svTool::on_TPF_valueCSpinBox_valueChanged(double arg1)
-{
-    ui->TPF_valueCSlider->setValue((int) (arg1 * 100));
-    double initialSV, endSV;
-    double aValue, bValue, cValue;
-
-    aValue = ui->TPF_valueASpinBox->value();
-    bValue = ui->TPF_valueBSpinBox->value();
-    cValue = arg1;
-
-    if (ui->TPF_linearRadio->isChecked())
-    {
-        initialSV = bValue;
-        endSV = aValue + bValue;
-    } else if (ui->TPF_quadraticRadio->isChecked())
-    {
-        initialSV = cValue;
-        endSV = aValue + bValue + cValue;
-    } else {
-        return;
-    }
-}
 void svTool::on_TPF_initialSVSlider_valueChanged(int value)
 {
     ui->TPF_initialSVSpinBox->setValue(((double) value) / 100);
@@ -1137,26 +1058,8 @@ void svTool::on_TPF_initialSVSlider_valueChanged(int value)
 void svTool::on_TPF_initialSVSpinBox_valueChanged(double arg1)
 {
     ui->TPF_initialSVSlider->setValue((int) (arg1 * 100));
-    double initialSV, endSV;
-    double aValue, bValue, cValue;
-
-    initialSV = arg1;
-    endSV = ui->TPF_endSVSpinBox->value();
-    cValue = ui->TPF_valueCSpinBox->value();
-
-    if (ui->TPF_linearRadio->isChecked())
-    {
-        aValue = endSV - initialSV;
-        bValue = initialSV;
-    } else if (ui->TPF_quadraticRadio->isChecked())
-    {
-        aValue = ui->TPF_valueA2SpinBox->value();
-        bValue = endSV - initialSV - aValue;
-        cValue = initialSV;
-    } else {
-        return;
-    }
 }
+
 void svTool::on_TPF_endSVSlider_valueChanged(int value)
 {
     ui->TPF_endSVSpinBox->setValue(((double) value) / 100);
@@ -1164,59 +1067,66 @@ void svTool::on_TPF_endSVSlider_valueChanged(int value)
 void svTool::on_TPF_endSVSpinBox_valueChanged(double arg1)
 {
     ui->TPF_endSVSlider->setValue((int) (arg1 * 100));
-    double initialSV, endSV;
-    double aValue, bValue, cValue;
-
-    initialSV = ui->TPF_initialSVSpinBox->value();
-    endSV = arg1;
-    cValue = ui->TPF_valueCSpinBox->value();
-
-    if (ui->TPF_linearRadio->isChecked())
-    {
-        aValue = endSV - initialSV;
-        bValue = initialSV;
-    } else if (ui->TPF_quadraticRadio->isChecked())
-    {
-        aValue = ui->TPF_valueA2SpinBox->value();
-        bValue = endSV - initialSV - aValue;
-        cValue = initialSV;
-    } else {
-        return;
-    }
 }
-void svTool::on_TPF_valueA2Slider_valueChanged(int value)
+
+void svTool::on_TPF_offsetSlider_valueChanged(int value)
 {
-    ui->TPF_valueA2Slider->setValue(((double) value) / 100);
+    ui->TPF_offsetSpinBox->setValue(value);
 }
-void svTool::on_TPF_valueA2SpinBox_valueChanged(double arg1)
+void svTool::on_TPF_offsetSpinBox_valueChanged(int arg1)
 {
-    ui->TPF_valueA2Slider->setValue((int) (arg1 * 100));
+    ui->TPF_offsetSlider->setValue(arg1);
 }
 
+void svTool::on_TPF_frequencySlider_valueChanged(int value)
+{
+    ui->TPF_frequencySpinBox->setValue(value);
+}
+void svTool::on_TPF_frequencySpinBox_valueChanged(int arg1)
+{
+    ui->TPF_frequencySlider->setValue(arg1);
+}
+
+void svTool::on_TPF_amplitudeSlider_valueChanged(int value)
+{
+    ui->TPF_amplitudeSpinBox->setValue(value);
+}
+void svTool::on_TPF_amplitudeSpinBox_valueChanged(int arg1)
+{
+    ui->TPF_amplitudeSlider->setValue(arg1);
+}
 
 // TPF Generate Button
 void svTool::on_TPF_generateButton_clicked()
-{
-    enum class graphType{
-        linearType, //0
-        quadraticType, //1
-    };
-    
-    double aValue, bValue, cValue;
-    double startOffset, endOffset;
+{  
+    /* For this function, we are going to have 2 separate graphs, linear and a sine graph (Default Range: PI)
+     *
+     * SINE GRAPH: This will control the "curve" modification of the graph, dependant on the <layman> Curve Factor (a.k.a. Amplitude).
+     *             Its offset is defaulted to 0 as its start and end point (0 - PI) is 0, hence not affecting the start and end points
+     *             of the original LINEAR GRAPH.
+     *
+     * LINEAR GRAPH: This controls the linear direction of the graph.
+     *
+     * PARAMETERS:
+         * INITIAL & END OFFSET
+         * INITIAL & END SV
+         * AMPLITUDE (of SINE GRAPH)
+         * OFFSET (of SINE GRAPH)
+     */
+
     QTextBrowser *statusBox;
     QLabel *statusLabel;
-    graphType functionType;
-    
-    aValue = ui->TPF_valueASpinBox->value();
-    bValue = ui->TPF_valueBSpinBox->value();
-    cValue = ui->TPF_valueCSpinBox->value();
-    
-    statusLabel = ui->TPF_statusLabel;
-    statusBox = ui->TPF_statusBox;
 
+    double initialOffset, endOffset;
+    double initialSV, endSV;
+    double xValue;
+    double offset, amplitude, frequency;
+    int intermediatePoints;
+    statusLabel = ui->TPF_statusLabel;
+    intermediatePoints = 100;
+    statusBox = ui->TPF_statusBox;
     statusBox->clear();
-    
+
     //Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
     {
@@ -1225,7 +1135,7 @@ void svTool::on_TPF_generateButton_clicked()
         return;
     } else if (svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).length() == 2)
     {
-        startOffset = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(0);
+        initialOffset = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(0);
         endOffset = svTool::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(1);
 
         statusLabel->setText("STATUS: Detected Editor Hit Object Input");
@@ -1236,82 +1146,85 @@ void svTool::on_TPF_generateButton_clicked()
         return;
     }
 
-    //Set function type with ternary
-    functionType = ui->TPF_linearRadio->isChecked() ? graphType::linearType : graphType::quadraticType;
-    
-    switch (functionType)
+    //Set other parameters
+    initialSV = ui->TPF_initialSVSpinBox->value();
+    endSV = ui->TPF_endSVSpinBox->value();
+    offset = (double) ui->TPF_offsetSpinBox->value() / 100;
+    amplitude = (double) ui->TPF_amplitudeSpinBox->value() / 100;
+    frequency = (double) ui->TPF_frequencySpinBox->value() / 100;
+
+    //Generate vectors for graph
+    QVector<double> x(intermediatePoints + 1), y(intermediatePoints + 1);
+    QVector<double> yLinear(intermediatePoints + 1);
+    QVector<double> ySine(intermediatePoints + 1);
+
+    for(int i=0; i<intermediatePoints + 1; ++i)
     {
-    case graphType::linearType:
-    {
-        statusBox->append(QString("RANGE: ")
-                          .append(QString::number(startOffset))
-                          .append(" ~ ")
-                          .append(QString::number(endOffset)));
-        statusBox->append(QString("FUNCTION: ")
-                          .append("f(x) = ")
-                          .append(QString::number(aValue))
-                          .append("x + ")
-                          .append(QString::number(bValue)));
-
-        QVector<double> x(101), y(101);
-        for(int i=0; i<101; ++i)
-        {
-            x[i] = (i * (endOffset - startOffset)) / 100 + startOffset;
-            //ax + b
-            y[i] = aValue * ((double) i / 100) + bValue;
-        }
-
-        ui->TPF_customPlot->addGraph();
-        ui->TPF_customPlot->graph(0)->setData(x,y);
-        ui->TPF_customPlot->graph(0)->setPen(QPen(Qt::black));
-        ui->TPF_customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
-        ui->TPF_customPlot->xAxis->setLabel("Offset");
-        ui->TPF_customPlot->yAxis->setLabel("SV");
-        ui->TPF_customPlot->xAxis->setRange(startOffset, endOffset);
-        ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
-        ui->TPF_customPlot->replot();
-
-
-        break;
+        xValue = i / ((double) intermediatePoints);
+        x[i] = (xValue * (endOffset - initialOffset)) + initialOffset;
+        yLinear[i] = xValue * (endSV - initialSV) + initialSV;
+        ySine[i] =  amplitude * qSin(frequency * (xValue + offset) * M_PI);
+        y[i] = yLinear[i] + ySine[i];
     }
-    case graphType::quadraticType:
-    {
-        statusBox->append(QString("RANGE: ")
-                          .append(QString::number(startOffset))
-                          .append(" ~ ")
-                          .append(QString::number(endOffset)));
-        statusBox->append(QString("FUNCTION: ")
-                          .append("f(x) = ")
-                          .append(QString::number(aValue))
-                          .append("x^2 + ")
-                          .append(QString::number(bValue))
-                          .append("x + ")
-                          .append(QString::number(cValue)));
-        break;
-    }
-    default:
-    {
-        break;
-    }
-    }
+    statusBox->append(QString("RANGE: ")
+                      .append(QString::number(initialOffset))
+                      .append(" ~ ")
+                      .append(QString::number(endOffset)));
 
+    statusBox->append(QString("LINEAR FUNCTION: ")
+                      .append("f(x) = ")
+                      .append(QString::number((endSV - initialSV) / intermediatePoints))
+                      .append("x + ")
+                      .append(QString::number(initialSV)));
+
+    statusBox->append(QString("SINE FUNCTION: ")
+                      .append("f(x) = ")
+                      .append(QString::number(amplitude)
+                      .append(" * sin[(")
+                      .append(QString::number(frequency))
+                      .append(" * x + ")
+                      .append(QString::number(offset))
+                      .append(") * π]")));
+
+    ui->TPF_customPlot->addGraph();
+    ui->TPF_customPlot->graph(0)->setData(x,y);
+    ui->TPF_customPlot->graph(0)->setPen(QPen(Qt::black));
+    ui->TPF_customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
+    ui->TPF_customPlot->xAxis->setLabel("Offset");
+    ui->TPF_customPlot->yAxis->setLabel("SV");
+    ui->TPF_customPlot->xAxis->setRange(initialOffset, endOffset);
+    ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
+    ui->TPF_customPlot->replot();
 }
 
-/* Function Checks
- * - Check if empty (return)
- * - Check if incorrect format (status warning & return)
- */
-
+//Reset Values on Tab Change or Radio Change
 void svTool::on_TPF_linearRadio_clicked()
 {
-    svTool::on_TPF_valueASpinBox_valueChanged(ui->TPF_valueASpinBox->value());
-    svTool::on_TPF_valueBSpinBox_valueChanged(ui->TPF_valueBSpinBox->value());
-    svTool::on_TPF_valueCSpinBox_valueChanged(ui->TPF_valueCSpinBox->value());
+    svTool::resetTPF();
 }
-
 void svTool::on_TPF_quadraticRadio_clicked()
 {
-    svTool::on_TPF_valueASpinBox_valueChanged(ui->TPF_valueASpinBox->value());
-    svTool::on_TPF_valueBSpinBox_valueChanged(ui->TPF_valueBSpinBox->value());
-    svTool::on_TPF_valueCSpinBox_valueChanged(ui->TPF_valueCSpinBox->value());
+    svTool::resetTPF();
 }
+void svTool::resetTPF()
+{
+    ui->TPF_initialSVSpinBox->setValue(1.0);
+    ui->TPF_endSVSpinBox->setValue(1.0);
+    ui->TPF_amplitudeSpinBox->setValue(0);
+    ui->TPF_frequencySpinBox->setValue(0);
+    ui->TPF_offsetSpinBox->setValue(0);
+}
+
+
+// ------------------------------ FUNCTION EDITOR ---------------------------------
+
+
+
+
+
+
+
+
+
+
+

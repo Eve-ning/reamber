@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1097</width>
-    <height>462</height>
+    <width>1092</width>
+    <height>520</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>1074</width>
-      <height>397</height>
+      <width>1071</width>
+      <height>431</height>
      </rect>
     </property>
     <property name="tabShape">
@@ -491,51 +491,34 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <layout class="QGridLayout" name="TPF_formulaGroup">
-        <item row="2" column="0">
+        <item row="0" column="0">
          <widget class="QLabel" name="TPF_editorInput">
           <property name="text">
            <string>Editor Input (2 Notes)</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="TPF_linearRadio">
-          <property name="text">
-           <string>Linear &lt;f(x) = ax + b&gt;</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
+        <item row="2" column="0">
          <widget class="QLineEdit" name="TPF_editorInputLine"/>
         </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="TPF_statusLabel">
-          <property name="text">
-           <string>STATUS:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
+        <item row="4" column="0">
          <widget class="QTextBrowser" name="TPF_statusBox"/>
         </item>
-        <item row="5" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="TPF_statusBoxLabel">
           <property name="text">
            <string>Status Box</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="TPF_quadraticRadio">
+        <item row="6" column="0">
+         <widget class="QLabel" name="TPF_statusLabel">
           <property name="text">
-           <string>Quadratic &lt;f(x) = ax^2 + bx + c&gt;</string>
+           <string>STATUS:</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
+        <item row="5" column="0">
          <widget class="QPushButton" name="TPF_generateButton">
           <property name="text">
            <string>Generate</string>
@@ -545,11 +528,11 @@
        </layout>
       </item>
       <item>
-       <widget class="QTabWidget" name="tabWidget_2">
+       <widget class="QTabWidget" name="TPF_adjustTab">
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="endPointAdjustTab">
+        <widget class="QWidget" name="TPF_endPointAdjustTab">
          <attribute name="title">
           <string>End Point Adjust</string>
          </attribute>
@@ -635,16 +618,16 @@
            </layout>
           </item>
           <item>
-           <layout class="QGridLayout" name="TPF_valueA2Group">
+           <layout class="QGridLayout" name="TPF_amplitudeGroup">
             <item row="0" column="0">
-             <widget class="QLabel" name="TPF_valueA2Label">
+             <widget class="QLabel" name="TPF_amplitudeLabel">
               <property name="text">
-               <string>Value a:</string>
+               <string>Amplitude:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QSlider" name="TPF_valueA2Slider">
+             <widget class="QSlider" name="TPF_amplitudeSlider">
               <property name="minimum">
                <number>-1000</number>
               </property>
@@ -660,148 +643,115 @@
              </widget>
             </item>
             <item row="1" column="0" rowspan="2" colspan="2">
-             <widget class="QDoubleSpinBox" name="TPF_valueA2SpinBox">
+             <widget class="QSpinBox" name="TPF_amplitudeSpinBox">
               <property name="minimum">
-               <double>-10.000000000000000</double>
+               <number>-500</number>
               </property>
               <property name="maximum">
-               <double>10.000000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.000000000000000</double>
+               <number>500</number>
               </property>
              </widget>
             </item>
            </layout>
           </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="functionAdjustTab">
-         <attribute name="title">
-          <string>Function Adjust</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <layout class="QGridLayout" name="TPF_valueGroup">
-            <item row="1" column="0">
-             <layout class="QGridLayout" name="TPF_valueBGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="TPF_valueBLabel">
-                <property name="text">
-                 <string>Value b:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSlider" name="TPF_valueBSlider">
-                <property name="minimum">
-                 <number>-1000</number>
-                </property>
-                <property name="maximum">
-                 <number>1000</number>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0" rowspan="2" colspan="2">
-               <widget class="QDoubleSpinBox" name="TPF_valueBSpinBox">
-                <property name="minimum">
-                 <double>-10.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10.000000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <layout class="QGridLayout" name="TPF_valueCGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="TPF_valueCLabel">
-                <property name="text">
-                 <string>Value c:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSlider" name="TPF_valueCSlider">
-                <property name="minimum">
-                 <number>-1000</number>
-                </property>
-                <property name="maximum">
-                 <number>1000</number>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0" rowspan="3" colspan="2">
-               <widget class="QDoubleSpinBox" name="TPF_valueCSpinBox">
-                <property name="minimum">
-                 <double>-10.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10.000000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
+           <layout class="QGridLayout" name="TPF_offsetGroup">
             <item row="0" column="0">
-             <layout class="QGridLayout" name="TPF_valueAGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="TPF_valueALabel">
-                <property name="text">
-                 <string>Value a:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSlider" name="TPF_valueASlider">
-                <property name="minimum">
-                 <number>-1000</number>
-                </property>
-                <property name="maximum">
-                 <number>1000</number>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0" rowspan="2" colspan="2">
-               <widget class="QDoubleSpinBox" name="TPF_valueASpinBox">
-                <property name="minimum">
-                 <double>-10.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10.000000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QLabel" name="TPF_offsetLabel">
+              <property name="text">
+               <string>Offset:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="TPF_offsetSlider">
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="2" colspan="2">
+             <widget class="QSpinBox" name="TPF_offsetSpinBox">
+              <property name="minimum">
+               <number>-100</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="TPF_frequencyGroup">
+            <item row="0" column="0">
+             <widget class="QLabel" name="TPF_frequencyLabel">
+              <property name="text">
+               <string>Frequency:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="TPF_frequencySlider">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" rowspan="2" colspan="2">
+             <widget class="QSpinBox" name="TPF_frequencySpinBox">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="TPF_intermediateGroup">
+            <item row="1" column="0" rowspan="2" colspan="2">
+             <widget class="QSpinBox" name="TPF_intermediateSpinBox">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="TPF_intermediateLabel">
+              <property name="text">
+               <string>Intermediate Points</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -835,6 +785,483 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="tabFE">
+     <attribute name="title">
+      <string>Function Editor</string>
+     </attribute>
+     <widget class="QTabWidget" name="FE_functionTab">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>681</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="FE_function1">
+       <attribute name="title">
+        <string>Function 1</string>
+       </attribute>
+       <widget class="QCheckBox" name="FE_F1EnableCheck">
+        <property name="geometry">
+         <rect>
+          <x>600</x>
+          <y>140</y>
+          <width>70</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="FE_F1DisplayBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>541</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>541</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="FE_F1RadioGroup">
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="FE_F1LinearGroup">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="FE_F1LinearRadio">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Linear</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="FE_F1LinearLabel">
+             <property name="text">
+              <string>function</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="FE_F1PowerGroup">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="FE_F1PowerRadio">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Power</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="FE_F1PowerLabel">
+             <property name="text">
+              <string>function</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <layout class="QGridLayout" name="FE_F1QuadGroup">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="FE_F1QuadRadio">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Quadratic</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="FE_F1QuadLabel">
+             <property name="text">
+              <string>function</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>200</y>
+          <width>541</width>
+          <height>142</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="FE_F1ParameterGroup">
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="FE_F1ValueAGroup">
+           <item row="1" column="0">
+            <widget class="QLabel" name="FE_F1ValueALabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Parameter a</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="FE_F1ValueBGroup">
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F1ValueBLabel">
+             <property name="text">
+              <string>Parameter b</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <layout class="QGridLayout" name="FE_F1ValueCGroup">
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F1ValueCLabel">
+             <property name="text">
+              <string>Parameter c</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="0">
+          <layout class="QGridLayout" name="FE_F1ValueDGroup">
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F1ValueDLabel">
+             <property name="text">
+              <string>Parameter d</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="FE_function2">
+       <attribute name="title">
+        <string>Function 2</string>
+       </attribute>
+       <widget class="QCheckBox" name="FE_F2EnableCheck">
+        <property name="geometry">
+         <rect>
+          <x>600</x>
+          <y>140</y>
+          <width>70</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="FE_F2DisplayBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>541</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>200</y>
+          <width>541</width>
+          <height>116</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="FE_F2ParameterGroup_2">
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="FE_F2ValueAGroup">
+           <item row="0" column="2">
+            <widget class="QSlider" name="FE_F2ValueASlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F2ValueALabel">
+             <property name="text">
+              <string>Parameter a</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="FE_F2ValueALine">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="FE_F2ValueBGroup">
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F2ValueBLabel">
+             <property name="text">
+              <string>Parameter b</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="FE_F2ValueBLine">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QSlider" name="FE_F2ValueBSlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <layout class="QGridLayout" name="FE_F2ValueCGroup">
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F2ValueCLabel">
+             <property name="text">
+              <string>Parameter c</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QSlider" name="FE_F2ValueCSlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="FE_F2ValueCLine">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="0">
+          <layout class="QGridLayout" name="FE_F2ValueDGroup">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="FE_F2ValueDLine">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="FE_F2ValueDLabel">
+             <property name="text">
+              <string>Parameter d</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QSlider" name="FE_F2ValueDSlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>541</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="FE_F2RadioGroup">
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="FE_F2LinearGroup">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="FE_F2LinearRadio">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Linear</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="FE_F2LinearLabel">
+             <property name="text">
+              <string>function</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="FE_F2PowerGroup">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="FE_F2PowerRadio">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Power</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="FE_F2PowerLabel">
+             <property name="text">
+              <string>function</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <layout class="QGridLayout" name="FE_F2QuadGroup">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="FE_F2QuadRadio">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Quadratic</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="FE_F2QuadLabel">
+             <property name="text">
+              <string>function</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="FE_compileTab">
+       <attribute name="title">
+        <string>Compile</string>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>651</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>FORMULA</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>709</x>
+        <y>29</y>
+        <width>351</width>
+        <height>331</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tabConsole">
      <attribute name="title">
       <string>CONSOLE</string>
@@ -852,7 +1279,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1097</width>
+     <width>1092</width>
      <height>21</height>
     </rect>
    </property>
