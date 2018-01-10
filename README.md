@@ -38,4 +38,7 @@ Priority List:
 
 8/1/18 :
 - Added Graph
-- Added more problems tbh :(
+
+10/1/18 :
+- Rewrote TPF
+
