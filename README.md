@@ -41,5 +41,8 @@ Priority List:
 
 10/1/18 :
 - Rewrote TPF
-![progress](http://puu.sh/yYlqk/1b1623fa53.png)
+
+11/1/18 :
+- Finished TPF
+![product](https://puu.sh/yYMBJ/66d4ceaaa3.png)
 
