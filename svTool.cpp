@@ -125,6 +125,14 @@ QString svTool::compileOMFormatting_SV(QString offset,
                                        QString svCode,
                                        QString extension)
 {
+    if (svCode.toDouble() > -10.0)
+    {
+        svCode = QString::number(-10.0);
+    } else if (svCode.toDouble() < -1000.0)
+    {
+        svCode = QString::number(-1000.0);
+    }
+
     QString output;
     /* SV Line: offset,code,extension */
     output = offset
@@ -1058,6 +1066,9 @@ void svTool::on_TPF_initialSVSlider_valueChanged(int value)
 void svTool::on_TPF_initialSVSpinBox_valueChanged(double arg1)
 {
     ui->TPF_initialSVSlider->setValue((int) (arg1 * 100));
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
 }
 
 void svTool::on_TPF_endSVSlider_valueChanged(int value)
@@ -1067,6 +1078,9 @@ void svTool::on_TPF_endSVSlider_valueChanged(int value)
 void svTool::on_TPF_endSVSpinBox_valueChanged(double arg1)
 {
     ui->TPF_endSVSlider->setValue((int) (arg1 * 100));
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
 }
 
 void svTool::on_TPF_offsetSlider_valueChanged(int value)
@@ -1076,6 +1090,9 @@ void svTool::on_TPF_offsetSlider_valueChanged(int value)
 void svTool::on_TPF_offsetSpinBox_valueChanged(int arg1)
 {
     ui->TPF_offsetSlider->setValue(arg1);
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
 }
 
 void svTool::on_TPF_frequencySlider_valueChanged(int value)
@@ -1085,6 +1102,9 @@ void svTool::on_TPF_frequencySlider_valueChanged(int value)
 void svTool::on_TPF_frequencySpinBox_valueChanged(int arg1)
 {
     ui->TPF_frequencySlider->setValue(arg1);
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
 }
 
 void svTool::on_TPF_amplitudeSlider_valueChanged(int value)
@@ -1094,12 +1114,64 @@ void svTool::on_TPF_amplitudeSlider_valueChanged(int value)
 void svTool::on_TPF_amplitudeSpinBox_valueChanged(int arg1)
 {
     ui->TPF_amplitudeSlider->setValue(arg1);
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
+}
+
+void svTool::on_TPF_initialSVSlider_sliderReleased()
+{
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
+}
+void svTool::on_TPF_endSVSlider_sliderReleased()
+{
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
+}
+void svTool::on_TPF_amplitudeSlider_sliderReleased()
+{
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    };
+}
+void svTool::on_TPF_offsetSlider_sliderReleased()
+{
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
+}
+void svTool::on_TPF_frequencySlider_sliderReleased()
+{
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
+}
+void svTool::on_TPF_intermediateSpinBox_valueChanged(int arg1)
+{
+    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+        svTool::on_TPF_generateButton_clicked();
+    }
+}
+
+//Reset Values to Default
+void svTool::on_TPF_defaultButton_clicked()
+{
+    ui->TPF_initialSVSpinBox->setValue(1.0);
+    ui->TPF_endSVSpinBox->setValue(1.0);
+    ui->TPF_amplitudeSpinBox->setValue(0);
+    ui->TPF_frequencySpinBox->setValue(100);
+    ui->TPF_offsetSpinBox->setValue(0);
+    ui->TPF_intermediateSpinBox->setValue(100);
 }
 
 // TPF Generate Button
 void svTool::on_TPF_generateButton_clicked()
 {  
-    /* For this function, we are going to have 2 separate graphs, linear and a sine graph (Default Range: PI)
+    /* DESCRIPTION
+     * For this function, we are going to have 2 separate graphs, linear and a sine graph (Default Range: PI)
      *
      * SINE GRAPH: This will control the "curve" modification of the graph, dependant on the <layman> Curve Factor (a.k.a. Amplitude).
      *             Its offset is defaulted to 0 as its start and end point (0 - PI) is 0, hence not affecting the start and end points
@@ -1116,16 +1188,20 @@ void svTool::on_TPF_generateButton_clicked()
 
     QTextBrowser *statusBox;
     QLabel *statusLabel;
+    QTextBrowser *outputBox;
 
     double initialOffset, endOffset;
     double initialSV, endSV;
     double xValue;
     double offset, amplitude, frequency;
     int intermediatePoints;
+
+
     statusLabel = ui->TPF_statusLabel;
-    intermediatePoints = 100;
     statusBox = ui->TPF_statusBox;
     statusBox->clear();
+    outputBox = ui->TPF_outputBox;
+    outputBox->clear();
 
     //Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
@@ -1152,6 +1228,7 @@ void svTool::on_TPF_generateButton_clicked()
     offset = (double) ui->TPF_offsetSpinBox->value() / 100;
     amplitude = (double) ui->TPF_amplitudeSpinBox->value() / 100;
     frequency = (double) ui->TPF_frequencySpinBox->value() / 100;
+    intermediatePoints = ui->TPF_intermediateSpinBox->value();
 
     //Generate vectors for graph
     QVector<double> x(intermediatePoints + 1), y(intermediatePoints + 1);
@@ -1165,6 +1242,8 @@ void svTool::on_TPF_generateButton_clicked()
         yLinear[i] = xValue * (endSV - initialSV) + initialSV;
         ySine[i] =  amplitude * qSin(frequency * (xValue + offset) * M_PI);
         y[i] = yLinear[i] + ySine[i];
+
+        outputBox->append(svTool::compileOMFormatting_SV(QString::number(x[i]), QString::number(-100 / y[i])));
     }
     statusBox->append(QString("RANGE: ")
                       .append(QString::number(initialOffset))
@@ -1194,29 +1273,18 @@ void svTool::on_TPF_generateButton_clicked()
     ui->TPF_customPlot->yAxis->setLabel("SV");
     ui->TPF_customPlot->xAxis->setRange(initialOffset, endOffset);
     ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
-    ui->TPF_customPlot->replot();
+    ui->TPF_customPlot->replot(QCustomPlot::rpQueuedReplot);
 }
 
-//Reset Values on Tab Change or Radio Change
-void svTool::on_TPF_linearRadio_clicked()
-{
-    svTool::resetTPF();
-}
-void svTool::on_TPF_quadraticRadio_clicked()
-{
-    svTool::resetTPF();
-}
-void svTool::resetTPF()
-{
-    ui->TPF_initialSVSpinBox->setValue(1.0);
-    ui->TPF_endSVSpinBox->setValue(1.0);
-    ui->TPF_amplitudeSpinBox->setValue(0);
-    ui->TPF_frequencySpinBox->setValue(0);
-    ui->TPF_offsetSpinBox->setValue(0);
-}
+
 
 
 // ------------------------------ FUNCTION EDITOR ---------------------------------
+
+
+
+
+
 
 
 

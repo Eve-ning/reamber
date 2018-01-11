@@ -645,10 +645,10 @@
             <item row="1" column="0" rowspan="2" colspan="2">
              <widget class="QSpinBox" name="TPF_amplitudeSpinBox">
               <property name="minimum">
-               <number>-500</number>
+               <number>-1000</number>
               </property>
               <property name="maximum">
-               <number>500</number>
+               <number>1000</number>
               </property>
              </widget>
             </item>
@@ -666,10 +666,10 @@
             <item row="0" column="1">
              <widget class="QSlider" name="TPF_offsetSlider">
               <property name="minimum">
-               <number>-100</number>
+               <number>-200</number>
               </property>
               <property name="maximum">
-               <number>100</number>
+               <number>200</number>
               </property>
               <property name="value">
                <number>0</number>
@@ -682,10 +682,10 @@
             <item row="1" column="0" rowspan="2" colspan="2">
              <widget class="QSpinBox" name="TPF_offsetSpinBox">
               <property name="minimum">
-               <number>-100</number>
+               <number>-200</number>
               </property>
               <property name="maximum">
-               <number>100</number>
+               <number>200</number>
               </property>
              </widget>
             </item>
@@ -706,7 +706,13 @@
                <number>0</number>
               </property>
               <property name="maximum">
-               <number>500</number>
+               <number>2500</number>
+              </property>
+              <property name="singleStep">
+               <number>25</number>
+              </property>
+              <property name="pageStep">
+               <number>100</number>
               </property>
               <property name="value">
                <number>100</number>
@@ -722,7 +728,7 @@
                <number>0</number>
               </property>
               <property name="maximum">
-               <number>500</number>
+               <number>2500</number>
               </property>
               <property name="value">
                <number>100</number>
@@ -755,6 +761,13 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QPushButton" name="TPF_defaultButton">
+            <property name="text">
+             <string>Reset To Default</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </widget>
@@ -770,6 +783,13 @@
         </item>
         <item row="1" column="0">
          <widget class="QTextBrowser" name="TPF_outputBox"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="TPF_liveUpdateCheck">
+          <property name="text">
+           <string>Live Graph Update</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

@@ -114,10 +114,19 @@ private slots:
     void on_TPF_frequencySlider_valueChanged(int value);
     void on_TPF_amplitudeSlider_valueChanged(int value);
     void on_TPF_amplitudeSpinBox_valueChanged(int arg1);
-    void on_TPF_linearRadio_clicked();
-    void on_TPF_quadraticRadio_clicked();
-    void resetTPF();
+    void on_TPF_defaultButton_clicked();
 
+    void on_TPF_initialSVSlider_sliderReleased();
+
+    void on_TPF_endSVSlider_sliderReleased();
+
+    void on_TPF_amplitudeSlider_sliderReleased();
+
+    void on_TPF_offsetSlider_sliderReleased();
+
+    void on_TPF_frequencySlider_sliderReleased();
+
+    void on_TPF_intermediateSpinBox_valueChanged(int arg1);
 
 private:
     Ui::svTool *ui;
