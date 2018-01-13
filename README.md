@@ -46,3 +46,6 @@ Priority List:
 - Finished TPF
 ![product](https://puu.sh/yYMBJ/66d4ceaaa3.png)
 
+13/1/18 :
+- Add BPM support for TPF
+- Adjusted limits and naming conventions for TPF
