@@ -49,3 +49,6 @@ Priority List:
 13/1/18 :
 - Add BPM support for TPF
 - Adjusted limits and naming conventions for TPF
+- Cleaned up Code
+- Removed Input and DEBUG Tab
+- Added BASICtoOM and OMtoBASIC Converters
