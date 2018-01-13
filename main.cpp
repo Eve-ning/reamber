@@ -10,8 +10,6 @@ int main(int argc, char *argv[])
 
     svTool w;
 
-
-
     w.show();
     return a.exec();
 }

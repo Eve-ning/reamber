@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <QString>
 #include <QTextBrowser>
+#include <QPlainTextEdit>
 
 
 
@@ -87,21 +88,40 @@ public:
     QList<double> convertTimingPointToOffsetList(QStringList timingPointList);
     QList<double> convertTimingPointToCodeList(QStringList timingPointList);
 
+    QStringList convertOMtoBASIC(bool acceptEditorHitObject = true,
+                                 bool acceptHitObject = true,
+                                 bool acceptTimingPoint = true,
+                                 QStringList input = {},
+                                 int noOfKeys = 4);
+
+    QStringList convertBASICtoOM(QStringList input);
+
     //CHECKS
     bool checkEditorHitObject(QString editorHitObject);
     bool checkHitObject(QString hitObject);
     bool checkTimingPoint(QString timingPoint);
 
+    bool checkEditorHitObject(QPlainTextEdit *box);
+    bool checkHitObject(QPlainTextEdit *box);
+    bool checkTimingPoint(QPlainTextEdit *box);
+
+    bool checkEditorHitObject(QStringList editorHitObjectList);
+    bool checkHitObject(QStringList hitObjectList);
+    bool checkTimingPoint(QStringList timingPointList);
+
+    bool checkHitObjectNN(QString hitObjectNN);
+    bool checkHitObjectLN(QString hitObjectLN);
+    bool checkTimingPointSV(QString timingPointSV);
+    bool checkTimingPointBPM(QString timingPointBPM);
+
 private slots:
 
-    void on_input_validateButton_clicked();
     void on_stutter_initSVSlider_valueChanged(int value);
     void on_stutter_initSVSpinBox_valueChanged(double arg1);
     void on_stutter_thresholdSlider_valueChanged(int value);
     void on_stutter_thresholdSpinBox_valueChanged(double arg1);
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
     void on_stutter_generateButton_clicked();
-    void on_input_validateButton_2_clicked();
     void on_copier_generateButton_clicked();
     void on_TPF_generateButton_clicked();
     void on_TPF_initialTPSpinBox_valueChanged(double arg1);
@@ -115,38 +135,17 @@ private slots:
     void on_TPF_amplitudeSlider_valueChanged(int value);
     void on_TPF_amplitudeSpinBox_valueChanged(int arg1);
     void on_TPF_defaultButton_clicked();
-
     void on_TPF_initialTPSlider_sliderReleased();
-
     void on_TPF_endTPSlider_sliderReleased();
-
     void on_TPF_amplitudeSlider_sliderReleased();
-
     void on_TPF_offsetSlider_sliderReleased();
-
     void on_TPF_frequencySlider_sliderReleased();
-
     void on_TPF_intermediateSpinBox_valueChanged(int arg1);
-
     void on_TPF_SVRadio_clicked();
-
     void on_TPF_BPMRadio_clicked();
 
 private:
     Ui::svTool *ui;
 };
-
-/* class hitObjectEditorClass
-{
-    QStringList hitObjectEditorList_offset;
-    QStringList hitObjectEditorList_position;
-public:
-    explicit hitObjectEditorClass(QStringList, QStringList);
-};
-
-hitObjectEditorClass::hitObjectEditorClass (QStringList a, QStringList b){
-    hitObjectEditorList_offset = a;
-    hitObjectEditorList_position = b;
-} */
 
 #endif // SVTOOL_H

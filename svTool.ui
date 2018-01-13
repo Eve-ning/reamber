@@ -22,219 +22,19 @@
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>1071</width>
-      <height>431</height>
+      <width>1074</width>
+      <height>440</height>
      </rect>
     </property>
     <property name="tabShape">
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
     </property>
-    <widget class="QWidget" name="tabInput">
-     <attribute name="title">
-      <string>Input</string>
-     </attribute>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="input_rawInputGroup">
-        <item row="0" column="0">
-         <widget class="QLabel" name="input_rawInputLabel">
-          <property name="text">
-           <string>Input</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPlainTextEdit" name="input_rawInputBox"/>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="2">
-       <layout class="QGridLayout" name="input_rawInputGroup_2">
-        <item row="1" column="0">
-         <widget class="QPlainTextEdit" name="input_rawInputBox_2"/>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="input_rawInputLabel_2">
-          <property name="text">
-           <string>Input 2</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="input_statusLabel">
-        <property name="text">
-         <string>STATUS:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <layout class="QGridLayout" name="input_typeGroup">
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="input_typeLabel">
-          <property name="text">
-           <string>Input Type</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QPushButton" name="input_validateButton">
-          <property name="text">
-           <string>Validate Input</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="input_keysLabel">
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Keys</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QSpinBox" name="input_keysSpinBox">
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::UpDownArrows</enum>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>18</number>
-          </property>
-          <property name="value">
-           <number>4</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="2" column="2">
-       <layout class="QGridLayout" name="input_typeGroup_2">
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="input_typeLabel_2">
-          <property name="text">
-           <string>Input 2 Type</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QPushButton" name="input_validateButton_2">
-          <property name="text">
-           <string>Validate Input</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="input_keysLabel_2">
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Keys</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QSpinBox" name="input_keysSpinBox_2">
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::UpDownArrows</enum>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>18</number>
-          </property>
-          <property name="value">
-           <number>4</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="input_statusLabel_2">
-        <property name="text">
-         <string>STATUS 2:</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="tabDebug">
-     <attribute name="title">
-      <string>Debug</string>
-     </attribute>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <layout class="QGridLayout" name="debug_rawInputGroup">
-        <item row="0" column="0">
-         <widget class="QLabel" name="debug_rawInputLabel">
-          <property name="text">
-           <string>Raw Input</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextBrowser" name="debug_rawInputBox"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="debug_procInputGroup">
-        <item row="0" column="0">
-         <widget class="QLabel" name="debug_procInputLabel">
-          <property name="text">
-           <string>Processed Input</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextBrowser" name="debug_procInputBox"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="debug_rawInputGroup_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="debug_rawInputLabel_2">
-          <property name="text">
-           <string>Raw Input 2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextBrowser" name="debug_rawInputBox_2"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="debug_procInputGroup_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="debug_procInputLabel_2">
-          <property name="text">
-           <string>Processed Input 2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextBrowser" name="debug_procInputBox_2"/>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
     <widget class="QWidget" name="tabStutter">
      <attribute name="title">
       <string>Stutter</string>
@@ -255,16 +55,16 @@
        </layout>
       </item>
       <item row="0" column="0" rowspan="4">
-       <layout class="QGridLayout" name="stutter_procInputGroup">
+       <layout class="QGridLayout" name="stutter_inputGroup">
         <item row="0" column="0">
-         <widget class="QLabel" name="stutter_procInputLabel">
+         <widget class="QLabel" name="stutter_inputLabel">
           <property name="text">
-           <string>Processed Input</string>
+           <string>Input</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QTextBrowser" name="stutter_procInputBox"/>
+         <widget class="QPlainTextEdit" name="stutter_inputBox"/>
         </item>
        </layout>
       </item>
@@ -427,30 +227,30 @@
        </layout>
       </item>
       <item row="0" column="0" rowspan="2">
-       <layout class="QGridLayout" name="copier_procInputGroup">
+       <layout class="QGridLayout" name="copier_inputGroup">
         <item row="0" column="0">
-         <widget class="QLabel" name="copier_procInputLabel">
+         <widget class="QLabel" name="copier_inputLabel">
           <property name="text">
-           <string>Processed Input</string>
+           <string>Input</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QTextBrowser" name="copier_procInputBox"/>
+         <widget class="QPlainTextEdit" name="copier_inputBox"/>
         </item>
        </layout>
       </item>
       <item row="0" column="1" rowspan="2">
-       <layout class="QGridLayout" name="copier_procInputGroup_2">
-        <item row="1" column="0">
-         <widget class="QTextBrowser" name="copier_procInputBox_2"/>
-        </item>
+       <layout class="QGridLayout" name="copier_inputGroup_2">
         <item row="0" column="0">
-         <widget class="QLabel" name="copier_procInputLabel_2">
+         <widget class="QLabel" name="copier_inputLabel_2">
           <property name="text">
-           <string>Processed Input 2</string>
+           <string>Input 2</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPlainTextEdit" name="copier_inputBox_2"/>
         </item>
        </layout>
       </item>
@@ -474,7 +274,7 @@
          <widget class="QTextBrowser" name="copier_outputBox"/>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="coper_outputStatusLabel">
+         <widget class="QLabel" name="copier_outputStatusLabel">
           <property name="text">
            <string>STATUS:</string>
           </property>
@@ -1298,6 +1098,11 @@
        </rect>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tabNormalizer">
+     <attribute name="title">
+      <string>Normalizer</string>
+     </attribute>
     </widget>
     <widget class="QWidget" name="tabConsole">
      <attribute name="title">
