@@ -491,6 +491,12 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <layout class="QGridLayout" name="TPF_formulaGroup">
+        <item row="4" column="0">
+         <widget class="QTextBrowser" name="TPF_statusBox"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLineEdit" name="TPF_editorInputLine"/>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="TPF_editorInput">
           <property name="text">
@@ -498,11 +504,12 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLineEdit" name="TPF_editorInputLine"/>
-        </item>
-        <item row="4" column="0">
-         <widget class="QTextBrowser" name="TPF_statusBox"/>
+        <item row="8" column="0">
+         <widget class="QLabel" name="TPF_statusLabel">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="TPF_statusBoxLabel">
@@ -511,17 +518,27 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="TPF_statusLabel">
+        <item row="7" column="0">
+         <widget class="QPushButton" name="TPF_generateButton">
           <property name="text">
-           <string>STATUS:</string>
+           <string>Generate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QRadioButton" name="TPF_BPMRadio">
+          <property name="text">
+           <string>BPM</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QPushButton" name="TPF_generateButton">
+         <widget class="QRadioButton" name="TPF_SVRadio">
           <property name="text">
-           <string>Generate</string>
+           <string>SV</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -538,16 +555,16 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <layout class="QGridLayout" name="TPF_initialSVGroup">
+           <layout class="QGridLayout" name="TPF_initialTPGroup">
             <item row="0" column="0">
-             <widget class="QLabel" name="TPF_initialSVLabel">
+             <widget class="QLabel" name="TPF_initialTPLabel">
               <property name="text">
                <string>Initial SV:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QSlider" name="TPF_initialSVSlider">
+             <widget class="QSlider" name="TPF_initialTPSlider">
               <property name="minimum">
                <number>10</number>
               </property>
@@ -563,7 +580,7 @@
              </widget>
             </item>
             <item row="1" column="0" rowspan="2" colspan="2">
-             <widget class="QDoubleSpinBox" name="TPF_initialSVSpinBox">
+             <widget class="QDoubleSpinBox" name="TPF_initialTPSpinBox">
               <property name="minimum">
                <double>0.100000000000000</double>
               </property>
@@ -578,16 +595,16 @@
            </layout>
           </item>
           <item>
-           <layout class="QGridLayout" name="TPF_endSVGroup">
+           <layout class="QGridLayout" name="TPF_endTPGroup">
             <item row="0" column="0">
-             <widget class="QLabel" name="TPF_endSVLabel">
+             <widget class="QLabel" name="TPF_endTPLabel">
               <property name="text">
                <string>End SV:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QSlider" name="TPF_endSVSlider">
+             <widget class="QSlider" name="TPF_endTPSlider">
               <property name="minimum">
                <number>10</number>
               </property>
@@ -603,7 +620,7 @@
              </widget>
             </item>
             <item row="1" column="0" rowspan="2" colspan="2">
-             <widget class="QDoubleSpinBox" name="TPF_endSVSpinBox">
+             <widget class="QDoubleSpinBox" name="TPF_endTPSpinBox">
               <property name="minimum">
                <double>0.100000000000000</double>
               </property>
@@ -745,7 +762,7 @@
                <number>0</number>
               </property>
               <property name="maximum">
-               <number>500</number>
+               <number>5000</number>
               </property>
               <property name="value">
                <number>100</number>

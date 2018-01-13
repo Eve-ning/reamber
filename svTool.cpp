@@ -11,6 +11,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QtMath>
+#include <QRadioButton>
 
 /* osu!mania FORMATTING REF
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
@@ -112,6 +113,11 @@ QString svTool::compileOMFormatting_BPM(QString offset,
                                         QString bpmCode,
                                         QString extension)
 {
+    if (bpmCode.toDouble() < 0)
+    {
+        bpmCode = QString::number(99999999);
+    }
+
     QString output;
     /* BPM Line: offset,code,extension */
     output = offset
@@ -1059,25 +1065,25 @@ void svTool::on_copier_generateButton_clicked()
 
 // ------------------------------ TWO POINT FUNCTION ---------------------------------
 
-void svTool::on_TPF_initialSVSlider_valueChanged(int value)
+void svTool::on_TPF_initialTPSlider_valueChanged(int value)
 {
-    ui->TPF_initialSVSpinBox->setValue(((double) value) / 100);
+    ui->TPF_initialTPSpinBox->setValue(((double) value) / 100);
 }
-void svTool::on_TPF_initialSVSpinBox_valueChanged(double arg1)
+void svTool::on_TPF_initialTPSpinBox_valueChanged(double arg1)
 {
-    ui->TPF_initialSVSlider->setValue((int) (arg1 * 100));
+    ui->TPF_initialTPSlider->setValue((int) (arg1 * 100));
     if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         svTool::on_TPF_generateButton_clicked();
     }
 }
 
-void svTool::on_TPF_endSVSlider_valueChanged(int value)
+void svTool::on_TPF_endTPSlider_valueChanged(int value)
 {
-    ui->TPF_endSVSpinBox->setValue(((double) value) / 100);
+    ui->TPF_endTPSpinBox->setValue(((double) value) / 100);
 }
-void svTool::on_TPF_endSVSpinBox_valueChanged(double arg1)
+void svTool::on_TPF_endTPSpinBox_valueChanged(double arg1)
 {
-    ui->TPF_endSVSlider->setValue((int) (arg1 * 100));
+    ui->TPF_endTPSlider->setValue((int) (arg1 * 100));
     if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         svTool::on_TPF_generateButton_clicked();
     }
@@ -1119,13 +1125,13 @@ void svTool::on_TPF_amplitudeSpinBox_valueChanged(int arg1)
     }
 }
 
-void svTool::on_TPF_initialSVSlider_sliderReleased()
+void svTool::on_TPF_initialTPSlider_sliderReleased()
 {
     if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         svTool::on_TPF_generateButton_clicked();
     }
 }
-void svTool::on_TPF_endSVSlider_sliderReleased()
+void svTool::on_TPF_endTPSlider_sliderReleased()
 {
     if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         svTool::on_TPF_generateButton_clicked();
@@ -1156,15 +1162,65 @@ void svTool::on_TPF_intermediateSpinBox_valueChanged(int arg1)
     }
 }
 
+void svTool::on_TPF_SVRadio_clicked()
+{
+    svTool::on_TPF_defaultButton_clicked();
+}
+
+void svTool::on_TPF_BPMRadio_clicked()
+{
+    svTool::on_TPF_defaultButton_clicked();
+}
+
+
 //Reset Values to Default
 void svTool::on_TPF_defaultButton_clicked()
 {
-    ui->TPF_initialSVSpinBox->setValue(1.0);
-    ui->TPF_endSVSpinBox->setValue(1.0);
-    ui->TPF_amplitudeSpinBox->setValue(0);
-    ui->TPF_frequencySpinBox->setValue(100);
-    ui->TPF_offsetSpinBox->setValue(0);
-    ui->TPF_intermediateSpinBox->setValue(100);
+    if (ui->TPF_SVRadio->isChecked())
+    {
+        ui->TPF_initialTPSlider->setMaximum(1000);
+        ui->TPF_initialTPSlider->setMinimum(10);
+        ui->TPF_initialTPSpinBox->setMaximum(10.0);
+        ui->TPF_initialTPSpinBox->setMinimum(0.1);
+        ui->TPF_endTPSlider->setMaximum(1000);
+        ui->TPF_endTPSlider->setMinimum(10);
+        ui->TPF_endTPSpinBox->setMaximum(10.0);
+        ui->TPF_endTPSpinBox->setMinimum(0.1);
+
+        ui->TPF_initialTPLabel->setText("Initial SV:");
+        ui->TPF_endTPLabel->setText("End SV:");
+
+        ui->TPF_initialTPSpinBox->setValue(1.0);
+        ui->TPF_endTPSpinBox->setValue(1.0);
+        ui->TPF_amplitudeSpinBox->setValue(0);
+        ui->TPF_frequencySpinBox->setValue(100);
+        ui->TPF_offsetSpinBox->setValue(0);
+        ui->TPF_intermediateSpinBox->setValue(100);
+    } else if (ui->TPF_BPMRadio->isChecked())
+    {
+        ui->TPF_initialTPSlider->setMaximum(500000);
+        ui->TPF_initialTPSlider->setMinimum(100);
+        ui->TPF_initialTPSpinBox->setMaximum(5000);
+        ui->TPF_initialTPSpinBox->setMinimum(1);
+        ui->TPF_endTPSlider->setMaximum(500000);
+        ui->TPF_endTPSlider->setMinimum(100);
+        ui->TPF_endTPSpinBox->setMaximum(500);
+        ui->TPF_endTPSpinBox->setMinimum(1);
+
+        ui->TPF_initialTPLabel->setText("Initial BPM:");
+        ui->TPF_endTPLabel->setText("End BPM:");
+
+        ui->TPF_initialTPSpinBox->setValue(120);
+        ui->TPF_endTPSpinBox->setValue(120);
+        ui->TPF_amplitudeSpinBox->setValue(0);
+        ui->TPF_frequencySpinBox->setValue(100);
+        ui->TPF_offsetSpinBox->setValue(0);
+        ui->TPF_intermediateSpinBox->setValue(100);
+    } else
+    {
+        return;
+    }
+
 }
 
 // TPF Generate Button
@@ -1189,14 +1245,17 @@ void svTool::on_TPF_generateButton_clicked()
     QTextBrowser *statusBox;
     QLabel *statusLabel;
     QTextBrowser *outputBox;
+    QRadioButton *SVRadioButton;
+    QRadioButton *BPMRadioButton;
 
     double initialOffset, endOffset;
-    double initialSV, endSV;
+    double initialTP, endTP;
     double xValue;
     double offset, amplitude, frequency;
     int intermediatePoints;
 
-
+    SVRadioButton = ui->TPF_SVRadio;
+    BPMRadioButton = ui->TPF_BPMRadio;
     statusLabel = ui->TPF_statusLabel;
     statusBox = ui->TPF_statusBox;
     statusBox->clear();
@@ -1223,8 +1282,8 @@ void svTool::on_TPF_generateButton_clicked()
     }
 
     //Set other parameters
-    initialSV = ui->TPF_initialSVSpinBox->value();
-    endSV = ui->TPF_endSVSpinBox->value();
+    initialTP = ui->TPF_initialTPSpinBox->value();
+    endTP = ui->TPF_endTPSpinBox->value();
     offset = (double) ui->TPF_offsetSpinBox->value() / 100;
     amplitude = (double) ui->TPF_amplitudeSpinBox->value() / 100;
     frequency = (double) ui->TPF_frequencySpinBox->value() / 100;
@@ -1239,11 +1298,27 @@ void svTool::on_TPF_generateButton_clicked()
     {
         xValue = i / ((double) intermediatePoints);
         x[i] = (xValue * (endOffset - initialOffset)) + initialOffset;
-        yLinear[i] = xValue * (endSV - initialSV) + initialSV;
-        ySine[i] =  amplitude * qSin(frequency * (xValue + offset) * M_PI);
+        yLinear[i] = xValue * (endTP - initialTP) + initialTP;
+        ySine[i] =  amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
         y[i] = yLinear[i] + ySine[i];
 
-        outputBox->append(svTool::compileOMFormatting_SV(QString::number(x[i]), QString::number(-100 / y[i])));
+        //Prevent Division by Zero Error
+        if (y[i] == 0)
+        {
+            y[i] = 0.001;
+        }
+
+        if (SVRadioButton->isChecked())
+        {
+            outputBox->append(svTool::compileOMFormatting_SV(QString::number(x[i]), QString::number(-100 / y[i])));
+        } else if (BPMRadioButton->isChecked())
+        {
+            outputBox->append(svTool::compileOMFormatting_BPM(QString::number(x[i]), QString::number(60000 / y[i])));
+        } else
+        {
+            return;
+        }
+
     }
     statusBox->append(QString("RANGE: ")
                       .append(QString::number(initialOffset))
@@ -1252,9 +1327,9 @@ void svTool::on_TPF_generateButton_clicked()
 
     statusBox->append(QString("LINEAR FUNCTION: ")
                       .append("f(x) = ")
-                      .append(QString::number((endSV - initialSV) / intermediatePoints))
+                      .append(QString::number((endTP - initialTP) / intermediatePoints))
                       .append("x + ")
-                      .append(QString::number(initialSV)));
+                      .append(QString::number(initialTP)));
 
     statusBox->append(QString("SINE FUNCTION: ")
                       .append("f(x) = ")
@@ -1270,9 +1345,24 @@ void svTool::on_TPF_generateButton_clicked()
     ui->TPF_customPlot->graph(0)->setPen(QPen(Qt::black));
     ui->TPF_customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
     ui->TPF_customPlot->xAxis->setLabel("Offset");
-    ui->TPF_customPlot->yAxis->setLabel("SV");
     ui->TPF_customPlot->xAxis->setRange(initialOffset, endOffset);
-    ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
+
+    double min = *std::min_element(y.constBegin(),y.constEnd());
+    double max = *std::max_element(y.constBegin(),y.constEnd());
+
+    if (SVRadioButton->isChecked())
+    {
+        ui->TPF_customPlot->yAxis->setLabel("SV");
+        ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
+    } else if (BPMRadioButton->isChecked())
+    {
+        ui->TPF_customPlot->yAxis->setLabel("BPM");
+        ui->TPF_customPlot->yAxis->setRange(min, max);
+    } else
+    {
+        return;
+    }
+
     ui->TPF_customPlot->replot(QCustomPlot::rpQueuedReplot);
 }
 
@@ -1280,6 +1370,7 @@ void svTool::on_TPF_generateButton_clicked()
 
 
 // ------------------------------ FUNCTION EDITOR ---------------------------------
+
 
 
 

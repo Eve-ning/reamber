@@ -104,10 +104,10 @@ private slots:
     void on_input_validateButton_2_clicked();
     void on_copier_generateButton_clicked();
     void on_TPF_generateButton_clicked();
-    void on_TPF_initialSVSpinBox_valueChanged(double arg1);
-    void on_TPF_initialSVSlider_valueChanged(int value);
-    void on_TPF_endSVSpinBox_valueChanged(double arg1);
-    void on_TPF_endSVSlider_valueChanged(int value);
+    void on_TPF_initialTPSpinBox_valueChanged(double arg1);
+    void on_TPF_initialTPSlider_valueChanged(int value);
+    void on_TPF_endTPSpinBox_valueChanged(double arg1);
+    void on_TPF_endTPSlider_valueChanged(int value);
     void on_TPF_offsetSlider_valueChanged(int value);
     void on_TPF_offsetSpinBox_valueChanged(int arg1);
     void on_TPF_frequencySpinBox_valueChanged(int arg1);
@@ -116,9 +116,9 @@ private slots:
     void on_TPF_amplitudeSpinBox_valueChanged(int arg1);
     void on_TPF_defaultButton_clicked();
 
-    void on_TPF_initialSVSlider_sliderReleased();
+    void on_TPF_initialTPSlider_sliderReleased();
 
-    void on_TPF_endSVSlider_sliderReleased();
+    void on_TPF_endTPSlider_sliderReleased();
 
     void on_TPF_amplitudeSlider_sliderReleased();
 
@@ -127,6 +127,10 @@ private slots:
     void on_TPF_frequencySlider_sliderReleased();
 
     void on_TPF_intermediateSpinBox_valueChanged(int arg1);
+
+    void on_TPF_SVRadio_clicked();
+
+    void on_TPF_BPMRadio_clicked();
 
 private:
     Ui::svTool *ui;
