@@ -1,14 +1,23 @@
-# maniaMultiTool
-idk i just put whatever is useful here, who cares
+![amberLogo](https://i.imgur.com/9WXAlYq.png)
 
-expected to be completed midyear
+## Why
+This tool is to help mappers do repetitive tasks in osu!mania much more easily.
 
-Priority List:
-1. Remake what was once the sv-tool
-2. Multi-BPM map Separator to avert lazer crisis
-3. More stuff to come
-4. yes
+## What
+There are many functions planned for the tool, currently I can't guarantee any planned ones will be done. However, you can view those that are done in the **Changelog** below
 
+## Where
+This project will be centralized on GitHub, all updates can be found here 
+
+## When
+Expected **ALPHA** Completion Date: MID 2018
+
+## Who
+Currently I'm the only one contributing to this project. I don't require or want any contributors currently until further notice.
+
+ 
+ 
+ 
 # Changelog:
 28/12/17 :
 - Created Initial UI
