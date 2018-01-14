@@ -65,3 +65,5 @@ Currently I'm the only one contributing to this project. I don't require or want
 14/1/18 :
 - Renamed Project to amber
 - Fixed outOfIndex Issues
+- Added Normalizer
+- Adjusted messageBox returns for OMtoBASIC Converter
