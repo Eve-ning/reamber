@@ -1,17 +1,6 @@
 #include "amber.h"
 #include "ui_amber.h"
-#include <QObject>
-#include <QString>
-#include <QVector>
-#include <QSplitter>
-#include <QStringList>
-#include <QRegExp>
-#include <QList>
-#include <QTextBrowser>
-#include <QPen>
-#include <QBrush>
-#include <QtMath>
-#include <QRadioButton>
+
 
 /* osu!mania FORMATTING REF
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
@@ -66,7 +55,7 @@ QString def_xAxis            = "256"
        ,def_timingPointType  = "SV"
 ;
 
-// ------------------------------------- GENERAL -------------------------------------
+// --------------------------------------------------------------------------< GENERAL >
 
 //Compilers
 QString amber::compileOMFormatting_NN(QString xAxis,
@@ -468,8 +457,8 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
     bool isEditorHitObject, isHitObject, isTimingPoint;
 
     QStringList output;
-    QStringList partVector;
-    QString partString, lineString;
+    QStringList partList;
+    QString partString, inputString;
 
     isEditorHitObject = amber::checkEditorHitObject(input);
     isHitObject = amber::checkHitObject(input);
@@ -479,7 +468,7 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
         !isHitObject &&
         !isTimingPoint)
     {
-        messageLabel->setText("STATUS: No Input Detected");
+        messageLabel->setText("STATUS: No Valid Input Detected");
         messageLabel->setStyleSheet("QLabel { color:red; }");
         return output;
     }
@@ -497,93 +486,93 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
     if (isEditorHitObject)
     {
         // Reads each line from the input
-        foreach (lineString, input) {
+        foreach (inputString, input) {
 
-            if(lineString.isEmpty())
+            if(inputString.isEmpty())
             {
                 continue;
             }
 
             // Mid trims the current line from '(' and ')'
             // Split then splits them by ',' into different notes
-            partVector = lineString.mid(lineString.indexOf("(", 1) + 1,
-                                            lineString.indexOf(")", 1) - lineString.indexOf("(", 1) - 1)
+            partList = inputString.mid(inputString.indexOf("(", 1) + 1,
+                                            inputString.indexOf(")", 1) - inputString.indexOf("(", 1) - 1)
                                             .split(",", QString::SkipEmptyParts);
 
-            foreach (partString, partVector){
+            foreach (partString, partList){
                 output.append(amber::compileBASICFormatting_hitObject(QString::number(noOfKeys),
                               partString.split("|", QString::SkipEmptyParts).at(0),
                               partString.split("|", QString::SkipEmptyParts).at(1)));
             }
         }
 
-        messageLabel->setText("STATUS: Editor Hit Object");
+        messageLabel->setText("STATUS: Converted Editor Hit Object");
         messageLabel->setStyleSheet("QLabel { color:green; }");
 
     } else if (isHitObject)
     {
-        foreach (lineString, input) {
+        foreach (inputString, input) {
 
-            if(lineString.isEmpty())
+            if(inputString.isEmpty())
             {
                 continue;
             }
 
-            partVector = lineString.split(",", QString::SkipEmptyParts);
+            partList = inputString.split(",", QString::SkipEmptyParts);
 
             double columnKey;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            columnKey = amber::convertColumnCodeToColumnKey(partVector.at(0).toDouble(), noOfKeys);
+            columnKey = amber::convertColumnCodeToColumnKey(partList.at(0).toDouble(), noOfKeys);
 
-            if(amber::checkHitObjectNN(lineString))
+            if(amber::checkHitObjectNN(inputString))
             {
                 output.append(amber::compileBASICFormatting_hitObject(
                               QString::number(noOfKeys),
-                              partVector.at(2),
+                              partList.at(2),
                               QString::number(columnKey)));
 
-            } else if (amber::checkHitObjectLN(lineString))
+            } else if (amber::checkHitObjectLN(inputString))
             {
                 output.append(amber::compileBASICFormatting_hitObject(
                               QString::number(noOfKeys),
-                              partVector.at(2),
+                              partList.at(2),
                               QString::number(columnKey),
-                              partVector.at(5).mid(0,partVector.at(5).indexOf(":",1))));
+                              partList.at(5).mid(0,partList.at(5).indexOf(":",1))));
             }
         }
 
-        messageLabel->setText("STATUS: Hit Object");
+        messageLabel->setText("STATUS: Converted Hit Object");
         messageLabel->setStyleSheet("QLabel { color:green; }");
 
     } else if (isTimingPoint)
     {
-        foreach (lineString, input)
+        foreach (inputString, input)
         {
-            if(lineString.isEmpty())
+            if(inputString.isEmpty())
             {
                 continue;
             }
-            partVector = lineString.split(",", QString::SkipEmptyParts);
+            partList = inputString.split(",", QString::SkipEmptyParts);
 
             QString timingPointValue;
 
-            if (checkTimingPointSV(lineString))
+            if (checkTimingPointSV(inputString))
             {
-                timingPointValue = QString::number(-100.0 / partVector.at(1).toDouble());
-            } else if (checkTimingPointBPM(lineString))
+                timingPointValue = QString::number(-100.0 / partList.at(1).toDouble());
+            } else if (checkTimingPointBPM(inputString))
             {
-                timingPointValue = QString::number(60000.0 / partVector.at(1).toDouble());
+                timingPointValue = QString::number(60000.0 / partList.at(1).toDouble());
             }
 
             output.append(amber::compileBASICFormatting_timingPoint(
-                          partVector.at(0),
+                          partList.at(0),
                           timingPointValue,
-                          checkTimingPointSV(lineString) ? QString("SV") : QString("BPM")));
+                          checkTimingPointSV(inputString) ? QString("SV") : QString("BPM")));
 
         }
 
-        messageLabel->setText("STATUS: Timing Point");
+        messageLabel->setText("STATUS: Converted Timing Point");
         messageLabel->setStyleSheet("QLabel { color:green; }");
 
     }
@@ -596,8 +585,8 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
     bool isHitObject, isTimingPoint;
 
     QStringList output;
-    QStringList partVector;
-    QString lineString;
+    QStringList partList;
+    QString inputString;
 
     isHitObject = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "HITOBJECT";
     isTimingPoint = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "TIMINGPOINT";
@@ -612,29 +601,29 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
 
     if (isHitObject)
     {
-        foreach (lineString, input) {
+        foreach (inputString, input) {
 
-            if(lineString.isEmpty())
+            if(inputString.isEmpty())
             {
                 continue;
             }
 
-            partVector = lineString.split("|", QString::SkipEmptyParts);
+            partList = inputString.split("|", QString::SkipEmptyParts);
 
             double columnCode;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            columnCode = amber::convertColumnKeyToColumnCode(partVector.at(3).toDouble(), partVector.at(1).toDouble());
+            columnCode = amber::convertColumnKeyToColumnCode(partList.at(3).toDouble(), partList.at(1).toDouble());
 
-            if (partVector.at(4) == "-1")
+            if (partList.at(4) == "-1")
             {
                 output.append(amber::compileOMFormatting_NN(QString::number(columnCode),
-                                                             partVector.at(2)));
+                                                             partList.at(2)));
             } else
             {
                 output.append(amber::compileOMFormatting_LN(QString::number(columnCode),
-                                                             partVector.at(2),
-                                                             partVector.at(4)));
+                                                             partList.at(2),
+                                                             partList.at(4)));
             }
         }
 
@@ -643,22 +632,22 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
 
     } else if (isTimingPoint)
     {
-        foreach (lineString, input)
+        foreach (inputString, input)
         {
-            if(lineString.isEmpty())
+            if(inputString.isEmpty())
             {
                 continue;
             }
-            partVector = lineString.split(",", QString::SkipEmptyParts);
+            partList = inputString.split(",", QString::SkipEmptyParts);
 
-            if (partVector.at(3) == "BPM")
+            if (partList.at(3) == "BPM")
             {
-                output.append(amber::compileOMFormatting_BPM(partVector.at(1),
-                                                              QString::number(60000.0 / partVector.at(2).toDouble())));
-            } else if (partVector.at(3) == "SV")
+                output.append(amber::compileOMFormatting_BPM(partList.at(1),
+                                                              QString::number(60000.0 / partList.at(2).toDouble())));
+            } else if (partList.at(3) == "SV")
             {
-                output.append(amber::compileOMFormatting_SV(partVector.at(1),
-                                                              QString::number(-100 / partVector.at(2).toDouble())));
+                output.append(amber::compileOMFormatting_SV(partList.at(1),
+                                                              QString::number(-100 / partList.at(2).toDouble())));
             }
         }
 
@@ -670,11 +659,11 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
 }
 
 
-// -------------------------------------- INPUT --------------------------------------
+// --------------------------------------------------------------------------< INPUT >
 
 /* REMOVED 13/1/2018 */
 
-// ------------------------------------- STUTTER -------------------------------------
+// --------------------------------------------------------------------------< STUTTER >
 
 // Connect Stutter Widgets
 void amber::on_stutter_initSVSlider_valueChanged(int value)
@@ -796,8 +785,8 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 void amber::on_stutter_generateButton_clicked()
 {
     try {
-        QStringList partVector, rawInputVector;
-        QString rawInputString;
+        QStringList partList, inputList;
+        QString inputString;
         QList<double> uniqueOffsetList;
 
         double threshold, initSV, secondSV, averageSV, initOffset, secondOffset, endOffset;
@@ -813,17 +802,17 @@ void amber::on_stutter_generateButton_clicked()
         ui->stutter_outputBox->clear();
 
         // Set input vector
-        rawInputVector = amber::convertOMtoBASIC(ui->stutter_inputStatusLabel, true, true, false, inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+        inputList = amber::convertOMtoBASIC(ui->stutter_inputStatusLabel, true, true, false, inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
 
-        if (rawInputVector.length() == 0){
+        if (inputList.length() == 0){
             return;
         }
         // Set up uniqueOffsetList
-        foreach (rawInputString, rawInputVector)
+        foreach (inputString, inputList)
         {
-            partVector = rawInputString.split("|");
-            if (!uniqueOffsetList.contains(partVector.at(2).toDouble()))
-                uniqueOffsetList.append(partVector.at(2).toDouble());
+            partList = inputString.split("|");
+            if (!uniqueOffsetList.contains(partList.at(2).toDouble()))
+                uniqueOffsetList.append(partList.at(2).toDouble());
         }
 
         // Generate all SVs in basic format
@@ -855,14 +844,14 @@ void amber::on_stutter_generateButton_clicked()
     }
 }
 
-// ------------------------------------- COPIER -------------------------------------
+// --------------------------------------------------------------------------< COPIER >
 
 // Copier Generate Button
 void amber::on_copier_generateButton_clicked()
 {
     try {
-        QStringList rawInputVector_1, rawInputVector_2;
-        QStringList hitObjectVector, timingPointVector, hitObjectPartVector;
+        QStringList inputList_1, inputList_2;
+        QStringList hitObjectList, timingPointList, hitObjectPartList;
         QString hitObjectString;
         QString timingPointPart;
         QList<double> uniqueHitObjectOffsetList;
@@ -877,10 +866,10 @@ void amber::on_copier_generateButton_clicked()
         inputBoxType boxType1;
         inputBoxType boxType2;
 
-        rawInputVector_1 = amber::convertOMtoBASIC(ui->copier_inputStatusLabel, true, true, true, ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
-        rawInputVector_2 = amber::convertOMtoBASIC(ui->copier_inputStatusLabel_2, true, true, true, ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
+        inputList_1 = amber::convertOMtoBASIC(ui->copier_inputStatusLabel, true, true, true, ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+        inputList_2 = amber::convertOMtoBASIC(ui->copier_inputStatusLabel_2, true, true, true, ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
 
-        if (rawInputVector_1.length() == 0 || rawInputVector_2.length() == 0){
+        if (inputList_1.length() == 0 || inputList_2.length() == 0){
             return;
         }
 
@@ -888,12 +877,12 @@ void amber::on_copier_generateButton_clicked()
         ui->copier_procOutputBox->clear();
 
         //Checks for Type
-        if (QString::compare(rawInputVector_1.at(0).split("|").at(0),
+        if (QString::compare(inputList_1.at(0).split("|").at(0),
                              "HITOBJECT",
                              Qt::CaseInsensitive) == 0)
         {
             boxType1 = inputBoxType::hitObject;
-        } else if (QString::compare(rawInputVector_1.at(0).split("|").at(0),
+        } else if (QString::compare(inputList_1.at(0).split("|").at(0),
                                     "TIMINGPOINT",
                                     Qt::CaseInsensitive) == 0)
         {
@@ -905,12 +894,12 @@ void amber::on_copier_generateButton_clicked()
             return;
         }
 
-        if (QString::compare(rawInputVector_2.at(0).split("|").at(0),
+        if (QString::compare(inputList_2.at(0).split("|").at(0),
                              "HITOBJECT",
                              Qt::CaseInsensitive) == 0)
         {
             boxType2 = inputBoxType::hitObject;
-        } else if (QString::compare(rawInputVector_2.at(0).split("|").at(0),
+        } else if (QString::compare(inputList_2.at(0).split("|").at(0),
                                     "TIMINGPOINT",
                                     Qt::CaseInsensitive) == 0)
         {
@@ -933,29 +922,29 @@ void amber::on_copier_generateButton_clicked()
         //Assign the Vectors
         if (boxType1 == inputBoxType::hitObject)
         {
-            hitObjectVector = rawInputVector_1;
-            timingPointVector = rawInputVector_2;
+            hitObjectList = inputList_1;
+            timingPointList = inputList_2;
         } else
         {
-            hitObjectVector = rawInputVector_2;
-            timingPointVector = rawInputVector_1;
+            hitObjectList = inputList_2;
+            timingPointList = inputList_1;
         }
 
         //Generate Unique Offset List
-        foreach (hitObjectString, hitObjectVector)
+        foreach (hitObjectString, hitObjectList)
         {
-            hitObjectPartVector = hitObjectString.split("|");
-            if (!uniqueHitObjectOffsetList.contains(hitObjectPartVector.at(2).toDouble()))
-                uniqueHitObjectOffsetList.append(hitObjectPartVector.at(2).toDouble());
+            hitObjectPartList = hitObjectString.split("|");
+            if (!uniqueHitObjectOffsetList.contains(hitObjectPartList.at(2).toDouble()))
+                uniqueHitObjectOffsetList.append(hitObjectPartList.at(2).toDouble());
         }
 
         //Gets the offset from the First Timing Point in order to "zero" all Timing Points
-        initialTimingPointOffset = timingPointVector.at(0).split("|").at(1).toDouble();
+        initialTimingPointOffset = timingPointList.at(0).split("|").at(1).toDouble();
 
         //Generates Code
         foreach (uniqueHitObjectOffset, uniqueHitObjectOffsetList)
         {
-            foreach (timingPointPart, timingPointVector)
+            foreach (timingPointPart, timingPointList)
             {
                 timingPointOffset = timingPointPart.split("|", QString::SkipEmptyParts).at(1).toDouble();
                 timingPointPart.replace(QString::number(timingPointOffset),
@@ -975,7 +964,7 @@ void amber::on_copier_generateButton_clicked()
     }
 }
 
-// ------------------------------ TWO POINT FUNCTION ---------------------------------
+// --------------------------------------------------------------------------< TWO POINT FUNCTION >
 
 void amber::on_TPF_initialTPSlider_valueChanged(int value)
 {
@@ -1274,23 +1263,105 @@ void amber::on_TPF_generateButton_clicked()
     }
 
     ui->TPF_customPlot->replot(QCustomPlot::rpQueuedReplot);
+
 }
 
-// ------------------------------ FUNCTION EDITOR ---------------------------------
+// --------------------------------------------------------------------------< FUNCTION EDITOR >
 
 
+// --------------------------------------------------------------------------< NORMALIZER >
+void amber::on_normalizer_generateButton_clicked()
+{
+    QStringList inputList, partList;
+    QString inputString, partOffset, partBPM, selectionText;
+    QList<double> BPMList, offsetList;
+
+    QLabel *statusLabel;
+    QPlainTextEdit *inputBox;
+    QTextBrowser *outputBox;
+    QListWidget *listWidget;
+    QCheckBox *overrideCheck;
+    QDoubleSpinBox *overrideDoubleSpinBox;
+    QLineEdit *selectedBPMLine;
+
+    double normalizeBPM;
+    double normalizeSV;
+
+    statusLabel = ui->normalizer_inputStatusLabel;
+    inputBox = ui->normalizer_inputBox;
+    outputBox = ui->normalizer_outputBox;
+    listWidget = ui->normalizer_BPMListWidget;
+    selectedBPMLine = ui->normalizer_selectedBPMLine;
+
+    outputBox->clear();
+    listWidget->clear();
+
+    inputList = amber::convertOMtoBASIC(statusLabel, false, false, true,
+                                        inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+
+    if (inputList.length() == 0){
+        return;
+    }
+
+    foreach (inputString, inputList){
+
+        partList = inputString.split("|", QString::SkipEmptyParts);
+
+        if (partList.at(3) == "SV"){
+            continue;
+        }
+
+        partOffset = partList.at(1);
+        partBPM = partList.at(2);
+
+        BPMList.append(partBPM.toDouble());
+        offsetList.append(partOffset.toDouble());
+        listWidget->addItem(QString("BPM: ")
+                    .append(partBPM)
+                    .append(" | Offset: ")
+                    .append(partOffset));
+    }
+
+    if (BPMList.length() == 0){
+        statusLabel->setText("STATUS: Input at least 1 BPM Timing Point");
+        statusLabel->setStyleSheet("QLabel { color:red; }");
+        return;
+    }
+
+    overrideCheck = ui->normalizer_overrideCheck;
+    overrideDoubleSpinBox = ui->normalizer_overrideDoubleSpinBox;
+
+    if (overrideCheck->isChecked())
+    {
+        normalizeBPM = overrideDoubleSpinBox->value();
+    } else if (selectedBPMLine->text() != "Awaiting Selection...")
+    {
+        normalizeBPM = selectedBPMLine->text().toDouble();
+    } else
+    {
+        statusLabel->setText("STATUS: Select 1 BPM Timing Point or use the Manual Override");
+        statusLabel->setStyleSheet("QLabel { color:blue; }");
+        return;
+    }
+
+    statusLabel->setText(QString("STATUS: Normalizing to ")
+                         .append(QString::number(normalizeBPM))
+                         .append(" BPM"));
+    statusLabel->setStyleSheet("QLabel { color:green; }");
 
 
+    for(int cycle = 0; cycle < BPMList.length(); cycle ++)
+    {
+        normalizeSV = -100 / (normalizeBPM / BPMList.at(cycle));
+        outputBox->append(amber::compileOMFormatting_SV(QString::number(offsetList.at(cycle)),
+                                                        QString::number(normalizeSV)));
+    }
 
+    return;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
+{
+    ui->normalizer_selectedBPMLine->setText(item->text()
+                                            .mid(5, item->text().indexOf("|") - 5));
+}

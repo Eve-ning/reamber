@@ -7,6 +7,16 @@
 #include <QTextBrowser>
 #include <QPlainTextEdit>
 #include <QLabel>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QObject>
+#include <QVector>
+#include <QRegExp>
+#include <QList>
+#include <QPen>
+#include <QBrush>
+#include <QtMath>
+#include <QRadioButton>
 
 
 
@@ -146,6 +156,9 @@ private slots:
     void on_TPF_intermediateSpinBox_valueChanged(int arg1);
     void on_TPF_SVRadio_clicked();
     void on_TPF_BPMRadio_clicked();
+
+    void on_normalizer_generateButton_clicked();
+    void on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item);
 
 private:
     Ui::amber *ui;

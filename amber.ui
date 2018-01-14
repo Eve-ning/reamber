@@ -30,7 +30,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
@@ -643,6 +643,138 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="tabNormalizer">
+     <attribute name="title">
+      <string>Normalizer</string>
+     </attribute>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="normalizer_inputGroup">
+        <item row="0" column="0">
+         <widget class="QLabel" name="normalizer_inputLabel">
+          <property name="text">
+           <string>Input</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="normalizer_inputStatusLabel">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPlainTextEdit" name="normalizer_inputBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <layout class="QGridLayout" name="normalizer_BPMListGroup">
+        <item row="5" column="0">
+         <widget class="QLabel" name="normalizer_selectedBPMLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Selected BPM</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="normalizer_selectedBPMLine">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Awaiting Selection...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QListWidget" name="normalizer_BPMListWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QLabel" name="normalizer_BPMListLabel">
+          <property name="text">
+           <string>List Of BPMs</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QCheckBox" name="normalizer_overrideCheck">
+          <property name="text">
+           <string>Use Override Value</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QDoubleSpinBox" name="normalizer_overrideDoubleSpinBox">
+          <property name="decimals">
+           <number>3</number>
+          </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>100000.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>120.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="normalizer_overrideLabel">
+          <property name="text">
+           <string>Manual Override</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="2">
+         <widget class="QPushButton" name="normalizer_generateButton">
+          <property name="text">
+           <string>Generate</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2">
+       <layout class="QGridLayout" name="normalizer_outputGroup">
+        <item row="0" column="0">
+         <widget class="QLabel" name="normalizer_outputLabel">
+          <property name="text">
+           <string>Output</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="normalizer_outputBox"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
     <widget class="QWidget" name="tabFE">
      <attribute name="title">
       <string>Function Editor</string>
@@ -657,7 +789,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="FE_function1">
        <attribute name="title">
@@ -1119,11 +1251,6 @@
        </rect>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tabNormalizer">
-     <attribute name="title">
-      <string>Normalizer</string>
-     </attribute>
     </widget>
     <widget class="QWidget" name="tabConsole">
      <attribute name="title">
