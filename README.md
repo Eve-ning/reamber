@@ -61,3 +61,7 @@ Currently I'm the only one contributing to this project. I don't require or want
 - Cleaned up Code
 - Removed Input and DEBUG Tab
 - Added BASICtoOM and OMtoBASIC Converters
+
+14/1/18 :
+- Renamed Project to amber
+- Fixed outOfIndex Issues
