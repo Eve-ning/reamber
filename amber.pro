@@ -8,7 +8,7 @@ QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = svtool
+TARGET = amber
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,15 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        svTool.cpp \
+        amber.cpp \
     qcustomplot.cpp
 
 HEADERS += \
-        svTool.h \
+        amber.h \
     qcustomplot.h
 
 FORMS += \
-        svTool.ui \
+        amber.ui
 
 DISTFILES += \
     documentation
+
+SUBDIRS += \
+    amber.pro

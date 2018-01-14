@@ -1,5 +1,5 @@
-#ifndef SVTOOL_H
-#define SVTOOL_H
+#ifndef AMBER_H
+#define AMBER_H
 
 #include <QMainWindow>
 #include <QStringList>
@@ -11,11 +11,11 @@
 
 
 namespace Ui {
-class svTool;
+class amber;
 }
 
 //DEFAULT ARGUMENTS
-//Extern to tell the program that the variables have been defined somewhere else (svTool.cpp)
+//Extern to tell the program that the variables have been defined somewhere else (amber.cpp)
 extern QString def_xAxis
               ,def_yAxis
               ,def_offset
@@ -36,13 +36,13 @@ extern QString def_xAxis
               ,def_timingPointType
 ;
 
-class svTool : public QMainWindow
+class amber : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit svTool(QWidget *parent = 0);
-    ~svTool();
+    explicit amber(QWidget *parent = 0);
+    ~amber();
     void compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject);
 
     //COMPILERS
@@ -148,7 +148,7 @@ private slots:
     void on_TPF_BPMRadio_clicked();
 
 private:
-    Ui::svTool *ui;
+    Ui::amber *ui;
 };
 
-#endif // SVTOOL_H
+#endif // AMBER_H
