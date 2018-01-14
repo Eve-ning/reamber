@@ -6,6 +6,7 @@
 #include <QString>
 #include <QTextBrowser>
 #include <QPlainTextEdit>
+#include <QLabel>
 
 
 
@@ -88,13 +89,15 @@ public:
     QList<double> convertTimingPointToOffsetList(QStringList timingPointList);
     QList<double> convertTimingPointToCodeList(QStringList timingPointList);
 
-    QStringList convertOMtoBASIC(bool acceptEditorHitObject = true,
+    QStringList convertOMtoBASIC(QLabel *messageLabel,
+                                 bool acceptEditorHitObject = true,
                                  bool acceptHitObject = true,
                                  bool acceptTimingPoint = true,
                                  QStringList input = {},
                                  int noOfKeys = 4);
 
-    QStringList convertBASICtoOM(QStringList input);
+    QStringList convertBASICtoOM(QLabel *messageLabel,
+                                 QStringList input = {});
 
     //CHECKS
     bool checkEditorHitObject(QString editorHitObject);

@@ -309,185 +309,6 @@ QList<double> svTool::convertTimingPointToCodeList(QStringList timingPointList)
     }
 }
 
-QStringList svTool::convertOMtoBASIC(bool acceptEditorHitObject,
-                                     bool acceptHitObject,
-                                     bool acceptTimingPoint,
-                                     QStringList input,
-                                     int noOfKeys)
-{
-
-    bool isEditorHitObject, isHitObject, isTimingPoint;
-
-    QStringList output;
-    QStringList partVector;
-    QString partString, lineString;
-
-    isEditorHitObject = svTool::checkEditorHitObject(input);
-    isHitObject = svTool::checkHitObject(input);
-    isTimingPoint = svTool::checkTimingPoint(input);
-
-    // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
-    if((isEditorHitObject && !acceptEditorHitObject) ||
-       (isHitObject && !acceptHitObject) ||
-       (isTimingPoint && !acceptTimingPoint))
-    {
-        return output;
-    }
-
-    if (isEditorHitObject)
-    {
-        // Reads each line from the input
-        foreach (lineString, input) {
-
-            if(lineString.isEmpty())
-            {
-                continue;
-            }
-
-            // Mid trims the current line from '(' and ')'
-            // Split then splits them by ',' into different notes
-            partVector = lineString.mid(lineString.indexOf("(", 1) + 1,
-                                            lineString.indexOf(")", 1) - lineString.indexOf("(", 1) - 1)
-                                            .split(",", QString::SkipEmptyParts);
-
-            foreach (partString, partVector){
-                output.append(svTool::compileBASICFormatting_hitObject(QString::number(noOfKeys),
-                              partString.split("|", QString::SkipEmptyParts).at(0),
-                              partString.split("|", QString::SkipEmptyParts).at(1)));
-            }
-        }
-    } else if (isHitObject)
-    {
-        foreach (lineString, input) {
-
-            if(lineString.isEmpty())
-            {
-                continue;
-            }
-
-            partVector = lineString.split(",", QString::SkipEmptyParts);
-
-            double columnKey;
-
-            // Gets the key column through calculation and rounds to 0 D.P.
-            columnKey = svTool::convertColumnCodeToColumnKey(partVector.at(0).toDouble(), noOfKeys);
-
-            if(svTool::checkHitObjectNN(lineString))
-            {
-                output.append(svTool::compileBASICFormatting_hitObject(
-                              QString::number(noOfKeys),
-                              partVector.at(2),
-                              QString::number(columnKey)));
-
-            } else if (svTool::checkHitObjectLN(lineString))
-            {
-                output.append(svTool::compileBASICFormatting_hitObject(
-                              QString::number(noOfKeys),
-                              partVector.at(2),
-                              QString::number(columnKey),
-                              partVector.at(5).mid(0,partVector.at(5).indexOf(":",1))));
-            }
-        }
-    } else if (isTimingPoint)
-    {
-        foreach (lineString, input)
-        {
-            if(lineString.isEmpty())
-            {
-                continue;
-            }
-            partVector = lineString.split(",", QString::SkipEmptyParts);
-
-            QString timingPointValue;
-
-            if (checkTimingPointSV(lineString))
-            {
-                timingPointValue = QString::number(-100.0 / partVector.at(1).toDouble());
-            } else if (checkTimingPointBPM(lineString))
-            {
-                timingPointValue = QString::number(60000.0 / partVector.at(1).toDouble());
-            }
-
-            output.append(svTool::compileBASICFormatting_timingPoint(
-                          partVector.at(0),
-                          timingPointValue,
-                          checkTimingPointSV(lineString) ? QString("SV") : QString("BPM")));
-
-        }
-    }
-    return output;
-}
-
-QStringList svTool::convertBASICtoOM(QStringList input)
-{
-
-    bool isHitObject, isTimingPoint;
-
-    QStringList output;
-    QStringList partVector;
-    QString lineString;
-
-    isHitObject = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "HITOBJECT";
-    isTimingPoint = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "TIMINGPOINT";
-
-    // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
-    if(isHitObject || isTimingPoint)
-    {
-        return output;
-    }
-
-    if (isHitObject)
-    {
-        foreach (lineString, input) {
-
-            if(lineString.isEmpty())
-            {
-                continue;
-            }
-
-            partVector = lineString.split("|", QString::SkipEmptyParts);
-
-            double columnCode;
-
-            // Gets the key column through calculation and rounds to 0 D.P.
-            columnCode = svTool::convertColumnKeyToColumnCode(partVector.at(3).toDouble(), partVector.at(1).toDouble());
-
-            if (partVector.at(4) == "-1")
-            {
-                output.append(svTool::compileOMFormatting_NN(QString::number(columnCode),
-                                                             partVector.at(2)));
-            } else
-            {
-                output.append(svTool::compileOMFormatting_LN(QString::number(columnCode),
-                                                             partVector.at(2),
-                                                             partVector.at(4)));
-            }
-        }
-    } else if (isTimingPoint)
-    {
-        foreach (lineString, input)
-        {
-            if(lineString.isEmpty())
-            {
-                continue;
-            }
-            partVector = lineString.split(",", QString::SkipEmptyParts);
-
-            if (partVector.at(3) == "BPM")
-            {
-                output.append(svTool::compileOMFormatting_BPM(partVector.at(1),
-                                                              QString::number(60000.0 / partVector.at(2).toDouble())));
-            } else if (partVector.at(3) == "SV")
-            {
-                output.append(svTool::compileOMFormatting_SV(partVector.at(1),
-                                                              QString::number(-100 / partVector.at(2).toDouble())));
-            }
-        }
-    }
-    return output;
-}
-
-
 //Checks
 bool svTool::checkEditorHitObject(QString editorHitObject)
 {
@@ -534,15 +355,27 @@ bool svTool::checkTimingPoint(QPlainTextEdit *box)
 
 bool svTool::checkEditorHitObject(QStringList editorHitObjectList)
 {
+    if (editorHitObjectList.length() != 0)
+    {
     return svTool::checkEditorHitObject(editorHitObjectList.at(0));
+    }
+    return false;
 }
 bool svTool::checkHitObject(QStringList hitObjectList)
 {
+    if (hitObjectList.length() != 0)
+    {
     return svTool::checkHitObject(hitObjectList.at(0));
+    }
+    return false;
 }
 bool svTool::checkTimingPoint(QStringList timingPointList)
 {
+    if (timingPointList.length() != 0)
+    {
     return svTool::checkTimingPoint(timingPointList.at(0));
+    }
+    return false;
 }
 
 bool svTool::checkHitObjectNN(QString hitObjectNN)
@@ -623,6 +456,219 @@ void svTool::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outpu
         }
     }
 }
+
+QStringList svTool::convertOMtoBASIC(QLabel *messageLabel,
+                                     bool acceptEditorHitObject,
+                                     bool acceptHitObject,
+                                     bool acceptTimingPoint,
+                                     QStringList input,
+                                     int noOfKeys)
+{
+
+    bool isEditorHitObject, isHitObject, isTimingPoint;
+
+    QStringList output;
+    QStringList partVector;
+    QString partString, lineString;
+
+    isEditorHitObject = svTool::checkEditorHitObject(input);
+    isHitObject = svTool::checkHitObject(input);
+    isTimingPoint = svTool::checkTimingPoint(input);
+
+    if (!isEditorHitObject &&
+        !isHitObject &&
+        !isTimingPoint)
+    {
+        messageLabel->setText("STATUS: No Input Detected");
+        messageLabel->setStyleSheet("QLabel { color:red; }");
+        return output;
+    }
+
+    // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
+    if((isEditorHitObject && !acceptEditorHitObject) ||
+       (isHitObject && !acceptHitObject) ||
+       (isTimingPoint && !acceptTimingPoint))
+    {
+        messageLabel->setText("STATUS: Input Rejected");
+        messageLabel->setStyleSheet("QLabel { color:red; }");
+        return output;
+    }
+
+    if (isEditorHitObject)
+    {
+        // Reads each line from the input
+        foreach (lineString, input) {
+
+            if(lineString.isEmpty())
+            {
+                continue;
+            }
+
+            // Mid trims the current line from '(' and ')'
+            // Split then splits them by ',' into different notes
+            partVector = lineString.mid(lineString.indexOf("(", 1) + 1,
+                                            lineString.indexOf(")", 1) - lineString.indexOf("(", 1) - 1)
+                                            .split(",", QString::SkipEmptyParts);
+
+            foreach (partString, partVector){
+                output.append(svTool::compileBASICFormatting_hitObject(QString::number(noOfKeys),
+                              partString.split("|", QString::SkipEmptyParts).at(0),
+                              partString.split("|", QString::SkipEmptyParts).at(1)));
+            }
+        }
+
+        messageLabel->setText("STATUS: Editor Hit Object");
+        messageLabel->setStyleSheet("QLabel { color:green; }");
+
+    } else if (isHitObject)
+    {
+        foreach (lineString, input) {
+
+            if(lineString.isEmpty())
+            {
+                continue;
+            }
+
+            partVector = lineString.split(",", QString::SkipEmptyParts);
+
+            double columnKey;
+
+            // Gets the key column through calculation and rounds to 0 D.P.
+            columnKey = svTool::convertColumnCodeToColumnKey(partVector.at(0).toDouble(), noOfKeys);
+
+            if(svTool::checkHitObjectNN(lineString))
+            {
+                output.append(svTool::compileBASICFormatting_hitObject(
+                              QString::number(noOfKeys),
+                              partVector.at(2),
+                              QString::number(columnKey)));
+
+            } else if (svTool::checkHitObjectLN(lineString))
+            {
+                output.append(svTool::compileBASICFormatting_hitObject(
+                              QString::number(noOfKeys),
+                              partVector.at(2),
+                              QString::number(columnKey),
+                              partVector.at(5).mid(0,partVector.at(5).indexOf(":",1))));
+            }
+        }
+
+        messageLabel->setText("STATUS: Hit Object");
+        messageLabel->setStyleSheet("QLabel { color:green; }");
+
+    } else if (isTimingPoint)
+    {
+        foreach (lineString, input)
+        {
+            if(lineString.isEmpty())
+            {
+                continue;
+            }
+            partVector = lineString.split(",", QString::SkipEmptyParts);
+
+            QString timingPointValue;
+
+            if (checkTimingPointSV(lineString))
+            {
+                timingPointValue = QString::number(-100.0 / partVector.at(1).toDouble());
+            } else if (checkTimingPointBPM(lineString))
+            {
+                timingPointValue = QString::number(60000.0 / partVector.at(1).toDouble());
+            }
+
+            output.append(svTool::compileBASICFormatting_timingPoint(
+                          partVector.at(0),
+                          timingPointValue,
+                          checkTimingPointSV(lineString) ? QString("SV") : QString("BPM")));
+
+        }
+
+        messageLabel->setText("STATUS: Timing Point");
+        messageLabel->setStyleSheet("QLabel { color:green; }");
+
+    }
+    return output;
+}
+
+QStringList svTool::convertBASICtoOM(QLabel *messageLabel,
+                                     QStringList input)
+{
+    bool isHitObject, isTimingPoint;
+
+    QStringList output;
+    QStringList partVector;
+    QString lineString;
+
+    isHitObject = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "HITOBJECT";
+    isTimingPoint = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "TIMINGPOINT";
+
+    // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
+    if(isHitObject || isTimingPoint)
+    {
+        messageLabel->setText("STATUS: Input Rejected");
+        messageLabel->setStyleSheet("QLabel { color:red; }");
+        return output;
+    }
+
+    if (isHitObject)
+    {
+        foreach (lineString, input) {
+
+            if(lineString.isEmpty())
+            {
+                continue;
+            }
+
+            partVector = lineString.split("|", QString::SkipEmptyParts);
+
+            double columnCode;
+
+            // Gets the key column through calculation and rounds to 0 D.P.
+            columnCode = svTool::convertColumnKeyToColumnCode(partVector.at(3).toDouble(), partVector.at(1).toDouble());
+
+            if (partVector.at(4) == "-1")
+            {
+                output.append(svTool::compileOMFormatting_NN(QString::number(columnCode),
+                                                             partVector.at(2)));
+            } else
+            {
+                output.append(svTool::compileOMFormatting_LN(QString::number(columnCode),
+                                                             partVector.at(2),
+                                                             partVector.at(4)));
+            }
+        }
+
+        messageLabel->setText("STATUS: Hit Object");
+        messageLabel->setStyleSheet("QLabel { color:green; }");
+
+    } else if (isTimingPoint)
+    {
+        foreach (lineString, input)
+        {
+            if(lineString.isEmpty())
+            {
+                continue;
+            }
+            partVector = lineString.split(",", QString::SkipEmptyParts);
+
+            if (partVector.at(3) == "BPM")
+            {
+                output.append(svTool::compileOMFormatting_BPM(partVector.at(1),
+                                                              QString::number(60000.0 / partVector.at(2).toDouble())));
+            } else if (partVector.at(3) == "SV")
+            {
+                output.append(svTool::compileOMFormatting_SV(partVector.at(1),
+                                                              QString::number(-100 / partVector.at(2).toDouble())));
+            }
+        }
+
+        messageLabel->setText("STATUS: Timing Point");
+        messageLabel->setStyleSheet("QLabel { color:green; }");
+
+    }
+    return output;
+}
+
 
 // -------------------------------------- INPUT --------------------------------------
 
@@ -758,13 +804,6 @@ void svTool::on_stutter_generateButton_clicked()
 
         QPlainTextEdit *inputBox;
         inputBox = ui->stutter_inputBox;
-
-        if (!(svTool::checkHitObject(inputBox->toPlainText()) ||
-              svTool::checkEditorHitObject(inputBox->toPlainText().split("\n", QString::SkipEmptyParts))))
-        {
-            return;
-        }
-
         threshold = ui->stutter_thresholdSpinBox->value() / 100;
         initSV = ui->stutter_initSVSpinBox->value();
         averageSV = ui->stutter_averageSVSpinBox->value();
@@ -774,8 +813,11 @@ void svTool::on_stutter_generateButton_clicked()
         ui->stutter_outputBox->clear();
 
         // Set input vector
-        rawInputVector = svTool::convertOMtoBASIC(true, true, false, inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+        rawInputVector = svTool::convertOMtoBASIC(ui->stutter_inputStatusLabel, true, true, false, inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
 
+        if (rawInputVector.length() == 0){
+            return;
+        }
         // Set up uniqueOffsetList
         foreach (rawInputString, rawInputVector)
         {
@@ -835,8 +877,12 @@ void svTool::on_copier_generateButton_clicked()
         inputBoxType boxType1;
         inputBoxType boxType2;
 
-        rawInputVector_1 = svTool::convertOMtoBASIC(true, true, true, ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
-        rawInputVector_2 = svTool::convertOMtoBASIC(true, true, true, ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
+        rawInputVector_1 = svTool::convertOMtoBASIC(ui->copier_inputStatusLabel, true, true, true, ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+        rawInputVector_2 = svTool::convertOMtoBASIC(ui->copier_inputStatusLabel_2, true, true, true, ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
+
+        if (rawInputVector_1.length() == 0 || rawInputVector_2.length() == 0){
+            return;
+        }
 
         ui->copier_outputBox->clear();
         ui->copier_procOutputBox->clear();
@@ -1032,12 +1078,10 @@ void svTool::on_TPF_SVRadio_clicked()
 {
     svTool::on_TPF_defaultButton_clicked();
 }
-
 void svTool::on_TPF_BPMRadio_clicked()
 {
     svTool::on_TPF_defaultButton_clicked();
 }
-
 
 //Reset Values to Default
 void svTool::on_TPF_defaultButton_clicked()
@@ -1231,9 +1275,6 @@ void svTool::on_TPF_generateButton_clicked()
 
     ui->TPF_customPlot->replot(QCustomPlot::rpQueuedReplot);
 }
-
-
-
 
 // ------------------------------ FUNCTION EDITOR ---------------------------------
 

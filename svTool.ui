@@ -30,7 +30,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
@@ -63,8 +63,15 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QPlainTextEdit" name="stutter_inputBox"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="stutter_inputStatusLabel">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -235,8 +242,15 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QPlainTextEdit" name="copier_inputBox"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="copier_inputStatusLabel">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -249,8 +263,15 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QPlainTextEdit" name="copier_inputBox_2"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="copier_inputStatusLabel_2">
+          <property name="text">
+           <string>STATUS:</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
