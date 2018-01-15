@@ -1,4 +1,4 @@
-![amberLogo](https://i.imgur.com/9WXAlYq.png)
+![amberLogo](http://puu.sh/z235w/e2127a205c.png)
 
 ## Why
 This tool is to help mappers do repetitive tasks in osu!mania much more easily.
@@ -65,3 +65,5 @@ Currently I'm the only one contributing to this project. I don't require or want
 14/1/18 :
 - Renamed Project to amber
 - Fixed outOfIndex Issues
+- Added Normalizer
+- Adjusted messageBox returns for OMtoBASIC Converter
