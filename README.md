@@ -1,4 +1,4 @@
-![amberLogo](https://i.imgur.com/9WXAlYq.png)
+![amberLogo](http://puu.sh/z235w/e2127a205c.png)
 
 ## Why
 This tool is to help mappers do repetitive tasks in osu!mania much more easily.
