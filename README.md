@@ -15,9 +15,6 @@ Expected **ALPHA** Completion Date: MID 2018
 ## Who
 Currently I'm the only one contributing to this project. I don't require or want any contributors currently until further notice.
 
- 
- 
- 
 # Changelog:
 28/12/17 :
 - Created Initial UI
@@ -67,3 +64,9 @@ Currently I'm the only one contributing to this project. I don't require or want
 - Fixed outOfIndex Issues
 - Added Normalizer
 - Adjusted messageBox returns for OMtoBASIC Converter
+
+18/1/18 :
+- Added Quick Access
+- Segregated to Basic, Advanced and Settings Tabs
+- Add Default Value to Settings Tab
+
