@@ -160,6 +160,14 @@ private slots:
     void on_normalizer_generateButton_clicked();
     void on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item);
 
+    void on_basicWidgetList_itemClicked(QListWidgetItem *item);
+
+    void on_settingsWidgetList_itemClicked(QListWidgetItem *item);
+
+    void on_toolBox_currentChanged(int index);
+
+    void on_advancedWidgetList_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::amber *ui;
 };

@@ -36,7 +36,8 @@ FORMS += \
         amber.ui
 
 DISTFILES += \
-    documentation
+    documentation \
+    iconResources/Untitled.png
 
 SUBDIRS += \
     amber.pro

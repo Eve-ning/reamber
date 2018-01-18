@@ -27,6 +27,7 @@
 amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
+
 }
 
 amber::~amber()
@@ -658,6 +659,73 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
     return output;
 }
 
+// --------------------------------------------------------------------------< QUICK ACCESS >
+
+void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
+{
+    QString itemString;
+    itemString = item->text();
+
+    /* BASIC WIDGET LIST
+     * Stutter
+     * Copier
+     * 2PF
+     * Normalizer
+     */
+
+    ui->stackedWidget->setCurrentIndex(0);
+
+    if      (itemString == "Stutter")
+    {
+        ui->basicTabWidget->setCurrentIndex(0);
+    }
+    else if (itemString == "Copier")
+    {
+        ui->basicTabWidget->setCurrentIndex(1);
+    }
+    else if (itemString == "2-Point Function")
+    {
+        ui->basicTabWidget->setCurrentIndex(2);
+    }
+    else if (itemString == "Normalizer")
+    {
+        ui->basicTabWidget->setCurrentIndex(3);
+    }
+
+}
+void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
+{
+    QString itemString;
+    itemString = item->text();
+
+    ui->stackedWidget->setCurrentIndex(1);
+
+    if      (itemString == "Test 1")
+    {
+        ui->advancedTabWidget->setCurrentIndex(0);
+    }
+    else if (itemString == "Test 2")
+    {
+        ui->advancedTabWidget->setCurrentIndex(1);
+    }
+}
+void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
+{
+    QString itemString;
+    itemString = item->text();
+
+    ui->stackedWidget->setCurrentIndex(2);
+
+    if      (itemString == "Default Values")
+    {
+        ui->settingsTabWidget->setCurrentIndex(0);
+    }
+}
+
+void amber::on_toolBox_currentChanged(int index)
+{
+    ui->stackedWidget->setCurrentIndex(index);
+}
 
 // --------------------------------------------------------------------------< INPUT >
 
@@ -1266,9 +1334,6 @@ void amber::on_TPF_generateButton_clicked()
 
 }
 
-// --------------------------------------------------------------------------< FUNCTION EDITOR >
-
-
 // --------------------------------------------------------------------------< NORMALIZER >
 void amber::on_normalizer_generateButton_clicked()
 {
@@ -1365,3 +1430,11 @@ void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
     ui->normalizer_selectedBPMLine->setText(item->text()
                                             .mid(5, item->text().indexOf("|") - 5));
 }
+
+
+
+
+
+
+
+
