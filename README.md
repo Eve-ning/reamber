@@ -36,6 +36,7 @@ Currently I'm the only one contributing to this project. I don't require or want
 - Added Copier
 - Renamed Home Tab to Input
 
+
 6/1/18 :
 - Added documentation.txt
 - Added QCustomPlot 
@@ -70,3 +71,7 @@ Currently I'm the only one contributing to this project. I don't require or want
 - Segregated to Basic, Advanced and Settings Tabs
 - Add Default Value to Settings Tab
 
+20/1/18 :
+- Added Adjuster Framework
+- Removed procOutput
+- Fixed naming errors ("extesion")
