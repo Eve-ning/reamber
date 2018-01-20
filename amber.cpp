@@ -27,7 +27,6 @@
 amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
-
 }
 
 amber::~amber()
@@ -50,7 +49,7 @@ QString def_xAxis            = "256"
        ,def_timingPointLabel = "TIMINGPOINT"
        ,def_hitObjectLabel   = "HITOBJECT"
        ,def_nnExtension      = "1,0,0:0:0:0:"
-       ,def_lnExtesion       = ":0:0:0:0:"
+       ,def_lnExtension       = ":0:0:0:0:"
        ,def_bpmExtension     = "4,3,0,20,1,0"
        ,def_svExtension      = "4,3,0,20,0,0"
        ,def_timingPointType  = "SV"
@@ -447,6 +446,8 @@ void amber::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *output
     }
 }
 
+
+
 QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
                                      bool acceptEditorHitObject,
                                      bool acceptHitObject,
@@ -658,6 +659,29 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
     }
     return output;
 }
+// --------------------------------------------------------------------------< SETTINGS >
+
+void amber::saveDefaultValues()
+{
+   def_xAxis            = ui->def_xAxisLine           ->text();
+   def_yAxis            = ui->def_yAxisLine           ->text();
+   def_offset           = ui->def_offsetLine          ->text();
+   def_lnParameter      = ui->def_lnParameterLine     ->text();
+   def_lnOffset         = ui->def_lnOffsetLine        ->text();
+   def_bpmCode          = ui->def_bpmCodeLine         ->text();
+   def_svCode           = ui->def_svCodeLine          ->text();
+   def_bpmValue         = ui->def_bpmValueLine        ->text();
+   def_svValue          = ui->def_svValueLine         ->text();
+   def_column           = ui->def_columnLine          ->text();
+   def_noOfKeys         = ui->def_noOfKeysLine        ->text();
+   def_timingPointLabel = ui->def_timingPointLabelLine->text();
+   def_hitObjectLabel   = ui->def_hitObjectLabelLine  ->text();
+   def_nnExtension      = ui->def_nnExtensionLine     ->text();
+   def_lnExtension      = ui->def_lnExtensionLine     ->text();
+   def_bpmExtension     = ui->def_bpmExtensionLine    ->text();
+   def_svExtension      = ui->def_svExtensionLine     ->text();
+   def_timingPointType  = ui->def_timingPointTypeLine ->text();
+}
 
 // --------------------------------------------------------------------------< QUICK ACCESS >
 
@@ -857,6 +881,7 @@ void amber::on_stutter_generateButton_clicked()
         QString inputString;
         QList<double> uniqueOffsetList;
 
+
         double threshold, initSV, secondSV, averageSV, initOffset, secondOffset, endOffset;
 
         QPlainTextEdit *inputBox;
@@ -866,7 +891,6 @@ void amber::on_stutter_generateButton_clicked()
         averageSV = ui->stutter_averageSVSpinBox->value();
         secondSV = (averageSV - (initSV * threshold)) / (1 - threshold);
 
-        ui->stutter_procOutputBox->clear();
         ui->stutter_outputBox->clear();
 
         // Set input vector
@@ -884,29 +908,26 @@ void amber::on_stutter_generateButton_clicked()
         }
 
         // Generate all SVs in basic format
-        int offsetListCounter = 0;
-
-        while (offsetListCounter < uniqueOffsetList.length() - 1)
+        for (int i = 0; i < (uniqueOffsetList.length() - 1); ++ i)
         {
-            initOffset = uniqueOffsetList.at(offsetListCounter);
-            secondOffset = (uniqueOffsetList.at(offsetListCounter + 1) - initOffset) * threshold + initOffset;
+            initOffset = uniqueOffsetList.at(i);
+            secondOffset = (uniqueOffsetList.at(i + 1) - initOffset) * threshold + initOffset;
 
             //initSV append
-            ui->stutter_procOutputBox->append(amber::compileBASICFormatting_timingPoint(QString::number(initOffset), QString::number(initSV), "SV"));
+            ui->stutter_outputBox->append(amber::compileOMFormatting_SV(QString::number(initOffset),
+                                                                        QString::number(-100.0 / initSV)));
 
             //secondSV append
-            ui->stutter_procOutputBox->append(amber::compileBASICFormatting_timingPoint(QString::number(secondOffset), QString::number(secondSV), "SV"));
-
-            offsetListCounter += 1;
+            ui->stutter_outputBox->append(amber::compileOMFormatting_SV(QString::number(secondOffset),
+                                                                        QString::number(-100.0 / secondSV)));
         }
 
         //End SV for normalization
         endOffset = uniqueOffsetList.at(uniqueOffsetList.length() - 1);
 
         //normalizeSV append
-        ui->stutter_procOutputBox->append(amber::compileBASICFormatting_timingPoint(QString::number(endOffset), QString::number(averageSV), "SV"));
-
-        amber::compileProcOutput(ui->stutter_procOutputBox, ui->stutter_outputBox);
+        ui->stutter_outputBox->append(amber::compileOMFormatting_SV(QString::number(endOffset),
+                                                                    QString::number(-100.0 / averageSV)));
     } catch(...){
         //Generate Error Report
     }
@@ -942,7 +963,6 @@ void amber::on_copier_generateButton_clicked()
         }
 
         ui->copier_outputBox->clear();
-        ui->copier_procOutputBox->clear();
 
         //Checks for Type
         if (QString::compare(inputList_1.at(0).split("|").at(0),
@@ -1015,14 +1035,20 @@ void amber::on_copier_generateButton_clicked()
             foreach (timingPointPart, timingPointList)
             {
                 timingPointOffset = timingPointPart.split("|", QString::SkipEmptyParts).at(1).toDouble();
-                timingPointPart.replace(QString::number(timingPointOffset),
-                                        QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset));
-                ui->copier_procOutputBox->append(timingPointPart);
+
+                if (timingPointPart.split("|", QString::SkipEmptyParts).at(3) == "BPM")
+                {
+                    ui->copier_outputBox->append(
+                    amber::compileOMFormatting_BPM(QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
+                                                   QString::number(60000 / timingPointPart.split("|", QString::SkipEmptyParts).at(2).toDouble())));
+                } else
+                {
+                    ui->copier_outputBox->append(
+                    amber::compileOMFormatting_SV(QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
+                                                  QString::number(-100 / timingPointPart.split("|", QString::SkipEmptyParts).at(2).toDouble())));
+                }
             }
         }
-
-        //Converts format
-        amber::compileProcOutput(ui->copier_procOutputBox, ui->copier_outputBox);
         
         ui->copier_statusLabel->setText("STATUS: Convert Successful.");
         ui->copier_statusLabel->setStyleSheet("QLabel { color:green; }");
@@ -1431,10 +1457,9 @@ void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
                                             .mid(5, item->text().indexOf("|") - 5));
 }
 
+// --------------------------------------------------------------------------< DEFAULT >
 
-
-
-
-
-
-
+void amber::on_default_savePreferencesButton_clicked()
+{
+    amber::saveDefaultValues();
+}

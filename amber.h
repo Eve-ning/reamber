@@ -40,7 +40,7 @@ extern QString def_xAxis
               ,def_timingPointLabel
               ,def_hitObjectLabel
               ,def_nnExtension
-              ,def_lnExtesion
+              ,def_lnExtension
               ,def_bpmExtension
               ,def_svExtension
               ,def_timingPointType
@@ -55,6 +55,10 @@ public:
     ~amber();
     void compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject);
 
+    //SET DEFAULT
+    void saveDefaultValues();
+
+
     //COMPILERS
     QString compileOMFormatting_NN(QString xAxis = def_xAxis,
                                    QString offset = def_offset,
@@ -66,7 +70,7 @@ public:
                                    QString lnOffset = def_lnOffset,
                                    QString yAxis = def_yAxis,
                                    QString lnParameter = def_lnParameter,
-                                   QString extension = def_lnExtesion);
+                                   QString extension = def_lnExtension);
 
     QString compileOMFormatting_BPM(QString offset = def_offset,
                                     QString bpmCode = def_bpmCode,
@@ -167,6 +171,9 @@ private slots:
     void on_toolBox_currentChanged(int index);
 
     void on_advancedWidgetList_itemClicked(QListWidgetItem *item);
+
+
+    void on_default_savePreferencesButton_clicked();
 
 private:
     Ui::amber *ui;

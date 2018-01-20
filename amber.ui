@@ -18,7 +18,7 @@
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="basicSPage">
        <layout class="QGridLayout" name="gridLayout_5">
@@ -31,7 +31,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>1</number>
           </property>
           <property name="usesScrollButtons">
            <bool>true</bool>
@@ -59,34 +59,6 @@
                  <string>Input</string>
                 </property>
                </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2" rowspan="4">
-             <layout class="QGridLayout" name="stutter_procOutputGroup">
-              <item row="1" column="0">
-               <widget class="QTextBrowser" name="stutter_procOutputBox"/>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="stutter_procOutputLabel">
-                <property name="text">
-                 <string>Processed Output</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="3" rowspan="4">
-             <layout class="QGridLayout" name="stutter_outputGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="stutter_outputLabel">
-                <property name="text">
-                 <string>Output</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QTextBrowser" name="stutter_outputBox"/>
               </item>
              </layout>
             </item>
@@ -127,6 +99,20 @@
                  <string>Threshold</string>
                 </property>
                </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="2" rowspan="4">
+             <layout class="QGridLayout" name="stutter_outputGroup">
+              <item row="0" column="0">
+               <widget class="QLabel" name="stutter_outputLabel">
+                <property name="text">
+                 <string>Output</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QTextBrowser" name="stutter_outputBox"/>
               </item>
              </layout>
             </item>
@@ -226,20 +212,6 @@
             <string>Copier</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="3">
-             <layout class="QGridLayout" name="copier_procOutputGroup">
-              <item row="1" column="0">
-               <widget class="QTextBrowser" name="copier_procOutputBox"/>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="copier_procOutputLabel">
-                <property name="text">
-                 <string>Processed Output</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
             <item row="0" column="0" rowspan="2">
              <layout class="QGridLayout" name="copier_inputGroup">
               <item row="0" column="0">
@@ -282,7 +254,7 @@
               </item>
              </layout>
             </item>
-            <item row="0" column="4">
+            <item row="0" column="3">
              <layout class="QGridLayout" name="copier_outputGroup">
               <item row="3" column="0">
                <widget class="QPushButton" name="copier_generateButton">
@@ -782,6 +754,185 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="tabAdjuster">
+           <attribute name="title">
+            <string>Adjuster</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Input</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPlainTextEdit" name="plainTextEdit">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Output</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QTextBrowser" name="textBrowser">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="1">
+             <layout class="QGridLayout" name="adjuster_parameterGroup">
+              <item row="0" column="3">
+               <layout class="QGridLayout" name="adjuster_zeroGroup">
+                <item row="2" column="0">
+                 <widget class="QSpinBox" name="adjuster_zeroSpinBox"/>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="adjuster_zeroLabel">
+                  <property name="text">
+                   <string>Zero</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QSlider" name="adjuster_zeroSlider">
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="2">
+               <layout class="QGridLayout" name="adjuster_intensityGroup">
+                <item row="3" column="0">
+                 <widget class="QLabel" name="adjuster_intensityLabel">
+                  <property name="text">
+                   <string>Intensity</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QSpinBox" name="adjuster_intensitySpinBox"/>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QSlider" name="adjuster_intensitySlider">
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="0">
+               <layout class="QGridLayout" name="adjuster_addGroup">
+                <item row="3" column="0">
+                 <widget class="QLabel" name="adjuster_addLabel">
+                  <property name="text">
+                   <string>Add</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QSlider" name="adjuster_addSlider">
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QSpinBox" name="adjuster_addSpinBox"/>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="1">
+               <layout class="QGridLayout" name="adjuster_offsetGroup">
+                <item row="2" column="0">
+                 <widget class="QSpinBox" name="adjuster_offsetSpinBox"/>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="adjuster_offsetLabel">
+                  <property name="text">
+                   <string>Offset</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QSlider" name="adjuster_offsetSlider">
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="2">
+             <layout class="QGridLayout" name="adjuster_checkGroup">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="adjuster_autoZeroCheck">
+                <property name="text">
+                 <string>Auto Zero</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="adjuster_invertCheck">
+                <property name="text">
+                 <string>Invert</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <spacer name="adjuster_verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="3">
+             <widget class="QCustomPlot" name="adjuster_customPlot" native="true"/>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -817,7 +968,7 @@
            </attribute>
            <layout class="QGridLayout" name="gridLayout_9">
             <item row="0" column="0">
-             <layout class="QGridLayout" name="gridLayout_8">
+             <layout class="QGridLayout" name="defaultValueGroupTotal">
               <item row="0" column="0">
                <layout class="QGridLayout" name="defaultValueGroup1">
                 <item row="0" column="0">
@@ -1476,6 +1627,13 @@
               </item>
              </layout>
             </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="default_savePreferencesButton">
+              <property name="text">
+               <string>Save Preferences</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -1505,7 +1663,7 @@
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="basicPage">
           <property name="geometry">
