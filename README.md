@@ -15,6 +15,10 @@ Expected **ALPHA** Completion Date: MID 2018
 ## Who
 Currently I'm the only one contributing to this project. I don't require or want any contributors currently until further notice.
 
+## Latest Addition Showcase
+deltaMAX SV and BPM Graph
+![deltaMAX](http://puu.sh/z79zg/f4a2be9fab.png)
+
 # Changelog:
 28/12/17 :
 - Created Initial UI
