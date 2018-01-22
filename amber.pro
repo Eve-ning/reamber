@@ -37,7 +37,12 @@ FORMS += \
 
 DISTFILES += \
     documentation \
-    iconResources/Untitled.png
+    iconResources/Untitled.png \
+    amberResources/amberLogoBlackAA.png \
+    amberResources/icons/githubLogo.png
 
 SUBDIRS += \
     amber.pro
+
+RESOURCES += \
+    res.qrc

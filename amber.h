@@ -17,6 +17,7 @@
 #include <QBrush>
 #include <QtMath>
 #include <QRadioButton>
+#include <QDesktopServices>
 
 
 
@@ -172,8 +173,20 @@ private slots:
 
     void on_advancedWidgetList_itemClicked(QListWidgetItem *item);
 
-
     void on_default_savePreferencesButton_clicked();
+
+    void on_home_githubIconLabel_clicked();
+
+    void on_adjuster_generateButton_clicked();
+    void on_adjuster_multiplySpinBox_editingFinished();
+    void on_adjuster_zeroSpinBox_editingFinished();
+    void on_adjuster_offsetSpinBox_editingFinished();
+    void on_adjuster_addSpinBox_editingFinished();
+    void on_adjuster_autoZeroCheck_stateChanged(int arg1);
+    void on_adjuster_adjustSVRadio_clicked();
+    void on_adjuster_adjustBPMRadio_clicked();
+
+    void on_adjuster_defaultButton_clicked();
 
 private:
     Ui::amber *ui;

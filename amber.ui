@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1267</width>
-    <height>527</height>
+    <width>1391</width>
+    <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,114 @@
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
+      <widget class="QWidget" name="homeSPage">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>600</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #DDD</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_14">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="3" column="0" colspan="2">
+         <widget class="QLabel" name="home_amberIconLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="res.qrc">:/logos/amberResources/amberLogoBlack.png</pixmap>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QLabel" name="home_textLabel">
+          <property name="font">
+           <font>
+            <family>Microsoft JhengHei</family>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::RightToLeft</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:#555;</string>
+          </property>
+          <property name="text">
+           <string>You are currently using AMBER (ALPHA v0.3)</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QPushButton" name="home_githubIconLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="res.qrc">
+            <normaloff>:/logos/amberResources/icons/githubLogo.png</normaloff>:/logos/amberResources/icons/githubLogo.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>200</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="basicSPage">
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
@@ -27,11 +133,17 @@
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="tabShape">
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>4</number>
           </property>
           <property name="usesScrollButtons">
            <bool>true</bool>
@@ -40,163 +152,147 @@
            <attribute name="title">
             <string>Stutter</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_2">
+           <layout class="QGridLayout" name="gridLayout_31">
             <item row="0" column="0" rowspan="4">
-             <layout class="QGridLayout" name="stutter_inputGroup">
-              <item row="2" column="0">
-               <widget class="QPlainTextEdit" name="stutter_inputBox"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="stutter_inputStatusLabel">
-                <property name="text">
-                 <string>STATUS:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="stutter_inputLabel">
-                <property name="text">
-                 <string>Input</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="1">
-             <layout class="QGridLayout" name="stutter_thresholdGroup">
-              <item row="1" column="0">
-               <widget class="QSlider" name="stutter_thresholdSlider">
-                <property name="maximum">
-                 <number>100</number>
-                </property>
-                <property name="value">
-                 <number>50</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QDoubleSpinBox" name="stutter_thresholdSpinBox">
-                <property name="decimals">
-                 <number>0</number>
-                </property>
-                <property name="maximum">
-                 <double>100.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>1.000000000000000</double>
-                </property>
-                <property name="value">
-                 <double>50.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" colspan="2">
-               <widget class="QLabel" name="stutter_thresholdLabel">
-                <property name="text">
-                 <string>Threshold</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2" rowspan="4">
-             <layout class="QGridLayout" name="stutter_outputGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="stutter_outputLabel">
-                <property name="text">
-                 <string>Output</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QTextBrowser" name="stutter_outputBox"/>
-              </item>
-             </layout>
+             <widget class="QGroupBox" name="stutter_inputGroup">
+              <property name="title">
+               <string>Input</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="stutter_inputStatusLabel">
+                 <property name="text">
+                  <string>STATUS:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPlainTextEdit" name="stutter_inputBox"/>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item row="0" column="1">
-             <layout class="QGridLayout" name="stutter_initSVGroup">
-              <item row="3" column="0">
-               <widget class="QSlider" name="stutter_initSVSlider">
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>200</number>
-                </property>
-                <property name="pageStep">
-                 <number>1</number>
-                </property>
-                <property name="value">
-                 <number>100</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0" colspan="2">
-               <widget class="QLabel" name="stutter_initSVLabel">
-                <property name="lineWidth">
-                 <number>1</number>
-                </property>
-                <property name="midLineWidth">
-                 <number>1</number>
-                </property>
-                <property name="text">
-                 <string>Initial SV</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QDoubleSpinBox" name="stutter_initSVSpinBox">
-                <property name="decimals">
-                 <number>2</number>
-                </property>
-                <property name="minimum">
-                 <double>0.100000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.100000000000000</double>
-                </property>
-                <property name="value">
-                 <double>1.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QGroupBox" name="stutter_initSVGroup">
+              <property name="title">
+               <string>Initial SV</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_27">
+               <item row="0" column="0">
+                <widget class="QSlider" name="stutter_initSVSlider">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>200</number>
+                 </property>
+                 <property name="pageStep">
+                  <number>1</number>
+                 </property>
+                 <property name="value">
+                  <number>100</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QDoubleSpinBox" name="stutter_initSVSpinBox">
+                 <property name="decimals">
+                  <number>2</number>
+                 </property>
+                 <property name="minimum">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>10.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="2" rowspan="4">
+             <widget class="QGroupBox" name="stutter_outputGroup">
+              <property name="title">
+               <string>Output</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_30">
+               <item row="0" column="0">
+                <widget class="QTextBrowser" name="stutter_outputBox"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QGroupBox" name="stutter_thresholdGroup">
+              <property name="title">
+               <string>Threshold</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_28">
+               <item row="0" column="0">
+                <widget class="QSlider" name="stutter_thresholdSlider">
+                 <property name="maximum">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>50</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QDoubleSpinBox" name="stutter_thresholdSpinBox">
+                 <property name="decimals">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>1.000000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>50.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item row="2" column="1">
-             <layout class="QGridLayout" name="stutter_averageSVGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="stutter_averageSVLabel">
-                <property name="text">
-                 <string>Average SV</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QDoubleSpinBox" name="stutter_averageSVSpinBox">
-                <property name="minimum">
-                 <double>0.100000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>10.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.100000000000000</double>
-                </property>
-                <property name="value">
-                 <double>1.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QGroupBox" name="stutter_averageSVGroup">
+              <property name="title">
+               <string>Average SV</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_29">
+               <item row="0" column="0">
+                <widget class="QDoubleSpinBox" name="stutter_averageSVSpinBox">
+                 <property name="minimum">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>10.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item row="3" column="1">
              <widget class="QPushButton" name="stutter_generateButton">
@@ -211,76 +307,70 @@
            <attribute name="title">
             <string>Copier</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0" rowspan="2">
-             <layout class="QGridLayout" name="copier_inputGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="copier_inputLabel">
-                <property name="text">
-                 <string>Input</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPlainTextEdit" name="copier_inputBox"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="copier_inputStatusLabel">
-                <property name="text">
-                 <string>STATUS:</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QGroupBox" name="copier_inputGroup">
+              <property name="title">
+               <string>Input</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_25">
+               <item row="0" column="0">
+                <widget class="QLabel" name="copier_inputStatusLabel">
+                 <property name="text">
+                  <string>STATUS:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPlainTextEdit" name="copier_inputBox"/>
+               </item>
+              </layout>
+             </widget>
             </item>
-            <item row="0" column="1" rowspan="2">
-             <layout class="QGridLayout" name="copier_inputGroup_2">
-              <item row="0" column="0">
-               <widget class="QLabel" name="copier_inputLabel_2">
-                <property name="text">
-                 <string>Input 2</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPlainTextEdit" name="copier_inputBox_2"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="copier_inputStatusLabel_2">
-                <property name="text">
-                 <string>STATUS:</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+            <item>
+             <widget class="QGroupBox" name="copier_inputGroup_2">
+              <property name="title">
+               <string>Input 2</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="0" column="0">
+                <widget class="QLabel" name="copier_inputStatusLabel_2">
+                 <property name="text">
+                  <string>STATUS:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPlainTextEdit" name="copier_inputBox_2"/>
+               </item>
+              </layout>
+             </widget>
             </item>
-            <item row="0" column="3">
-             <layout class="QGridLayout" name="copier_outputGroup">
-              <item row="3" column="0">
-               <widget class="QPushButton" name="copier_generateButton">
-                <property name="text">
-                 <string>Generate</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="copier_statusLabel">
-                <property name="text">
-                 <string>Output</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QTextBrowser" name="copier_outputBox"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="copier_outputStatusLabel">
-                <property name="text">
-                 <string>STATUS:</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+            <item>
+             <widget class="QGroupBox" name="copier_outputGroup">
+              <property name="title">
+               <string>Output</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_26">
+               <item row="3" column="0">
+                <widget class="QPushButton" name="copier_generateButton">
+                 <property name="text">
+                  <string>Generate</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QTextBrowser" name="copier_outputBox"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="copier_outputStatusLabel">
+                 <property name="text">
+                  <string>STATUS:</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -288,64 +378,34 @@
            <attribute name="title">
             <string>2-Point Function</string>
            </attribute>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <layout class="QGridLayout" name="TPF_formulaGroup">
-              <item row="4" column="0">
-               <widget class="QTextBrowser" name="TPF_statusBox"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLineEdit" name="TPF_editorInputLine"/>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="TPF_editorInput">
-                <property name="text">
-                 <string>Editor Input (2 Notes)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="TPF_statusLabel">
-                <property name="text">
-                 <string>STATUS:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="TPF_statusBoxLabel">
-                <property name="text">
-                 <string>Status Box</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QPushButton" name="TPF_generateButton">
-                <property name="text">
-                 <string>Generate</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QRadioButton" name="TPF_BPMRadio">
-                <property name="text">
-                 <string>BPM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QRadioButton" name="TPF_SVRadio">
-                <property name="text">
-                 <string>SV</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
+           <layout class="QGridLayout" name="gridLayout_35">
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="TPF_editorInputGroup">
+              <property name="title">
+               <string>Editor Note Input</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_32">
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="TPF_editorInputLine">
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
-            <item>
+            <item row="0" column="1" rowspan="2">
              <widget class="QTabWidget" name="TPF_adjustTab">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="currentIndex">
                <number>0</number>
               </property>
@@ -355,228 +415,231 @@
                </attribute>
                <layout class="QVBoxLayout" name="verticalLayout">
                 <item>
-                 <layout class="QGridLayout" name="TPF_initialTPGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="TPF_initialTPLabel">
-                    <property name="text">
-                     <string>Initial SV:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSlider" name="TPF_initialTPSlider">
-                    <property name="minimum">
-                     <number>10</number>
-                    </property>
-                    <property name="maximum">
-                     <number>1000</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" rowspan="2" colspan="2">
-                   <widget class="QDoubleSpinBox" name="TPF_initialTPSpinBox">
-                    <property name="minimum">
-                     <double>0.100000000000000</double>
-                    </property>
-                    <property name="maximum">
-                     <double>10.000000000000000</double>
-                    </property>
-                    <property name="value">
-                     <double>1.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QGroupBox" name="TPF_initialTPGroup">
+                  <property name="title">
+                   <string>Initial SV</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_19">
+                   <item row="0" column="0">
+                    <widget class="QSlider" name="TPF_initialTPSlider">
+                     <property name="minimum">
+                      <number>10</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                     <property name="value">
+                      <number>100</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QDoubleSpinBox" name="TPF_initialTPSpinBox">
+                     <property name="minimum">
+                      <double>0.100000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>10.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>0.010000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>1.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="TPF_endTPGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="TPF_endTPLabel">
-                    <property name="text">
-                     <string>End SV:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSlider" name="TPF_endTPSlider">
-                    <property name="minimum">
-                     <number>10</number>
-                    </property>
-                    <property name="maximum">
-                     <number>1000</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" rowspan="2" colspan="2">
-                   <widget class="QDoubleSpinBox" name="TPF_endTPSpinBox">
-                    <property name="minimum">
-                     <double>0.100000000000000</double>
-                    </property>
-                    <property name="maximum">
-                     <double>10.000000000000000</double>
-                    </property>
-                    <property name="value">
-                     <double>1.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QGroupBox" name="TPF_endTPGroup">
+                  <property name="title">
+                   <string>End SV</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_20">
+                   <item row="0" column="0">
+                    <widget class="QSlider" name="TPF_endTPSlider">
+                     <property name="minimum">
+                      <number>10</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                     <property name="value">
+                      <number>100</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QDoubleSpinBox" name="TPF_endTPSpinBox">
+                     <property name="minimum">
+                      <double>0.100000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>10.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>0.010000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>1.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="TPF_amplitudeGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="TPF_amplitudeLabel">
-                    <property name="text">
-                     <string>Amplitude:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSlider" name="TPF_amplitudeSlider">
-                    <property name="minimum">
-                     <number>-1000</number>
-                    </property>
-                    <property name="maximum">
-                     <number>1000</number>
-                    </property>
-                    <property name="value">
-                     <number>0</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" rowspan="2" colspan="2">
-                   <widget class="QSpinBox" name="TPF_amplitudeSpinBox">
-                    <property name="minimum">
-                     <number>-1000</number>
-                    </property>
-                    <property name="maximum">
-                     <number>1000</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QGroupBox" name="TPF_amplitudeGroup">
+                  <property name="title">
+                   <string>Amplitude</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_21">
+                   <item row="0" column="0">
+                    <widget class="QSlider" name="TPF_amplitudeSlider">
+                     <property name="minimum">
+                      <number>-1000</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                     <property name="value">
+                      <number>0</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QSpinBox" name="TPF_amplitudeSpinBox">
+                     <property name="suffix">
+                      <string/>
+                     </property>
+                     <property name="minimum">
+                      <number>-1000</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="TPF_offsetGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="TPF_offsetLabel">
-                    <property name="text">
-                     <string>Offset:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSlider" name="TPF_offsetSlider">
-                    <property name="minimum">
-                     <number>-200</number>
-                    </property>
-                    <property name="maximum">
-                     <number>200</number>
-                    </property>
-                    <property name="value">
-                     <number>0</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" rowspan="2" colspan="2">
-                   <widget class="QSpinBox" name="TPF_offsetSpinBox">
-                    <property name="minimum">
-                     <number>-200</number>
-                    </property>
-                    <property name="maximum">
-                     <number>200</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QGroupBox" name="TPF_offsetGroup">
+                  <property name="title">
+                   <string>Offset</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_22">
+                   <item row="0" column="0">
+                    <widget class="QSlider" name="TPF_offsetSlider">
+                     <property name="minimum">
+                      <number>-200</number>
+                     </property>
+                     <property name="maximum">
+                      <number>200</number>
+                     </property>
+                     <property name="value">
+                      <number>0</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QSpinBox" name="TPF_offsetSpinBox">
+                     <property name="suffix">
+                      <string>pi</string>
+                     </property>
+                     <property name="minimum">
+                      <number>-200</number>
+                     </property>
+                     <property name="maximum">
+                      <number>200</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="TPF_frequencyGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="TPF_frequencyLabel">
-                    <property name="text">
-                     <string>Frequency:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSlider" name="TPF_frequencySlider">
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>2500</number>
-                    </property>
-                    <property name="singleStep">
-                     <number>25</number>
-                    </property>
-                    <property name="pageStep">
-                     <number>100</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" rowspan="2" colspan="2">
-                   <widget class="QSpinBox" name="TPF_frequencySpinBox">
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>2500</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QGroupBox" name="TPF_frequencyGroup">
+                  <property name="title">
+                   <string>Frequency</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_23">
+                   <item row="1" column="0">
+                    <widget class="QSpinBox" name="TPF_frequencySpinBox">
+                     <property name="suffix">
+                      <string>%</string>
+                     </property>
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>10000</number>
+                     </property>
+                     <property name="value">
+                      <number>100</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QSlider" name="TPF_frequencySlider">
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>10000</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>25</number>
+                     </property>
+                     <property name="pageStep">
+                      <number>100</number>
+                     </property>
+                     <property name="value">
+                      <number>100</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="TPF_intermediateGroup">
-                  <item row="1" column="0" rowspan="2" colspan="2">
-                   <widget class="QSpinBox" name="TPF_intermediateSpinBox">
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>5000</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0" colspan="2">
-                   <widget class="QLabel" name="TPF_intermediateLabel">
-                    <property name="text">
-                     <string>Intermediate Points</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QGroupBox" name="TPF_intermediateGroup">
+                  <property name="title">
+                   <string>Intermediate Points</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_24">
+                   <item row="0" column="0">
+                    <widget class="QSpinBox" name="TPF_intermediateSpinBox">
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>5000</number>
+                     </property>
+                     <property name="value">
+                      <number>100</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QPushButton" name="TPF_defaultButton">
@@ -589,28 +652,33 @@
               </widget>
              </widget>
             </item>
-            <item>
-             <layout class="QGridLayout" name="TPF_outputGroup">
-              <item row="0" column="0">
-               <widget class="QLabel" name="TPF_outputLabel">
-                <property name="text">
-                 <string>Output</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QTextBrowser" name="TPF_outputBox"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QCheckBox" name="TPF_liveUpdateCheck">
-                <property name="text">
-                 <string>Live Graph Update</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+            <item row="0" column="2" rowspan="2">
+             <widget class="QGroupBox" name="TPF_outputGroup">
+              <property name="title">
+               <string>Output</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_34">
+               <item row="0" column="0">
+                <widget class="QTextBrowser" name="TPF_outputBox">
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="TPF_liveUpdateCheck">
+                 <property name="text">
+                  <string>Live Graph Update</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
-            <item>
+            <item row="0" column="3" rowspan="2">
              <widget class="QCustomPlot" name="TPF_customPlot" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -618,6 +686,56 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QGroupBox" name="TPF_statusGroup">
+              <property name="title">
+               <string>Status Box</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_33">
+               <item row="0" column="0">
+                <widget class="QTextBrowser" name="TPF_statusBox">
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QRadioButton" name="TPF_SVRadio">
+                 <property name="text">
+                  <string>SV</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QRadioButton" name="TPF_BPMRadio">
+                 <property name="text">
+                  <string>BPM</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QPushButton" name="TPF_generateButton">
+                 <property name="text">
+                  <string>Generate</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="TPF_statusLabel">
+                 <property name="text">
+                  <string>STATUS:</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -758,163 +876,137 @@
            <attribute name="title">
             <string>Adjuster</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_11">
-            <item row="0" column="0">
-             <layout class="QGridLayout" name="gridLayout_10">
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0" rowspan="2">
+             <layout class="QGridLayout" name="adjuster_group">
               <item row="0" column="0">
-               <widget class="QLabel" name="label">
-                <property name="text">
+               <widget class="QGroupBox" name="adjuster_inputGroup">
+                <property name="title">
                  <string>Input</string>
                 </property>
+                <layout class="QGridLayout" name="gridLayout_36">
+                 <item row="1" column="0">
+                  <widget class="QPlainTextEdit" name="adjuster_inputBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>133333</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="adjuster_inputStatusLabel">
+                   <property name="text">
+                    <string>STATUS:</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QPlainTextEdit" name="plainTextEdit">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="text">
+               <widget class="QGroupBox" name="adjuster_outputGroup">
+                <property name="title">
                  <string>Output</string>
                 </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QTextBrowser" name="textBrowser">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+                <layout class="QGridLayout" name="gridLayout_37">
+                 <item row="1" column="0">
+                  <widget class="QTextBrowser" name="adjuster_outputBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>133333</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="adjuster_outputStatusLabel">
+                   <property name="text">
+                    <string>STATUS:</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
             </item>
-            <item row="0" column="1">
+            <item row="0" column="1" rowspan="2">
              <layout class="QGridLayout" name="adjuster_parameterGroup">
-              <item row="0" column="3">
-               <layout class="QGridLayout" name="adjuster_zeroGroup">
-                <item row="2" column="0">
-                 <widget class="QSpinBox" name="adjuster_zeroSpinBox"/>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="adjuster_zeroLabel">
-                  <property name="text">
-                   <string>Zero</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QSlider" name="adjuster_zeroSlider">
-                  <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="2">
-               <layout class="QGridLayout" name="adjuster_intensityGroup">
-                <item row="3" column="0">
-                 <widget class="QLabel" name="adjuster_intensityLabel">
-                  <property name="text">
-                   <string>Intensity</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QSpinBox" name="adjuster_intensitySpinBox"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QSlider" name="adjuster_intensitySlider">
-                  <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
               <item row="0" column="0">
-               <layout class="QGridLayout" name="adjuster_addGroup">
-                <item row="3" column="0">
-                 <widget class="QLabel" name="adjuster_addLabel">
-                  <property name="text">
-                   <string>Add</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QSlider" name="adjuster_addSlider">
-                  <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QSpinBox" name="adjuster_addSpinBox"/>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="adjuster_offsetGroup">
-                <item row="2" column="0">
-                 <widget class="QSpinBox" name="adjuster_offsetSpinBox"/>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="adjuster_offsetLabel">
-                  <property name="text">
-                   <string>Offset</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QSlider" name="adjuster_offsetSlider">
-                  <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2">
-             <layout class="QGridLayout" name="adjuster_checkGroup">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="adjuster_autoZeroCheck">
-                <property name="text">
-                 <string>Auto Zero</string>
+               <widget class="QGroupBox" name="adjuster_adjustTypeGroup">
+                <property name="title">
+                 <string>Adjust Type</string>
                 </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="adjuster_invertCheck">
-                <property name="text">
-                 <string>Invert</string>
-                </property>
+                <layout class="QGridLayout" name="gridLayout_39">
+                 <item row="1" column="0">
+                  <widget class="QRadioButton" name="adjuster_adjustBPMRadio">
+                   <property name="text">
+                    <string>BPM</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QRadioButton" name="adjuster_adjustSVRadio">
+                   <property name="text">
+                    <string>SV</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item row="2" column="0">
-               <spacer name="adjuster_verticalSpacer">
+               <widget class="QGroupBox" name="adjuster_graphGroup">
+                <property name="title">
+                 <string>Graph Type</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_11">
+                 <item row="0" column="0">
+                  <widget class="QRadioButton" name="adjuster_graphLineRadio">
+                   <property name="text">
+                    <string>Line</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QRadioButton" name="adjuster_graphScatterRadio">
+                   <property name="text">
+                    <string>Scatter</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <spacer name="verticalSpacer">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -926,10 +1018,273 @@
                 </property>
                </spacer>
               </item>
+              <item row="1" column="0">
+               <widget class="QGroupBox" name="adjuster_optionsGroup">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Options</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_38">
+                 <item row="3" column="0">
+                  <widget class="QCheckBox" name="adjuster_liveUpdateCheck">
+                   <property name="text">
+                    <string>Live Graph Update</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QCheckBox" name="adjuster_invertCheck">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Invert</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QCheckBox" name="adjuster_autoZeroCheck">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Auto Zero</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                   <property name="tristate">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QGroupBox" name="adjuster_zeroGroup">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Zero (SV)</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_15">
+                 <item row="0" column="0">
+                  <widget class="QDoubleSpinBox" name="adjuster_zeroSpinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimum">
+                    <double>0.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>10.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QGroupBox" name="adjuster_addGroup">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Add (SV)</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_18">
+                 <item row="0" column="0">
+                  <widget class="QDoubleSpinBox" name="adjuster_addSpinBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimum">
+                    <double>-10.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>10.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QGroupBox" name="adjuster_multiplyGroup">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Multiply</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_16">
+                 <item row="0" column="0">
+                  <widget class="QDoubleSpinBox" name="adjuster_multiplySpinBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimum">
+                    <double>0.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>1000.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QPushButton" name="adjuster_generateButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Generate</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QGroupBox" name="adjuster_offsetGroup">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Offset</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_17">
+                 <item row="0" column="0">
+                  <widget class="QSpinBox" name="adjuster_offsetSpinBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="suffix">
+                    <string>ms</string>
+                   </property>
+                   <property name="minimum">
+                    <number>-1000000</number>
+                   </property>
+                   <property name="maximum">
+                    <number>1000000</number>
+                   </property>
+                   <property name="displayIntegerBase">
+                    <number>10</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QPushButton" name="adjuster_defaultButton">
+                <property name="text">
+                 <string>Reset To Default</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
-            <item row="0" column="3">
-             <widget class="QCustomPlot" name="adjuster_customPlot" native="true"/>
+            <item row="0" column="2">
+             <widget class="QCustomPlot" name="adjuster_customSVPlot" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>700</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCustomPlot" name="adjuster_customBPMPlot" native="true">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>700</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -1645,15 +2000,15 @@
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-        <horstretch>2</horstretch>
+       <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="minimumSize">
+      <property name="maximumSize">
        <size>
-        <width>140</width>
-        <height>0</height>
+        <width>200</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="title">
@@ -1670,113 +2025,107 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>120</width>
-            <height>342</height>
+            <width>180</width>
+            <height>599</height>
            </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
           <attribute name="label">
            <string>Basic Functions</string>
           </attribute>
-          <widget class="QListWidget" name="basicWidgetList">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>111</width>
-             <height>341</height>
-            </rect>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Stutter</string>
-            </property>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="basicWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Stutter</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copier</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2-Point Function</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Normalizer</string>
+              </property>
+             </item>
+            </widget>
            </item>
-           <item>
-            <property name="text">
-             <string>Copier</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>2-Point Function</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Normalizer</string>
-            </property>
-           </item>
-          </widget>
+          </layout>
          </widget>
          <widget class="QWidget" name="advancedPage">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>120</width>
-            <height>342</height>
+            <width>180</width>
+            <height>599</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Advanced Functions</string>
           </attribute>
-          <widget class="QListWidget" name="advancedWidgetList">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>111</width>
-             <height>341</height>
-            </rect>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Test 1</string>
-            </property>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="advancedWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Test 1</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Test 2</string>
+              </property>
+             </item>
+            </widget>
            </item>
-           <item>
-            <property name="text">
-             <string>Test 2</string>
-            </property>
-           </item>
-          </widget>
+          </layout>
          </widget>
          <widget class="QWidget" name="settingsPage">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>120</width>
-            <height>342</height>
+            <width>180</width>
+            <height>599</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Settings</string>
           </attribute>
-          <widget class="QListWidget" name="settingsWidgetList">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>111</width>
-             <height>341</height>
-            </rect>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Default Values</string>
-            </property>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="settingsWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Default Values</string>
+              </property>
+             </item>
+            </widget>
            </item>
-          </widget>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -1790,7 +2139,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1267</width>
+     <width>1391</width>
      <height>21</height>
     </rect>
    </property>
@@ -1814,6 +2163,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

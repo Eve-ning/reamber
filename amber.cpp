@@ -1,7 +1,6 @@
 #include "amber.h"
 #include "ui_amber.h"
 
-
 /* osu!mania FORMATTING REF
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
  * Long Note: 402,192,73,128,0,388:0:0:0:0:
@@ -27,6 +26,21 @@
 amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
+
+    //Pre-RenderGraphs
+    ui->adjuster_customSVPlot->addGraph();
+    ui->adjuster_customSVPlot->xAxis->setLabel("Offset");
+    ui->adjuster_customSVPlot->yAxis->setLabel("SV");
+
+    ui->adjuster_customBPMPlot->addGraph();
+    ui->adjuster_customBPMPlot->xAxis->setLabel("Offset");
+    ui->adjuster_customBPMPlot->yAxis->setLabel("BPM");
+
+    amber::on_adjuster_defaultButton_clicked(); //Placeholder for Bug
+
+    ui->TPF_customPlot->addGraph();
+    ui->TPF_customPlot->xAxis->setLabel("Offset");
+
 }
 
 amber::~amber()
@@ -34,7 +48,20 @@ amber::~amber()
     delete ui;
 }
 
+namespace B_INDEX {
+    int HO_LABEL       = 0;
+    int HO_NOOFKEYS    = 1;
+    int HO_OFFSET      = 2;
+    int HO_COLUMN      = 3;
+    int HO_LNENDOFFSET = 4;
+    int TP_LABEL       = 0;
+    int TP_OFFSET      = 1;
+    int TP_VALUE       = 2;
+    int TP_TYPE        = 3;
+}
+
 //DEFAULT ARGUMENTS
+
 QString def_xAxis            = "256"
        ,def_yAxis            = "192"
        ,def_offset           = "0"
@@ -55,13 +82,20 @@ QString def_xAxis            = "256"
        ,def_timingPointType  = "SV"
 ;
 
+// --------------------------------------------------------------------------< HOME >
+
+void amber::on_home_githubIconLabel_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber", QUrl::TolerantMode));
+}
+
 // --------------------------------------------------------------------------< GENERAL >
 
 //Compilers
 QString amber::compileOMFormatting_NN(QString xAxis,
-                                       QString offset,
-                                       QString yAxis,
-                                       QString extension)
+                                      QString offset,
+                                      QString yAxis,
+                                      QString extension)
 {
     QString output;
     /* Normal Note: xAxis,yAxis,offset,extension */
@@ -75,11 +109,11 @@ QString amber::compileOMFormatting_NN(QString xAxis,
     return output;
 }
 QString amber::compileOMFormatting_LN(QString xAxis,
-                                       QString offset,
-                                       QString lnOffset,
-                                       QString yAxis,
-                                       QString lnParameter,
-                                       QString extension)
+                                      QString offset,
+                                      QString lnOffset,
+                                      QString yAxis,
+                                      QString lnParameter,
+                                      QString extension)
 {
     QString output;
     /* Long Note: xAxis,yAxis,offset,parameter,lnOffset&extension */
@@ -96,8 +130,8 @@ QString amber::compileOMFormatting_LN(QString xAxis,
     return output;
 }
 QString amber::compileOMFormatting_BPM(QString offset,
-                                        QString bpmCode,
-                                        QString extension)
+                                       QString bpmCode,
+                                       QString extension)
 {
     if (bpmCode.toDouble() < 0)
     {
@@ -114,13 +148,14 @@ QString amber::compileOMFormatting_BPM(QString offset,
     return output;
 }
 QString amber::compileOMFormatting_SV(QString offset,
-                                       QString svCode,
-                                       QString extension)
+                                      QString svCode,
+                                      QString extension)
 {
     if (svCode.toDouble() > -10.0)
     {
         svCode = QString::number(-10.0);
-    } else if (svCode.toDouble() < -1000.0)
+    }
+    else if (svCode.toDouble() < -1000.0)
     {
         svCode = QString::number(-1000.0);
     }
@@ -135,10 +170,10 @@ QString amber::compileOMFormatting_SV(QString offset,
     return output;
 }
 QString amber::compileBASICFormatting_hitObject(QString noOfKeys,
-                                                 QString offset,
-                                                 QString column,
-                                                 QString lnOffset,
-                                                 QString label)
+                                                QString offset,
+                                                QString column,
+                                                QString lnOffset,
+                                                QString label)
 {
     QString output;
     /* HITOBJECT: HITOBJECT|NO_OF_KEYS|OFFSET|COLUMN|LN_OFFSET */
@@ -154,9 +189,9 @@ QString amber::compileBASICFormatting_hitObject(QString noOfKeys,
     return output;
 }
 QString amber::compileBASICFormatting_timingPoint(QString offset,
-                                                   QString value,
-                                                   QString timingPointType,
-                                                   QString label)
+                                                  QString value,
+                                                  QString timingPointType,
+                                                  QString label)
 {
     QString output;
     /* TIMINGPOINT: TIMINGPOINT|OFFSET|VALUE|TYPE */
@@ -194,7 +229,8 @@ QList<double> amber::convertEditorHitObjectToOffsetList(QString editorHitObject)
             offsetList.append(parameter.split("|").at(0).toDouble());
         }
         return offsetList;
-    } else
+    }
+    else
     {
         offsetList.append(0.0);
         return offsetList;
@@ -217,7 +253,8 @@ QList<int> amber::convertEditorHitObjectToColumnList(QString editorHitObject)
             columnList.append(parameter.split("|").at(1).toInt());
         }
         return columnList;
-    } else
+    }
+    else
     {
         columnList.append(0);
         return columnList;
@@ -236,7 +273,8 @@ QList<double> amber::convertHitObjectToOffsetList(QStringList hitObjectList)
             offsetList.append(hitObject.split(",").at(2).toDouble());
         }
         return offsetList;
-    } else
+    }
+    else
     {
         offsetList.append(0.0);
         return offsetList;
@@ -255,7 +293,8 @@ QList<int> amber::convertHitObjectToColumnList(QStringList hitObjectList, int ke
                               hitObject.split(",").at(2).toInt(), (double) keyCount));
         }
         return columnList;
-    } else
+    }
+    else
     {
         columnList.append(0);
         return columnList;
@@ -273,7 +312,8 @@ QList<double> amber::convertTimingPointToOffsetList(QStringList timingPointList)
             offsetList.append(timingPoint.split(",").at(0).toDouble());
         }
         return offsetList;
-    } else
+    }
+    else
     {
         offsetList.append(0.0);
         return offsetList;
@@ -291,7 +331,8 @@ QList<double> amber::convertTimingPointToCodeList(QStringList timingPointList)
             codeList.append(timingPoint.split(",").at(1).toDouble());
         }
         return codeList;
-    } else
+    }
+    else
     {
         codeList.append(0.0);
         return codeList;
@@ -369,23 +410,35 @@ bool amber::checkTimingPoint(QStringList timingPointList)
 
 bool amber::checkHitObjectNN(QString hitObjectNN)
 {
+    if (!hitObjectNN.contains(",")){
+        return false;
+    }
     return hitObjectNN.count(QRegExp(",")) == 4;
 }
 bool amber::checkHitObjectLN(QString hitObjectLN)
 {
+    if (!hitObjectLN.contains(",")){
+        return false;
+    }
     return hitObjectLN.count(QRegExp(",")) == 5;
 }
 bool amber::checkTimingPointSV(QString timingPointSV)
 {
+    if (!timingPointSV.contains(",")){
+        return false;
+    }
     return timingPointSV.split(",", QString::SkipEmptyParts).at(6) == "0";
 }
 bool amber::checkTimingPointBPM(QString timingPointBPM)
 {
+    if (!timingPointBPM.contains(",")){
+        return false;
+    }
     return timingPointBPM.split(",", QString::SkipEmptyParts).at(6) == "1";
 }
 
-//Converts data from BASIC FORMATTING to OSU!MANIA FORMATTING
-void amber::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject)
+void amber::compileProcOutput(QTextBrowser *inputBoxObject,
+                              QTextBrowser *outputBoxObject)
 {
     QStringList partVector, rawOutputVector;
     QString rawOutputString;
@@ -400,45 +453,46 @@ void amber::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *output
     foreach(rawOutputString, rawOutputVector){
         partVector = rawOutputString.split("|",QString::SkipEmptyParts);
 
-         /* DEBUG
-          * ui->console_consoleBox->append(QString("RAW"));
-          * ui->console_consoleBox->append(QString(partVector.at(0)));
-          * ui->console_consoleBox->append(QString("HITOBJECT Compare"));
-          * ui->console_consoleBox->append(QString::number(QString::compare(partVector.at(0),QString("HITOBJECT"),Qt::CaseInsensitive)));
-          * ui->console_consoleBox->append(QString("TIMINGPOINT Compare"));
-          * ui->console_consoleBox->append(QString::number(QString::compare(partVector.at(0),QString("TIMINGPOINT"),Qt::CaseInsensitive)));
-          */
-
-        if (QString::compare(partVector.at(0),QString("HITOBJECT"),Qt::CaseInsensitive) == 0)
+        if (partVector.at(B_INDEX::HO_LABEL) == "HITOBJECT")
         {
             //hitObjectOutput
             //Calculation of ColumnCode
-            columnCode = amber::convertColumnKeyToColumnCode(partVector.at(1).toDouble(), partVector.at(3).toDouble());
-            if (QString::compare(partVector.at(4),QString("-1"),Qt::CaseInsensitive) == 0)
+            columnCode = amber::convertColumnKeyToColumnCode(partVector.at(B_INDEX::HO_COLUMN).toDouble(),
+                                                             partVector.at(B_INDEX::HO_NOOFKEYS).toDouble());
+            if (partVector.at(B_INDEX::HO_LNENDOFFSET) == "-1")
             {
                 //Normal Note Compile
-                outputBoxObject->append(amber::compileOMFormatting_NN(QString::number(columnCode),partVector.at(2)));
-            } else
+                outputBoxObject->append(amber::compileOMFormatting_NN(QString::number(columnCode),
+                                                                      partVector.at(B_INDEX::HO_OFFSET)));
+            }
+            else
             {
                 //Long Note Compile
-                outputBoxObject->append(amber::compileOMFormatting_LN(QString::number(columnCode),partVector.at(2),partVector.at(4)));
+                outputBoxObject->append(amber::compileOMFormatting_LN(QString::number(columnCode),
+                                                                      partVector.at(B_INDEX::HO_OFFSET),
+                                                                      partVector.at(B_INDEX::HO_LNENDOFFSET)));
             }
 
-        } else if (QString::compare(partVector.at(0),QString("TIMINGPOINT"),Qt::CaseInsensitive) == 0)
+        }
+        else if (partVector.at(B_INDEX::TP_LABEL) == "TIMINGPOINT")
         {
             //timingPointOutput
-            if (QString::compare(partVector.at(3),QString("BPM"),Qt::CaseInsensitive) == 0)
+            if (partVector.at(B_INDEX::TP_TYPE) == "BPM")
             {
                 //BPM Compile
-                timingPointCode = 60000 / partVector.at(2).toDouble();
-                outputBoxObject->append(amber::compileOMFormatting_BPM(QString(partVector.at(1)),QString::number(timingPointCode)));
-            } else if (QString::compare(partVector.at(3),QString("SV"),Qt::CaseInsensitive) == 0)
+                timingPointCode = 60000 / partVector.at(B_INDEX::TP_VALUE).toDouble();
+                outputBoxObject->append(amber::compileOMFormatting_BPM(partVector.at(B_INDEX::TP_OFFSET),
+                                                                       QString::number(timingPointCode)));
+            }
+            else if (partVector.at(B_INDEX::TP_TYPE) == "BPM")
             {
                 //SV Compile
-                timingPointCode = -100 / partVector.at(2).toDouble();
-                outputBoxObject->append(amber::compileOMFormatting_SV(QString(partVector.at(1)),QString::number(timingPointCode)));
+                timingPointCode = -100 / partVector.at(B_INDEX::TP_VALUE).toDouble();
+                outputBoxObject->append(amber::compileOMFormatting_SV(partVector.at(B_INDEX::TP_OFFSET),
+                                                                      QString::number(timingPointCode)));
             }
-        } else
+        }
+        else
         {
             //nullOutput
             continue;
@@ -446,20 +500,18 @@ void amber::compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *output
     }
 }
 
-
-
 QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
-                                     bool acceptEditorHitObject,
-                                     bool acceptHitObject,
-                                     bool acceptTimingPoint,
-                                     QStringList input,
-                                     int noOfKeys)
+                                    bool acceptEditorHitObject,
+                                    bool acceptHitObject,
+                                    bool acceptTimingPoint,
+                                    QStringList input,
+                                    int noOfKeys)
 {
 
     bool isEditorHitObject, isHitObject, isTimingPoint;
 
-    QStringList output;
-    QStringList partList;
+    QStringList output,
+                partList;
     QString partString, inputString;
 
     isEditorHitObject = amber::checkEditorHitObject(input);
@@ -476,7 +528,7 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
     }
 
     // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
-    if((isEditorHitObject && !acceptEditorHitObject) ||
+    if ((isEditorHitObject && !acceptEditorHitObject) ||
        (isHitObject && !acceptHitObject) ||
        (isTimingPoint && !acceptTimingPoint))
     {
@@ -490,7 +542,7 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
         // Reads each line from the input
         foreach (inputString, input) {
 
-            if(inputString.isEmpty())
+            if (inputString.isEmpty())
             {
                 continue;
             }
@@ -511,11 +563,12 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
         messageLabel->setText("STATUS: Converted Editor Hit Object");
         messageLabel->setStyleSheet("QLabel { color:green; }");
 
-    } else if (isHitObject)
+    }
+    else if (isHitObject)
     {
         foreach (inputString, input) {
 
-            if(inputString.isEmpty())
+            if (inputString.isEmpty())
             {
                 continue;
             }
@@ -527,14 +580,15 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
             // Gets the key column through calculation and rounds to 0 D.P.
             columnKey = amber::convertColumnCodeToColumnKey(partList.at(0).toDouble(), noOfKeys);
 
-            if(amber::checkHitObjectNN(inputString))
+            if (amber::checkHitObjectNN(inputString))
             {
                 output.append(amber::compileBASICFormatting_hitObject(
                               QString::number(noOfKeys),
                               partList.at(2),
                               QString::number(columnKey)));
 
-            } else if (amber::checkHitObjectLN(inputString))
+            }
+            else if (amber::checkHitObjectLN(inputString))
             {
                 output.append(amber::compileBASICFormatting_hitObject(
                               QString::number(noOfKeys),
@@ -547,11 +601,12 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
         messageLabel->setText("STATUS: Converted Hit Object");
         messageLabel->setStyleSheet("QLabel { color:green; }");
 
-    } else if (isTimingPoint)
+    }
+    else if (isTimingPoint)
     {
         foreach (inputString, input)
         {
-            if(inputString.isEmpty())
+            if (inputString.isEmpty())
             {
                 continue;
             }
@@ -562,7 +617,8 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
             if (checkTimingPointSV(inputString))
             {
                 timingPointValue = QString::number(-100.0 / partList.at(1).toDouble());
-            } else if (checkTimingPointBPM(inputString))
+            }
+            else if (checkTimingPointBPM(inputString))
             {
                 timingPointValue = QString::number(60000.0 / partList.at(1).toDouble());
             }
@@ -582,19 +638,19 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
 }
 
 QStringList amber::convertBASICtoOM(QLabel *messageLabel,
-                                     QStringList input)
+                                    QStringList input)
 {
     bool isHitObject, isTimingPoint;
 
-    QStringList output;
-    QStringList partList;
+    QStringList output,
+                partList;
     QString inputString;
 
-    isHitObject = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "HITOBJECT";
+    isHitObject   = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "HITOBJECT";
     isTimingPoint = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "TIMINGPOINT";
 
     // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
-    if(isHitObject || isTimingPoint)
+    if (isHitObject || isTimingPoint)
     {
         messageLabel->setText("STATUS: Input Rejected");
         messageLabel->setStyleSheet("QLabel { color:red; }");
@@ -605,7 +661,7 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
     {
         foreach (inputString, input) {
 
-            if(inputString.isEmpty())
+            if (inputString.isEmpty())
             {
                 continue;
             }
@@ -621,7 +677,8 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
             {
                 output.append(amber::compileOMFormatting_NN(QString::number(columnCode),
                                                              partList.at(2)));
-            } else
+            }
+            else
             {
                 output.append(amber::compileOMFormatting_LN(QString::number(columnCode),
                                                              partList.at(2),
@@ -632,11 +689,12 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
         messageLabel->setText("STATUS: Hit Object");
         messageLabel->setStyleSheet("QLabel { color:green; }");
 
-    } else if (isTimingPoint)
+    }
+    else if (isTimingPoint)
     {
         foreach (inputString, input)
         {
-            if(inputString.isEmpty())
+            if (inputString.isEmpty())
             {
                 continue;
             }
@@ -646,7 +704,8 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
             {
                 output.append(amber::compileOMFormatting_BPM(partList.at(1),
                                                               QString::number(60000.0 / partList.at(2).toDouble())));
-            } else if (partList.at(3) == "SV")
+            }
+            else if (partList.at(3) == "SV")
             {
                 output.append(amber::compileOMFormatting_SV(partList.at(1),
                                                               QString::number(-100 / partList.at(2).toDouble())));
@@ -697,7 +756,7 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
      * Normalizer
      */
 
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 
     if      (itemString == "Stutter")
     {
@@ -722,7 +781,7 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
     QString itemString;
     itemString = item->text();
 
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(2);
 
     if      (itemString == "Test 1")
     {
@@ -738,7 +797,7 @@ void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
     QString itemString;
     itemString = item->text();
 
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(3);
 
     if      (itemString == "Default Values")
     {
@@ -777,8 +836,8 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
 
-    double maxInitSV, minInitSV, secondSV;
-    double currentAverageSV, currentThreshold;
+    double maxInitSV, minInitSV, secondSV,
+           currentAverageSV, currentThreshold;
 
     currentAverageSV = ui->stutter_averageSVSpinBox->value();
     currentThreshold = arg1 / 100;
@@ -816,18 +875,11 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
 
 
     // Set Maximum and Minimum
-    ui->stutter_initSVSlider->setMaximum((int) (maxInitSV * 100));
+    ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV * 100));
     ui->stutter_initSVSpinBox->setMaximum(maxInitSV);
 
-    ui->stutter_initSVSlider->setMinimum((int) (minInitSV * 100));
+    ui->stutter_initSVSlider-> setMinimum((int) (minInitSV * 100));
     ui->stutter_initSVSpinBox->setMinimum(minInitSV);
-
-    /* DEBUG
-    ui->stutter_procOutputBox->append(QString("maxinit ").append(QString::number((int) (maxInitSV * 100))));
-    ui->stutter_procOutputBox->append(QString::number(ui->stutter_initSVSlider->singleStep()));
-    ui->stutter_procOutputBox->append(QString::number(maxInitSV).append(" maxInit"));
-    ui->stutter_procOutputBox->append(QString::number(minInitSV).append(" minInit"));
-    */
 
 }
 void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
@@ -835,8 +887,8 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
 
-    double maxInitSV, minInitSV;
-    double currentAverageSV, currentThreshold;
+    double maxInitSV, minInitSV,
+           currentAverageSV, currentThreshold;
 
     currentAverageSV = arg1;
     currentThreshold = ui->stutter_thresholdSpinBox->value() / 100;
@@ -865,10 +917,10 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
                    : (currentAverageSV - 0.1 * (1 - currentThreshold)) / currentThreshold;
 
     // Set Maximum and Minimum
-    ui->stutter_initSVSlider->setMaximum(maxInitSV * 10);
+    ui->stutter_initSVSlider-> setMaximum(maxInitSV * 10);
     ui->stutter_initSVSpinBox->setMaximum(maxInitSV);
 
-    ui->stutter_initSVSlider->setMinimum(minInitSV * 10);
+    ui->stutter_initSVSlider-> setMinimum(minInitSV * 10);
     ui->stutter_initSVSpinBox->setMinimum(minInitSV);
 
 }
@@ -881,15 +933,16 @@ void amber::on_stutter_generateButton_clicked()
         QString inputString;
         QList<double> uniqueOffsetList;
 
-
-        double threshold, initSV, secondSV, averageSV, initOffset, secondOffset, endOffset;
+        double threshold,
+               initSV, secondSV, averageSV,
+               initOffset, secondOffset, endOffset;
 
         QPlainTextEdit *inputBox;
-        inputBox = ui->stutter_inputBox;
+        inputBox  = ui->stutter_inputBox;
         threshold = ui->stutter_thresholdSpinBox->value() / 100;
-        initSV = ui->stutter_initSVSpinBox->value();
+        initSV    = ui->stutter_initSVSpinBox->value();
         averageSV = ui->stutter_averageSVSpinBox->value();
-        secondSV = (averageSV - (initSV * threshold)) / (1 - threshold);
+        secondSV  = (averageSV - (initSV * threshold)) / (1 - threshold);
 
         ui->stutter_outputBox->clear();
 
@@ -903,8 +956,8 @@ void amber::on_stutter_generateButton_clicked()
         foreach (inputString, inputList)
         {
             partList = inputString.split("|");
-            if (!uniqueOffsetList.contains(partList.at(2).toDouble()))
-                uniqueOffsetList.append(partList.at(2).toDouble());
+            if (!uniqueOffsetList.contains(partList.at(B_INDEX::HO_OFFSET).toDouble()))
+                uniqueOffsetList.append(partList.at(B_INDEX::HO_OFFSET).toDouble());
         }
 
         // Generate all SVs in basic format
@@ -939,12 +992,20 @@ void amber::on_stutter_generateButton_clicked()
 void amber::on_copier_generateButton_clicked()
 {
     try {
-        QStringList inputList_1, inputList_2;
-        QStringList hitObjectList, timingPointList, hitObjectPartList;
-        QString hitObjectString;
-        QString timingPointPart;
+        QStringList inputList_1, inputList_2,
+                    hitObjectList, timingPointList, hitObjectPartList;
+        QString hitObjectString,
+                timingPointPart;
         QList<double> uniqueHitObjectOffsetList;
         double uniqueHitObjectOffset, timingPointOffset, initialTimingPointOffset;
+
+        QLabel *inputStatusLabel_1,
+               *inputStatusLabel_2,
+               *outputStatusLabel;
+
+        inputStatusLabel_1 = ui->copier_inputStatusLabel;
+        inputStatusLabel_2 = ui->copier_inputStatusLabel_2;
+        outputStatusLabel  = ui->copier_outputStatusLabel;
 
         enum class inputBoxType
         {
@@ -952,11 +1013,15 @@ void amber::on_copier_generateButton_clicked()
             hitObject // 1
         };
 
-        inputBoxType boxType1;
-        inputBoxType boxType2;
+        inputBoxType boxType1,
+                     boxType2;
 
-        inputList_1 = amber::convertOMtoBASIC(ui->copier_inputStatusLabel, true, true, true, ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
-        inputList_2 = amber::convertOMtoBASIC(ui->copier_inputStatusLabel_2, true, true, true, ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
+        inputList_1 = amber::convertOMtoBASIC(inputStatusLabel_1,
+                                              true, true, true,
+                                              ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+        inputList_2 = amber::convertOMtoBASIC(inputStatusLabel_2,
+                                              true, true, true,
+                                              ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
 
         if (inputList_1.length() == 0 || inputList_2.length() == 0){
             return;
@@ -965,45 +1030,45 @@ void amber::on_copier_generateButton_clicked()
         ui->copier_outputBox->clear();
 
         //Checks for Type
-        if (QString::compare(inputList_1.at(0).split("|").at(0),
-                             "HITOBJECT",
-                             Qt::CaseInsensitive) == 0)
+        if (inputList_1.at(0).split("|").at(B_INDEX::HO_LABEL) == "HITOBJECT")
         {
             boxType1 = inputBoxType::hitObject;
-        } else if (QString::compare(inputList_1.at(0).split("|").at(0),
-                                    "TIMINGPOINT",
-                                    Qt::CaseInsensitive) == 0)
+        }
+        else if (inputList_1.at(0).split("|").at(B_INDEX::TP_LABEL) == "TIMINGPOINT")
         {
             boxType1 = inputBoxType::timingPoint;
-        } else
+        }
+        else
         {
-            ui->copier_statusLabel->setText("STATUS: Input Box 1 is neither HITOBJECT nor TIMINGPOINT.");
-            ui->copier_statusLabel->setStyleSheet("QLabel { color:red; }");
+            inputStatusLabel_1->setText("STATUS: Input Box 1 is neither HITOBJECT nor TIMINGPOINT.");
+            inputStatusLabel_1->setStyleSheet("QLabel { color:red; }");
+            outputStatusLabel ->setText("STATUS: Error has occured.");
+            outputStatusLabel ->setStyleSheet("QLabel { color:red; }");
             return;
         }
 
-        if (QString::compare(inputList_2.at(0).split("|").at(0),
-                             "HITOBJECT",
-                             Qt::CaseInsensitive) == 0)
+        if (inputList_2.at(0).split("|").at(B_INDEX::HO_LABEL) == "HITOBJECT")
         {
             boxType2 = inputBoxType::hitObject;
-        } else if (QString::compare(inputList_2.at(0).split("|").at(0),
-                                    "TIMINGPOINT",
-                                    Qt::CaseInsensitive) == 0)
+        }
+        else if (inputList_2.at(0).split("|").at(B_INDEX::TP_LABEL) == "TIMINGPOINT")
         {
             boxType2 = inputBoxType::timingPoint;
-        } else
+        }
+        else
         {
-            ui->copier_statusLabel->setText("STATUS: Input Box 2 is neither HITOBJECT nor TIMINGPOINT.");
-            ui->copier_statusLabel->setStyleSheet("QLabel { color:red; }");
+            inputStatusLabel_2->setText("STATUS: Input Box 2 is neither HITOBJECT nor TIMINGPOINT.");
+            inputStatusLabel_2->setStyleSheet("QLabel { color:red; }");
+            outputStatusLabel ->setText("STATUS: Error has occured.");
+            outputStatusLabel ->setStyleSheet("QLabel { color:red; }");
             return;
         }
 
         if ((boxType1 == inputBoxType::hitObject && boxType2 == inputBoxType::hitObject) ||
                 (boxType2 == inputBoxType::timingPoint && boxType1 == inputBoxType::timingPoint))
         {
-            ui->copier_statusLabel->setText("STATUS: Make sure that both Inputs are different in type.");
-            ui->copier_statusLabel->setStyleSheet("QLabel { color:red; }");
+            outputStatusLabel->setText("STATUS: Make sure that both Inputs are different in type.");
+            outputStatusLabel->setStyleSheet("QLabel { color:red; }");
             return;
         }
 
@@ -1012,7 +1077,8 @@ void amber::on_copier_generateButton_clicked()
         {
             hitObjectList = inputList_1;
             timingPointList = inputList_2;
-        } else
+        }
+        else
         {
             hitObjectList = inputList_2;
             timingPointList = inputList_1;
@@ -1022,12 +1088,12 @@ void amber::on_copier_generateButton_clicked()
         foreach (hitObjectString, hitObjectList)
         {
             hitObjectPartList = hitObjectString.split("|");
-            if (!uniqueHitObjectOffsetList.contains(hitObjectPartList.at(2).toDouble()))
-                uniqueHitObjectOffsetList.append(hitObjectPartList.at(2).toDouble());
+            if (!uniqueHitObjectOffsetList.contains(hitObjectPartList.at(B_INDEX::HO_OFFSET).toDouble()))
+                uniqueHitObjectOffsetList.append(hitObjectPartList.at(B_INDEX::HO_OFFSET).toDouble());
         }
 
         //Gets the offset from the First Timing Point in order to "zero" all Timing Points
-        initialTimingPointOffset = timingPointList.at(0).split("|").at(1).toDouble();
+        initialTimingPointOffset = timingPointList.at(0).split("|").at(B_INDEX::TP_OFFSET).toDouble();
 
         //Generates Code
         foreach (uniqueHitObjectOffset, uniqueHitObjectOffsetList)
@@ -1036,22 +1102,25 @@ void amber::on_copier_generateButton_clicked()
             {
                 timingPointOffset = timingPointPart.split("|", QString::SkipEmptyParts).at(1).toDouble();
 
-                if (timingPointPart.split("|", QString::SkipEmptyParts).at(3) == "BPM")
+                if (timingPointPart.split("|", QString::SkipEmptyParts).at(B_INDEX::TP_TYPE) == "BPM")
                 {
                     ui->copier_outputBox->append(
                     amber::compileOMFormatting_BPM(QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
-                                                   QString::number(60000 / timingPointPart.split("|", QString::SkipEmptyParts).at(2).toDouble())));
-                } else
+                                                   QString::number(60000 / timingPointPart.split("|",QString::SkipEmptyParts)
+                                                                   .at(B_INDEX::TP_VALUE).toDouble())));
+                }
+                else
                 {
                     ui->copier_outputBox->append(
                     amber::compileOMFormatting_SV(QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
-                                                  QString::number(-100 / timingPointPart.split("|", QString::SkipEmptyParts).at(2).toDouble())));
+                                                  QString::number(-100 / timingPointPart.split("|", QString::SkipEmptyParts)
+                                                                  .at(B_INDEX::TP_VALUE).toDouble())));
                 }
             }
         }
         
-        ui->copier_statusLabel->setText("STATUS: Convert Successful.");
-        ui->copier_statusLabel->setStyleSheet("QLabel { color:green; }");
+        outputStatusLabel->setText("STATUS: Convert Successful.");
+        outputStatusLabel->setStyleSheet("QLabel { color:green; }");
 
     } catch (...){
         //Generate Error Report
@@ -1067,7 +1136,7 @@ void amber::on_TPF_initialTPSlider_valueChanged(int value)
 void amber::on_TPF_initialTPSpinBox_valueChanged(double arg1)
 {
     ui->TPF_initialTPSlider->setValue((int) (arg1 * 100));
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
@@ -1079,7 +1148,7 @@ void amber::on_TPF_endTPSlider_valueChanged(int value)
 void amber::on_TPF_endTPSpinBox_valueChanged(double arg1)
 {
     ui->TPF_endTPSlider->setValue((int) (arg1 * 100));
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
@@ -1091,7 +1160,7 @@ void amber::on_TPF_offsetSlider_valueChanged(int value)
 void amber::on_TPF_offsetSpinBox_valueChanged(int arg1)
 {
     ui->TPF_offsetSlider->setValue(arg1);
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
@@ -1103,7 +1172,7 @@ void amber::on_TPF_frequencySlider_valueChanged(int value)
 void amber::on_TPF_frequencySpinBox_valueChanged(int arg1)
 {
     ui->TPF_frequencySlider->setValue(arg1);
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
@@ -1115,44 +1184,44 @@ void amber::on_TPF_amplitudeSlider_valueChanged(int value)
 void amber::on_TPF_amplitudeSpinBox_valueChanged(int arg1)
 {
     ui->TPF_amplitudeSlider->setValue(arg1);
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 
 void amber::on_TPF_initialTPSlider_sliderReleased()
 {
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_endTPSlider_sliderReleased()
 {
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_amplitudeSlider_sliderReleased()
 {
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     };
 }
 void amber::on_TPF_offsetSlider_sliderReleased()
 {
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_frequencySlider_sliderReleased()
 {
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_intermediateSpinBox_valueChanged(int arg1)
 {
-    if(ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
+    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
@@ -1171,49 +1240,50 @@ void amber::on_TPF_defaultButton_clicked()
 {
     if (ui->TPF_SVRadio->isChecked())
     {
-        ui->TPF_initialTPSlider->setMaximum(1000);
-        ui->TPF_initialTPSlider->setMinimum(10);
-        ui->TPF_initialTPSpinBox->setMaximum(10.0);
-        ui->TPF_initialTPSpinBox->setMinimum(0.1);
-        ui->TPF_endTPSlider->setMaximum(1000);
-        ui->TPF_endTPSlider->setMinimum(10);
-        ui->TPF_endTPSpinBox->setMaximum(10.0);
-        ui->TPF_endTPSpinBox->setMinimum(0.1);
+        ui->TPF_initialTPSlider    ->setMaximum(1000);
+        ui->TPF_initialTPSlider    ->setMinimum(10);
+        ui->TPF_initialTPSpinBox   ->setMaximum(10.0);
+        ui->TPF_initialTPSpinBox   ->setMinimum(0.1);
+        ui->TPF_endTPSlider        ->setMaximum(1000);
+        ui->TPF_endTPSlider        ->setMinimum(10);
+        ui->TPF_endTPSpinBox       ->setMaximum(10.0);
+        ui->TPF_endTPSpinBox       ->setMinimum(0.1);
 
-        ui->TPF_initialTPLabel->setText("Initial SV:");
-        ui->TPF_endTPLabel->setText("End SV:");
+        ui->TPF_initialTPGroup     ->setTitle("Initial SV:");
+        ui->TPF_endTPGroup         ->setTitle("End SV:");
 
-        ui->TPF_initialTPSpinBox->setValue(1.0);
-        ui->TPF_endTPSpinBox->setValue(1.0);
-        ui->TPF_amplitudeSpinBox->setValue(0);
-        ui->TPF_frequencySpinBox->setValue(100);
-        ui->TPF_offsetSpinBox->setValue(0);
+        ui->TPF_initialTPSpinBox   ->setValue(1.0);
+        ui->TPF_endTPSpinBox       ->setValue(1.0);
+        ui->TPF_amplitudeSpinBox   ->setValue(0);
+        ui->TPF_frequencySpinBox   ->setValue(100);
+        ui->TPF_offsetSpinBox      ->setValue(0);
         ui->TPF_intermediateSpinBox->setValue(100);
-    } else if (ui->TPF_BPMRadio->isChecked())
+    }
+    else if (ui->TPF_BPMRadio->isChecked())
     {
-        ui->TPF_initialTPSlider->setMaximum(500000);
-        ui->TPF_initialTPSlider->setMinimum(100);
-        ui->TPF_initialTPSpinBox->setMaximum(5000);
-        ui->TPF_initialTPSpinBox->setMinimum(1);
-        ui->TPF_endTPSlider->setMaximum(500000);
-        ui->TPF_endTPSlider->setMinimum(100);
-        ui->TPF_endTPSpinBox->setMaximum(500);
-        ui->TPF_endTPSpinBox->setMinimum(1);
+        ui->TPF_initialTPSlider    ->setMaximum(500000);
+        ui->TPF_initialTPSlider    ->setMinimum(100);
+        ui->TPF_initialTPSpinBox   ->setMaximum(5000);
+        ui->TPF_initialTPSpinBox   ->setMinimum(1);
+        ui->TPF_endTPSlider        ->setMaximum(500000);
+        ui->TPF_endTPSlider        ->setMinimum(100);
+        ui->TPF_endTPSpinBox       ->setMaximum(500);
+        ui->TPF_endTPSpinBox       ->setMinimum(1);
 
-        ui->TPF_initialTPLabel->setText("Initial BPM:");
-        ui->TPF_endTPLabel->setText("End BPM:");
+        ui->TPF_initialTPGroup     ->setTitle("Initial BPM:");
+        ui->TPF_endTPGroup         ->setTitle("End BPM:");
 
-        ui->TPF_initialTPSpinBox->setValue(120);
-        ui->TPF_endTPSpinBox->setValue(120);
-        ui->TPF_amplitudeSpinBox->setValue(0);
-        ui->TPF_frequencySpinBox->setValue(100);
-        ui->TPF_offsetSpinBox->setValue(0);
+        ui->TPF_initialTPSpinBox   ->setValue(120);
+        ui->TPF_endTPSpinBox       ->setValue(120);
+        ui->TPF_amplitudeSpinBox   ->setValue(0);
+        ui->TPF_frequencySpinBox   ->setValue(100);
+        ui->TPF_offsetSpinBox      ->setValue(0);
         ui->TPF_intermediateSpinBox->setValue(100);
-    } else
+    }
+    else
     {
         return;
     }
-
 }
 
 // TPF Generate Button
@@ -1235,24 +1305,25 @@ void amber::on_TPF_generateButton_clicked()
          * OFFSET (of SINE GRAPH)
      */
 
-    QTextBrowser *statusBox;
-    QLabel *statusLabel;
-    QTextBrowser *outputBox;
-    QRadioButton *SVRadioButton;
-    QRadioButton *BPMRadioButton;
+    QTextBrowser *statusBox,
+                 *outputBox;
+    QLabel       *statusLabel;
+    QRadioButton *SVRadioButton,
+                 *BPMRadioButton;
 
-    double initialOffset, endOffset;
-    double initialTP, endTP;
-    double xValue;
-    double offset, amplitude, frequency;
-    int intermediatePoints;
+    double initialOffset, endOffset,
+           initialTP, endTP,
+           xValue,
+           offset, amplitude, frequency;
+    int    intermediatePoints;
 
-    SVRadioButton = ui->TPF_SVRadio;
+    SVRadioButton  = ui->TPF_SVRadio;
     BPMRadioButton = ui->TPF_BPMRadio;
-    statusLabel = ui->TPF_statusLabel;
-    statusBox = ui->TPF_statusBox;
-    statusBox->clear();
-    outputBox = ui->TPF_outputBox;
+    statusLabel    = ui->TPF_statusLabel;
+    statusBox      = ui->TPF_statusBox;
+    outputBox      = ui->TPF_outputBox;
+
+    statusBox->clear(); 
     outputBox->clear();
 
     //Set startOffset and endOffset
@@ -1261,53 +1332,58 @@ void amber::on_TPF_generateButton_clicked()
         statusLabel->setText("STATUS: No Input detected");
         statusLabel->setStyleSheet("QLabel { color:red; }");
         return;
-    } else if (amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).length() == 2)
+    }
+    else if (amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).length() == 2)
     {
         initialOffset = amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(0);
         endOffset = amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(1);
 
         statusLabel->setText("STATUS: Detected Editor Hit Object Input");
         statusLabel->setStyleSheet("QLabel { color:green; }");
-    } else {
+    }
+    else
+    {
         statusLabel->setText("STATUS: Make sure you input 2 Editor Hit Objects in the Input.");
         statusLabel->setStyleSheet("QLabel { color:red; }");
         return;
     }
 
     //Set other parameters
-    initialTP = ui->TPF_initialTPSpinBox->value();
-    endTP = ui->TPF_endTPSpinBox->value();
-    offset = (double) ui->TPF_offsetSpinBox->value() / 100;
-    amplitude = (double) ui->TPF_amplitudeSpinBox->value() / 100;
-    frequency = (double) ui->TPF_frequencySpinBox->value() / 100;
-    intermediatePoints = ui->TPF_intermediateSpinBox->value();
+    initialTP          =          ui->TPF_initialTPSpinBox->value();
+    endTP              =          ui->TPF_endTPSpinBox->value();
+    offset             = (double) ui->TPF_offsetSpinBox->value() / 100;
+    amplitude          = (double) ui->TPF_amplitudeSpinBox->value() / 100;
+    frequency          = (double) ui->TPF_frequencySpinBox->value() / 100;
+    intermediatePoints =          ui->TPF_intermediateSpinBox->value();
 
     //Generate vectors for graph
-    QVector<double> x(intermediatePoints + 1), y(intermediatePoints + 1);
+    QVector<double> xData(intermediatePoints + 1), yData(intermediatePoints + 1);
     QVector<double> yLinear(intermediatePoints + 1);
     QVector<double> ySine(intermediatePoints + 1);
 
-    for(int i=0; i<intermediatePoints + 1; ++i)
+    for(int i = 0; i < intermediatePoints + 1; ++ i)
     {
-        xValue = i / ((double) intermediatePoints);
-        x[i] = (xValue * (endOffset - initialOffset)) + initialOffset;
+        xValue     = i / ((double) intermediatePoints);
+        xData[i]   = (xValue * (endOffset - initialOffset)) + initialOffset;
         yLinear[i] = xValue * (endTP - initialTP) + initialTP;
-        ySine[i] =  amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
-        y[i] = yLinear[i] + ySine[i];
+        ySine[i]   = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
+        yData[i]   = yLinear[i] + ySine[i];
 
         //Prevent Division by Zero Error
-        if (y[i] == 0)
+        if (yData[i] == 0)
         {
-            y[i] = 0.001;
+            yData[i] = 0.001;
         }
 
         if (SVRadioButton->isChecked())
         {
-            outputBox->append(amber::compileOMFormatting_SV(QString::number(x[i]), QString::number(-100 / y[i])));
-        } else if (BPMRadioButton->isChecked())
+            outputBox->append(amber::compileOMFormatting_SV(QString::number(xData[i]), QString::number(-100 / yData[i])));
+        }
+        else if (BPMRadioButton->isChecked())
         {
-            outputBox->append(amber::compileOMFormatting_BPM(QString::number(x[i]), QString::number(60000 / y[i])));
-        } else
+            outputBox->append(amber::compileOMFormatting_BPM(QString::number(xData[i]), QString::number(60000 / yData[i])));
+        }
+        else
         {
             return;
         }
@@ -1333,25 +1409,27 @@ void amber::on_TPF_generateButton_clicked()
                       .append(QString::number(offset))
                       .append(") * π]")));
 
-    ui->TPF_customPlot->addGraph();
-    ui->TPF_customPlot->graph(0)->setData(x,y);
+
+
+    ui->TPF_customPlot->graph(0)->setData(xData,yData);
     ui->TPF_customPlot->graph(0)->setPen(QPen(Qt::black));
     ui->TPF_customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
-    ui->TPF_customPlot->xAxis->setLabel("Offset");
     ui->TPF_customPlot->xAxis->setRange(initialOffset, endOffset);
 
-    double min = *std::min_element(y.constBegin(),y.constEnd());
-    double max = *std::max_element(y.constBegin(),y.constEnd());
+    double min = *std::min_element(yData.constBegin(),yData.constEnd());
+    double max = *std::max_element(yData.constBegin(),yData.constEnd());
 
     if (SVRadioButton->isChecked())
     {
         ui->TPF_customPlot->yAxis->setLabel("SV");
         ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
-    } else if (BPMRadioButton->isChecked())
+    }
+    else if (BPMRadioButton->isChecked())
     {
         ui->TPF_customPlot->yAxis->setLabel("BPM");
         ui->TPF_customPlot->yAxis->setRange(min, max);
-    } else
+    }
+    else
     {
         return;
     }
@@ -1363,28 +1441,30 @@ void amber::on_TPF_generateButton_clicked()
 // --------------------------------------------------------------------------< NORMALIZER >
 void amber::on_normalizer_generateButton_clicked()
 {
-    QStringList inputList, partList;
-    QString inputString, partOffset, partBPM, selectionText;
+    QStringList   inputList, partList;
+    QString       inputString, partOffset, partBPM;
     QList<double> BPMList, offsetList;
 
-    QLabel *statusLabel;
+    QLabel         *statusLabel;
     QPlainTextEdit *inputBox;
-    QTextBrowser *outputBox;
-    QListWidget *listWidget;
-    QCheckBox *overrideCheck;
+    QTextBrowser   *outputBox;
+    QListWidget    *listWidget;
+    QCheckBox      *overrideCheck;
     QDoubleSpinBox *overrideDoubleSpinBox;
-    QLineEdit *selectedBPMLine;
+    QLineEdit      *selectedBPMLine;
 
     double normalizeBPM;
     double normalizeSV;
 
-    statusLabel = ui->normalizer_inputStatusLabel;
-    inputBox = ui->normalizer_inputBox;
-    outputBox = ui->normalizer_outputBox;
-    listWidget = ui->normalizer_BPMListWidget;
-    selectedBPMLine = ui->normalizer_selectedBPMLine;
+    statusLabel =           ui->normalizer_inputStatusLabel;
+    inputBox =              ui->normalizer_inputBox;
+    outputBox =             ui->normalizer_outputBox;
+    listWidget =            ui->normalizer_BPMListWidget;
+    selectedBPMLine =       ui->normalizer_selectedBPMLine;
+    overrideCheck =         ui->normalizer_overrideCheck;
+    overrideDoubleSpinBox = ui->normalizer_overrideDoubleSpinBox;
 
-    outputBox->clear();
+    outputBox-> clear();
     listWidget->clear();
 
     inputList = amber::convertOMtoBASIC(statusLabel, false, false, true,
@@ -1398,12 +1478,12 @@ void amber::on_normalizer_generateButton_clicked()
 
         partList = inputString.split("|", QString::SkipEmptyParts);
 
-        if (partList.at(3) == "SV"){
+        if (partList.at(B_INDEX::TP_TYPE) == "SV"){
             continue;
         }
 
-        partOffset = partList.at(1);
-        partBPM = partList.at(2);
+        partOffset = partList.at(B_INDEX::TP_OFFSET);
+        partBPM = partList.at(B_INDEX::TP_VALUE);
 
         BPMList.append(partBPM.toDouble());
         offsetList.append(partOffset.toDouble());
@@ -1419,16 +1499,15 @@ void amber::on_normalizer_generateButton_clicked()
         return;
     }
 
-    overrideCheck = ui->normalizer_overrideCheck;
-    overrideDoubleSpinBox = ui->normalizer_overrideDoubleSpinBox;
-
     if (overrideCheck->isChecked())
     {
         normalizeBPM = overrideDoubleSpinBox->value();
-    } else if (selectedBPMLine->text() != "Awaiting Selection...")
+    }
+    else if (selectedBPMLine->text() != "Awaiting Selection...")
     {
         normalizeBPM = selectedBPMLine->text().toDouble();
-    } else
+    }
+    else
     {
         statusLabel->setText("STATUS: Select 1 BPM Timing Point or use the Manual Override");
         statusLabel->setStyleSheet("QLabel { color:blue; }");
@@ -1463,3 +1542,348 @@ void amber::on_default_savePreferencesButton_clicked()
 {
     amber::saveDefaultValues();
 }
+
+// --------------------------------------------------------------------------< ADJUSTER >
+
+void amber::on_adjuster_multiplySpinBox_editingFinished()
+{
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
+        amber::on_adjuster_generateButton_clicked();
+    }
+}
+void amber::on_adjuster_zeroSpinBox_editingFinished()
+{
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
+        amber::on_adjuster_generateButton_clicked();
+    }
+}
+void amber::on_adjuster_offsetSpinBox_editingFinished()
+{
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
+        amber::on_adjuster_generateButton_clicked();
+    }
+}
+void amber::on_adjuster_addSpinBox_editingFinished()
+{
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
+        amber::on_adjuster_generateButton_clicked();
+    }
+}
+void amber::on_adjuster_autoZeroCheck_stateChanged(int arg1)
+{
+    if (arg1 == Qt::Checked)
+    {
+        ui->adjuster_zeroSpinBox->setEnabled(false);
+    }
+    else if (arg1 == Qt::Unchecked)
+    {
+        ui->adjuster_zeroSpinBox->setEnabled(true);
+    }
+}
+
+void amber::on_adjuster_generateButton_clicked()
+{
+    QPlainTextEdit *inputBox;
+    QTextBrowser   *outputBox;
+    QDoubleSpinBox *multiplySpinBox,
+                   *zeroSpinBox,
+                   *addSpinBox;
+    QSpinBox       *offsetSpinBox;
+    QCheckBox      *autoZeroCheck,
+                   *invertCheck,
+                   *liveUpdateCheck;
+    QCustomPlot    *customSVPlot,
+                   *customBPMPlot;
+    QLabel         *inputStatusLabel,
+                   *outputStatusLabel;
+    QRadioButton   *SVRadio,
+                   *BPMRadio,
+                   *graphScatterRadio,
+                   *graphLineRadio;
+
+    inputBox          = ui->adjuster_inputBox;
+    outputBox         = ui->adjuster_outputBox;
+    multiplySpinBox   = ui->adjuster_multiplySpinBox;
+    zeroSpinBox       = ui->adjuster_zeroSpinBox;
+    addSpinBox        = ui->adjuster_addSpinBox;
+    offsetSpinBox     = ui->adjuster_offsetSpinBox;
+    autoZeroCheck     = ui->adjuster_autoZeroCheck;
+    invertCheck       = ui->adjuster_invertCheck;
+    liveUpdateCheck   = ui->adjuster_liveUpdateCheck;
+    customSVPlot      = ui->adjuster_customSVPlot;
+    customBPMPlot     = ui->adjuster_customBPMPlot;
+    inputStatusLabel  = ui->adjuster_inputStatusLabel;
+    outputStatusLabel = ui->adjuster_outputStatusLabel;
+    SVRadio           = ui->adjuster_adjustSVRadio;
+    BPMRadio          = ui->adjuster_adjustBPMRadio;
+    graphScatterRadio = ui->adjuster_graphScatterRadio;
+    graphLineRadio    = ui->adjuster_graphLineRadio;
+
+    QStringList inputList, partList;
+    QString inputString;
+
+    double initialSVOffset,
+           endSVOffset,
+           initialBPMOffset,
+           endBPMOffset,
+           initialOffset,
+           endOffset,
+           minBPM,
+           maxBPM,
+           averageSV,
+           averageBPM;
+
+    bool isSV           = SVRadio->isChecked(),
+         isBPM          = BPMRadio->isChecked(),
+         isGraphScatter = graphScatterRadio->isChecked(),
+         isGraphLine    = graphLineRadio->isChecked();
+
+    inputList = amber::convertOMtoBASIC(inputStatusLabel,
+                                        false, false, true,
+                                        inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+    QVector<double> xSVData,
+                    ySVData,
+                    xBPMData,
+                    yBPMData;
+
+    foreach (inputString, inputList)
+    {
+        partList = inputString.split("|", QString::SkipEmptyParts);
+
+        if (partList.at(B_INDEX::TP_TYPE) == "SV")
+        {
+            xSVData.append(partList.at(B_INDEX::TP_OFFSET).toDouble());
+            ySVData.append(partList.at(B_INDEX::TP_VALUE).toDouble());
+
+        }
+        else if (partList.at(B_INDEX::TP_TYPE) == "BPM")
+        {
+            xBPMData.append(partList.at(B_INDEX::TP_OFFSET).toDouble());
+            yBPMData.append(partList.at(B_INDEX::TP_VALUE).toDouble());
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    //Adjust Functions
+    if (isSV)
+    {
+        //ADJUST Y
+        for (QVector<double>::iterator i = ySVData.begin(); i != ySVData.end(); i++)
+        {
+            *i -= zeroSpinBox->value(); //Zero +
+
+            if (invertCheck->isChecked()) {*i = - *i;}
+
+            *i *= multiplySpinBox->value();
+            *i += addSpinBox->value();
+
+            *i += zeroSpinBox->value(); //Zero -
+        }
+
+        //ADJUST X
+        for (QVector<double>::iterator i = xSVData.begin(); i != xSVData.end(); i++)
+        {
+            *i += offsetSpinBox->value();
+        }
+    }
+    else if (isBPM)
+    {
+        //ADJUST Y
+        for (QVector<double>::iterator i = yBPMData.begin(); i != yBPMData.end(); i++)
+        {
+            *i -= zeroSpinBox->value(); //Zero +
+
+            if (invertCheck->isChecked()) {*i = - *i;}
+
+            *i *= multiplySpinBox->value();
+            *i += addSpinBox->value();
+
+            *i += zeroSpinBox->value(); //Zero -
+        }
+
+        //ADJUST X
+        for (QVector<double>::iterator i = xBPMData.begin(); i != xBPMData.end(); i++)
+        {
+            *i += offsetSpinBox->value();
+        }
+    }
+
+    initialSVOffset  = *std::min_element(xSVData.constBegin(), xSVData.constEnd());
+    endSVOffset      = *std::max_element(xSVData.constBegin(), xSVData.constEnd());
+    initialBPMOffset = *std::min_element(xBPMData.constBegin(), xBPMData.constEnd());
+    endBPMOffset     = *std::max_element(xBPMData.constBegin(), xBPMData.constEnd());
+
+    if (xSVData.length() == 0)
+    {
+        initialOffset = initialBPMOffset;
+        endOffset = endBPMOffset;
+    }
+    else if (xBPMData.length() == 0)
+    {
+        initialOffset = initialSVOffset;
+        endOffset = endSVOffset;
+    }
+    else
+    {
+        initialOffset = initialSVOffset < initialBPMOffset ? initialSVOffset : initialBPMOffset;
+        endOffset     = endSVOffset     > endBPMOffset     ? endSVOffset     : endBPMOffset;
+    }
+
+    minBPM = *std::min_element(yBPMData.constBegin(),yBPMData.constEnd());
+    maxBPM = *std::max_element(yBPMData.constBegin(),yBPMData.constEnd());
+
+    //If the values are too close together (threshold : 10), separate to at least 10
+    if (qFabs(maxBPM - minBPM) < 10)
+    {
+        minBPM -= 5;
+        maxBPM += 5;
+    }
+
+    //Calculate averageSV and averageBPM
+    if (xSVData.length() == 1)
+    {
+        averageSV = ySVData.at(0);
+    }
+    else
+    {
+        for (int i = 0; i < (xSVData.length() - 1); i ++)
+        {
+            averageSV += (ySVData.at(i) * (xSVData.at(i + 1) - xSVData.at(i))) / (endOffset - initialOffset);
+        }
+    }
+    if (xBPMData.length() == 1)
+    {
+        averageBPM = yBPMData.at(0);
+    }
+    else
+    {
+        for (int i = 0; i < (xBPMData.length() - 1); i ++)
+        {
+            averageBPM += (yBPMData.at(i) * (xBPMData.at(i + 1) - xBPMData.at(i))) / (endOffset - initialOffset);
+        }
+    }
+
+    //Auto Zero
+    if (autoZeroCheck->isChecked())
+    {
+        if (isSV) {zeroSpinBox->setValue(averageSV);}
+        else if (isBPM) {zeroSpinBox->setValue(averageBPM);}
+    }
+
+    //Generates Graphs
+    if (isSV)
+    {
+        //SV Graph
+        customSVPlot->clearItems();
+        QCPItemText *averageSVLabel = new QCPItemText(customSVPlot);
+
+        customSVPlot->graph(0)->setData(xSVData,ySVData);
+        customSVPlot->graph(0)->setPen(QPen(QColor(50,200,50,255)));
+        customSVPlot->graph(0)->setBrush(QBrush(QColor(50,200,50,20)));
+
+        if (isGraphLine)
+        {
+            customSVPlot->graph(0)->setLineStyle(QCPGraph::lsStepLeft);
+        }
+        else if (isGraphScatter)
+        {
+            customSVPlot->graph(0)->setLineStyle(QCPGraph::lsImpulse);
+        }
+
+        averageSVLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
+        averageSVLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
+        averageSVLabel->position->setCoords(0.5, 0);
+        averageSVLabel->setText(QString("Average SV: ").append(QString::number(averageSV)));
+        averageSVLabel->setFont(QFont(font().family(), 12));
+
+        customSVPlot->xAxis->setRange(initialOffset, endOffset);
+        customSVPlot->yAxis->setRange(0.0, 10.0);
+
+        customSVPlot->replot(QCustomPlot::rpQueuedReplot);
+    }
+
+    else if (isBPM)
+    {
+        //BPM Graph
+        customBPMPlot->clearItems();
+        QCPItemText *averageBPMLabel = new QCPItemText(customBPMPlot);
+
+        customBPMPlot->graph(0)->setData(xBPMData,yBPMData);
+        customBPMPlot->graph(0)->setPen(QPen(QColor(200,50,50,255)));
+        customBPMPlot->graph(0)->setBrush(QBrush(QColor(200,50,50,20)));
+
+        if (isGraphLine)
+        {
+            customBPMPlot->graph(0)->setLineStyle(QCPGraph::lsStepLeft);
+        }
+        else
+        {
+            customBPMPlot->graph(0)->setLineStyle(QCPGraph::lsImpulse);
+        }
+
+        averageBPMLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
+        averageBPMLabel->position->setCoords(0.5, 0);
+        averageBPMLabel->setText(QString("Average BPM: ").append(QString::number(averageBPM)));
+        averageBPMLabel->setFont(QFont(font().family(), 12));
+
+        customBPMPlot->xAxis->setRange(initialOffset, endOffset);
+        customBPMPlot->yAxis->setRange(minBPM, maxBPM);
+
+        customBPMPlot->replot(QCustomPlot::rpQueuedReplot);
+    }
+
+    return;
+}
+
+
+void amber::on_adjuster_adjustSVRadio_clicked()
+{
+    ui->adjuster_addGroup   ->setTitle  ("Add (SV)");
+    ui->adjuster_zeroGroup  ->setTitle  ("Zero (SV)");
+    ui->adjuster_addSpinBox ->setMinimum(-10.0);
+    ui->adjuster_addSpinBox ->setMaximum(10.0);
+    ui->adjuster_zeroSpinBox->setMinimum(0.0);
+    ui->adjuster_zeroSpinBox->setMaximum(10.0);
+}
+
+void amber::on_adjuster_adjustBPMRadio_clicked()
+{
+    ui->adjuster_addGroup   ->setTitle  ("Add (BPM)");
+    ui->adjuster_zeroGroup  ->setTitle  ("Zero (BPM)");
+    ui->adjuster_addSpinBox ->setMinimum(-1000000.0);
+    ui->adjuster_addSpinBox ->setMaximum(1000000.0);
+    ui->adjuster_zeroSpinBox->setMinimum(0.0);
+    ui->adjuster_zeroSpinBox->setMaximum(1000000.0);
+}
+
+void amber::on_adjuster_defaultButton_clicked()
+{
+    ui->adjuster_adjustSVRadio    ->setChecked(true);
+    ui->adjuster_adjustBPMRadio   ->setChecked(false);
+    ui->adjuster_autoZeroCheck    ->setChecked(true);
+    ui->adjuster_invertCheck      ->setChecked(false);
+    ui->adjuster_liveUpdateCheck  ->setChecked(false);
+    ui->adjuster_multiplySpinBox  ->setValue  (1.0);
+    ui->adjuster_addSpinBox       ->setValue  (0.0);
+    ui->adjuster_offsetSpinBox    ->setValue  (0.0);
+    ui->adjuster_zeroSpinBox      ->setValue  (0.0);
+    ui->adjuster_graphLineRadio   ->setChecked(true);
+    ui->adjuster_graphScatterRadio->setChecked(false);
+
+    amber::on_adjuster_adjustSVRadio_clicked();
+
+    ui->adjuster_customSVPlot ->replot(QCustomPlot::rpQueuedReplot);
+    ui->adjuster_customBPMPlot->replot(QCustomPlot::rpQueuedReplot);
+}
+
+
+
+
+
+
+
+
+
