@@ -51,7 +51,6 @@ Currently I'm the only one contributing to this project. I don't require or want
 
 11/1/18 :
 - Finished TPF
-![product](https://puu.sh/yYMBJ/66d4ceaaa3.png)
 
 13/1/18 :
 - Add BPM support for TPF
@@ -85,3 +84,7 @@ Currently I'm the only one contributing to this project. I don't require or want
 - Adjusted Code Formatting
 - Added Pre-rendering Graph Function
 - Added Preference Saving for Default Values
+- Added BPM Support for Adjuster
+- Added Auto Zeroing
+- Added Invert
+- Added Different Graph Types
