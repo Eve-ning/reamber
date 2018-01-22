@@ -75,3 +75,13 @@ Currently I'm the only one contributing to this project. I don't require or want
 - Added Adjuster Framework
 - Removed procOutput
 - Fixed naming errors ("extesion")
+
+22/1/18 :
+- Update Adjuster Framework
+- Cleaned up Code
+- Added B_INDEX
+- Added res.qrc (resource file)
+- Added Home Page
+- Adjusted Code Formatting
+- Added Pre-rendering Graph Function
+- Added Preference Saving for Default Values
