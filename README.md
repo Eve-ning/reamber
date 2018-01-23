@@ -16,8 +16,10 @@ Expected **ALPHA** Completion Date: MID 2018
 Currently I'm the only one contributing to this project. I don't require or want any contributors currently until further notice.
 
 ## Latest Addition Showcase
-deltaMAX SV and BPM Graph
+deltaMAX SV and BPM Graph <outdated>
 ![deltaMAX](http://puu.sh/z79zg/f4a2be9fab.png)
+PLANET//SHAPER SV Graph
+![PLANET//SHAPER](http://puu.sh/z7Rw7/86b3553d6d.png)
 
 # Changelog:
 28/12/17 :
@@ -92,3 +94,11 @@ deltaMAX SV and BPM Graph
 - Added Auto Zeroing
 - Added Invert
 - Added Different Graph Types
+
+23/1/18 :
+- Remastered Adjuster Coding
+- Finished Adjuster
+- Fix Auto Zero Function to not be enabled when Multiply != 0
+- Added Limits to Graphs
+- Added Average to TPF
+- Renamed Prefix for Offset
