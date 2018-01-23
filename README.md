@@ -16,7 +16,7 @@ Expected **ALPHA** Completion Date: MID 2018
 Currently I'm the only one contributing to this project. I don't require or want any contributors currently until further notice.
 
 ## Latest Addition Showcase
-deltaMAX SV and BPM Graph <outdated>
+deltaMAX SV and BPM Graph \<outdated>
 ![deltaMAX](http://puu.sh/z79zg/f4a2be9fab.png)
 PLANET//SHAPER SV Graph
 ![PLANET//SHAPER](http://puu.sh/z7Rw7/86b3553d6d.png)
