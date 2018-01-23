@@ -28,18 +28,13 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->setupUi(this);
 
     //Pre-RenderGraphs
-    ui->adjuster_customSVPlot->addGraph();
-    ui->adjuster_customSVPlot->xAxis->setLabel("Offset");
-    ui->adjuster_customSVPlot->yAxis->setLabel("SV");
-
-    ui->adjuster_customBPMPlot->addGraph();
-    ui->adjuster_customBPMPlot->xAxis->setLabel("Offset");
-    ui->adjuster_customBPMPlot->yAxis->setLabel("BPM");
-
-    amber::on_adjuster_defaultButton_clicked(); //Placeholder for Bug
+    ui->adjuster_customPlot->addGraph();
+    ui->adjuster_customPlot->xAxis->setLabel("Offset");
+    ui->adjuster_customPlot->yAxis->setLabel("SV");
 
     ui->TPF_customPlot->addGraph();
     ui->TPF_customPlot->xAxis->setLabel("Offset");
+    ui->TPF_customPlot->yAxis->setLabel("SV");
 
 }
 
@@ -82,14 +77,14 @@ QString def_xAxis            = "256"
        ,def_timingPointType  = "SV"
 ;
 
-// --------------------------------------------------------------------------< HOME >
+// --------------------------------------------------------------------------------------------------------< HOME >
 
 void amber::on_home_githubIconLabel_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber", QUrl::TolerantMode));
 }
 
-// --------------------------------------------------------------------------< GENERAL >
+// --------------------------------------------------------------------------------------------------------< GENERAL >
 
 //Compilers
 QString amber::compileOMFormatting_NN(QString xAxis,
@@ -226,7 +221,7 @@ QList<double> amber::convertEditorHitObjectToOffsetList(QString editorHitObject)
                                               ).split(",", QString::SkipEmptyParts);
         foreach(parameter, parameterList)
         {
-            offsetList.append(parameter.split("|").at(0).toDouble());
+            offsetList.append(parameter.split("|")[0].toDouble());
         }
         return offsetList;
     }
@@ -250,7 +245,7 @@ QList<int> amber::convertEditorHitObjectToColumnList(QString editorHitObject)
                                               ).split(",", QString::SkipEmptyParts);
         foreach(parameter, parameterList)
         {
-            columnList.append(parameter.split("|").at(1).toInt());
+            columnList.append(parameter.split("|")[1].toInt());
         }
         return columnList;
     }
@@ -266,11 +261,11 @@ QList<double> amber::convertHitObjectToOffsetList(QStringList hitObjectList)
     QList<double> offsetList;
     QString hitObject;
 
-    if (amber::checkHitObject(hitObjectList.at(0)))
+    if (amber::checkHitObject(hitObjectList[0]))
     {
         foreach(hitObject, hitObjectList)
         {
-            offsetList.append(hitObject.split(",").at(2).toDouble());
+            offsetList.append(hitObject.split(",")[2].toDouble());
         }
         return offsetList;
     }
@@ -285,12 +280,12 @@ QList<int> amber::convertHitObjectToColumnList(QStringList hitObjectList, int ke
     QList<int> columnList;
     QString hitObject;
 
-    if (amber::checkHitObject(hitObjectList.at(0)))
+    if (amber::checkHitObject(hitObjectList[0]))
     {
         foreach(hitObject, hitObjectList)
         {
             columnList.append(amber::convertColumnCodeToColumnKey(
-                              hitObject.split(",").at(2).toInt(), (double) keyCount));
+                              hitObject.split(",")[2].toInt(), (double) keyCount));
         }
         return columnList;
     }
@@ -305,11 +300,11 @@ QList<double> amber::convertTimingPointToOffsetList(QStringList timingPointList)
     QList<double> offsetList;
     QString timingPoint;
 
-    if (amber::checkTimingPoint(timingPointList.at(0)))
+    if (amber::checkTimingPoint(timingPointList[0]))
     {
         foreach(timingPoint, timingPointList)
         {
-            offsetList.append(timingPoint.split(",").at(0).toDouble());
+            offsetList.append(timingPoint.split(",")[0].toDouble());
         }
         return offsetList;
     }
@@ -324,11 +319,11 @@ QList<double> amber::convertTimingPointToCodeList(QStringList timingPointList)
     QList<double> codeList;
     QString timingPoint;
 
-    if (amber::checkTimingPoint(timingPointList.at(0)))
+    if (amber::checkTimingPoint(timingPointList[0]))
     {
         foreach(timingPoint, timingPointList)
         {
-            codeList.append(timingPoint.split(",").at(1).toDouble());
+            codeList.append(timingPoint.split(",")[1].toDouble());
         }
         return codeList;
     }
@@ -372,22 +367,22 @@ bool amber::checkTimingPoint(QString timingPoint)
 
 bool amber::checkEditorHitObject(QPlainTextEdit *box)
 {
-    return amber::checkEditorHitObject(box->toPlainText().split("\n", QString::SkipEmptyParts).at(0));
+    return amber::checkEditorHitObject(box->toPlainText().split("\n", QString::SkipEmptyParts)[0]);
 }
 bool amber::checkHitObject(QPlainTextEdit *box)
 {
-    return amber::checkHitObject(box->toPlainText().split("\n", QString::SkipEmptyParts).at(0));
+    return amber::checkHitObject(box->toPlainText().split("\n", QString::SkipEmptyParts)[0]);
 }
 bool amber::checkTimingPoint(QPlainTextEdit *box)
 {
-    return amber::checkTimingPoint(box->toPlainText().split("\n", QString::SkipEmptyParts).at(0));
+    return amber::checkTimingPoint(box->toPlainText().split("\n", QString::SkipEmptyParts)[0]);
 }
 
 bool amber::checkEditorHitObject(QStringList editorHitObjectList)
 {
     if (editorHitObjectList.length() != 0)
     {
-    return amber::checkEditorHitObject(editorHitObjectList.at(0));
+    return amber::checkEditorHitObject(editorHitObjectList[0]);
     }
     return false;
 }
@@ -395,7 +390,7 @@ bool amber::checkHitObject(QStringList hitObjectList)
 {
     if (hitObjectList.length() != 0)
     {
-    return amber::checkHitObject(hitObjectList.at(0));
+    return amber::checkHitObject(hitObjectList[0]);
     }
     return false;
 }
@@ -403,7 +398,7 @@ bool amber::checkTimingPoint(QStringList timingPointList)
 {
     if (timingPointList.length() != 0)
     {
-    return amber::checkTimingPoint(timingPointList.at(0));
+    return amber::checkTimingPoint(timingPointList[0]);
     }
     return false;
 }
@@ -427,14 +422,14 @@ bool amber::checkTimingPointSV(QString timingPointSV)
     if (!timingPointSV.contains(",")){
         return false;
     }
-    return timingPointSV.split(",", QString::SkipEmptyParts).at(6) == "0";
+    return timingPointSV.split(",", QString::SkipEmptyParts)[6] == "0";
 }
 bool amber::checkTimingPointBPM(QString timingPointBPM)
 {
     if (!timingPointBPM.contains(",")){
         return false;
     }
-    return timingPointBPM.split(",", QString::SkipEmptyParts).at(6) == "1";
+    return timingPointBPM.split(",", QString::SkipEmptyParts)[6] == "1";
 }
 
 void amber::compileProcOutput(QTextBrowser *inputBoxObject,
@@ -453,42 +448,42 @@ void amber::compileProcOutput(QTextBrowser *inputBoxObject,
     foreach(rawOutputString, rawOutputVector){
         partVector = rawOutputString.split("|",QString::SkipEmptyParts);
 
-        if (partVector.at(B_INDEX::HO_LABEL) == "HITOBJECT")
+        if (partVector[B_INDEX::HO_LABEL] == "HITOBJECT")
         {
             //hitObjectOutput
             //Calculation of ColumnCode
-            columnCode = amber::convertColumnKeyToColumnCode(partVector.at(B_INDEX::HO_COLUMN).toDouble(),
-                                                             partVector.at(B_INDEX::HO_NOOFKEYS).toDouble());
-            if (partVector.at(B_INDEX::HO_LNENDOFFSET) == "-1")
+            columnCode = amber::convertColumnKeyToColumnCode(partVector[B_INDEX::HO_COLUMN].toDouble(),
+                                                             partVector[B_INDEX::HO_NOOFKEYS].toDouble());
+            if (partVector[B_INDEX::HO_LNENDOFFSET] == "-1")
             {
                 //Normal Note Compile
                 outputBoxObject->append(amber::compileOMFormatting_NN(QString::number(columnCode),
-                                                                      partVector.at(B_INDEX::HO_OFFSET)));
+                                                                      partVector[B_INDEX::HO_OFFSET]));
             }
             else
             {
                 //Long Note Compile
                 outputBoxObject->append(amber::compileOMFormatting_LN(QString::number(columnCode),
-                                                                      partVector.at(B_INDEX::HO_OFFSET),
-                                                                      partVector.at(B_INDEX::HO_LNENDOFFSET)));
+                                                                      partVector[B_INDEX::HO_OFFSET],
+                                                                      partVector[B_INDEX::HO_LNENDOFFSET]));
             }
 
         }
-        else if (partVector.at(B_INDEX::TP_LABEL) == "TIMINGPOINT")
+        else if (partVector[B_INDEX::TP_LABEL] == "TIMINGPOINT")
         {
             //timingPointOutput
-            if (partVector.at(B_INDEX::TP_TYPE) == "BPM")
+            if (partVector[B_INDEX::TP_TYPE] == "BPM")
             {
                 //BPM Compile
-                timingPointCode = 60000 / partVector.at(B_INDEX::TP_VALUE).toDouble();
-                outputBoxObject->append(amber::compileOMFormatting_BPM(partVector.at(B_INDEX::TP_OFFSET),
+                timingPointCode = 60000 / partVector[B_INDEX::TP_VALUE].toDouble();
+                outputBoxObject->append(amber::compileOMFormatting_BPM(partVector[B_INDEX::TP_OFFSET],
                                                                        QString::number(timingPointCode)));
             }
-            else if (partVector.at(B_INDEX::TP_TYPE) == "BPM")
+            else if (partVector[B_INDEX::TP_TYPE] == "BPM")
             {
                 //SV Compile
-                timingPointCode = -100 / partVector.at(B_INDEX::TP_VALUE).toDouble();
-                outputBoxObject->append(amber::compileOMFormatting_SV(partVector.at(B_INDEX::TP_OFFSET),
+                timingPointCode = -100 / partVector[B_INDEX::TP_VALUE].toDouble();
+                outputBoxObject->append(amber::compileOMFormatting_SV(partVector[B_INDEX::TP_OFFSET],
                                                                       QString::number(timingPointCode)));
             }
         }
@@ -555,8 +550,8 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
 
             foreach (partString, partList){
                 output.append(amber::compileBASICFormatting_hitObject(QString::number(noOfKeys),
-                              partString.split("|", QString::SkipEmptyParts).at(0),
-                              partString.split("|", QString::SkipEmptyParts).at(1)));
+                              partString.split("|", QString::SkipEmptyParts)[0],
+                              partString.split("|", QString::SkipEmptyParts)[1]));
             }
         }
 
@@ -578,13 +573,13 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
             double columnKey;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            columnKey = amber::convertColumnCodeToColumnKey(partList.at(0).toDouble(), noOfKeys);
+            columnKey = amber::convertColumnCodeToColumnKey(partList[0].toDouble(), noOfKeys);
 
             if (amber::checkHitObjectNN(inputString))
             {
                 output.append(amber::compileBASICFormatting_hitObject(
                               QString::number(noOfKeys),
-                              partList.at(2),
+                              partList[2],
                               QString::number(columnKey)));
 
             }
@@ -592,9 +587,9 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
             {
                 output.append(amber::compileBASICFormatting_hitObject(
                               QString::number(noOfKeys),
-                              partList.at(2),
+                              partList[2],
                               QString::number(columnKey),
-                              partList.at(5).mid(0,partList.at(5).indexOf(":",1))));
+                              partList[5].mid(0,partList[5].indexOf(":",1))));
             }
         }
 
@@ -616,15 +611,15 @@ QStringList amber::convertOMtoBASIC(QLabel *messageLabel,
 
             if (checkTimingPointSV(inputString))
             {
-                timingPointValue = QString::number(-100.0 / partList.at(1).toDouble());
+                timingPointValue = QString::number(-100.0 / partList[1].toDouble());
             }
             else if (checkTimingPointBPM(inputString))
             {
-                timingPointValue = QString::number(60000.0 / partList.at(1).toDouble());
+                timingPointValue = QString::number(60000.0 / partList[1].toDouble());
             }
 
             output.append(amber::compileBASICFormatting_timingPoint(
-                          partList.at(0),
+                          partList[0],
                           timingPointValue,
                           checkTimingPointSV(inputString) ? QString("SV") : QString("BPM")));
 
@@ -646,8 +641,8 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
                 partList;
     QString inputString;
 
-    isHitObject   = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "HITOBJECT";
-    isTimingPoint = input.at(0).split(",", QString::SkipEmptyParts).at(0) == "TIMINGPOINT";
+    isHitObject   = input[0].split(",", QString::SkipEmptyParts)[0] == "HITOBJECT";
+    isTimingPoint = input[0].split(",", QString::SkipEmptyParts)[0] == "TIMINGPOINT";
 
     // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
     if (isHitObject || isTimingPoint)
@@ -671,18 +666,18 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
             double columnCode;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            columnCode = amber::convertColumnKeyToColumnCode(partList.at(3).toDouble(), partList.at(1).toDouble());
+            columnCode = amber::convertColumnKeyToColumnCode(partList[3].toDouble(), partList[1].toDouble());
 
-            if (partList.at(4) == "-1")
+            if (partList[4] == "-1")
             {
                 output.append(amber::compileOMFormatting_NN(QString::number(columnCode),
-                                                             partList.at(2)));
+                                                             partList[2]));
             }
             else
             {
                 output.append(amber::compileOMFormatting_LN(QString::number(columnCode),
-                                                             partList.at(2),
-                                                             partList.at(4)));
+                                                             partList[2],
+                                                             partList[4]));
             }
         }
 
@@ -700,15 +695,15 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
             }
             partList = inputString.split(",", QString::SkipEmptyParts);
 
-            if (partList.at(3) == "BPM")
+            if (partList[3] == "BPM")
             {
-                output.append(amber::compileOMFormatting_BPM(partList.at(1),
-                                                              QString::number(60000.0 / partList.at(2).toDouble())));
+                output.append(amber::compileOMFormatting_BPM(partList[1],
+                                                              QString::number(60000.0 / partList[2].toDouble())));
             }
-            else if (partList.at(3) == "SV")
+            else if (partList[3] == "SV")
             {
-                output.append(amber::compileOMFormatting_SV(partList.at(1),
-                                                              QString::number(-100 / partList.at(2).toDouble())));
+                output.append(amber::compileOMFormatting_SV(partList[1],
+                                                              QString::number(-100 / partList[2].toDouble())));
             }
         }
 
@@ -718,7 +713,7 @@ QStringList amber::convertBASICtoOM(QLabel *messageLabel,
     }
     return output;
 }
-// --------------------------------------------------------------------------< SETTINGS >
+// --------------------------------------------------------------------------------------------------------< SETTINGS >
 
 void amber::saveDefaultValues()
 {
@@ -742,7 +737,7 @@ void amber::saveDefaultValues()
    def_timingPointType  = ui->def_timingPointTypeLine ->text();
 }
 
-// --------------------------------------------------------------------------< QUICK ACCESS >
+// --------------------------------------------------------------------------------------------------------< QUICK ACCESS >
 
 void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
 {
@@ -773,6 +768,10 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
     else if (itemString == "Normalizer")
     {
         ui->basicTabWidget->setCurrentIndex(3);
+    }
+    else if (itemString == "Adjuster")
+    {
+        ui->basicTabWidget->setCurrentIndex(4);
     }
 
 }
@@ -810,11 +809,11 @@ void amber::on_toolBox_currentChanged(int index)
     ui->stackedWidget->setCurrentIndex(index);
 }
 
-// --------------------------------------------------------------------------< INPUT >
+// --------------------------------------------------------------------------------------------------------< INPUT >
 
 /* REMOVED 13/1/2018 */
 
-// --------------------------------------------------------------------------< STUTTER >
+// --------------------------------------------------------------------------------------------------------< STUTTER >
 
 // Connect Stutter Widgets
 void amber::on_stutter_initSVSlider_valueChanged(int value)
@@ -956,8 +955,8 @@ void amber::on_stutter_generateButton_clicked()
         foreach (inputString, inputList)
         {
             partList = inputString.split("|");
-            if (!uniqueOffsetList.contains(partList.at(B_INDEX::HO_OFFSET).toDouble()))
-                uniqueOffsetList.append(partList.at(B_INDEX::HO_OFFSET).toDouble());
+            if (!uniqueOffsetList.contains(partList[B_INDEX::HO_OFFSET].toDouble()))
+                uniqueOffsetList.append(partList[B_INDEX::HO_OFFSET].toDouble());
         }
 
         // Generate all SVs in basic format
@@ -986,7 +985,7 @@ void amber::on_stutter_generateButton_clicked()
     }
 }
 
-// --------------------------------------------------------------------------< COPIER >
+// --------------------------------------------------------------------------------------------------------< COPIER >
 
 // Copier Generate Button
 void amber::on_copier_generateButton_clicked()
@@ -1030,11 +1029,11 @@ void amber::on_copier_generateButton_clicked()
         ui->copier_outputBox->clear();
 
         //Checks for Type
-        if (inputList_1.at(0).split("|").at(B_INDEX::HO_LABEL) == "HITOBJECT")
+        if (inputList_1[0].split("|")[B_INDEX::HO_LABEL] == "HITOBJECT")
         {
             boxType1 = inputBoxType::hitObject;
         }
-        else if (inputList_1.at(0).split("|").at(B_INDEX::TP_LABEL) == "TIMINGPOINT")
+        else if (inputList_1[0].split("|")[B_INDEX::TP_LABEL] == "TIMINGPOINT")
         {
             boxType1 = inputBoxType::timingPoint;
         }
@@ -1047,11 +1046,11 @@ void amber::on_copier_generateButton_clicked()
             return;
         }
 
-        if (inputList_2.at(0).split("|").at(B_INDEX::HO_LABEL) == "HITOBJECT")
+        if (inputList_2[0].split("|")[B_INDEX::HO_LABEL] == "HITOBJECT")
         {
             boxType2 = inputBoxType::hitObject;
         }
-        else if (inputList_2.at(0).split("|").at(B_INDEX::TP_LABEL) == "TIMINGPOINT")
+        else if (inputList_2[0].split("|")[B_INDEX::TP_LABEL] == "TIMINGPOINT")
         {
             boxType2 = inputBoxType::timingPoint;
         }
@@ -1088,33 +1087,33 @@ void amber::on_copier_generateButton_clicked()
         foreach (hitObjectString, hitObjectList)
         {
             hitObjectPartList = hitObjectString.split("|");
-            if (!uniqueHitObjectOffsetList.contains(hitObjectPartList.at(B_INDEX::HO_OFFSET).toDouble()))
-                uniqueHitObjectOffsetList.append(hitObjectPartList.at(B_INDEX::HO_OFFSET).toDouble());
+            if (!uniqueHitObjectOffsetList.contains(hitObjectPartList[B_INDEX::HO_OFFSET].toDouble()))
+                uniqueHitObjectOffsetList.append(hitObjectPartList[B_INDEX::HO_OFFSET].toDouble());
         }
 
         //Gets the offset from the First Timing Point in order to "zero" all Timing Points
-        initialTimingPointOffset = timingPointList.at(0).split("|").at(B_INDEX::TP_OFFSET).toDouble();
+        initialTimingPointOffset = timingPointList[0].split("|")[B_INDEX::TP_OFFSET].toDouble();
 
         //Generates Code
         foreach (uniqueHitObjectOffset, uniqueHitObjectOffsetList)
         {
             foreach (timingPointPart, timingPointList)
             {
-                timingPointOffset = timingPointPart.split("|", QString::SkipEmptyParts).at(1).toDouble();
+                timingPointOffset = timingPointPart.split("|", QString::SkipEmptyParts)[1].toDouble();
 
-                if (timingPointPart.split("|", QString::SkipEmptyParts).at(B_INDEX::TP_TYPE) == "BPM")
+                if (timingPointPart.split("|", QString::SkipEmptyParts)[B_INDEX::TP_TYPE] == "BPM")
                 {
                     ui->copier_outputBox->append(
                     amber::compileOMFormatting_BPM(QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
                                                    QString::number(60000 / timingPointPart.split("|",QString::SkipEmptyParts)
-                                                                   .at(B_INDEX::TP_VALUE).toDouble())));
+                                                                   [B_INDEX::TP_VALUE].toDouble())));
                 }
                 else
                 {
                     ui->copier_outputBox->append(
                     amber::compileOMFormatting_SV(QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
                                                   QString::number(-100 / timingPointPart.split("|", QString::SkipEmptyParts)
-                                                                  .at(B_INDEX::TP_VALUE).toDouble())));
+                                                                  [B_INDEX::TP_VALUE].toDouble())));
                 }
             }
         }
@@ -1127,7 +1126,7 @@ void amber::on_copier_generateButton_clicked()
     }
 }
 
-// --------------------------------------------------------------------------< TWO POINT FUNCTION >
+// --------------------------------------------------------------------------------------------------------< TWO POINT FUNCTION >
 
 void amber::on_TPF_initialTPSlider_valueChanged(int value)
 {
@@ -1310,9 +1309,10 @@ void amber::on_TPF_generateButton_clicked()
     QLabel       *statusLabel;
     QRadioButton *SVRadioButton,
                  *BPMRadioButton;
+    QCustomPlot  *customPlot;
 
     double initialOffset, endOffset,
-           initialTP, endTP,
+           initialTP, endTP, averageTP,
            xValue,
            offset, amplitude, frequency;
     int    intermediatePoints;
@@ -1322,6 +1322,10 @@ void amber::on_TPF_generateButton_clicked()
     statusLabel    = ui->TPF_statusLabel;
     statusBox      = ui->TPF_statusBox;
     outputBox      = ui->TPF_outputBox;
+    customPlot     = ui->TPF_customPlot;
+
+    bool isSV  = SVRadioButton ->isChecked();
+    bool isBPM = BPMRadioButton->isChecked();
 
     statusBox->clear(); 
     outputBox->clear();
@@ -1335,8 +1339,8 @@ void amber::on_TPF_generateButton_clicked()
     }
     else if (amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).length() == 2)
     {
-        initialOffset = amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(0);
-        endOffset = amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text()).at(1);
+        initialOffset = amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text())[0];
+        endOffset = amber::convertEditorHitObjectToOffsetList(ui->TPF_editorInputLine->text())[1];
 
         statusLabel->setText("STATUS: Detected Editor Hit Object Input");
         statusLabel->setStyleSheet("QLabel { color:green; }");
@@ -1369,25 +1373,36 @@ void amber::on_TPF_generateButton_clicked()
         ySine[i]   = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
         yData[i]   = yLinear[i] + ySine[i];
 
-        //Prevent Division by Zero Error
-        if (yData[i] == 0)
+        //LIMIT VALUES
+        if (isSV)
         {
-            yData[i] = 0.001;
+            yData[i] = yData[i] <= 0.1 ? 0.1 : yData[i];
+            yData[i] = yData[i] >= 10.0 ? 10.0 : yData[i];
+        }
+        else
+        {
+            yData[i] = yData[i] = 0 ? 0.00001 : yData[i];
         }
 
-        if (SVRadioButton->isChecked())
+        if (isSV)
         {
-            outputBox->append(amber::compileOMFormatting_SV(QString::number(xData[i]), QString::number(-100 / yData[i])));
+            outputBox->append(amber::compileOMFormatting_SV(QString::number(xData[i]),
+                                                            QString::number(yData[i] < 0.1 ? -1000 : -100 / yData[i])));
         }
-        else if (BPMRadioButton->isChecked())
+        else if (isBPM)
         {
-            outputBox->append(amber::compileOMFormatting_BPM(QString::number(xData[i]), QString::number(60000 / yData[i])));
+            outputBox->append(amber::compileOMFormatting_BPM(QString::number(xData[i]),
+                                                             QString::number(yData[i] == 0 ? 9999999 : 60000 / yData[i])));
         }
         else
         {
             return;
         }
+    }
 
+    for (int i = 0; i < intermediatePoints; i++)
+    {
+        averageTP += (yData[i] * (xData[i + 1] - xData[i])) / (endOffset - initialOffset);
     }
     statusBox->append(QString("RANGE: ")
                       .append(QString::number(initialOffset))
@@ -1409,36 +1424,45 @@ void amber::on_TPF_generateButton_clicked()
                       .append(QString::number(offset))
                       .append(") * π]")));
 
+    customPlot->graph(0)->setData(xData,yData);
+    customPlot->graph(0)->setPen(QPen(Qt::black));
+    customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
+    customPlot->xAxis->setRange(initialOffset, endOffset);
 
+    double minTP = *std::min_element(yData.constBegin(),yData.constEnd());
+    double maxTP = *std::max_element(yData.constBegin(),yData.constEnd());
 
-    ui->TPF_customPlot->graph(0)->setData(xData,yData);
-    ui->TPF_customPlot->graph(0)->setPen(QPen(Qt::black));
-    ui->TPF_customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
-    ui->TPF_customPlot->xAxis->setRange(initialOffset, endOffset);
+    customPlot->clearItems();
+    QCPItemText *averageLabel = new QCPItemText(customPlot);
+    averageLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
+    averageLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
+    averageLabel->position->setCoords(0.5, 0);
+    averageLabel->setText(QString("Average ")
+                          .append(isSV ? "SV: " : "BPM: ")
+                          .append(QString::number(averageTP)));
+    averageLabel->setFont(QFont(font().family(), 12));
 
-    double min = *std::min_element(yData.constBegin(),yData.constEnd());
-    double max = *std::max_element(yData.constBegin(),yData.constEnd());
-
-    if (SVRadioButton->isChecked())
-    {
-        ui->TPF_customPlot->yAxis->setLabel("SV");
-        ui->TPF_customPlot->yAxis->setRange(0.0, 10.0);
+    if (isSV)
+    {      
+        customPlot->yAxis->setLabel("SV");
+        customPlot->yAxis->setRange(0.0, 10.0);
     }
-    else if (BPMRadioButton->isChecked())
+    else if (isBPM)
     {
-        ui->TPF_customPlot->yAxis->setLabel("BPM");
-        ui->TPF_customPlot->yAxis->setRange(min, max);
+        customPlot->yAxis->setLabel("BPM");
+        customPlot->yAxis->setRange(minTP, maxTP);
     }
     else
     {
         return;
     }
 
-    ui->TPF_customPlot->replot(QCustomPlot::rpQueuedReplot);
+    customPlot->replot(QCustomPlot::rpQueuedReplot);
 
 }
 
-// --------------------------------------------------------------------------< NORMALIZER >
+// --------------------------------------------------------------------------------------------------------< NORMALIZER >
+
 void amber::on_normalizer_generateButton_clicked()
 {
     QStringList   inputList, partList;
@@ -1478,12 +1502,12 @@ void amber::on_normalizer_generateButton_clicked()
 
         partList = inputString.split("|", QString::SkipEmptyParts);
 
-        if (partList.at(B_INDEX::TP_TYPE) == "SV"){
+        if (partList[B_INDEX::TP_TYPE] == "SV"){
             continue;
         }
 
-        partOffset = partList.at(B_INDEX::TP_OFFSET);
-        partBPM = partList.at(B_INDEX::TP_VALUE);
+        partOffset = partList[B_INDEX::TP_OFFSET];
+        partBPM = partList[B_INDEX::TP_VALUE];
 
         BPMList.append(partBPM.toDouble());
         offsetList.append(partOffset.toDouble());
@@ -1536,36 +1560,51 @@ void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
                                             .mid(5, item->text().indexOf("|") - 5));
 }
 
-// --------------------------------------------------------------------------< DEFAULT >
+// --------------------------------------------------------------------------------------------------------< DEFAULT >
 
 void amber::on_default_savePreferencesButton_clicked()
 {
     amber::saveDefaultValues();
 }
 
-// --------------------------------------------------------------------------< ADJUSTER >
+// --------------------------------------------------------------------------------------------------------< ADJUSTER >
 
 void amber::on_adjuster_multiplySpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked()){
+    if (ui->adjuster_liveUpdateCheck->isChecked())
+    {
         amber::on_adjuster_generateButton_clicked();
+    }
+    if (ui->adjuster_multiplySpinBox->value() != 1)
+    {
+        ui->adjuster_autoZeroCheck->setEnabled(false);
+        ui->adjuster_autoZeroCheck->setChecked(false);
+
+        ui->adjuster_zeroSpinBox->setEnabled(true);
+    }
+    else
+    {
+        ui->adjuster_autoZeroCheck->setEnabled(true);
     }
 }
 void amber::on_adjuster_zeroSpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked()){
+    if (ui->adjuster_liveUpdateCheck->isChecked())
+    {
         amber::on_adjuster_generateButton_clicked();
     }
 }
 void amber::on_adjuster_offsetSpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked()){
+    if (ui->adjuster_liveUpdateCheck->isChecked())
+    {
         amber::on_adjuster_generateButton_clicked();
     }
 }
 void amber::on_adjuster_addSpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked()){
+    if (ui->adjuster_liveUpdateCheck->isChecked())
+    {
         amber::on_adjuster_generateButton_clicked();
     }
 }
@@ -1590,10 +1629,8 @@ void amber::on_adjuster_generateButton_clicked()
                    *addSpinBox;
     QSpinBox       *offsetSpinBox;
     QCheckBox      *autoZeroCheck,
-                   *invertCheck,
-                   *liveUpdateCheck;
-    QCustomPlot    *customSVPlot,
-                   *customBPMPlot;
+                   *invertCheck;
+    QCustomPlot    *customPlot;
     QLabel         *inputStatusLabel,
                    *outputStatusLabel;
     QRadioButton   *SVRadio,
@@ -1609,9 +1646,7 @@ void amber::on_adjuster_generateButton_clicked()
     offsetSpinBox     = ui->adjuster_offsetSpinBox;
     autoZeroCheck     = ui->adjuster_autoZeroCheck;
     invertCheck       = ui->adjuster_invertCheck;
-    liveUpdateCheck   = ui->adjuster_liveUpdateCheck;
-    customSVPlot      = ui->adjuster_customSVPlot;
-    customBPMPlot     = ui->adjuster_customBPMPlot;
+    customPlot        = ui->adjuster_customPlot;
     inputStatusLabel  = ui->adjuster_inputStatusLabel;
     outputStatusLabel = ui->adjuster_outputStatusLabel;
     SVRadio           = ui->adjuster_adjustSVRadio;
@@ -1622,16 +1657,11 @@ void amber::on_adjuster_generateButton_clicked()
     QStringList inputList, partList;
     QString inputString;
 
-    double initialSVOffset,
-           endSVOffset,
-           initialBPMOffset,
-           endBPMOffset,
-           initialOffset,
+    double initialOffset,
            endOffset,
-           minBPM,
-           maxBPM,
-           averageSV,
-           averageBPM;
+           minTP,
+           maxTP,
+           averageTP;
 
     bool isSV           = SVRadio->isChecked(),
          isBPM          = BPMRadio->isChecked(),
@@ -1641,25 +1671,18 @@ void amber::on_adjuster_generateButton_clicked()
     inputList = amber::convertOMtoBASIC(inputStatusLabel,
                                         false, false, true,
                                         inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
-    QVector<double> xSVData,
-                    ySVData,
-                    xBPMData,
-                    yBPMData;
+    QVector<double> xData,
+                    yData;
 
     foreach (inputString, inputList)
     {
         partList = inputString.split("|", QString::SkipEmptyParts);
 
-        if (partList.at(B_INDEX::TP_TYPE) == "SV")
+        if ((partList[B_INDEX::TP_TYPE] == "SV" && isSV) ||
+            (partList[B_INDEX::TP_TYPE] == "BPM" && isBPM))
         {
-            xSVData.append(partList.at(B_INDEX::TP_OFFSET).toDouble());
-            ySVData.append(partList.at(B_INDEX::TP_VALUE).toDouble());
-
-        }
-        else if (partList.at(B_INDEX::TP_TYPE) == "BPM")
-        {
-            xBPMData.append(partList.at(B_INDEX::TP_OFFSET).toDouble());
-            yBPMData.append(partList.at(B_INDEX::TP_VALUE).toDouble());
+            xData.append(partList[B_INDEX::TP_OFFSET].toDouble());
+            yData.append(partList[B_INDEX::TP_VALUE].toDouble());
         }
         else
         {
@@ -1668,176 +1691,119 @@ void amber::on_adjuster_generateButton_clicked()
     }
 
     //Adjust Functions
-    if (isSV)
+    //ADJUST Y
+    for (QVector<double>::iterator i = yData.begin(); i != yData.end(); i++)
     {
-        //ADJUST Y
-        for (QVector<double>::iterator i = ySVData.begin(); i != ySVData.end(); i++)
-        {
-            *i -= zeroSpinBox->value(); //Zero +
+        *i -= zeroSpinBox->value(); //Zero +
 
-            if (invertCheck->isChecked()) {*i = - *i;}
+        if (invertCheck->isChecked()) {*i = - *i;}
 
-            *i *= multiplySpinBox->value();
-            *i += addSpinBox->value();
+        *i *= multiplySpinBox->value();
+        *i += addSpinBox->value();
 
-            *i += zeroSpinBox->value(); //Zero -
-        }
-
-        //ADJUST X
-        for (QVector<double>::iterator i = xSVData.begin(); i != xSVData.end(); i++)
-        {
-            *i += offsetSpinBox->value();
-        }
+        *i += zeroSpinBox->value(); //Zero -
     }
-    else if (isBPM)
+
+    //ADJUST X
+    for (QVector<double>::iterator i = xData.begin(); i != xData.end(); i++)
     {
-        //ADJUST Y
-        for (QVector<double>::iterator i = yBPMData.begin(); i != yBPMData.end(); i++)
+        *i += offsetSpinBox->value();
+    }
+
+    //LIMIT VALUES
+    for (int i = 0; i < yData.length(); i ++)
+    {
+        if (isSV)
         {
-            *i -= zeroSpinBox->value(); //Zero +
-
-            if (invertCheck->isChecked()) {*i = - *i;}
-
-            *i *= multiplySpinBox->value();
-            *i += addSpinBox->value();
-
-            *i += zeroSpinBox->value(); //Zero -
+            yData[i] = yData[i] <= 0.1 ? 0.1 : yData[i];
+            yData[i] = yData[i] >= 10.0 ? 10.0 : yData[i];
         }
-
-        //ADJUST X
-        for (QVector<double>::iterator i = xBPMData.begin(); i != xBPMData.end(); i++)
+        else
         {
-            *i += offsetSpinBox->value();
+            yData[i] = yData[i] = 0 ? 0.00001 : yData[i];
         }
     }
 
-    initialSVOffset  = *std::min_element(xSVData.constBegin(), xSVData.constEnd());
-    endSVOffset      = *std::max_element(xSVData.constBegin(), xSVData.constEnd());
-    initialBPMOffset = *std::min_element(xBPMData.constBegin(), xBPMData.constEnd());
-    endBPMOffset     = *std::max_element(xBPMData.constBegin(), xBPMData.constEnd());
+    initialOffset  = *std::min_element(xData.constBegin(), xData.constEnd());
+    endOffset      = *std::max_element(xData.constBegin(), xData.constEnd());
 
-    if (xSVData.length() == 0)
-    {
-        initialOffset = initialBPMOffset;
-        endOffset = endBPMOffset;
-    }
-    else if (xBPMData.length() == 0)
-    {
-        initialOffset = initialSVOffset;
-        endOffset = endSVOffset;
-    }
-    else
-    {
-        initialOffset = initialSVOffset < initialBPMOffset ? initialSVOffset : initialBPMOffset;
-        endOffset     = endSVOffset     > endBPMOffset     ? endSVOffset     : endBPMOffset;
-    }
-
-    minBPM = *std::min_element(yBPMData.constBegin(),yBPMData.constEnd());
-    maxBPM = *std::max_element(yBPMData.constBegin(),yBPMData.constEnd());
+    minTP = *std::min_element(yData.constBegin(),yData.constEnd());
+    maxTP = *std::max_element(yData.constBegin(),yData.constEnd());
 
     //If the values are too close together (threshold : 10), separate to at least 10
-    if (qFabs(maxBPM - minBPM) < 10)
+    if (qFabs(maxTP - minTP) < 10 && isBPM)
     {
-        minBPM -= 5;
-        maxBPM += 5;
+        minTP -= 5;
+        maxTP += 5;
     }
 
     //Calculate averageSV and averageBPM
-    if (xSVData.length() == 1)
+    if (xData.length() <= 1)
     {
-        averageSV = ySVData.at(0);
+        averageTP = xData.length() == 0 ? 0 : yData[0];
     }
     else
     {
-        for (int i = 0; i < (xSVData.length() - 1); i ++)
+        for (int i = 0; i < (xData.length() - 1); i ++)
         {
-            averageSV += (ySVData.at(i) * (xSVData.at(i + 1) - xSVData.at(i))) / (endOffset - initialOffset);
-        }
-    }
-    if (xBPMData.length() == 1)
-    {
-        averageBPM = yBPMData.at(0);
-    }
-    else
-    {
-        for (int i = 0; i < (xBPMData.length() - 1); i ++)
-        {
-            averageBPM += (yBPMData.at(i) * (xBPMData.at(i + 1) - xBPMData.at(i))) / (endOffset - initialOffset);
+            averageTP += (yData.at(i) * (xData.at(i + 1) - xData.at(i))) / (endOffset - initialOffset);
         }
     }
 
     //Auto Zero
     if (autoZeroCheck->isChecked())
     {
-        if (isSV) {zeroSpinBox->setValue(averageSV);}
-        else if (isBPM) {zeroSpinBox->setValue(averageBPM);}
+        zeroSpinBox->setValue(averageTP);
     }
 
-    //Generates Graphs
+    //Generates Graph
+    customPlot->clearItems();
+    QCPItemText *averageLabel = new QCPItemText(customPlot);
+
+    customPlot->graph(0)->setData(xData,yData);
+    customPlot->graph(0)->setPen(QPen(QColor(50,200,50,255)));
+    customPlot->graph(0)->setBrush(QBrush(QColor(50,200,50,20)));
+
+    customPlot->graph(0)->setLineStyle(isGraphLine ? QCPGraph::lsStepLeft : QCPGraph::lsImpulse);
+
+    averageLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
+    averageLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
+    averageLabel->position->setCoords(0.5, 0);
+    averageLabel->setText(QString("Average ")
+                          .append(isSV ? "SV: " : "BPM: ")
+                          .append(QString::number(averageTP)));
+    averageLabel->setFont(QFont(font().family(), 12));
+
+    customPlot->xAxis->setRange(initialOffset, endOffset);
+    customPlot->yAxis->setRange(0.0, 10.0);
+    customPlot->yAxis->setLabel(isSV ? "SV" : "BPM");
+
+    customPlot->replot(QCustomPlot::rpQueuedReplot);
+
+    //Generate Output
     if (isSV)
     {
-        //SV Graph
-        customSVPlot->clearItems();
-        QCPItemText *averageSVLabel = new QCPItemText(customSVPlot);
-
-        customSVPlot->graph(0)->setData(xSVData,ySVData);
-        customSVPlot->graph(0)->setPen(QPen(QColor(50,200,50,255)));
-        customSVPlot->graph(0)->setBrush(QBrush(QColor(50,200,50,20)));
-
-        if (isGraphLine)
+        outputBox->clear();
+        for(int i = 0; i < xData.length(); i++)
         {
-            customSVPlot->graph(0)->setLineStyle(QCPGraph::lsStepLeft);
+            outputBox->append(amber::compileOMFormatting_SV(QString::number(xData[i]),
+                                                            QString::number(yData[i] <= 0 ? -1000 : -100 / yData[i])));
         }
-        else if (isGraphScatter)
-        {
-            customSVPlot->graph(0)->setLineStyle(QCPGraph::lsImpulse);
-        }
-
-        averageSVLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
-        averageSVLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
-        averageSVLabel->position->setCoords(0.5, 0);
-        averageSVLabel->setText(QString("Average SV: ").append(QString::number(averageSV)));
-        averageSVLabel->setFont(QFont(font().family(), 12));
-
-        customSVPlot->xAxis->setRange(initialOffset, endOffset);
-        customSVPlot->yAxis->setRange(0.0, 10.0);
-
-        customSVPlot->replot(QCustomPlot::rpQueuedReplot);
     }
-
     else if (isBPM)
     {
-        //BPM Graph
-        customBPMPlot->clearItems();
-        QCPItemText *averageBPMLabel = new QCPItemText(customBPMPlot);
-
-        customBPMPlot->graph(0)->setData(xBPMData,yBPMData);
-        customBPMPlot->graph(0)->setPen(QPen(QColor(200,50,50,255)));
-        customBPMPlot->graph(0)->setBrush(QBrush(QColor(200,50,50,20)));
-
-        if (isGraphLine)
+        outputBox->clear();
+        for(int i = 0; i < xData.length(); i++)
         {
-            customBPMPlot->graph(0)->setLineStyle(QCPGraph::lsStepLeft);
+            outputBox->append(amber::compileOMFormatting_SV(QString::number(xData[i]),
+                                                            QString::number(yData[i] == 0 ? 9999999 : 60000 / yData[i])));
         }
-        else
-        {
-            customBPMPlot->graph(0)->setLineStyle(QCPGraph::lsImpulse);
-        }
-
-        averageBPMLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
-        averageBPMLabel->position->setCoords(0.5, 0);
-        averageBPMLabel->setText(QString("Average BPM: ").append(QString::number(averageBPM)));
-        averageBPMLabel->setFont(QFont(font().family(), 12));
-
-        customBPMPlot->xAxis->setRange(initialOffset, endOffset);
-        customBPMPlot->yAxis->setRange(minBPM, maxBPM);
-
-        customBPMPlot->replot(QCustomPlot::rpQueuedReplot);
     }
 
+    outputStatusLabel->setStyleSheet("QLabel { color:green };");
+    outputStatusLabel->setText("STATUS: Convert Successful.");
     return;
 }
-
 
 void amber::on_adjuster_adjustSVRadio_clicked()
 {
@@ -1875,8 +1841,8 @@ void amber::on_adjuster_defaultButton_clicked()
 
     amber::on_adjuster_adjustSVRadio_clicked();
 
-    ui->adjuster_customSVPlot ->replot(QCustomPlot::rpQueuedReplot);
-    ui->adjuster_customBPMPlot->replot(QCustomPlot::rpQueuedReplot);
+    ui->adjuster_customPlot ->replot(QCustomPlot::rpQueuedReplot);
+    ui->adjuster_customPlot->replot(QCustomPlot::rpQueuedReplot);
 }
 
 
