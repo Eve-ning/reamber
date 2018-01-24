@@ -1,19 +1,6 @@
 ![amberLogo](http://puu.sh/z235w/e2127a205c.png)
 
-## Why
-This tool is to help mappers do repetitive tasks in osu!mania much more easily.
-
-## What
-There are many functions planned for the tool, currently I can't guarantee any planned ones will be done. However, you can view those that are done in the **Changelog** below
-
-## Where
-This project will be centralized on GitHub, all updates can be found here 
-
-## When
-Expected **ALPHA** Completion Date: MID 2018
-
-## Who
-Currently I'm the only one contributing to this project. I don't require or want any contributors currently until further notice.
+[Amber Wiki](https://github.com/Eve-ning/amber/wiki)
 
 ## Latest Addition Showcase
 deltaMAX SV and BPM Graph \<outdated>
