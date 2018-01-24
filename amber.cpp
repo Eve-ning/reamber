@@ -1686,7 +1686,7 @@ void amber::on_adjuster_generateButton_clicked()
         }
         else
         {
-            return;
+            continue;
         }
     }
 
@@ -1761,8 +1761,8 @@ void amber::on_adjuster_generateButton_clicked()
     QCPItemText *averageLabel = new QCPItemText(customPlot);
 
     customPlot->graph(0)->setData(xData,yData);
-    customPlot->graph(0)->setPen(QPen(QColor(50,200,50,255)));
-    customPlot->graph(0)->setBrush(QBrush(QColor(50,200,50,20)));
+    customPlot->graph(0)->setPen(QPen(isSV ? QColor(50,200,50,255) : QColor(200,50,50,255)));
+    customPlot->graph(0)->setBrush(QBrush(isSV ? QColor(50,200,50,20) : QColor(200,50,50,20)));
 
     customPlot->graph(0)->setLineStyle(isGraphLine ? QCPGraph::lsStepLeft : QCPGraph::lsImpulse);
 
@@ -1775,7 +1775,7 @@ void amber::on_adjuster_generateButton_clicked()
     averageLabel->setFont(QFont(font().family(), 12));
 
     customPlot->xAxis->setRange(initialOffset, endOffset);
-    customPlot->yAxis->setRange(0.0, 10.0);
+    customPlot->yAxis->setRange(isSV ? 0.0 : minTP, isSV ? 10.0 : maxTP);
     customPlot->yAxis->setLabel(isSV ? "SV" : "BPM");
 
     customPlot->replot(QCustomPlot::rpQueuedReplot);
