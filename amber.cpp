@@ -1795,8 +1795,8 @@ void amber::on_adjuster_generateButton_clicked()
         outputBox->clear();
         for(int i = 0; i < xData.length(); i++)
         {
-            outputBox->append(amber::compileOMFormatting_SV(QString::number(xData[i]),
-                                                            QString::number(yData[i] == 0 ? 9999999 : 60000 / yData[i])));
+            outputBox->append(amber::compileOMFormatting_BPM(QString::number(xData[i]),
+                                                             QString::number(yData[i] == 0 ? 9999999 : 60000 / yData[i])));
         }
     }
 
