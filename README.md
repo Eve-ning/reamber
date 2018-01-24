@@ -1,14 +1,18 @@
 ![amberLogo](http://puu.sh/z235w/e2127a205c.png)
 
-[Amber Wiki](https://github.com/Eve-ning/amber/wiki)
+# :bar_chart: [Amber Wiki](https://github.com/Eve-ning/amber/wiki)
 
-## Latest Addition Showcase
+***
+
+## :star: Latest Addition Showcase
 deltaMAX SV and BPM Graph \<outdated>
 ![deltaMAX](http://puu.sh/z79zg/f4a2be9fab.png)
 PLANET//SHAPER SV Graph
 ![PLANET//SHAPER](http://puu.sh/z7Rw7/86b3553d6d.png)
 
-# Changelog:
+***
+
+# :bookmark_tabs: Changelog:
 28/12/17 :
 - Created Initial UI
 - Set up Home Tab
@@ -89,3 +93,7 @@ PLANET//SHAPER SV Graph
 - Added Limits to Graphs
 - Added Average to TPF
 - Renamed Prefix for Offset
+
+24/1/18 :
+- Fixed some bugs
+- Added wiki!
