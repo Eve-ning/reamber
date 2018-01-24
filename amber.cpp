@@ -806,7 +806,7 @@ void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
 
 void amber::on_toolBox_currentChanged(int index)
 {
-    ui->stackedWidget->setCurrentIndex(index);
+    ui->stackedWidget->setCurrentIndex(index + 1);
 }
 
 // --------------------------------------------------------------------------------------------------------< INPUT >
