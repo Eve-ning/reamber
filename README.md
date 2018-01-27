@@ -97,3 +97,7 @@ PLANET//SHAPER SV Graph
 24/1/18 :
 - Fixed some bugs
 - Added wiki!
+
+27/1/18 :
+- Fixed UI Grouping for Normalizer
+- Added Pack Splitter Framework
