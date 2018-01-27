@@ -1845,6 +1845,58 @@ void amber::on_adjuster_defaultButton_clicked()
     ui->adjuster_customPlot->replot(QCustomPlot::rpQueuedReplot);
 }
 
+// --------------------------------------------------------------------------------------------------------< PACK SPLITTER >
+
+void amber::on_PS_browseButton_clicked()
+{
+    QString filePath = QFileDialog::getExistingDirectory(this, "Open osu! Song Folder", "/home",
+                                                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    ui->PS_browseLine->setText(filePath);
+    QDir fileDir(filePath);
+
+    if (filePath.right(5) == "Songs")
+    {
+        ui->PS_statusLabel->setText("STATUS: File Path loaded successfully");
+        ui->PS_statusLabel->setStyleSheet("QLabel { color:green }");
+    } else if (!filePath.isEmpty()){
+        ui->PS_statusLabel->setText("STATUS: File Path might be incorrect, make sure it's the [Songs] Folder!");
+        ui->PS_statusLabel->setStyleSheet("QLabel { color:orange }");
+    } else {
+        ui->PS_statusLabel->setText("STATUS: File Path cannot be loaded");
+        ui->PS_statusLabel->setStyleSheet("QLabel { color:red }");
+    }
+
+    ui->PS_mapListListWidget->clear();
+    ui->PS_mapListListWidget->addItems(fileDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs));
+}
+
+void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
+{
+    QString mapFilePath = ui->PS_browseLine->text().append("/").append(item->text());
+
+    QDir mapFileDir(mapFilePath);
+
+    QStringList audioFilter,
+                difficultyFilter;
+
+    audioFilter     .append("*.mp3");
+    audioFilter     .append("*.ogg");
+    difficultyFilter.append("*.osu");
+
+    ui->PS_audioFileListListWidget->clear();
+    ui->PS_audioFileListListWidget->addItems(mapFileDir.entryList(audioFilter,
+                                                                  QDir::NoDotAndDotDot | QDir::Files));
+
+    ui->PS_difficultyListListWidget->clear();
+    ui->PS_difficultyListListWidget->addItems(mapFileDir.entryList(difficultyFilter,
+                                                                   QDir::NoDotAndDotDot | QDir::Files));
+}
+
+
+
+
+
+
 
 
 

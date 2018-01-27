@@ -18,6 +18,7 @@
 #include <QtMath>
 #include <QRadioButton>
 #include <QDesktopServices>
+#include <QFileDialog>
 
 
 
@@ -187,6 +188,10 @@ private slots:
     void on_adjuster_adjustBPMRadio_clicked();
 
     void on_adjuster_defaultButton_clicked();
+
+    void on_PS_browseButton_clicked();
+
+    void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::amber *ui;
