@@ -101,3 +101,7 @@ PLANET//SHAPER SV Graph
 27/1/18 :
 - Fixed UI Grouping for Normalizer
 - Added Pack Splitter Framework
+
+28/1/18 :
+- Update Pack Splitter Framework
+- (To Fix) QFile::Copy Error
