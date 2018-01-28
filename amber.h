@@ -19,7 +19,7 @@
 #include <QRadioButton>
 #include <QDesktopServices>
 #include <QFileDialog>
-
+#include <QDesktopServices>
 
 
 namespace Ui {
@@ -192,6 +192,8 @@ private slots:
     void on_PS_browseButton_clicked();
 
     void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
+
+    void on_PS_controlSplitButton_clicked();
 
 private:
     Ui::amber *ui;

@@ -1849,59 +1849,160 @@ void amber::on_adjuster_defaultButton_clicked()
 
 void amber::on_PS_browseButton_clicked()
 {
-    QString filePath = QFileDialog::getExistingDirectory(this, "Open osu! Song Folder", "/home",
-                                                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    ui->PS_browseLine->setText(filePath);
+    QLabel      *statusLabel;
+    QLineEdit   *browseLine;
+    QListWidget *mapListWidget;
+    QString      filePath;
+
+    statusLabel   = ui->PS_statusLabel;
+    browseLine    = ui->PS_browseLine;
+    mapListWidget = ui->PS_mapListListWidget;
+
+    filePath = QFileDialog::getExistingDirectory(this, "Open osu! Song Folder", "/home",
+                                                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    browseLine->setText(filePath);
     QDir fileDir(filePath);
 
     if (filePath.right(5) == "Songs")
     {
-        ui->PS_statusLabel->setText("STATUS: File Path loaded successfully");
-        ui->PS_statusLabel->setStyleSheet("QLabel { color:green }");
+        statusLabel->setText("STATUS: File Path loaded successfully");
+        statusLabel->setStyleSheet("QLabel { color:green };");
     } else if (!filePath.isEmpty()){
-        ui->PS_statusLabel->setText("STATUS: File Path might be incorrect, make sure it's the [Songs] Folder!");
-        ui->PS_statusLabel->setStyleSheet("QLabel { color:orange }");
+        statusLabel->setText("STATUS: File Path might be incorrect, make sure it's the [Songs] Folder!");
+        statusLabel->setStyleSheet("QLabel { color:orange };");
     } else {
-        ui->PS_statusLabel->setText("STATUS: File Path cannot be loaded");
-        ui->PS_statusLabel->setStyleSheet("QLabel { color:red }");
+        statusLabel->setText("STATUS: File Path cannot be loaded");
+        statusLabel->setStyleSheet("QLabel { color:red };");
     }
 
-    ui->PS_mapListListWidget->clear();
-    ui->PS_mapListListWidget->addItems(fileDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs));
+    mapListWidget->clear();
+    mapListWidget->addItems(fileDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs));
 }
 
 void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
 {
-    QString mapFilePath = ui->PS_browseLine->text().append("/").append(item->text());
+    QString mapPath = ui->PS_browseLine->text().append("/").append(item->text());
+    QDir mapDir(mapPath);
 
-    QDir mapFileDir(mapFilePath);
+    QListWidget *audioListWidget,
+                *difficultyListWidget;
 
     QStringList audioFilter,
                 difficultyFilter;
+
+    audioListWidget      = ui->PS_audioFileListListWidget;
+    difficultyListWidget = ui->PS_difficultyListListWidget;
 
     audioFilter     .append("*.mp3");
     audioFilter     .append("*.ogg");
     difficultyFilter.append("*.osu");
 
-    ui->PS_audioFileListListWidget->clear();
-    ui->PS_audioFileListListWidget->addItems(mapFileDir.entryList(audioFilter,
-                                                                  QDir::NoDotAndDotDot | QDir::Files));
+    audioListWidget->clear();
+    audioListWidget->addItems(mapDir.entryList(audioFilter, QDir::NoDotAndDotDot | QDir::Files));
 
-    ui->PS_difficultyListListWidget->clear();
-    ui->PS_difficultyListListWidget->addItems(mapFileDir.entryList(difficultyFilter,
-                                                                   QDir::NoDotAndDotDot | QDir::Files));
+    difficultyListWidget->clear();
+    difficultyListWidget->addItems(mapDir.entryList(difficultyFilter, QDir::NoDotAndDotDot | QDir::Files));
 }
 
+void amber::on_PS_controlSplitButton_clicked()
+{
+    QListWidget *mapListWidget,
+                *audioListWidget;
+    QLabel      *statusLabel;
+    QLineEdit   *browseLine;
+    QString     mapName,
+                audioFolderPath,
+                audioFolderName,
+                convFileName,
+                convFilePath,
+                convPath,
+                copyAudioFilePath,
+                songsFolderPath;
+
+    mapListWidget   = ui->PS_mapListListWidget;
+    audioListWidget = ui->PS_audioFileListListWidget;
+    statusLabel     = ui->PS_statusLabel;
+    browseLine      = ui->PS_browseLine;
+
+    songsFolderPath = browseLine->text();
+
+    mapName = mapListWidget->selectedItems()[0]->text();
+    convPath = songsFolderPath;
+    convPath.append("/")
+            .append(mapName)
+            .append("/Converted Files");
+
+    QDir convDir(convPath);
+
+    if (convDir.mkpath(".") == false)
+    {
+        statusLabel->setText("STATUS: Convert folder couldn't be created");
+        statusLabel->setStyleSheet("QLabel { color:red };");
+        return;
+    }
+    else
+    {
+        statusLabel->setText("STATUS: Convert folder successfully created");
+        statusLabel->setStyleSheet("QLabel { color:green };");
+        QDesktopServices::openUrl(QUrl::fromLocalFile(convPath));
+    }
+
+    for (int i = 0; i < audioListWidget->count(); i ++)
+    {
+        convFileName   = audioListWidget->item(i)->text();
+        audioFolderName = convFileName;
+        audioFolderName.replace(".","_");
+
+        audioFolderPath.clear();
+        audioFolderPath.append(convPath)
+                       .append("/")
+                       .append(audioFolderName);
+
+        convFilePath.clear();
+        convFilePath.append(songsFolderPath)
+                     .append("/")
+                     .append(mapName)
+                     .append("/")
+                     .append(convFileName);
+
+        copyAudioFilePath.clear();
+        copyAudioFilePath.append(songsFolderPath)
+                         .append("/")
+                         .append(mapName)
+                         .append("/")
+                         .append(audioFolderName)
+                         .append("/")
+                         .append(convFileName);
 
 
+        QDir audioFolderDir(audioFolderPath);
+        QFile audioCopyFile(convFilePath);
 
+        if (audioFolderDir.mkpath(".") == false)
+        {
+            statusLabel->setText("STATUS: Audio folder couldn't be created");
+            statusLabel->setStyleSheet("QLabel { color:red };");
+            return;
+        }
+        else
+        {
+            statusLabel->setText("STATUS: Audio folder successfully created");
+            statusLabel->setStyleSheet("QLabel { color:green };");
+        }
 
+        qDebug() << audioCopyFile.exists();
+        if (audioCopyFile.copy(copyAudioFilePath) == false)
+        {
+            statusLabel->setText("STATUS: Copying Failed");
+            statusLabel->setStyleSheet("QLabel { color:red };");
+        }
+        else
+        {
+            statusLabel->setText("STATUS: Copying successful");
+            statusLabel->setStyleSheet("QLabel { color:green };");
+        }
 
+        qDebug() << audioCopyFile.error();
 
-
-
-
-
-
-
-
+    }
+}

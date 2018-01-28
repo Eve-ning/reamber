@@ -1336,7 +1336,11 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_46">
                <item row="0" column="0">
-                <widget class="QListWidget" name="PS_audioFileListListWidget"/>
+                <widget class="QListWidget" name="PS_audioFileListListWidget">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -1348,7 +1352,11 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_47">
                <item row="0" column="0">
-                <widget class="QListWidget" name="PS_difficultyListListWidget"/>
+                <widget class="QListWidget" name="PS_difficultyListListWidget">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
