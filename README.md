@@ -105,3 +105,7 @@ PLANET//SHAPER SV Graph
 28/1/18 :
 - Update Pack Splitter Framework
 - (To Fix) QFile::Copy Error
+
+31/1/18 :
+- Fix QFile::Copy Error
+- Updated with Checker for BG and Audio in Map Pack Splitter (MPS)
