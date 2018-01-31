@@ -1907,32 +1907,52 @@ void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
 void amber::on_PS_controlSplitButton_clicked()
 {
     QListWidget *mapListWidget,
-                *audioListWidget;
+                *audioListWidget,
+                *difficultyListWidget;
     QLabel      *statusLabel;
     QLineEdit   *browseLine;
-    QString     mapName,
-                audioFolderPath,
+    QString     songsFolderPath,
+                mapName,
+                convName,
                 audioFolderName,
-                convFileName,
-                convFilePath,
-                convPath,
-                copyAudioFilePath,
-                songsFolderPath;
+                audioName,
+                difficultyName;
 
-    mapListWidget   = ui->PS_mapListListWidget;
-    audioListWidget = ui->PS_audioFileListListWidget;
-    statusLabel     = ui->PS_statusLabel;
-    browseLine      = ui->PS_browseLine;
+    mapListWidget        = ui->PS_mapListListWidget;
+    audioListWidget      = ui->PS_audioFileListListWidget;
+    difficultyListWidget = ui->PS_difficultyListListWidget;
+    statusLabel          = ui->PS_statusLabel;
+    browseLine           = ui->PS_browseLine;
+
+    /* [songsFolderPath]
+     * D:\osu!\Songs
+     *
+     * [mapName]
+     * 100000 ARTIST - SONG
+     *
+     * [convName]
+     * Converted Files
+     *
+     * [audioFolderName]
+     * audio_mp3
+     *
+     * [audioName]
+     * audio.mp3
+     *
+     * [difficultyName]
+     * difficulty.osu
+     */
 
     songsFolderPath = browseLine->text();
+    mapName         = mapListWidget->selectedItems()[0]->text();
+    convName        = "Converted Files";
 
-    mapName = mapListWidget->selectedItems()[0]->text();
-    convPath = songsFolderPath;
-    convPath.append("/")
-            .append(mapName)
-            .append("/Converted Files");
-
-    QDir convDir(convPath);
+    // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
+    QDir convDir(QString().append(songsFolderPath)
+                          .append("/")
+                          .append(mapName)
+                          .append("/")
+                          .append(convName));
 
     if (convDir.mkpath(".") == false)
     {
@@ -1944,39 +1964,40 @@ void amber::on_PS_controlSplitButton_clicked()
     {
         statusLabel->setText("STATUS: Convert folder successfully created");
         statusLabel->setStyleSheet("QLabel { color:green };");
-        QDesktopServices::openUrl(QUrl::fromLocalFile(convPath));
+
+        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
+        QDesktopServices::openUrl(QUrl::fromLocalFile(QString().append(songsFolderPath)
+                                                               .append(mapName)
+                                                               .append("/")
+                                                               .append(convName)));
     }
 
+    //Copy Audio Files over
     for (int i = 0; i < audioListWidget->count(); i ++)
     {
-        convFileName   = audioListWidget->item(i)->text();
-        audioFolderName = convFileName;
+        /* We firstly create the directories for each of the maps by referring to the audio name
+         * We then copy over the audio files to each of those files
+         */
+        audioName       = audioListWidget->item(i)->text();
+        audioFolderName = audioName;
         audioFolderName.replace(".","_");
 
-        audioFolderPath.clear();
-        audioFolderPath.append(convPath)
-                       .append("/")
-                       .append(audioFolderName);
 
-        convFilePath.clear();
-        convFilePath.append(songsFolderPath)
-                     .append("/")
-                     .append(mapName)
-                     .append("/")
-                     .append(convFileName);
+        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
+        QDir audioFolderDir(QString().append(songsFolderPath)
+                                     .append("/")
+                                     .append(mapName)
+                                     .append("/")
+                                     .append(convName)
+                                     .append("/")
+                                     .append(audioFolderName));
 
-        copyAudioFilePath.clear();
-        copyAudioFilePath.append(songsFolderPath)
-                         .append("/")
-                         .append(mapName)
-                         .append("/")
-                         .append(audioFolderName)
-                         .append("/")
-                         .append(convFileName);
-
-
-        QDir audioFolderDir(audioFolderPath);
-        QFile audioCopyFile(convFilePath);
+        // D:\osu!\Songs\100000 ARTIST - SONG\audio.mp3
+        QFile audioCopyFile(QString().append(songsFolderPath)
+                                     .append("/")
+                                     .append(mapName)
+                                     .append("/")
+                                     .append(audioName));
 
         if (audioFolderDir.mkpath(".") == false)
         {
@@ -1990,8 +2011,17 @@ void amber::on_PS_controlSplitButton_clicked()
             statusLabel->setStyleSheet("QLabel { color:green };");
         }
 
-        qDebug() << audioCopyFile.exists();
-        if (audioCopyFile.copy(copyAudioFilePath) == false)
+        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
+        if (audioCopyFile.copy(QString().append(songsFolderPath)
+                                        .append("/")
+                                        .append(mapName)
+                                        .append("/")
+                                        .append(convName)
+                                        .append("/")
+                                        .append(audioFolderName)
+                                        .append("/")
+                                        .append(audioName))
+                                        == false )
         {
             statusLabel->setText("STATUS: Copying Failed");
             statusLabel->setStyleSheet("QLabel { color:red };");
@@ -2002,7 +2032,47 @@ void amber::on_PS_controlSplitButton_clicked()
             statusLabel->setStyleSheet("QLabel { color:green };");
         }
 
-        qDebug() << audioCopyFile.error();
+    }
 
+    //Check Difficulty Files and copy over
+    for (int i = 0; i < difficultyListWidget->count(); i ++)
+    {
+        /* [General]
+         * AudioFilename: audio.mp3
+         * AudioLeadIn: 0
+         *
+         * [Events]
+         * //Background and Video events
+         * 0,0,"BG.jpg",0,0
+         */
+
+        QString strStream,
+                difficultyAudioFileName,
+                difficultyBGFileName;
+
+        difficultyName = difficultyListWidget->item(i)->text();
+
+        QFile difficultyFile(QString().append(songsFolderPath)
+                                      .append("/")
+                                      .append(mapName)
+                                      .append("/")
+                                      .append(difficultyName));
+        difficultyFile.open(QIODevice::ReadOnly);
+        QTextStream difficultyStream(&difficultyFile);
+
+        while (!difficultyFile.atEnd())
+        {
+            strStream = difficultyStream.readLine();
+            if (strStream.contains("AudioFilename:"))
+            {
+                difficultyAudioFileName = strStream.right(strStream.length() - 15);
+            }
+            else if (strStream.contains(",\"") && strStream.contains("\","))
+            {
+                difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
+            }
+        }
+
+        difficultyFile.close();
     }
 }
