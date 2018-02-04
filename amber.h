@@ -60,6 +60,10 @@ public:
     //SET DEFAULT
     void saveDefaultValues();
 
+    //DEBUG MESSENGER
+    void ERROR_MESSAGE(int ERROR_CODE);
+    void PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST);
+
 
     //COMPILERS
     QString compileOMFormatting_NN(QString xAxis = def_xAxis,
@@ -194,6 +198,8 @@ private slots:
     void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
 
     void on_PS_controlSplitButton_clicked();
+
+    void on_PS_controlOpenFolderButton_clicked();
 
 private:
     Ui::amber *ui;

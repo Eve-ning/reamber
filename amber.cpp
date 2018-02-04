@@ -77,6 +77,109 @@ QString def_xAxis            = "256"
        ,def_timingPointType  = "SV"
 ;
 
+
+// --------------------------------------------------------------------------------------------------------< DEBUG >
+/* Error Handling Idea 4/2/2018
+void amber::ERROR_MESSAGE(int ERROR_CODE)
+{
+//REFERENCE
+
+//-FORMAT-
+
+//-
+//#A0000 - MESSAGE NAME
+//DETAILS
+//-
+//-
+
+//[SUPPORTING FUNCTIONS]
+//0___ : ALL
+
+//[BASIC]
+//11__ : STUTTER
+//12__ : COPIER
+//13__ : TPF
+//14__ : NORMALIZER
+//15__ : ADJUSTER
+//16__ :
+//17__ :
+//18__ :
+//19__ :
+//20__ :
+
+//[ADVANCED]
+//50__ : PACK SPLITTER
+//51__ :
+//52__ :
+//53__ :
+//54__ :
+//55__ :
+//56__ :
+
+//[LIST OF ALL ERROR MESSAGES]
+//-
+
+//-
+
+
+//[LIST OF ALL WARNING MESSAGES]
+
+
+
+
+    QTextBrowser *messageBrowser;
+    QMap<int, QString> messageMap;
+
+    messageBrowser = ui->el_messageBrowser;
+
+    messageMap[1]    = "[0001] QString amber::compileOMFormatting_NN has encountered an error.";
+    messageMap[2]    = "[0002] QString amber::compileOMFormatting_LN has encountered an error.";
+    messageMap[3]    = "[0003] QString amber::compileOMFormatting_BPM has encountered an error.";
+    messageMap[4]    = "[0004] QString amber::compileOMFormatting_SV has encountered an error.";
+    messageMap[5]    = "[0005] QString amber::compileBASICFormatting_hitObject has encountered an error.";
+    messageMap[6]    = "[0006] QString amber::compileBASICFormatting_timingPoint has encountered an error.";
+    messageMap[7]    = "[0007] double amber::convertColumnCodeToColumnKey has encountered an error.";
+    messageMap[8]    = "[0008] double amber::convertColumnKeyToColumnCode has encountered an error.";
+    messageMap[9]    = "[0009] QList<double> amber::convertEditorHitObjectToOffsetList has encountered an error.";
+    messageMap[10]   = "[0010] QList<int> amber::convertEditorHitObjectToColumnList has encountered an error.";
+    messageMap[11]   = "[0011] QList<double> amber::convertHitObjectToOffsetList has encountered an error.";
+    messageMap[12]   = "[0012] QList<int> amber::convertHitObjectToColumnList has encountered an error.";
+    messageMap[13]   = "[0013] QList<double> amber::convertTimingPointToOffsetList has encountered an error.";
+    messageMap[14]   = "[0014] QList<double> amber::convertTimingPointToCodeList has encountered an error.";
+    messageMap[15]   = "[0015] void amber::compileProcOutput has encountered an error.";
+    messageMap[16]   = "[0016] QStringList amber::convertOMtoBASIC has encountered an error.";
+    messageMap[17]   = "[0017] QStringList amber::convertBASICtoOM has encountered an error.";
+
+    messageBrowser->append(messageMap[ERROR_CODE]);
+}
+
+void amber::PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST)
+{
+    QVariant VALUE;
+    QTextBrowser *parameterBrowser;
+
+    parameterBrowser = ui->el_parameterBrowser;
+
+    QMap<QString, QVariant>::iterator iter;
+    for (iter = PARAMETER_VALUE_LIST.begin(); iter != PARAMETER_VALUE_LIST.end(); ++iter)
+    {
+        if (iter.value().canConvert<QString>())
+        {
+            parameterBrowser->append(QString("%1 : %2").arg(iter.key()).arg(iter.value().toString()));
+        }
+        else if (iter.value().canConvert<QStringList>())
+        {
+            QStringList VALUE_LIST;
+            VALUE_LIST = iter.value().toStringList();
+
+            for (int i = 0; i < VALUE_LIST.length(); i ++)
+            {
+                parameterBrowser->append(QString("%1 : %2").arg(iter.key()).arg(VALUE_LIST[i]));
+            }
+        }
+    }
+}
+*/
 // --------------------------------------------------------------------------------------------------------< HOME >
 
 void amber::on_home_githubIconLabel_clicked()
@@ -782,7 +885,7 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
 
     ui->stackedWidget->setCurrentIndex(2);
 
-    if      (itemString == "Test 1")
+    if      (itemString == "Pack Splitter")
     {
         ui->advancedTabWidget->setCurrentIndex(0);
     }
@@ -980,7 +1083,7 @@ void amber::on_stutter_generateButton_clicked()
         //normalizeSV append
         ui->stutter_outputBox->append(amber::compileOMFormatting_SV(QString::number(endOffset),
                                                                     QString::number(-100.0 / averageSV)));
-    } catch(...){
+    } catch(...){        
         //Generate Error Report
     }
 }
@@ -1635,7 +1738,6 @@ void amber::on_adjuster_generateButton_clicked()
                    *outputStatusLabel;
     QRadioButton   *SVRadio,
                    *BPMRadio,
-                   *graphScatterRadio,
                    *graphLineRadio;
 
     inputBox          = ui->adjuster_inputBox;
@@ -1651,7 +1753,6 @@ void amber::on_adjuster_generateButton_clicked()
     outputStatusLabel = ui->adjuster_outputStatusLabel;
     SVRadio           = ui->adjuster_adjustSVRadio;
     BPMRadio          = ui->adjuster_adjustBPMRadio;
-    graphScatterRadio = ui->adjuster_graphScatterRadio;
     graphLineRadio    = ui->adjuster_graphLineRadio;
 
     QStringList inputList, partList;
@@ -1665,7 +1766,6 @@ void amber::on_adjuster_generateButton_clicked()
 
     bool isSV           = SVRadio->isChecked(),
          isBPM          = BPMRadio->isChecked(),
-         isGraphScatter = graphScatterRadio->isChecked(),
          isGraphLine    = graphLineRadio->isChecked();
 
     inputList = amber::convertOMtoBASIC(inputStatusLabel,
@@ -1941,6 +2041,9 @@ void amber::on_PS_controlSplitButton_clicked()
      *
      * [difficultyName]
      * difficulty.osu
+     *
+     * [difficultyBGFileName]
+     * bg.jpg
      */
 
     songsFolderPath = browseLine->text();
@@ -1954,11 +2057,26 @@ void amber::on_PS_controlSplitButton_clicked()
                           .append("/")
                           .append(convName));
 
+    // Make Converted Files Directory
     if (convDir.mkpath(".") == false)
     {
-        statusLabel->setText("STATUS: Convert folder couldn't be created");
-        statusLabel->setStyleSheet("QLabel { color:red };");
-        return;
+        if (convDir.exists())
+        {
+            statusLabel->setText("STATUS: Convert folder exists already.");
+            statusLabel->setStyleSheet("QLabel { color:orange };");
+
+            // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
+            QDesktopServices::openUrl(QUrl::fromLocalFile(QString().append(songsFolderPath)
+                                                                   .append(mapName)
+                                                                   .append("/")
+                                                                   .append(convName)));
+        }
+        else
+        {
+            statusLabel->setText("STATUS: Convert folder couldn't be created");
+            statusLabel->setStyleSheet("QLabel { color:red };");
+            return;
+        }
     }
     else
     {
@@ -1967,6 +2085,7 @@ void amber::on_PS_controlSplitButton_clicked()
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
         QDesktopServices::openUrl(QUrl::fromLocalFile(QString().append(songsFolderPath)
+                                                               .append("/")
                                                                .append(mapName)
                                                                .append("/")
                                                                .append(convName)));
@@ -1999,6 +2118,7 @@ void amber::on_PS_controlSplitButton_clicked()
                                      .append("/")
                                      .append(audioName));
 
+        // Make audio folder for each audio file
         if (audioFolderDir.mkpath(".") == false)
         {
             statusLabel->setText("STATUS: Audio folder couldn't be created");
@@ -2011,6 +2131,7 @@ void amber::on_PS_controlSplitButton_clicked()
             statusLabel->setStyleSheet("QLabel { color:green };");
         }
 
+        // Copy audio files over
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
         if (audioCopyFile.copy(QString().append(songsFolderPath)
                                         .append("/")
@@ -2023,8 +2144,8 @@ void amber::on_PS_controlSplitButton_clicked()
                                         .append(audioName))
                                         == false )
         {
-            statusLabel->setText("STATUS: Copying Failed");
-            statusLabel->setStyleSheet("QLabel { color:red };");
+            statusLabel->setText("STATUS: Copying Failed or File already exists");
+            statusLabel->setStyleSheet("QLabel { color:orange };");
         }
         else
         {
@@ -2037,7 +2158,9 @@ void amber::on_PS_controlSplitButton_clicked()
     //Check Difficulty Files and copy over
     for (int i = 0; i < difficultyListWidget->count(); i ++)
     {
-        /* [General]
+        /* REFERENCE
+         *
+         * [General]
          * AudioFilename: audio.mp3
          * AudioLeadIn: 0
          *
@@ -2047,7 +2170,7 @@ void amber::on_PS_controlSplitButton_clicked()
          */
 
         QString strStream,
-                difficultyAudioFileName,
+                difficultyAudioFolderName,
                 difficultyBGFileName;
 
         difficultyName = difficultyListWidget->item(i)->text();
@@ -2065,14 +2188,75 @@ void amber::on_PS_controlSplitButton_clicked()
             strStream = difficultyStream.readLine();
             if (strStream.contains("AudioFilename:"))
             {
-                difficultyAudioFileName = strStream.right(strStream.length() - 15);
+                difficultyAudioFolderName = strStream.right(strStream.length() - 15).replace(".","_");
             }
             else if (strStream.contains(",\"") && strStream.contains("\","))
             {
                 difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
+                break;
             }
+
+
         }
 
         difficultyFile.close();
+
+        // D:\osu!\Songs\100000 ARTIST - SONG\difficulty.osu
+        QFile difficultyCopyFile(QString().append(songsFolderPath)
+                                          .append("/")
+                                          .append(mapName)
+                                          .append("/")
+                                          .append(difficultyName));
+
+        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\difficulty.osu
+        difficultyCopyFile.copy(QString().append(songsFolderPath)
+                                         .append("/")
+                                         .append(mapName)
+                                         .append("/")
+                                         .append(convName)
+                                         .append("/")
+                                         .append(difficultyAudioFolderName)
+                                         .append("/")
+                                         .append(difficultyName));
+
+        // D:\osu!\Songs\100000 ARTIST - SONG\bg.jpg
+        QFile difficultyBGCopyFile(QString().append(songsFolderPath)
+                                          .append("/")
+                                          .append(mapName)
+                                          .append("/")
+                                          .append(difficultyBGFileName));
+
+        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
+        difficultyBGCopyFile.copy(QString().append(songsFolderPath)
+                                         .append("/")
+                                         .append(mapName)
+                                         .append("/")
+                                         .append(convName)
+                                         .append("/")
+                                         .append(difficultyAudioFolderName)
+                                         .append("/")
+                                         .append(difficultyBGFileName));
+
+
+    }
+}
+
+void amber::on_PS_controlOpenFolderButton_clicked()
+{
+    QString songsFolderPath,
+            mapName;
+
+    if (ui->PS_browseLine->text() != "" || ui->PS_mapListListWidget->selectedItems().size() != 0)
+    {
+        songsFolderPath = ui->PS_browseLine->text();
+        mapName = ui->PS_mapListListWidget->selectedItems()[0]->text();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(songsFolderPath.append("/").append(mapName)));
+
+    }
+    else
+    {
+        ui->PS_statusLabel->setText("STATUS: No Map Folder Specified");
+        ui->PS_statusLabel->setStyleSheet("QLabel { color:red }");
+        return;
     }
 }
