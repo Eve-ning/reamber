@@ -112,3 +112,10 @@ PLANET//SHAPER SV Graph
 
 4/2/18 :
 - Finalize Pack Splitter
+
+14/2/18 :
+- Added Issue Template
+- Revamp Home
+- Added Home Tab
+- Added Icons
+- Added Designs and Placeholders for future UI Revamps
