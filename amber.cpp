@@ -27,6 +27,13 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
 
+    QIcon windowIcon = QIcon(":/amberResources/icons/amberIcon.ico");
+
+    qDebug() << windowIcon.availableSizes();
+
+
+    setWindowIcon(QIcon(":/amberResources/icons/amberIcon.ico"));
+
     //Pre-RenderGraphs
     ui->adjuster_customPlot->addGraph();
     ui->adjuster_customPlot->xAxis->setLabel("Offset");
@@ -891,7 +898,7 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
     }
     else if (itemString == "Test 2")
     {
-        ui->advancedTabWidget->setCurrentIndex(1);
+        // ui->advancedTabWidget->setCurrentIndex(1);
     }
 }
 void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
@@ -905,6 +912,11 @@ void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
     {
         ui->settingsTabWidget->setCurrentIndex(0);
     }
+    else if (itemString == "Error Log")
+    {
+        ui->settingsTabWidget->setCurrentIndex(1);
+    }
+
 }
 
 void amber::on_toolBox_currentChanged(int index)
@@ -1415,7 +1427,7 @@ void amber::on_TPF_generateButton_clicked()
     QCustomPlot  *customPlot;
 
     double initialOffset, endOffset,
-           initialTP, endTP, averageTP,
+           initialTP, endTP, averageTP = 0,
            xValue,
            offset, amplitude, frequency;
     int    intermediatePoints;
@@ -1762,7 +1774,7 @@ void amber::on_adjuster_generateButton_clicked()
            endOffset,
            minTP,
            maxTP,
-           averageTP;
+           averageTP = 0;
 
     bool isSV           = SVRadio->isChecked(),
          isBPM          = BPMRadio->isChecked(),

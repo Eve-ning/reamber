@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>svTool</string>
+   <string>amber</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -1386,11 +1386,6 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="testTab2">
-           <attribute name="title">
-            <string>Tab 2</string>
-           </attribute>
-          </widget>
          </widget>
         </item>
        </layout>
@@ -2420,7 +2415,7 @@
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="basicPage">
           <property name="geometry">

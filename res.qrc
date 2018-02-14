@@ -6,4 +6,7 @@
         <file>amberResources/amberLogoWhite.png</file>
         <file>amberResources/amberLogoWhiteAA.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>amberResources/icons/amberIcon.ico</file>
+    </qresource>
 </RCC>
