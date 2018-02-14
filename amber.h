@@ -201,6 +201,12 @@ private slots:
 
     void on_PS_controlOpenFolderButton_clicked();
 
+    void on_home_wikiLabel_clicked();
+
+    void on_home_releasesLabel_clicked();
+
+    void on_home_contactLabel_clicked();
+
 private:
     Ui::amber *ui;
 };

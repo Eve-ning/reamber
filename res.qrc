@@ -1,12 +1,21 @@
 <RCC>
     <qresource prefix="/logos">
-        <file>amberResources/icons/githubLogo.png</file>
         <file>amberResources/amberLogoBlack.png</file>
         <file>amberResources/amberLogoBlackAA.png</file>
         <file>amberResources/amberLogoWhite.png</file>
         <file>amberResources/amberLogoWhiteAA.png</file>
     </qresource>
-    <qresource prefix="/">
+    <qresource prefix="/icons">
         <file>amberResources/icons/amberIcon.ico</file>
+    </qresource>
+    <qresource prefix="/labels">
+        <file>amberResources/labels/repoLabel.png</file>
+        <file>amberResources/labels/wikiLabel.png</file>
+        <file>amberResources/labels/releasesLabel.png</file>
+        <file>amberResources/labels/contactLabel.png</file>
+        <file>amberResources/labels/contactLabel_SEL.png</file>
+        <file>amberResources/labels/releasesLabel_SEL.png</file>
+        <file>amberResources/labels/repoLabel_SEL.png</file>
+        <file>amberResources/labels/wikiLabel_SEL.png</file>
     </qresource>
 </RCC>

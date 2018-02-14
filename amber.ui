@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1391</width>
-    <height>784</height>
+    <width>1383</width>
+    <height>745</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,93 +15,214 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Quick Access</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QToolBox" name="toolBox">
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <widget class="QWidget" name="homePage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>173</width>
+            <height>533</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <attribute name="label">
+           <string>Home</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_54">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="homeWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="basicPage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>173</width>
+            <height>533</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <attribute name="label">
+           <string>Basic Functions</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="basicWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Stutter</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copier</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2-Point Function</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Normalizer</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Adjuster</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="advancedPage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>173</width>
+            <height>533</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Advanced Functions</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="advancedWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Pack Splitter</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Test 2</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="settingsPage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>173</width>
+            <height>533</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Settings</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="settingsWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Default Values</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Error Log</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="homeSPage">
        <property name="enabled">
         <bool>true</bool>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>600</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #DDD</string>
+        <string notr="true">background-color: #FFF</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_14">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item row="3" column="0" colspan="2">
-         <widget class="QLabel" name="home_amberIconLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="pixmap">
-           <pixmap resource="res.qrc">:/logos/amberResources/amberLogoBlack.png</pixmap>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QLabel" name="home_textLabel">
-          <property name="font">
-           <font>
-            <family>Microsoft JhengHei</family>
-            <pointsize>14</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color:#555;</string>
-          </property>
-          <property name="text">
-           <string>You are currently using AMBER (ALPHA v0.3)</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
          <widget class="QPushButton" name="home_githubIconLabel">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -111,18 +232,117 @@
           </property>
           <property name="icon">
            <iconset resource="res.qrc">
-            <normaloff>:/logos/amberResources/icons/githubLogo.png</normaloff>:/logos/amberResources/icons/githubLogo.png</iconset>
+            <normaloff>:/labels/amberResources/labels/repoLabel.png</normaloff>
+            <selectedoff>:/labels/amberResources/labels/repoLabel_SEL.png</selectedoff>
+            <selectedon>:/labels/amberResources/labels/repoLabel_SEL.png</selectedon>:/labels/amberResources/labels/repoLabel.png</iconset>
           </property>
           <property name="iconSize">
            <size>
-            <width>200</width>
-            <height>200</height>
+            <width>275</width>
+            <height>150</height>
            </size>
           </property>
           <property name="flat">
            <bool>true</bool>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="home_wikiLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="res.qrc">
+            <normaloff>:/labels/amberResources/labels/wikiLabel.png</normaloff>
+            <selectedoff>:/labels/amberResources/labels/wikiLabel_SEL.png</selectedoff>
+            <selectedon>:/labels/amberResources/labels/wikiLabel_SEL.png</selectedon>:/labels/amberResources/labels/wikiLabel.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>275</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="home_releasesLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="res.qrc">
+            <normaloff>:/labels/amberResources/labels/releasesLabel.png</normaloff>
+            <selectedoff>:/labels/amberResources/labels/releasesLabel_SEL.png</selectedoff>
+            <selectedon>:/labels/amberResources/labels/releasesLabel_SEL.png</selectedon>:/labels/amberResources/labels/releasesLabel.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>275</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="home_contactLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="res.qrc">
+            <normaloff>:/labels/amberResources/labels/contactLabel.png</normaloff>
+            <selectedoff>:/labels/amberResources/labels/contactLabel_SEL.png</selectedoff>
+            <selectedon>:/labels/amberResources/labels/contactLabel_SEL.png</selectedon>:/labels/amberResources/labels/contactLabel.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>275</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -143,7 +363,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="usesScrollButtons">
            <bool>true</bool>
@@ -1394,8 +1614,11 @@
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <widget class="QTabWidget" name="settingsTabWidget">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tabDefault">
            <attribute name="title">
@@ -2394,151 +2617,6 @@
       </widget>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Quick Access</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QToolBox" name="toolBox">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="basicPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>180</width>
-            <height>599</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <attribute name="label">
-           <string>Basic Functions</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="basicWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Stutter</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Copier</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>2-Point Function</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Normalizer</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Adjuster</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="advancedPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>180</width>
-            <height>599</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Advanced Functions</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="advancedWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Pack Splitter</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Test 2</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="settingsPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>180</width>
-            <height>599</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="settingsWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Default Values</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Error Log</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -2546,7 +2624,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1391</width>
+     <width>1383</width>
      <height>21</height>
     </rect>
    </property>

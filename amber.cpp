@@ -194,6 +194,21 @@ void amber::on_home_githubIconLabel_clicked()
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber", QUrl::TolerantMode));
 }
 
+void amber::on_home_wikiLabel_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber/wiki", QUrl::TolerantMode));
+}
+
+void amber::on_home_releasesLabel_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber/releases", QUrl::TolerantMode));
+}
+
+void amber::on_home_contactLabel_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://osu.ppy.sh/forum/ucp.php?i=pm&mode=compose&u=2193881", QUrl::TolerantMode));
+}
+
 // --------------------------------------------------------------------------------------------------------< GENERAL >
 
 //Compilers
@@ -916,12 +931,11 @@ void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
     {
         ui->settingsTabWidget->setCurrentIndex(1);
     }
-
 }
 
 void amber::on_toolBox_currentChanged(int index)
 {
-    ui->stackedWidget->setCurrentIndex(index + 1);
+    ui->stackedWidget->setCurrentIndex(index);
 }
 
 // --------------------------------------------------------------------------------------------------------< INPUT >
@@ -2272,3 +2286,7 @@ void amber::on_PS_controlOpenFolderButton_clicked()
         return;
     }
 }
+
+
+
+
