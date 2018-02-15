@@ -4,11 +4,8 @@
 
 ***
 
-## :star: Latest Addition Showcase
-deltaMAX SV and BPM Graph \<outdated>
-![deltaMAX](http://puu.sh/z79zg/f4a2be9fab.png)
-PLANET//SHAPER SV Graph
-![PLANET//SHAPER](http://puu.sh/z7Rw7/86b3553d6d.png)
+## :star: [Release v0.0.1a happened](https://github.com/Eve-ning/amber/releases)
 
 ***
+
 
