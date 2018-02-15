@@ -27,12 +27,14 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
 
-    QIcon windowIcon = QIcon(":/amberResources/icons/amberIcon.ico");
+    ui->toolBox->setCurrentIndex(0);
+
+    QIcon windowIcon = QIcon(":/amberResources/icons/amberIcn.ico");
 
     qDebug() << windowIcon.availableSizes();
 
 
-    setWindowIcon(QIcon(":/amberResources/icons/amberIcon.ico"));
+    setWindowIcon(QIcon(":/amberResources/icons/amberIcn.ico"));
 
     //Pre-RenderGraphs
     ui->adjuster_customPlot->addGraph();
@@ -910,10 +912,6 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
     if      (itemString == "Pack Splitter")
     {
         ui->advancedTabWidget->setCurrentIndex(0);
-    }
-    else if (itemString == "Test 2")
-    {
-        // ui->advancedTabWidget->setCurrentIndex(1);
     }
 }
 void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)

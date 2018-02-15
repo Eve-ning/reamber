@@ -148,11 +148,6 @@
                <string>Pack Splitter</string>
               </property>
              </item>
-             <item>
-              <property name="text">
-               <string>Test 2</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>

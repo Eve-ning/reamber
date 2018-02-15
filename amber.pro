@@ -46,6 +46,6 @@ SUBDIRS += \
 RESOURCES += \
     res.qrc
 
-win32:RC_ICONS += amberResources/icons/amberIcon.ico
+win32:RC_ICONS += amberResources/icons/amberIcn.ico
 
 QMAKE_LFLAGS += -static
