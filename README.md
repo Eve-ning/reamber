@@ -4,6 +4,11 @@
 
 ## :star: [Release v0.0.1a happened](https://github.com/Eve-ning/amber/releases)
 
+## Currently Working On...
+
+#### Recreation of Project Skeletal
+I think it's important to state that I'm currently still working on this project, I'm currently building a better framework/skeletal for this whole project so that it's more flexible. A lot of back-end changes are expected.
+
 ## Purpose
 
 This program is designed to be as user-friendly as possible, removing most uncommon terminologies and simplifying the process of mapping osu!mania maps.
