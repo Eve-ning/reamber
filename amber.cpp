@@ -162,22 +162,19 @@ void amber::PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST)
 
 void amber::on_home_githubIconLabel_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber", QUrl::TolerantMode));
+    HYPERLINK::REPO();
 }
-
 void amber::on_home_wikiLabel_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber/wiki", QUrl::TolerantMode));
+    HYPERLINK::WIKI();
 }
-
 void amber::on_home_releasesLabel_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/amber/releases", QUrl::TolerantMode));
+    HYPERLINK::RELEASES();
 }
-
 void amber::on_home_contactLabel_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://osu.ppy.sh/forum/ucp.php?i=pm&mode=compose&u=2193881", QUrl::TolerantMode));
+    HYPERLINK::CONTACT();
 }
 
 // --------------------------------------------------------------------------------------------------------< GENERAL >

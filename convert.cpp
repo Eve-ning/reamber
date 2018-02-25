@@ -60,6 +60,7 @@ QList<int> EHOtoCOLUMNLIST(QString EHO)
     }
 
 }
+
 QList<double> HOtoOFFSETLIST(QStringList HOList)
 {
     QList<double> offsetList;
@@ -99,6 +100,29 @@ QList<int> HOtoCOLUMNLIST(QStringList HOList, int keyCount)
         return columnList;
     }
 }
+QStringList HOtoEXTENSIONLIST(QStringList HOList)
+{
+    QStringList extensionList;
+    QString extension;
+    QStringList extensionSplitList;
+
+    if (CHECK::HO(HOList))
+    {
+        foreach(extension, extensionList)
+        {
+            extensionSplitList = extension.split(",", QString::SkipEmptyParts);
+            extensionList.append(extensionSplitList[3] + "," +
+                                 extensionSplitList[4] + "," +
+                                 extensionSplitList[5]);
+        }
+        return extensionList;
+    } else
+    {
+        extensionList.append("0.0");
+        return extensionList;
+    }
+}
+
 QList<double> TPtoOFFSETLIST(QStringList TPList)
 {
     QList<double> offsetList;
@@ -128,6 +152,103 @@ QList<double> TPtoCODELIST(QStringList TPList)
         foreach(timingPoint, TPList)
         {
             codeList.append(timingPoint.split(",")[1].toDouble());
+        }
+        return codeList;
+    }
+    else
+    {
+        codeList.append(0.0);
+        return codeList;
+    }
+}
+
+QList<double> TPtoSVVALUELIST(QStringList TPList)
+{
+    QList<double> codeList;
+    QString timingPoint;
+
+    if (CHECK::TP(TPList[0]))
+    {
+        foreach(timingPoint, TPList)
+        {
+            if (CHECK::TP_BPM(timingPoint))
+            {
+                continue;
+            }
+
+             codeList.append(TP_SVCODEtoVALUE(timingPoint.split(",")[1].toDouble()));
+        }
+        return codeList;
+    }
+    else
+    {
+        codeList.append(0.0);
+        return codeList;
+    }
+}
+QList<double> TPtoBPMVALUELIST(QStringList TPList)
+{
+    QList<double> codeList;
+    QString timingPoint;
+
+    if (CHECK::TP(TPList[0]))
+    {
+        foreach(timingPoint, TPList)
+        {
+            if (CHECK::TP_SV(timingPoint))
+            {
+                continue;
+            }
+
+             codeList.append(TP_BPMCODEtoVALUE(timingPoint.split(",")[1].toDouble()));
+        }
+        return codeList;
+    }
+    else
+    {
+        codeList.append(0.0);
+        return codeList;
+    }
+}
+QList<double> TPtoSVCODELIST(QStringList TPList)
+{
+    QList<double> codeList;
+    QString timingPoint;
+
+    if (CHECK::TP(TPList[0]))
+    {
+        foreach(timingPoint, TPList)
+        {
+            if (CHECK::TP_BPM(timingPoint))
+            {
+                continue;
+            }
+
+             codeList.append(timingPoint.split(",")[1].toDouble());
+        }
+        return codeList;
+    }
+    else
+    {
+        codeList.append(0.0);
+        return codeList;
+    }
+}
+QList<double> TPtoBPMCODELIST(QStringList TPList)
+{
+    QList<double> codeList;
+    QString timingPoint;
+
+    if (CHECK::TP(TPList[0]))
+    {
+        foreach(timingPoint, TPList)
+        {
+            if (CHECK::TP_SV(timingPoint))
+            {
+                continue;
+            }
+
+             codeList.append(timingPoint.split(",")[1].toDouble());
         }
         return codeList;
     }
@@ -357,57 +478,22 @@ QStringList BASICtoOM(QLabel *messageLabel,
     return output;
 }
 
-QStringList HOtoEXTENSIONLIST(QStringList HOList)
-{
-    QStringList extensionList;
-    QString extension;
-    QStringList extensionSplitList;
 
-    if (CHECK::HO(HOList))
-    {
-        foreach(extension, extensionList)
-        {
-            extensionSplitList = extension.split(",", QString::SkipEmptyParts);
-            extensionList.append(extensionSplitList[3] + "," +
-                                 extensionSplitList[4] + "," +
-                                 extensionSplitList[5]);
-        }
-        return extensionList;
-    } else
-    {
-        extensionList.append("0.0");
-        return extensionList;
-    }
+double TP_BPMCODEtoVALUE(double TPCode)
+{
+    return 60000 / TPCode;
 }
-
-QList<double> TPtoSVVALUELIST(QStringList TPList)
+double TP_BPMVALUEtoCODE(double TPValue)
 {
-
+    return 60000 / TPCode;
 }
-
-QList<double> TPtoBPMVALUELIST(QStringList TPList)
+double TP_SVCODEtoVALUE(double TPCode)
 {
-
+    return -100 / TPCode;
 }
-
-QList<double> TPtoSVCODELIST(QStringList TPList)
+double TP_SVVALUEtoCODE(double TPValue)
 {
-
-}
-
-QList<double> TPtoBPMCODELIST(QStringList TPList)
-{
-
-}
-
-double TP_CODEtoVALUE(double TPCode)
-{
-
-}
-
-double TP_VALUEtoCODE(double TPValue)
-{
-
+    return -100 / TPCode;
 }
 
 }

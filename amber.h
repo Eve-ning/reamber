@@ -24,6 +24,7 @@
 #include "check.h"
 #include "compile.h"
 #include "convert.h"
+#include "hyperlink.h"
 
 namespace Ui {
 class amber;

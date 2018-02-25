@@ -32,8 +32,11 @@ namespace CONVERT {
     QList<double> TPtoSVCODELIST(QStringList TPList);
     QList<double> TPtoBPMCODELIST(QStringList TPList);
 
-    double TP_CODEtoVALUE(double TPCode);
-    double TP_VALUEtoCODE(double TPValue);
+    double TP_BPMCODEtoVALUE(double TPCode);
+    double TP_BPMVALUEtoCODE(double TPValue);
+
+    double TP_SVCODEtoVALUE(double TPCode);
+    double TP_SVVALUEtoCODE(double TPValue);
 
     QStringList OMtoBASIC(QLabel *messageLabel,
                           bool acceptEHO = true,

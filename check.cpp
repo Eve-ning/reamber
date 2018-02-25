@@ -99,4 +99,9 @@ bool TP_BPM(QString TP_BPM)
     return TP_BPM.split(",", QString::SkipEmptyParts)[6] == "1";
 }
 
+QString INPUT(QString input)
+{
+
+}
+
 }

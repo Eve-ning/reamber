@@ -5,6 +5,9 @@
 #include <QtWidgets>
 
 namespace CHECK {
+
+    QString INPUT(QString input);
+
     bool EHO(QString EHO);
     bool HO(QString HO);
     bool TP(QString TP);

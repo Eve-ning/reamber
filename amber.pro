@@ -29,7 +29,8 @@ SOURCES += \
     check.cpp \
     convert.cpp \
     compile.cpp \
-    defargs.cpp
+    defargs.cpp \
+    hyperlink.cpp
 
 HEADERS += \
         amber.h \
@@ -37,7 +38,8 @@ HEADERS += \
     check.h \
     convert.h \
     compile.h \
-    defargs.h
+    defargs.h \
+    hyperlink.h
 
 FORMS += \
         amber.ui
