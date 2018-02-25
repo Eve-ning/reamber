@@ -32,7 +32,7 @@ Slider Velocity (SV)
         TIMINGPOINT|4005|2|SV
 
     Formatting:
-    hitObject/editorHitObject:
+    hitObject/EHO:
         HITOBJECT|NO_OF_KEYS|OFFSET|COLUMN|LN_END_OFFSET
     timingPoint:
         TIMINGPOINT|OFFSET|VALUE|TYPE
@@ -51,7 +51,7 @@ Slider Velocity (SV)
         mm:ss:(ms)(ms)(ms)  (offset|column,offset|column,offset|column,offset|column,...) -
         00:03:992           (3992|2,       4029|0,       4065|3,       4065|1           ) - 
             
-    Shorthand Naming: editorHitObject
+    Shorthand Naming: EHO
 
     Note:
     Editor Hit Object can only be copied within the osu! editor

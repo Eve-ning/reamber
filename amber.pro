@@ -25,11 +25,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         amber.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    check.cpp \
+    convert.cpp \
+    compile.cpp \
+    defargs.cpp
 
 HEADERS += \
         amber.h \
-    qcustomplot.h
+    qcustomplot.h \
+    check.h \
+    convert.h \
+    compile.h \
+    defargs.h
 
 FORMS += \
         amber.ui

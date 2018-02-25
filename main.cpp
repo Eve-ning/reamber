@@ -1,5 +1,9 @@
 #include "amber.h"
 #include "ui_amber.h"
+#include "check.h"
+#include "convert.h"
+#include "defargs.h"
+#include "compile.h"
 #include <QApplication>
 #include <QDialog>
 

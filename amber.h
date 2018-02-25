@@ -21,32 +21,13 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 
+#include "check.h"
+#include "compile.h"
+#include "convert.h"
 
 namespace Ui {
 class amber;
 }
-
-//DEFAULT ARGUMENTS
-//Extern to tell the program that the variables have been defined somewhere else (amber.cpp)
-extern QString def_xAxis
-              ,def_yAxis
-              ,def_offset
-              ,def_lnParameter
-              ,def_lnOffset
-              ,def_bpmCode
-              ,def_svCode
-              ,def_bpmValue
-              ,def_svValue
-              ,def_column
-              ,def_noOfKeys
-              ,def_timingPointLabel
-              ,def_hitObjectLabel
-              ,def_nnExtension
-              ,def_lnExtension
-              ,def_bpmExtension
-              ,def_svExtension
-              ,def_timingPointType
-;
 
 class amber : public QMainWindow
 {
@@ -55,7 +36,7 @@ class amber : public QMainWindow
 public:
     explicit amber(QWidget *parent = 0);
     ~amber();
-    void compileProcOutput(QTextBrowser *inputBoxObject, QTextBrowser *outputBoxObject);
+
 
     //SET DEFAULT
     void saveDefaultValues();
@@ -64,78 +45,6 @@ public:
     void ERROR_MESSAGE(int ERROR_CODE);
     void PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST);
 
-
-    //COMPILERS
-    QString compileOMFormatting_NN(QString xAxis = def_xAxis,
-                                   QString offset = def_offset,
-                                   QString yAxis = def_yAxis,
-                                   QString extension = def_nnExtension);
-
-    QString compileOMFormatting_LN(QString xAxis = def_xAxis,
-                                   QString offset = def_offset,
-                                   QString lnOffset = def_lnOffset,
-                                   QString yAxis = def_yAxis,
-                                   QString lnParameter = def_lnParameter,
-                                   QString extension = def_lnExtension);
-
-    QString compileOMFormatting_BPM(QString offset = def_offset,
-                                    QString bpmCode = def_bpmCode,
-                                    QString extension = def_bpmExtension);
-
-    QString compileOMFormatting_SV(QString offset = def_offset,
-                                   QString svCode = def_svCode,
-                                   QString extension = def_svExtension);
-
-    QString compileBASICFormatting_hitObject(QString noOfKeys = def_noOfKeys,
-                                      QString offset = def_offset,
-                                      QString column = def_column,
-                                      QString lnOffset = def_lnOffset,
-                                      QString label = def_hitObjectLabel);
-
-    QString compileBASICFormatting_timingPoint(QString offset = def_offset,
-                                       QString value = def_bpmValue,
-                                       QString timingPointType = def_timingPointType,
-                                       QString label = def_timingPointLabel);
-    //CONVERTERS
-    double convertColumnCodeToColumnKey(double columnCode,
-                                        double noOfKeys);
-    double convertColumnKeyToColumnCode(double columnKey,
-                                        double noOfKeys);
-
-    QList<double> convertEditorHitObjectToOffsetList(QString editorHitObject);
-    QList<int> convertEditorHitObjectToColumnList(QString editorHitObject);
-    QList<double> convertHitObjectToOffsetList(QStringList hitObjectList);
-    QList<int> convertHitObjectToColumnList(QStringList hitObjectList, int keyCount);
-    QList<double> convertTimingPointToOffsetList(QStringList timingPointList);
-    QList<double> convertTimingPointToCodeList(QStringList timingPointList);
-
-    QStringList convertOMtoBASIC(QLabel *messageLabel,
-                                 bool acceptEditorHitObject = true,
-                                 bool acceptHitObject = true,
-                                 bool acceptTimingPoint = true,
-                                 QStringList input = {},
-                                 int noOfKeys = 4);
-
-    QStringList convertBASICtoOM(QLabel *messageLabel,
-                                 QStringList input = {});
-
-    //CHECKS
-    bool checkEditorHitObject(QString editorHitObject);
-    bool checkHitObject(QString hitObject);
-    bool checkTimingPoint(QString timingPoint);
-
-    bool checkEditorHitObject(QPlainTextEdit *box);
-    bool checkHitObject(QPlainTextEdit *box);
-    bool checkTimingPoint(QPlainTextEdit *box);
-
-    bool checkEditorHitObject(QStringList editorHitObjectList);
-    bool checkHitObject(QStringList hitObjectList);
-    bool checkTimingPoint(QStringList timingPointList);
-
-    bool checkHitObjectNN(QString hitObjectNN);
-    bool checkHitObjectLN(QString hitObjectLN);
-    bool checkTimingPointSV(QString timingPointSV);
-    bool checkTimingPointBPM(QString timingPointBPM);
 
 private slots:
 
@@ -210,5 +119,12 @@ private slots:
 private:
     Ui::amber *ui;
 };
+
+namespace CHECK {
+
+}
+//CHECKS
+
+
 
 #endif // AMBER_H
