@@ -1,9 +1,5 @@
 #include "hyperlink.h"
 
-hyperLink::hyperLink()
-{
-
-}
 
 namespace HYPERLINK {
 

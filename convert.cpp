@@ -3,22 +3,85 @@
 namespace CONVERT {
 
 //Converts
-double COLUMN_CODEtoVALUE(double columnCode, double noOfKeys)
+double          COLUMN_CODEtoVALUE  (QTextBrowser *tb, double columnCode, double noOfKeys)
 {
-    return round(((columnCode / 512 * noOfKeys * 2 + 1) / 2) - 1);
+    double output;
+    output = round(((columnCode / 512 * noOfKeys * 2 + 1) / 2) - 1);
+    STATMSG("Value: " + QString::number(output));
+    return output;
 }
-double COLUMN_VALUEtoCODE(double columnValue, double noOfKeys)
+double          COLUMN_VALUEtoCODE  (QTextBrowser *tb, double columnValue, double noOfKeys)
 {
-    return round(((columnValue + 1) * 2 - 1) / 2 * 512 / noOfKeys);
+    double output;
+    output = round(((columnValue + 1) * 2 - 1) / 2 * 512 / noOfKeys);
+    STATMSG("Code: " + QString::number(output));
+    return output;
+}
+double          TP_BPMCODEtoVALUE   (QTextBrowser *tb, double TPCode)
+{
+    double output;
+    if (TPCode == 0) {
+        STATMSG("Recieved division by 0, returning 100.");
+        output = 100;
+    }
+    else
+    {
+        output = 60000 / TPCode;
+    }
+    STATMSG("Code: " + QString::number(output));
+    return output;
+}
+double          TP_BPMVALUEtoCODE   (QTextBrowser *tb, double TPValue)
+{
+    double output;
+    if (TPValue == 0) {
+        STATMSG("Recieved division by 0, returning 100.");
+        output = 100;
+    }
+    else
+    {
+        output = 60000 / TPValue;
+    }
+    STATMSG("Code: " + QString::number(output));
+    return output;
+}
+double          TP_SVCODEtoVALUE    (QTextBrowser *tb, double TPCode)
+{
+    double output;
+    if (TPCode == 0) {
+        STATMSG("Recieved division by 0, returning -100.");
+        output = -100;
+    }
+    else
+    {
+        output = -100 / TPCode;
+    }
+    STATMSG("Code: " + QString::number(output));
+    return output;
+}
+double          TP_SVVALUEtoCODE    (QTextBrowser *tb, double TPValue)
+{
+    double output;
+    if (TPValue == 0) {
+        STATMSG("Recieved division by 0, returning -100.");
+        output = -100;
+    }
+    else
+    {
+        output = -100 / TPValue;
+    }
+    STATMSG("Code: " + QString::number(output));
+
+    return output;
 }
 
-QList<double> EHOtoOFFSETLIST(QString EHO)
+QList<double>   EHOtoOFFSETLIST     (QTextBrowser *tb, QString EHO)
 {
     QList<double> offsetList;
     QStringList parameterList;
     QString parameter;
 
-    if (CHECK::EHO(EHO))
+    if (CHECK::EHO(tb, EHO))
     {
         parameterList = EHO.mid(EHO.indexOf("(",1) + 1,
                                             EHO.indexOf(")",1) - EHO.indexOf("(",1) - 1
@@ -27,22 +90,22 @@ QList<double> EHOtoOFFSETLIST(QString EHO)
         {
             offsetList.append(parameter.split("|")[0].toDouble());
         }
-        return offsetList;
     }
     else
     {
         offsetList.append(0.0);
-        return offsetList;
     }
-    return offsetList;
+    STATMSG("Offset List");
+    STATMSG(offsetList);
+    return offsetList;  
 }
-QList<int> EHOtoCOLUMNLIST(QString EHO)
+QList<int>      EHOtoCOLUMNLIST     (QTextBrowser *tb, QString EHO)
 {
     QList<int> columnList;
     QStringList parameterList;
     QString parameter;
 
-    if (CHECK::EHO(EHO))
+    if (CHECK::EHO(tb, EHO))
     {
         parameterList = EHO.mid(EHO.indexOf("(",1) + 1,
                                             EHO.indexOf(")",1) - EHO.indexOf("(",1) - 1
@@ -50,63 +113,66 @@ QList<int> EHOtoCOLUMNLIST(QString EHO)
         foreach(parameter, parameterList)
         {
             columnList.append(parameter.split("|")[1].toInt());
-        }
-        return columnList;
+        }        
     }
     else
     {
         columnList.append(0);
-        return columnList;
-    }
 
+    }
+    STATMSG("Column List");
+    STATMSG(columnList);
+    return columnList;
 }
 
-QList<double> HOtoOFFSETLIST(QStringList HOList)
+QList<double>   HOtoOFFSETLIST      (QTextBrowser *tb, QStringList HOList)
 {
     QList<double> offsetList;
     QString hitObject;
 
-    if (CHECK::HO(HOList[0]))
+    if (CHECK::HO(tb, HOList[0]))
     {
         foreach(hitObject, HOList)
         {
             offsetList.append(hitObject.split(",")[2].toDouble());
         }
-        return offsetList;
     }
     else
     {
         offsetList.append(0.0);
-        return offsetList;
     }
+    STATMSG("Offset List");
+    STATMSG(offsetList);
+    return offsetList;
 }
-QList<int> HOtoCOLUMNLIST(QStringList HOList, int keyCount)
+QList<int>      HOtoCOLUMNLIST      (QTextBrowser *tb, QStringList HOList, int keyCount)
 {
     QList<int> columnList;
     QString hitObject;
 
-    if (CHECK::HO(HOList[0]))
+    if (CHECK::HO(tb, HOList[0]))
     {
         foreach(hitObject, HOList)
         {
-            columnList.append(COLUMN_CODEtoVALUE(
-                                  hitObject.split(",")[2].toInt(), (double) keyCount));
+            columnList.append(COLUMN_CODEtoVALUE(tb,
+                              hitObject.split(",")[2].toInt(), (double) keyCount));
         }
-        return columnList;
     }
     else
     {
         columnList.append(0);
-        return columnList;
     }
+    STATMSG("Column List");
+    STATMSG(columnList);
+    return columnList;
 }
-QStringList HOtoEXTENSIONLIST(QStringList HOList)
+QStringList     HOtoEXTENSIONLIST   (QTextBrowser *tb, QStringList HOList)
 {
     QStringList extensionList;
     QString extension;
     QStringList extensionSplitList;
 
-    if (CHECK::HO(HOList))
+    if (CHECK::HO(tb, HOList))
     {
         foreach(extension, extensionList)
         {
@@ -115,151 +181,159 @@ QStringList HOtoEXTENSIONLIST(QStringList HOList)
                                  extensionSplitList[4] + "," +
                                  extensionSplitList[5]);
         }
-        return extensionList;
     } else
     {
         extensionList.append("0.0");
-        return extensionList;
     }
+    STATMSG("Column List");
+    STATMSG(extensionList);
+    return extensionList;
 }
 
-QList<double> TPtoOFFSETLIST(QStringList TPList)
+QList<double>   TPtoOFFSETLIST      (QTextBrowser *tb, QStringList TPList)
 {
     QList<double> offsetList;
     QString timingPoint;
 
-    if (CHECK::TP(TPList[0]))
+    if (CHECK::TP(tb, TPList[0]))
     {
         foreach(timingPoint, TPList)
         {
             offsetList.append(timingPoint.split(",")[0].toDouble());
         }
-        return offsetList;
     }
     else
     {
         offsetList.append(0.0);
-        return offsetList;
     }
+    STATMSG("Offset List");
+    STATMSG(offsetList);
+    return offsetList;
 }
-QList<double> TPtoCODELIST(QStringList TPList)
+QList<double>   TPtoCODELIST        (QTextBrowser *tb, QStringList TPList)
 {
     QList<double> codeList;
     QString timingPoint;
 
-    if (CHECK::TP(TPList[0]))
+    if (CHECK::TP(tb, TPList[0]))
     {
         foreach(timingPoint, TPList)
         {
             codeList.append(timingPoint.split(",")[1].toDouble());
         }
-        return codeList;
     }
     else
     {
         codeList.append(0.0);
-        return codeList;
     }
+    STATMSG("Code List");
+    STATMSG(codeList);
+    return codeList;
 }
 
-QList<double> TPtoSVVALUELIST(QStringList TPList)
+QList<double>   TPtoSVVALUELIST     (QTextBrowser *tb, QStringList TPList)
 {
-    QList<double> codeList;
+    QList<double> valueList;
     QString timingPoint;
 
-    if (CHECK::TP(TPList[0]))
+    if (CHECK::TP(tb, TPList[0]))
     {
         foreach(timingPoint, TPList)
         {
-            if (CHECK::TP_BPM(timingPoint))
+            if (CHECK::TP_BPM(tb, timingPoint))
             {
                 continue;
             }
 
-             codeList.append(TP_SVCODEtoVALUE(timingPoint.split(",")[1].toDouble()));
+             valueList.append(TP_SVCODEtoVALUE(tb, timingPoint.split(",")[1].toDouble()));
         }
-        return codeList;
     }
     else
     {
-        codeList.append(0.0);
-        return codeList;
+        valueList.append(0.0);
     }
+    STATMSG("Value List");
+    STATMSG(valueList);
+    return valueList;
 }
-QList<double> TPtoBPMVALUELIST(QStringList TPList)
+QList<double>   TPtoBPMVALUELIST    (QTextBrowser *tb, QStringList TPList)
 {
-    QList<double> codeList;
+    QList<double> valueList;
     QString timingPoint;
 
-    if (CHECK::TP(TPList[0]))
+    if (CHECK::TP(tb, TPList[0]))
     {
         foreach(timingPoint, TPList)
         {
-            if (CHECK::TP_SV(timingPoint))
+            if (CHECK::TP_SV(tb, timingPoint))
             {
                 continue;
             }
 
-             codeList.append(TP_BPMCODEtoVALUE(timingPoint.split(",")[1].toDouble()));
+             valueList.append(TP_BPMCODEtoVALUE(tb, timingPoint.split(",")[1].toDouble()));
         }
-        return codeList;
     }
     else
     {
-        codeList.append(0.0);
-        return codeList;
+        valueList.append(0.0);
     }
+    STATMSG("Value List");
+    STATMSG(valueList);
+    return valueList;
 }
-QList<double> TPtoSVCODELIST(QStringList TPList)
+QList<double>   TPtoSVCODELIST      (QTextBrowser *tb, QStringList TPList)
 {
     QList<double> codeList;
     QString timingPoint;
 
-    if (CHECK::TP(TPList[0]))
+    if (CHECK::TP(tb, TPList[0]))
     {
         foreach(timingPoint, TPList)
         {
-            if (CHECK::TP_BPM(timingPoint))
-            {
-                continue;
-            }
-
-             codeList.append(timingPoint.split(",")[1].toDouble());
-        }
-        return codeList;
-    }
-    else
-    {
-        codeList.append(0.0);
-        return codeList;
-    }
-}
-QList<double> TPtoBPMCODELIST(QStringList TPList)
-{
-    QList<double> codeList;
-    QString timingPoint;
-
-    if (CHECK::TP(TPList[0]))
-    {
-        foreach(timingPoint, TPList)
-        {
-            if (CHECK::TP_SV(timingPoint))
+            if (CHECK::TP_BPM(tb, timingPoint))
             {
                 continue;
             }
 
              codeList.append(timingPoint.split(",")[1].toDouble());
         }
-        return codeList;
     }
     else
     {
         codeList.append(0.0);
-        return codeList;
     }
+    STATMSG("Code List");
+    STATMSG(codeList);
+    return codeList;
+}
+QList<double>   TPtoBPMCODELIST     (QTextBrowser *tb, QStringList TPList)
+{
+    QList<double> codeList;
+    QString timingPoint;
+
+    if (CHECK::TP(tb, TPList[0]))
+    {
+        foreach(timingPoint, TPList)
+        {
+            if (CHECK::TP_SV(tb, timingPoint))
+            {
+                continue;
+            }
+
+             codeList.append(timingPoint.split(",")[1].toDouble());
+        }
+    }
+    else
+    {
+        codeList.append(0.0);
+    }
+    STATMSG("Code List");
+    STATMSG(codeList);
+    return codeList;
 }
 
-QStringList OMtoBASIC(QLabel *messageLabel,
+
+QStringList OMtoBASIC(QTextBrowser *tb,
                       bool acceptEHO,
                       bool acceptHO,
                       bool acceptTP,
@@ -267,36 +341,45 @@ QStringList OMtoBASIC(QLabel *messageLabel,
                       int noOfKeys)
 {
 
-    bool isEditorHitObject, isHitObject, isTimingPoint;
+    bool isEHO, isHO, isTP;
 
     QStringList output,
             partList;
     QString partString, inputString;
 
-    isEditorHitObject = CHECK::EHO(input);
-    isHitObject = CHECK::HO(input);
-    isTimingPoint = CHECK::TP(input);
+    isEHO = CHECK::EHO(tb, input);
+    isHO  = CHECK::HO (tb, input);
+    isTP  = CHECK::TP (tb, input);
 
-    if (!isEditorHitObject &&
-            !isHitObject &&
-            !isTimingPoint)
+    if (!isEHO &&
+        !isHO &&
+        !isTP)
     {
-        messageLabel->setText("STATUS: No Valid Input Detected");
-        messageLabel->setStyleSheet("QLabel { color:red; }");
+        STATMSG("Format rejected <NO MATCH>.");
+        STATMSG("Input: ");
+        STATMSG(input);
         return output;
     }
 
     // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
-    if ((isEditorHitObject && !acceptEHO) ||
-            (isHitObject && !acceptHO) ||
-            (isTimingPoint && !acceptTP))
+    if ((isEHO && !acceptEHO) ||
+        (isHO  && !acceptHO ) ||
+        (isTP  && !acceptTP ))
     {
-        messageLabel->setText("STATUS: Input Rejected");
-        messageLabel->setStyleSheet("QLabel { color:red; }");
+        STATMSG("Format rejected <MISMATCH>.");
+        STATMSG("Input:");
+        STATMSG(input);
+        STATMSG("Parameters:");
+        STATMSG("isEHO: "     + isEHO     ? "TRUE" : "FALSE");
+        STATMSG("acceptEHO: " + acceptEHO ? "TRUE" : "FALSE");
+        STATMSG("isHO: "      + isHO      ? "TRUE" : "FALSE");
+        STATMSG("acceptHO: "  + acceptHO  ? "TRUE" : "FALSE");
+        STATMSG("isTP: "      + isTP      ? "TRUE" : "FALSE");
+        STATMSG("acceptTP: "  + acceptTP  ? "TRUE" : "FALSE");
         return output;
     }
 
-    if (isEditorHitObject)
+    if (isEHO)
     {
         // Reads each line from the input
         foreach (inputString, input) {
@@ -310,20 +393,17 @@ QStringList OMtoBASIC(QLabel *messageLabel,
             // Split then splits them by ',' into different notes
             partList = inputString.mid(inputString.indexOf("(", 1) + 1,
                                        inputString.indexOf(")", 1) - inputString.indexOf("(", 1) - 1)
-                    .split(",", QString::SkipEmptyParts);
+                                       .split(",", QString::SkipEmptyParts);
 
             foreach (partString, partList){
-                output.append(COMPILE::BASIC_HO(QString::number(noOfKeys),
-                                                                 partString.split("|", QString::SkipEmptyParts)[0],
-                              partString.split("|", QString::SkipEmptyParts)[1]));
+                output.append(COMPILE::BASIC_HO(tb,
+                                                QString::number(noOfKeys),
+                                                partString.split("|", QString::SkipEmptyParts)[0],
+                                                partString.split("|", QString::SkipEmptyParts)[1]));
             }
         }
-
-        messageLabel->setText("STATUS: Converted Editor Hit Object");
-        messageLabel->setStyleSheet("QLabel { color:green; }");
-
     }
-    else if (isHitObject)
+    else if (isHO)
     {
         foreach (inputString, input) {
 
@@ -337,31 +417,28 @@ QStringList OMtoBASIC(QLabel *messageLabel,
             double columnKey;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            columnKey = COLUMN_CODEtoVALUE(partList[0].toDouble(), noOfKeys);
+            columnKey = COLUMN_CODEtoVALUE(tb,
+                                           partList[0].toDouble(), noOfKeys);
 
-            if (CHECK::HO_NN(inputString))
+            if (CHECK::HO_NN(tb, inputString))
             {
-                output.append(COMPILE::BASIC_HO(
-                                  QString::number(noOfKeys),
-                                  partList[2],
-                              QString::number(columnKey)));
+                output.append(COMPILE::BASIC_HO(tb,
+                                                QString::number(noOfKeys),
+                                                partList[2],
+                                                QString::number(columnKey)));
 
             }
-            else if (CHECK::HO_LN(inputString))
+            else if (CHECK::HO_LN(tb, inputString))
             {
-                output.append(COMPILE::BASIC_HO(
-                                  QString::number(noOfKeys),
-                                  partList[2],
-                              QString::number(columnKey),
-                              partList[5].mid(0,partList[5].indexOf(":",1))));
+                output.append(COMPILE::BASIC_HO(tb,
+                                                QString::number(noOfKeys),
+                                                partList[2],
+                                                QString::number(columnKey),
+                                                partList[5].mid(0,partList[5].indexOf(":",1))));
             }
         }
-
-        messageLabel->setText("STATUS: Converted Hit Object");
-        messageLabel->setStyleSheet("QLabel { color:green; }");
-
     }
-    else if (isTimingPoint)
+    else if (isTP)
     {
         foreach (inputString, input)
         {
@@ -373,31 +450,27 @@ QStringList OMtoBASIC(QLabel *messageLabel,
 
             QString timingPointValue;
 
-            if (CHECK::TP_SV(inputString))
+            if (CHECK::TP_SV(tb, inputString))
             {
                 timingPointValue = QString::number(-100.0 / partList[1].toDouble());
             }
-            else if (CHECK::TP_BPM(inputString))
+            else if (CHECK::TP_BPM(tb, inputString))
             {
                 timingPointValue = QString::number(60000.0 / partList[1].toDouble());
             }
 
-            output.append(COMPILE::BASIC_TP(
-                              partList[0],
-                          timingPointValue,
-                          CHECK::TP_SV(inputString) ? QString("SV") : QString("BPM")));
-
+            output.append(COMPILE::BASIC_TP(tb,
+                                            partList[0],
+                                            timingPointValue,
+                                            CHECK::TP_SV(tb, inputString) ? QString("SV") : QString("BPM")));
         }
-
-        messageLabel->setText("STATUS: Converted Timing Point");
-        messageLabel->setStyleSheet("QLabel { color:green; }");
-
     }
+    STATMSG("Output List:");
+    STATMSG(output);
     return output;
 }
 
-QStringList BASICtoOM(QLabel *messageLabel,
-                      QStringList input)
+QStringList BASICtoOM(QTextBrowser *tb, QStringList input)
 {
     bool isHitObject, isTimingPoint;
 
@@ -405,14 +478,15 @@ QStringList BASICtoOM(QLabel *messageLabel,
             partList;
     QString inputString;
 
-    isHitObject   = input[0].split(",", QString::SkipEmptyParts)[0] == "HITOBJECT";
-    isTimingPoint = input[0].split(",", QString::SkipEmptyParts)[0] == "TIMINGPOINT";
+    isHitObject   = input[0].split("|", QString::SkipEmptyParts)[0] == "HITOBJECT";
+    isTimingPoint = input[0].split("|", QString::SkipEmptyParts)[0] == "TIMINGPOINT";
 
-    // The logic is the program will return if it DOESN'T ACCEPT the input but it RECIEVES the input
-    if (isHitObject || isTimingPoint)
+    // If it's neither a hitobject and timingpoint then return
+    if (isHitObject && isTimingPoint)
     {
-        messageLabel->setText("STATUS: Input Rejected");
-        messageLabel->setStyleSheet("QLabel { color:red; }");
+        STATMSG("Format Rejected <NO MATCH>");
+        STATMSG("Input: ");
+        STATMSG(input);
         return output;
     }
 
@@ -430,24 +504,22 @@ QStringList BASICtoOM(QLabel *messageLabel,
             double columnCode;
 
             // Gets the key column through calculation and rounds to 0 D.P.
-            columnCode = CONVERT::COLUMN_VALUEtoCODE(partList[3].toDouble(), partList[1].toDouble());
+            columnCode = CONVERT::COLUMN_VALUEtoCODE(tb, partList[3].toDouble(), partList[1].toDouble());
 
             if (partList[4] == "-1")
             {
-                output.append(COMPILE::OM_NN(QString::number(columnCode),
-                                                       partList[2]));
+                output.append(COMPILE::OM_NN(tb,
+                                             QString::number(columnCode),
+                                             partList[2]));
             }
             else
             {
-                output.append(COMPILE::OM_LN(QString::number(columnCode),
-                                                       partList[2],
-                              partList[4]));
+                output.append(COMPILE::OM_LN(tb,
+                                             QString::number(columnCode),
+                                             partList[2],
+                                             partList[4]));
             }
         }
-
-        messageLabel->setText("STATUS: Hit Object");
-        messageLabel->setStyleSheet("QLabel { color:green; }");
-
     }
     else if (isTimingPoint)
     {
@@ -461,39 +533,20 @@ QStringList BASICtoOM(QLabel *messageLabel,
 
             if (partList[3] == "BPM")
             {
-                output.append(COMPILE::OM_BPM(partList[1],
+                output.append(COMPILE::OM_BPM(tb, partList[1],
                               QString::number(60000.0 / partList[2].toDouble())));
             }
             else if (partList[3] == "SV")
             {
-                output.append(COMPILE::OM_SV(partList[1],
+                output.append(COMPILE::OM_SV(tb, partList[1],
                               QString::number(-100 / partList[2].toDouble())));
             }
         }
-
-        messageLabel->setText("STATUS: Timing Point");
-        messageLabel->setStyleSheet("QLabel { color:green; }");
-
     }
+    STATMSG("Output List:");
+    STATMSG(output);
     return output;
 }
 
-
-double TP_BPMCODEtoVALUE(double TPCode)
-{
-    return 60000 / TPCode;
-}
-double TP_BPMVALUEtoCODE(double TPValue)
-{
-    return 60000 / TPCode;
-}
-double TP_SVCODEtoVALUE(double TPCode)
-{
-    return -100 / TPCode;
-}
-double TP_SVVALUEtoCODE(double TPValue)
-{
-    return -100 / TPCode;
-}
 
 }

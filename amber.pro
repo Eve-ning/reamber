@@ -30,7 +30,8 @@ SOURCES += \
     convert.cpp \
     compile.cpp \
     defargs.cpp \
-    hyperlink.cpp
+    hyperlink.cpp \
+    statusbox.cpp
 
 HEADERS += \
         amber.h \
@@ -39,7 +40,8 @@ HEADERS += \
     convert.h \
     compile.h \
     defargs.h \
-    hyperlink.h
+    hyperlink.h \
+    statusbox.h
 
 FORMS += \
         amber.ui

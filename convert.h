@@ -11,42 +11,43 @@
 namespace CONVERT {
 
     //CONVERTERS
-    double COLUMN_CODEtoVALUE(double columnCode,
-                                 double noOfKeys);
-    double COLUMN_VALUEtoCODE(double columnValue,
-                                 double noOfKeys);
+    double          COLUMN_CODEtoVALUE  (QTextBrowser *tb,
+                                         double columnCode,
+                                         double noOfKeys);
+    double          COLUMN_VALUEtoCODE  (QTextBrowser *tb,
+                                         double columnValue,
+                                         double noOfKeys);
 
-    QList<double> EHOtoOFFSETLIST(QString EHO);
-    QList<int> EHOtoCOLUMNLIST(QString EHO);
+    QList<double>   EHOtoOFFSETLIST     (QTextBrowser *tb, QString EHO);
+    QList<int>      EHOtoCOLUMNLIST     (QTextBrowser *tb, QString EHO);
 
-    QList<double> HOtoOFFSETLIST(QStringList HOList);
-    QList<int> HOtoCOLUMNLIST(QStringList HOList, int keyCount);
-    QStringList HOtoEXTENSIONLIST(QStringList HOList);
+    QList<double>   HOtoOFFSETLIST      (QTextBrowser *tb, QStringList HOList);
+    QList<int>      HOtoCOLUMNLIST      (QTextBrowser *tb, QStringList HOList, int keyCount);
+    QStringList     HOtoEXTENSIONLIST   (QTextBrowser *tb, QStringList HOList);
 
-    QList<double> TPtoOFFSETLIST(QStringList TPList);
-    QList<double> TPtoVALUELIST(QStringList TPList);
-    QList<double> TPtoCODELIST(QStringList TPList);
+    QList<double>   TPtoOFFSETLIST      (QTextBrowser *tb, QStringList TPList);
+    QList<double>   TPtoVALUELIST       (QTextBrowser *tb, QStringList TPList);
+    QList<double>   TPtoCODELIST        (QTextBrowser *tb, QStringList TPList);
 
-    QList<double> TPtoSVVALUELIST(QStringList TPList);
-    QList<double> TPtoBPMVALUELIST(QStringList TPList);
-    QList<double> TPtoSVCODELIST(QStringList TPList);
-    QList<double> TPtoBPMCODELIST(QStringList TPList);
+    QList<double>   TPtoSVVALUELIST     (QTextBrowser *tb, QStringList TPList);
+    QList<double>   TPtoBPMVALUELIST    (QTextBrowser *tb, QStringList TPList);
+    QList<double>   TPtoSVCODELIST      (QTextBrowser *tb, QStringList TPList);
+    QList<double>   TPtoBPMCODELIST     (QTextBrowser *tb, QStringList TPList);
 
-    double TP_BPMCODEtoVALUE(double TPCode);
-    double TP_BPMVALUEtoCODE(double TPValue);
+    double          TP_BPMCODEtoVALUE   (QTextBrowser *tb, double TPCode);
+    double          TP_BPMVALUEtoCODE   (QTextBrowser *tb, double TPValue);
 
-    double TP_SVCODEtoVALUE(double TPCode);
-    double TP_SVVALUEtoCODE(double TPValue);
+    double          TP_SVCODEtoVALUE    (QTextBrowser *tb, double TPCode);
+    double          TP_SVVALUEtoCODE    (QTextBrowser *tb, double TPValue);
 
-    QStringList OMtoBASIC(QLabel *messageLabel,
-                          bool acceptEHO = true,
-                          bool acceptHO = true,
-                          bool acceptTP = true,
-                          QStringList input = {},
-                          int noOfKeys = 4);
+    QStringList     OMtoBASIC           (QTextBrowser *tb,
+                                         bool acceptEHO = true,
+                                         bool acceptHO = true,
+                                         bool acceptTP = true,
+                                         QStringList input = {},
+                                         int noOfKeys = 4);
 
-    QStringList BASICtoOM(QLabel *messageLabel,
-                          QStringList input = {});
+    QStringList     BASICtoOM           (QStringList input = {});
 }
 
 #endif // CONVERT_H

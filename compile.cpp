@@ -2,9 +2,9 @@
 
 namespace COMPILE {
 
-
 //Compilers
-QString OM_NN(QString xAxis,
+QString OM_NN(QTextBrowser *tb,
+              QString xAxis,
               QString offset,
               QString yAxis,
               QString extension)
@@ -12,16 +12,18 @@ QString OM_NN(QString xAxis,
     QString output;
     /* Normal Note: xAxis,yAxis,offset,extension */
     output = xAxis
-            .append(",")
-            .append(yAxis)
-            .append(",")
-            .append(offset)
-            .append(",")
-            .append(extension);
+            + (",")
+            + (yAxis)
+            + (",")
+            + (offset)
+            + (",")
+            + (extension);
+    STATMSG("Output: " + output)
     return output;
 }
 
-QString OM_LN(QString xAxis,
+QString OM_LN(QTextBrowser *tb,
+              QString xAxis,
               QString offset,
               QString lnOffset,
               QString yAxis,
@@ -31,19 +33,21 @@ QString OM_LN(QString xAxis,
     QString output;
     /* Long Note: xAxis,yAxis,offset,parameter,lnOffset&extension */
     output = xAxis
-            .append(",")
-            .append(yAxis)
-            .append(",")
-            .append(offset)
-            .append(",")
-            .append(lnParameter)
-            .append(",")
-            .append(lnOffset)
-            .append(extension);
+            + (",")
+            + (yAxis)
+            + (",")
+            + (offset)
+            + (",")
+            + (lnParameter)
+            + (",")
+            + (lnOffset)
+            + (extension);
+    STATMSG("Output: " + output)
     return output;
 }
 
-QString OM_BPM(QString offset,
+QString OM_BPM(QTextBrowser *tb,
+               QString offset,
                QString bpmCode,
                QString extension)
 {
@@ -55,14 +59,16 @@ QString OM_BPM(QString offset,
     QString output;
     /* BPM Line: offset,code,extension */
     output = offset
-            .append(",")
-            .append(bpmCode)
-            .append(",")
-            .append(extension);
+            + (",")
+            + (bpmCode)
+            + (",")
+            + (extension);
+    STATMSG("Output: " + output)
     return output;
 }
 
-QString OM_SV(QString offset,
+QString OM_SV(QTextBrowser *tb,
+              QString offset,
               QString svCode,
               QString extension)
 {
@@ -78,14 +84,16 @@ QString OM_SV(QString offset,
     QString output;
     /* SV Line: offset,code,extension */
     output = offset
-            .append(",")
-            .append(svCode)
-            .append(",")
-            .append(extension);
+            + (",")
+            + (svCode)
+            + (",")
+            + (extension);
+    STATMSG("Output: " + output)
     return output;
 }
 
-QString BASIC_HO(QString noOfKeys,
+QString BASIC_HO(QTextBrowser *tb,
+                 QString noOfKeys,
                  QString offset,
                  QString column,
                  QString lnOffset,
@@ -94,18 +102,20 @@ QString BASIC_HO(QString noOfKeys,
     QString output;
     /* HITOBJECT: HITOBJECT|NO_OF_KEYS|OFFSET|COLUMN|LN_OFFSET */
     output = label
-            .append("|")
-            .append(noOfKeys)
-            .append("|")
-            .append(offset)
-            .append("|")
-            .append(column)
-            .append("|")
-            .append(lnOffset);
+            + ("|")
+            + (noOfKeys)
+            + ("|")
+            + (offset)
+            + ("|")
+            + (column)
+            + ("|")
+            + (lnOffset);
+    STATMSG("Output: " + output)
     return output;
 }
 
-QString BASIC_TP(QString offset,
+QString BASIC_TP(QTextBrowser *tb,
+                 QString offset,
                  QString value,
                  QString timingPointType,
                  QString label)
@@ -113,15 +123,17 @@ QString BASIC_TP(QString offset,
     QString output;
     /* TIMINGPOINT: TIMINGPOINT|OFFSET|VALUE|TYPE */
     output = label
-            .append("|")
-            .append(offset)
-            .append("|")
-            .append(value)
-            .append("|")
-            .append(timingPointType);
+            + ("|")
+            + (offset)
+            + ("|")
+            + (value)
+            + ("|")
+            + (timingPointType);
+    STATMSG("Output: " + output)
     return output;
 }
 
+/* ProcOutput
 void ProcOutput(QTextBrowser *inputBoxObject,
                 QTextBrowser *outputBoxObject)
 {
@@ -184,5 +196,5 @@ void ProcOutput(QTextBrowser *inputBoxObject,
         }
     }
 }
-
+*/
 }

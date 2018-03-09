@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1383</width>
-    <height>745</height>
+    <width>1656</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,184 +15,10 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Quick Access</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QToolBox" name="toolBox">
-         <property name="currentIndex">
-          <number>2</number>
-         </property>
-         <widget class="QWidget" name="homePage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>173</width>
-            <height>533</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <attribute name="label">
-           <string>Home</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_54">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="homeWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="basicPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>173</width>
-            <height>533</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <attribute name="label">
-           <string>Basic Functions</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="basicWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Stutter</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Copier</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>2-Point Function</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Normalizer</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Adjuster</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="advancedPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>173</width>
-            <height>533</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Advanced Functions</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="advancedWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Pack Splitter</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="settingsPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>173</width>
-            <height>533</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="settingsWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Default Values</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Error Log</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="homeSPage">
        <property name="enabled">
@@ -358,7 +184,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="usesScrollButtons">
            <bool>true</bool>
@@ -375,13 +201,6 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_2">
                <item row="0" column="0">
-                <widget class="QLabel" name="stutter_inputStatusLabel">
-                 <property name="text">
-                  <string>STATUS:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
                 <widget class="QPlainTextEdit" name="stutter_inputBox"/>
                </item>
               </layout>
@@ -530,13 +349,6 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_25">
                <item row="0" column="0">
-                <widget class="QLabel" name="copier_inputStatusLabel">
-                 <property name="text">
-                  <string>STATUS:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
                 <widget class="QPlainTextEdit" name="copier_inputBox"/>
                </item>
               </layout>
@@ -549,13 +361,6 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_4">
                <item row="0" column="0">
-                <widget class="QLabel" name="copier_inputStatusLabel_2">
-                 <property name="text">
-                  <string>STATUS:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
                 <widget class="QPlainTextEdit" name="copier_inputBox_2"/>
                </item>
               </layout>
@@ -567,22 +372,15 @@
                <string>Output</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_26">
-               <item row="3" column="0">
+               <item row="2" column="0">
                 <widget class="QPushButton" name="copier_generateButton">
                  <property name="text">
                   <string>Generate</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QTextBrowser" name="copier_outputBox"/>
-               </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="copier_outputStatusLabel">
-                 <property name="text">
-                  <string>STATUS:</string>
-                 </property>
-                </widget>
+                <widget class="QTextBrowser" name="copier_outputBox"/>
                </item>
               </layout>
              </widget>
@@ -904,22 +702,19 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QGroupBox" name="TPF_statusGroup">
+             <widget class="QGroupBox" name="TPF_settingsGroup">
               <property name="title">
-               <string>Status Box</string>
+               <string>Settings</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_33">
-               <item row="0" column="0">
-                <widget class="QTextBrowser" name="TPF_statusBox">
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
+               <item row="1" column="0">
+                <widget class="QRadioButton" name="TPF_BPMRadio">
+                 <property name="text">
+                  <string>BPM</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
+               <item row="0" column="0">
                 <widget class="QRadioButton" name="TPF_SVRadio">
                  <property name="text">
                   <string>SV</string>
@@ -930,23 +725,9 @@
                 </widget>
                </item>
                <item row="2" column="0">
-                <widget class="QRadioButton" name="TPF_BPMRadio">
-                 <property name="text">
-                  <string>BPM</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
                 <widget class="QPushButton" name="TPF_generateButton">
                  <property name="text">
                   <string>Generate</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="TPF_statusLabel">
-                 <property name="text">
-                  <string>STATUS:</string>
                  </property>
                 </widget>
                </item>
@@ -967,13 +748,6 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_6">
                <item row="0" column="0">
-                <widget class="QLabel" name="normalizer_inputStatusLabel">
-                 <property name="text">
-                  <string>STATUS:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
                 <widget class="QPlainTextEdit" name="normalizer_inputBox"/>
                </item>
               </layout>
@@ -1100,7 +874,7 @@
                  <string>Input</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_36">
-                 <item row="1" column="0">
+                 <item row="0" column="0">
                   <widget class="QPlainTextEdit" name="adjuster_inputBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -1116,13 +890,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="adjuster_inputStatusLabel">
-                   <property name="text">
-                    <string>STATUS:</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
               </item>
@@ -1132,7 +899,7 @@
                  <string>Output</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_37">
-                 <item row="1" column="0">
+                 <item row="0" column="0">
                   <widget class="QTextBrowser" name="adjuster_outputBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -1145,13 +912,6 @@
                      <width>133333</width>
                      <height>16777215</height>
                     </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="adjuster_outputStatusLabel">
-                   <property name="text">
-                    <string>STATUS:</string>
                    </property>
                   </widget>
                  </item>
@@ -2612,6 +2372,192 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Quick Access</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QToolBox" name="toolBox">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="homePage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>172</width>
+            <height>536</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <attribute name="label">
+           <string>Home</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_54">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="homeWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="basicPage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>172</width>
+            <height>536</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <attribute name="label">
+           <string>Basic Functions</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="basicWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Stutter</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copier</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2-Point Function</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Normalizer</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Adjuster</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="advancedPage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>172</width>
+            <height>536</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Advanced Functions</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="advancedWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Pack Splitter</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="settingsPage">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>172</width>
+            <height>536</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Settings</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <widget class="QListWidget" name="settingsWidgetList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Default Values</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Error Log</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="statusGroup">
+      <property name="title">
+       <string>Status</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_14">
+       <item row="0" column="0">
+        <widget class="QTextBrowser" name="statusBox"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -2619,7 +2565,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1383</width>
+     <width>1656</width>
      <height>21</height>
     </rect>
    </property>

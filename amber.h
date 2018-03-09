@@ -1,6 +1,8 @@
 #ifndef AMBER_H
 #define AMBER_H
 
+#define STATMSG(text) STATUSBOX::sendMsg(tb, text, __FUNCTION__);
+
 #include <QMainWindow>
 #include <QStringList>
 #include <QString>
@@ -19,12 +21,15 @@
 #include <QRadioButton>
 #include <QDesktopServices>
 #include <QFileDialog>
-#include <QDesktopServices>
+
+//Must be defined first
+#include "statusbox.h"
 
 #include "check.h"
 #include "compile.h"
 #include "convert.h"
 #include "hyperlink.h"
+
 
 namespace Ui {
 class amber;
@@ -35,9 +40,12 @@ class amber : public QMainWindow
     Q_OBJECT
 
 public:
+
     explicit amber(QWidget *parent = 0);
     ~amber();
 
+    void appendStatusBox(QString message);
+    void clearStatusBox();
 
     //SET DEFAULT
     void saveDefaultValues();
@@ -118,13 +126,9 @@ private slots:
     void on_home_contactLabel_clicked();
 
 private:
+    QTextBrowser *tb;
     Ui::amber *ui;
 };
-
-namespace CHECK {
-
-}
-//CHECKS
 
 
 
