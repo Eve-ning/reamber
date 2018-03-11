@@ -44,7 +44,7 @@ public:
 
     void toString  ();
 
-    unsigned short getLNLen(){ return lnEnd - offset; }
+    unsigned short getLNLen(){ return lnEnd == -1 ? 0 : lnEnd - offset; }
 
 
 protected:

@@ -1,8 +1,6 @@
 #ifndef CHECK_H
 #define CHECK_H
 
-
-
 #include <QString>
 #include <QStringList>
 #include <QtWidgets>

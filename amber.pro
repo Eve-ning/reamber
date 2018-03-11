@@ -33,7 +33,8 @@ SOURCES += \
     hyperlink.cpp \
     statusbox.cpp \
     com_ho.cpp \
-    com_tp.cpp
+    com_tp.cpp \
+    com_holist.cpp
 
 HEADERS += \
         amber.h \
@@ -46,7 +47,8 @@ HEADERS += \
     statusbox.h \
     om_nn.h \
     com_ho.h \
-    com_tp.h
+    com_tp.h \
+    com_holist.h
 
 FORMS += \
         amber.ui
