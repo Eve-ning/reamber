@@ -45,7 +45,7 @@ void sendMsg(QTextBrowser *tb, QList<int> messageList, QString tag)
     }
 }
 
-void clear(QTextBrowser *tb){
+void clearBox(QTextBrowser *tb){
     tb->clear();
     return;
 }

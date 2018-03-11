@@ -1,0 +1,34 @@
+#include "cstatusbox.h"
+
+
+cStatusBox::cStatusBox(){
+
+
+
+}
+
+cStatusBox::~cStatusBox(){
+
+
+
+}
+
+void cStatusBox::sendIndex(int messageIndex){
+    amber::appendStatusBox(statusList[messageIndex] + "\n");
+    return;
+}
+
+void cStatusBox::sendCustom(QString message, QString tag){
+    if (tag != "")
+    {
+        amber::appendStatusBox("[" + tag + "] ");
+    }
+    amber::appendStatusBox(message + "\n");
+    return;
+}
+
+void cStatusBox::clear(){
+    amber::clearStatusBox();
+    return;
+}
+

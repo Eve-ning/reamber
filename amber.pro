@@ -31,7 +31,9 @@ SOURCES += \
     compile.cpp \
     defargs.cpp \
     hyperlink.cpp \
-    statusbox.cpp
+    statusbox.cpp \
+    com_ho.cpp \
+    com_tp.cpp
 
 HEADERS += \
         amber.h \
@@ -41,7 +43,10 @@ HEADERS += \
     compile.h \
     defargs.h \
     hyperlink.h \
-    statusbox.h
+    statusbox.h \
+    om_nn.h \
+    com_ho.h \
+    com_tp.h
 
 FORMS += \
         amber.ui

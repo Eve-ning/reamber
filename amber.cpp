@@ -54,17 +54,7 @@ amber::~amber()
     delete ui;
 }
 
-// --------------------------------------------------------------------------------------------------------< STATUS BOX >
 
-void amber::appendStatusBox(QString message)
-{
-    ui->statusBox->append(message);
-}
-
-void amber::clearStatusBox()
-{
-    ui->statusBox->clear();
-}
 
 // --------------------------------------------------------------------------------------------------------< DEBUG >
 /* Error Handling Idea 4/2/2018
@@ -318,8 +308,6 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
                    ? 10.0
                    : (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold;
 
-
-
     // Where secondSV = 10.0
     secondSV = 10.0;
     minInitSV = (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold < 0.1
@@ -469,13 +457,14 @@ void amber::on_copier_generateButton_clicked()
                                          ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
 
         if (inputList_1.length() == 0 || inputList_2.length() == 0){
+            STATMSG("Empty inputs are not allowed")
             return;
         }
 
         ui->copier_outputBox->clear();
 
         //Checks for Type
-        if (inputList_1[0].split("|")[DEFARGS::HO_LABEL] == "HITOBJECT")
+        if      (inputList_1[0].split("|")[DEFARGS::HO_LABEL] == "HITOBJECT")
         {
             boxType1 = inputBoxType::hitObject;
         }
@@ -485,8 +474,7 @@ void amber::on_copier_generateButton_clicked()
         }
         else
         {
-            STATUSBOX::sendMsg(tb, "STATUS: Input Box 1 is neither HITOBJECT nor TIMINGPOINT.");
-            STATUSBOX::sendMsg(tb, "STATUS: Error has occured.");
+            STATMSG("Input Box 1 is neither HITOBJECT nor TIMINGPOINT.");
             return;
         }
 
@@ -500,15 +488,15 @@ void amber::on_copier_generateButton_clicked()
         }
         else
         {
-            STATUSBOX::sendMsg(tb, "STATUS: Input Box 2 is neither HITOBJECT nor TIMINGPOINT.");
-            STATUSBOX::sendMsg(tb, "STATUS: Error has occured.");
+            STATMSG("Input Box 2 is neither HITOBJECT nor TIMINGPOINT.");
+            STATMSG("Error has occured.");
             return;
         }
 
         if ((boxType1 == inputBoxType::hitObject && boxType2 == inputBoxType::hitObject) ||
             (boxType2 == inputBoxType::timingPoint && boxType1 == inputBoxType::timingPoint))
         {
-            STATUSBOX::sendMsg(tb, "STATUS: Make sure that both Inputs are different in type.");
+            STATMSG("Make sure that both Inputs are different in type.");
             return;
         }
 
@@ -561,7 +549,7 @@ void amber::on_copier_generateButton_clicked()
             }
         }
         
-        STATUSBOX::sendMsg(tb, "STATUS: Convert Successful.");
+        STATMSG("Convert Successful.");
 
     } catch (...){
         //Generate Error Report
@@ -770,7 +758,7 @@ void amber::on_TPF_generateButton_clicked()
     //Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
     {
-        STATUSBOX::sendMsg(tb, "STATUS: No Input detected");
+        STATMSG("No Input detected");
         return;
     }
     else if (CONVERT::EHOtoOFFSETLIST(tb, ui->TPF_editorInputLine->text()).length() == 2)
@@ -778,11 +766,11 @@ void amber::on_TPF_generateButton_clicked()
         initialOffset = CONVERT::EHOtoOFFSETLIST(tb, ui->TPF_editorInputLine->text())[0];
         endOffset     = CONVERT::EHOtoOFFSETLIST(tb, ui->TPF_editorInputLine->text())[1];
 
-        STATUSBOX::sendMsg(tb, "STATUS: Detected Editor Hit Object Input");
+        STATMSG("Detected Editor Hit Object Input");
     }
     else
     {
-        STATUSBOX::sendMsg(tb, "STATUS: Make sure you input 2 Editor Hit Objects in the Input.");
+        STATMSG("Make sure you input 2 Editor Hit Objects in the Input.");
         return;
     }
 
@@ -840,17 +828,17 @@ void amber::on_TPF_generateButton_clicked()
     {
         averageTP += (yData[i] * (xData[i + 1] - xData[i])) / (endOffset - initialOffset);
     }
-    STATUSBOX::sendMsg(tb,   ("RANGE: ")
+    STATMSG(  ("RANGE: ")
                           + (QString::number(initialOffset))
                           + (" ~ ")
                           + (QString::number(endOffset)));
 
-    STATUSBOX::sendMsg(tb,   "LINEAR FUNCTION: f(x) = "
+    STATMSG(  "LINEAR FUNCTION: f(x) = "
                           + QString::number((endTP - initialTP) / intermediatePoints)
                           + "x + "
                           + QString::number(initialTP));
 
-    STATUSBOX::sendMsg(tb,   "SINE FUNCTION: f(x) = "
+    STATMSG(  "SINE FUNCTION: f(x) = "
                           + QString::number(amplitude)
                           + " * sin[("
                           + QString::number(frequency)
@@ -951,7 +939,7 @@ void amber::on_normalizer_generateButton_clicked()
     }
 
     if (BPMList.length() == 0){
-        STATUSBOX::sendMsg(tb, "STATUS: Input at least 1 BPM Timing Point");
+        STATMSG("Input at least 1 BPM Timing Point");
 
         return;
     }
@@ -966,11 +954,11 @@ void amber::on_normalizer_generateButton_clicked()
     }
     else
     {
-        STATUSBOX::sendMsg(tb, "STATUS: Select 1 BPM Timing Point or use the Manual Override");
+        STATMSG("Select 1 BPM Timing Point or use the Manual Override");
         return;
     }
 
-    STATUSBOX::sendMsg(tb,   ("STATUS: Normalizing to ")
+    STATMSG(  ("Normalizing to ")
                           + (QString::number(normalizeBPM))
                           + (" BPM"));
 
@@ -1274,12 +1262,10 @@ void amber::on_adjuster_defaultButton_clicked()
 
 void amber::on_PS_browseButton_clicked()
 {
-    QLabel      *statusLabel;
     QLineEdit   *browseLine;
     QListWidget *mapListWidget;
     QString      filePath;
 
-    statusLabel   = ui->PS_statusLabel;
     browseLine    = ui->PS_browseLine;
     mapListWidget = ui->PS_mapListListWidget;
 
@@ -1290,14 +1276,11 @@ void amber::on_PS_browseButton_clicked()
 
     if (filePath.right(5) == "Songs")
     {
-        statusLabel->setText("STATUS: File Path loaded successfully");
-        statusLabel->setStyleSheet("QLabel { color:green };");
+        STATMSG("File Path loaded successfully");
     } else if (!filePath.isEmpty()){
-        statusLabel->setText("STATUS: File Path might be incorrect, make sure it's the [Songs] Folder!");
-        statusLabel->setStyleSheet("QLabel { color:orange };");
+        STATMSG("File Path might be incorrect, make sure it's the [Songs] Folder!");
     } else {
-        statusLabel->setText("STATUS: File Path cannot be loaded");
-        statusLabel->setStyleSheet("QLabel { color:red };");
+        STATMSG("File Path cannot be loaded");
     }
 
     mapListWidget->clear();
@@ -1334,7 +1317,6 @@ void amber::on_PS_controlSplitButton_clicked()
     QListWidget *mapListWidget,
                 *audioListWidget,
                 *difficultyListWidget;
-    QLabel      *statusLabel;
     QLineEdit   *browseLine;
     QString     songsFolderPath,
                 mapName,
@@ -1346,10 +1328,10 @@ void amber::on_PS_controlSplitButton_clicked()
     mapListWidget        = ui->PS_mapListListWidget;
     audioListWidget      = ui->PS_audioFileListListWidget;
     difficultyListWidget = ui->PS_difficultyListListWidget;
-    statusLabel          = ui->PS_statusLabel;
     browseLine           = ui->PS_browseLine;
 
-    /* [songsFolderPath]
+    /* EXAMPLE
+     * [songsFolderPath]
      * D:\osu!\Songs
      *
      * [mapName]
@@ -1382,14 +1364,12 @@ void amber::on_PS_controlSplitButton_clicked()
                  + "/"
                  + convName);
 
-    // Make Converted Files Directory
-    if (convDir.mkpath(".") == false)
+    // CREATE: CONVERTED FILES FOLDER
+    if (convDir.mkpath(".") == false) // Cannot create Convert Files Dir
     {
         if (convDir.exists())
         {
-            statusLabel->setText("STATUS: Convert folder exists already.");
-            statusLabel->setStyleSheet("QLabel { color:orange };");
-
+            STATMSG("Convert folder exists already.");
             // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
             QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
                                                           + mapName
@@ -1398,15 +1378,13 @@ void amber::on_PS_controlSplitButton_clicked()
         }
         else
         {
-            statusLabel->setText("STATUS: Convert folder couldn't be created");
-            statusLabel->setStyleSheet("QLabel { color:red };");
+            STATMSG("Convert folder couldn't be created");
             return;
         }
     }
     else
     {
-        statusLabel->setText("STATUS: Convert folder successfully created");
-        statusLabel->setStyleSheet("QLabel { color:green };");
+        STATMSG("Convert folder successfully created");
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
         QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
@@ -1416,7 +1394,7 @@ void amber::on_PS_controlSplitButton_clicked()
                                                       + convName));
     }
 
-    //Copy Audio Files over
+    // CREATE: AUDIO FILES FOLDER
     for (int i = 0; i < audioListWidget->count(); i ++)
     {
         /* We firstly create the directories for each of the maps by referring to the audio name
@@ -1425,7 +1403,6 @@ void amber::on_PS_controlSplitButton_clicked()
         audioName       = audioListWidget->item(i)->text();
         audioFolderName = audioName;
         audioFolderName.replace(".","_");
-
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
         QDir audioFolderDir(  songsFolderPath
@@ -1446,17 +1423,15 @@ void amber::on_PS_controlSplitButton_clicked()
         // Make audio folder for each audio file
         if (audioFolderDir.mkpath(".") == false)
         {
-            statusLabel->setText("STATUS: Audio folder couldn't be created");
-            statusLabel->setStyleSheet("QLabel { color:red };");
+            STATMSG("Audio folder couldn't be created");
             return;
         }
         else
         {
-            statusLabel->setText("STATUS: Audio folder successfully created");
-            statusLabel->setStyleSheet("QLabel { color:green };");
+            STATMSG("Audio folder successfully created");
         }
 
-        // Copy audio files over
+        // COPY: AUDIO FILES
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
         if (audioCopyFile.copy(  songsFolderPath
                                + "/"
@@ -1469,18 +1444,16 @@ void amber::on_PS_controlSplitButton_clicked()
                                + audioName)
                                == false )
         {
-            statusLabel->setText("STATUS: Copying Failed or File already exists");
-            statusLabel->setStyleSheet("QLabel { color:orange };");
+            STATMSG("Copying Failed or File already exists");
         }
         else
         {
-            statusLabel->setText("STATUS: Copying successful");
-            statusLabel->setStyleSheet("QLabel { color:green };");
+            STATMSG("Copying successful");
         }
 
     }
 
-    //Check Difficulty Files and copy over
+    // COPY: DIFFICULTY & BG OVER
     for (int i = 0; i < difficultyListWidget->count(); i ++)
     {
         /* REFERENCE
@@ -1505,23 +1478,24 @@ void amber::on_PS_controlSplitButton_clicked()
                              + mapName
                              + "/"
                              + difficultyName);
+
+        // READ: DIFFICULTY
         difficultyFile.open(QIODevice::ReadOnly);
         QTextStream difficultyStream(&difficultyFile);
 
         while (!difficultyFile.atEnd())
         {
             strStream = difficultyStream.readLine();
-            if (strStream.contains("AudioFilename:"))
+
+            if (strStream.contains("AudioFilename:")) //CHECK FOR AUDIO FILE NAME
             {
                 difficultyAudioFolderName = strStream.right(strStream.length() - 15).replace(".","_");
             }
-            else if (strStream.contains(",\"") && strStream.contains("\","))
+            else if (strStream.contains(",\"") && strStream.contains("\",")) //CHECK FOR BG FILE NAME
             {
                 difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
                 break;
             }
-
-
         }
 
         difficultyFile.close();
@@ -1533,6 +1507,7 @@ void amber::on_PS_controlSplitButton_clicked()
                                  + "/"
                                  + difficultyName);
 
+        // COPY: DIFFICULTY
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\difficulty.osu
         difficultyCopyFile.copy(  songsFolderPath
                                 + "/"
@@ -1551,6 +1526,7 @@ void amber::on_PS_controlSplitButton_clicked()
                                    + "/"
                                    + difficultyBGFileName);
 
+        // COPY: AUDIO
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
         difficultyBGCopyFile.copy(  songsFolderPath
                                   + "/"
@@ -1580,8 +1556,7 @@ void amber::on_PS_controlOpenFolderButton_clicked()
     }
     else
     {
-        ui->PS_statusLabel->setText("STATUS: No Map Folder Specified");
-        ui->PS_statusLabel->setStyleSheet("QLabel { color:red }");
+        STATMSG("No Map Folder Specified");
         return;
     }
 }

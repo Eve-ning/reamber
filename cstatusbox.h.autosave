@@ -1,0 +1,116 @@
+#ifndef STATUSMESSAGE_H
+#define STATUSMESSAGE_H
+#include <QString>
+#include <QStringList>
+#include <QTextBrowser>
+#include "amber.h"
+
+class cStatusBox
+{
+
+public:
+    cStatusBox();
+    ~cStatusBox();
+
+    void sendIndex(int messageIndex); //Sends message based on index through amber::appendM
+    void sendCustom(QString message, QString tag = ""); //Sends custom message
+    void clear(); //Clears status box
+private:
+    
+    QStringList statusList =
+    {
+        "Check EHO Pass.", //0 <Input doesn't match specified>
+        "Check EHO Fail.", //1 <Input matches specified>
+        "Check HO Pass." , //2
+        "Check HO Fail." , //3
+        "Check TP Pass." , //4
+        "Check TP Fail." , //5
+
+        "Converted EHO."   //6
+        "Converted HO."    //7
+        "Converted TP."    //4
+        "Convert Fail."    //5 <Input cannot be converted>
+        //Currently working on replacing status labels with message box
+    };
+
+};
+
+enum STATUSENUM {
+
+    //CHECK
+    CHECK_EHO_PASS                  =   0,
+    CHECK_HO_PASS                   =   1,
+    CHECK_TP_PASS                   =   2,
+
+    CHECK_EHO_FAIL                  =   3,
+    CHECK_HO_FAIL                   =   4,
+    CHECK_TP_FAIL                   =   5,
+
+    //CONVERT
+    CONVERT_EHOtoOFFSETLIST_PASS    =   100,
+    CONVERT_EHOtoCOLUMNLIST_PASS    =   101,
+    CONVERT_HOtoOFFSETLIST_PASS     =   102,
+    CONVERT_HOtoCOLUMNLIST_PASS     =   103,
+    CONVERT_HOtoEXTENSIONLIST_PASS  =   104,
+    CONVERT_TPtoOFFSETLIST_PASS     =   105,
+    CONVERT_TPtoVALUELIST_PASS      =   106,
+    CONVERT_TPtoCODELIST_PASS       =   107,
+    CONVERT_TPtoSVVALUELIST_PASS    =   108,
+    CONVERT_TPtoBPMVALUELIST_PASS   =   109,
+    CONVERT_TPtoSVCODELIST_PASS     =   110,
+    CONVERT_TPtoBPMCODELIST_PASS    =   111,
+    CONVERT_TP_BPMCODEtoVALUE_PASS  =   112,
+    CONVERT_TP_BPMVALUEtoCODE_PASS  =   113,
+    CONVERT_TP_SVCODEtoVALUE_PASS   =   114,
+    CONVERT_TP_SVVALUEtoCODE_PASS   =   115,
+    CONVERT_OMtoBASIC_PASS          =   116,
+    CONVERT_BASICtoOM_PASS          =   117,
+
+    CONVERT_EHOtoOFFSETLIST_FAIL    =   118,
+    CONVERT_EHOtoCOLUMNLIST_FAIL    =   119,
+    CONVERT_HOtoOFFSETLIST_FAIL     =   120,
+    CONVERT_HOtoCOLUMNLIST_FAIL     =   121,
+    CONVERT_HOtoEXTENSIONLIST_FAIL  =   122,
+    CONVERT_TPtoOFFSETLIST_FAIL     =   123,
+    CONVERT_TPtoVALUELIST_FAIL      =   124,
+    CONVERT_TPtoCODELIST_FAIL       =   125,
+    CONVERT_TPtoSVVALUELIST_FAIL    =   126,
+    CONVERT_TPtoBPMVALUELIST_FAIL   =   127,
+    CONVERT_TPtoSVCODELIST_FAIL     =   128,
+    CONVERT_TPtoBPMCODELIST_FAIL    =   129,
+    CONVERT_TP_BPMCODEtoVALUE_FAIL  =   130,
+    CONVERT_TP_BPMVALUEtoCODE_FAIL  =   131,
+    CONVERT_TP_SVCODEtoVALUE_FAIL   =   130,
+    CONVERT_TP_SVVALUEtoCODE_FAIL   =   131,
+    CONVERT_OMtoBASIC_FAIL          =   132,
+    CONVERT_BASICtoOM_FAIL          =   133,
+
+    //COMPILE
+    COMPILE_OM_NN_PASS              =   200,
+    COMPILE_OM_LN_PASS              =   201,
+    COMPILE_OM_BPM_PASS             =   202,
+    COMPILE_OM_SV_PASS              =   203,
+    COMPILE_BASIC_HO_PASS           =   204,
+    COMPILE_BASIC_TP_PASS           =   205,
+
+    COMPILE_OM_NN_FAIL              =   206,
+    COMPILE_OM_LN_FAIL              =   207,
+    COMPILE_OM_BPM_FAIL             =   208,
+    COMPILE_OM_SV_FAIL              =   209,
+    COMPILE_BASIC_HO_FAIL           =   210,
+    COMPILE_BASIC_TP_FAIL           =   211,
+
+    //LINK
+    LINK_REPO_PASS                  =   300,
+    LINK_WIKI_PASS                  =   301,
+    LINK_RELEASES_PASS              =   302,
+    LINK_CONTACT_PASS               =   303,
+
+    LINK_REPO_FAIL                  =   304,
+    LINK_WIKI_FAIL                  =   305,
+    LINK_RELEASES_FAIL              =   306,
+    LINK_CONTACT_FAIL               =   307
+
+};
+
+#endif // STATUSMESSAGE_H

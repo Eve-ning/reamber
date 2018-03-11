@@ -11,7 +11,7 @@ namespace STATUSBOX
     void sendMsg (QTextBrowser *tb, QStringList messageList, QString tag = ""); //Sends custom message through amber::appendMessages
     void sendMsg (QTextBrowser *tb, QList<double> messageList, QString tag = "");
     void sendMsg (QTextBrowser *tb, QList<int> messageList, QString tag);
-    void clear      (QTextBrowser *tb); //Clears status box
+    void clearBox(QTextBrowser *tb); //Clears status box
 }
 
 /* Redacted for other error parsing methods.

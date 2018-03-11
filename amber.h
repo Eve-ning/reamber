@@ -44,9 +44,6 @@ public:
     explicit amber(QWidget *parent = 0);
     ~amber();
 
-    void appendStatusBox(QString message);
-    void clearStatusBox();
-
     //SET DEFAULT
     void saveDefaultValues();
 

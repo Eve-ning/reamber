@@ -18,7 +18,7 @@
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="homeSPage">
        <property name="enabled">
@@ -1272,9 +1272,6 @@
                <string>osu! Song Folder</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_43">
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="PS_browseLine"/>
-               </item>
                <item row="0" column="1">
                 <widget class="QPushButton" name="PS_browseButton">
                  <property name="text">
@@ -1282,12 +1279,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="2">
-                <widget class="QLabel" name="PS_statusLabel">
-                 <property name="text">
-                  <string>STATUS:</string>
-                 </property>
-                </widget>
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="PS_browseLine"/>
                </item>
               </layout>
              </widget>
