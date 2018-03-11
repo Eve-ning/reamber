@@ -19,6 +19,8 @@ cOM_HO::cOM_HO()
 
 cOM_HO::cOM_HO(QString HO)
 {
+
+    /* REFERENCE FOR .osu HO
     // NN
 
     // splitComma [0] [1] [2]  [3][4]
@@ -30,12 +32,14 @@ cOM_HO::cOM_HO(QString HO)
     // splitComma [0] [1] [2]  [3][4]
     // splitColon                    [0]  [1][2][3][4][5]
     // REFERENCE  448,192,1799,5, 6, 2001:1: 1: 2: 70:audio.mp3
+    */
 
     QStringList HO_splitComma,
                 HO_splitColon;
+
     HO_splitComma = HO.split(",", QString::KeepEmptyParts);
     HO_splitColon = HO_splitComma[HO_splitComma.size() - 1]
-                        .split(":", QString::KeepEmptyParts);
+            .split(":", QString::KeepEmptyParts);
 
     if (HO_splitColon.size() == 5 &&
         HO_splitComma.size() == 6) // Means it is a NN
@@ -74,6 +78,7 @@ cOM_HO::cOM_HO(QString HO)
         STATMSG("Failed to Convert QString.");
         cOM_HO::cOM_HO();
     }
+
 }
 
 void cOM_HO::setXAxis       (unsigned short  newXAxis       ){ xAxis        = newXAxis       ; return; }
