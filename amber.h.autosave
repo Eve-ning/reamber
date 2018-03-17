@@ -29,7 +29,6 @@
 #include "compile.h"
 #include "convert.h"
 #include "hyperlink.h"
-#include "
 
 namespace Ui {
 class amber;

@@ -42,12 +42,8 @@ HEADERS += \
     defargs.h \
     hyperlink.h \
     statusbox.h \
-    D:/qtdoc/amber_base/com_ho.h \
-    D:/qtdoc/amber_base/com_holist.h \
-    D:/qtdoc/amber_base/com_map.h \
-    D:/qtdoc/amber_base/com_mapset.h \
-    D:/qtdoc/amber_base/com_tp.h \
-    D:/qtdoc/amber_base/com_tplist.h
+
+LIBS += \
 
 
 FORMS += \
@@ -68,3 +64,18 @@ RESOURCES += \
 win32:RC_ICONS += amberResources/icons/amberIcn.ico
 
 QMAKE_LFLAGS += -static
+
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/release/ -lamber_base
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/debug/ -lamber_base
+else:unix: LIBS += -L$$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/ -lamber_base
+
+INCLUDEPATH += $$PWD/../amber_base
+DEPENDPATH += $$PWD/../amber_base
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/release/libamber_base.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/debug/libamber_base.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/release/amber_base.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/debug/amber_base.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/libamber_base.a
