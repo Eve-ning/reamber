@@ -32,9 +32,6 @@ SOURCES += \
     defargs.cpp \
     hyperlink.cpp \
     statusbox.cpp \
-    com_ho.cpp \
-    com_tp.cpp \
-    com_holist.cpp
 
 HEADERS += \
         amber.h \
@@ -45,10 +42,13 @@ HEADERS += \
     defargs.h \
     hyperlink.h \
     statusbox.h \
-    om_nn.h \
-    com_ho.h \
-    com_tp.h \
-    com_holist.h
+    D:/qtdoc/amber_base/com_ho.h \
+    D:/qtdoc/amber_base/com_holist.h \
+    D:/qtdoc/amber_base/com_map.h \
+    D:/qtdoc/amber_base/com_mapset.h \
+    D:/qtdoc/amber_base/com_tp.h \
+    D:/qtdoc/amber_base/com_tplist.h
+
 
 FORMS += \
         amber.ui

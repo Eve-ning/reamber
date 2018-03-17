@@ -2,6 +2,7 @@
 #include "ui_amber.h"
 
 
+
 /* osu!mania FORMATTING REF
  * Normal Note: 109,192,1020,1,0,0:0:0:0:
  * Long Note: 402,192,73,128,0,388:0:0:0:0:
