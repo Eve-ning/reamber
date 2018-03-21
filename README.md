@@ -8,6 +8,7 @@
 
 #### Recreation of Project Skeletal
 I think it's important to state that I'm currently still working on this project, I'm currently building a better framework/skeletal for this whole project so that it's more flexible. A lot of back-end changes are expected.
+### [Skeletal Repo](https://github.com/Eve-ning/amber_base)
 
 ## Purpose
 
