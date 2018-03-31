@@ -10,6 +10,9 @@
 I think it's important to state that I'm currently still working on this project, I'm currently building a better framework/skeletal for this whole project so that it's more flexible. A lot of back-end changes are expected.
 ### [Skeletal Repo](https://github.com/Eve-ning/amber_base)
 
+### Estimated Time of Project Completion
+Feb 2019
+
 ## Purpose
 
 This program is designed to be as user-friendly as possible, removing most uncommon terminologies and simplifying the process of mapping osu!mania maps.
