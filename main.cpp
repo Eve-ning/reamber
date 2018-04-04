@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QDialog>
 
-
+#include "amber_base_inc.h"
 
 int main(int argc, char *argv[])
 {

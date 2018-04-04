@@ -24,8 +24,6 @@
      * TYPE: SV/BPM
  */
 
-
-
 amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
@@ -52,8 +50,6 @@ amber::~amber()
 {
     delete ui;
 }
-
-
 
 // --------------------------------------------------------------------------------------------------------< DEBUG >
 /* Error Handling Idea 4/2/2018
@@ -176,6 +172,7 @@ void amber::on_home_contactLabel_clicked()
     HYPERLINK::CONTACT();
 }
 
+
 // --------------------------------------------------------------------------------------------------------< GENERAL >
 
 // --------------------------------------------------------------------------------------------------------< SETTINGS >
@@ -278,11 +275,11 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
 
-    double maxInitSV, minInitSV, secondSV,
-           currentAverageSV, currentThreshold;
+    double maxInitSV, minInitSV,
+           averageSV, threshold;
 
-    currentAverageSV = ui->stutter_averageSVSpinBox->value();
-    currentThreshold = arg1 / 100;
+    averageSV = ui->stutter_averageSVSpinBox->value();
+    threshold = arg1;
 
     /* initSV CALCULATION
      * solve for mininitSV by substitution;
@@ -296,23 +293,27 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
      * [(ave) - (sec) + (th)(sec)] / (th) = (in)
      */
 
-    /* TERNARY CALCULATION
-     * Assume secondSV is the minimum and maximum value possible to see the limits of initSV
-     * If the calculation of initSV exceeds 0.1 - 10.0, it'll be bound in the limit
-     */
+    cOM_TPList OM_TPList(QList<cOM_TP>({cOM_TP(), cOM_TP(), cOM_TP()}));
+
+    // Set Offset according to threshold
+    OM_TPList[0].setOffset(0);
+    OM_TPList[1].setOffset(threshold);
+    OM_TPList[2].setOffset(100);
+
+    // We analyse what is the value needed to adjust to the maximum and minimum
+    // So if the second SV is bound between 0.1 and 10.0, what value would it take to break the boundaries
 
     // Where secondSV = 0.1
-    secondSV = 0.1;
-    maxInitSV = (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold > 10.0
-                   ? 10.0
-                   : (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold;
+    OM_TPList[1].setValue(0.1);
+
+    OM_TPList.adjustToAverage(averageSV, 0);
+    maxInitSV = OM_TPList[0].getValue();
 
     // Where secondSV = 10.0
-    secondSV = 10.0;
-    minInitSV = (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold < 0.1
-                   ? 0.1
-                   : (currentAverageSV - secondSV + currentThreshold * secondSV) / currentThreshold;
+    OM_TPList[1].setValue(10.0);
 
+    OM_TPList.adjustToAverage(averageSV, 0);
+    minInitSV = OM_TPList[0].getValue();
 
     // Set Maximum and Minimum
     ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV * 100));
@@ -324,37 +325,33 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
 }
 void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 {
-    // averageSV = initSV * threshold + secondSV * (1 - threshold);
-    // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
-
     double maxInitSV, minInitSV,
-           currentAverageSV, currentThreshold;
+           averageSV, threshold;
 
-    currentAverageSV = arg1;
-    currentThreshold = ui->stutter_thresholdSpinBox->value() / 100;
+    averageSV = arg1;
+    threshold = ui->stutter_thresholdSpinBox->value() / 100;
 
-    /* initSV CALCULATION
-     * solve for mininitSV by substitution;
-     *
-     * find initSV in terms of secondSV and threshold
-     * averageSV = initSV * threshold + (secondSV - secondSV * threshold)
-     * initSV = [ averageSV - secondSV * ( 1 - threshold ) ] / threshold
-     */
+    cOM_TPList OM_TPList(QList<cOM_TP>({cOM_TP(), cOM_TP(), cOM_TP()}));
 
-    /* TERNARY CALCULATION
-     * Assume secondSV is the minimum and maximum value possible to see the limits of initSV
-     * If the calculation of initSV exceeds 0.1 - 10.0, it'll be bound in the limit
-     */
+    // Set Offset according to threshold
+    OM_TPList[0].setOffset(0);
+    OM_TPList[1].setOffset(threshold);
+    OM_TPList[2].setOffset(100);
+
+    // We analyse what is the value needed to adjust to the maximum and minimum
+    // So if the second SV is bound between 0.1 and 10.0, what value would it take to break the boundaries
 
     // Where secondSV = 0.1
-    maxInitSV = (currentAverageSV - 0.1 * (1 - currentThreshold)) / currentThreshold > 10.0
-                   ? 10.0
-                   : (currentAverageSV - 0.1 * (1 - currentThreshold)) / currentThreshold;
+    OM_TPList[1].setValue(0.1);
+
+    OM_TPList.adjustToAverage(averageSV, 0);
+    maxInitSV = OM_TPList[0].getValue();
 
     // Where secondSV = 10.0
-    minInitSV = (currentAverageSV - 0.1 * (1 - currentThreshold)) / currentThreshold > 10.0
-                   ? 10.0
-                   : (currentAverageSV - 0.1 * (1 - currentThreshold)) / currentThreshold;
+    OM_TPList[1].setValue(10.0);
+
+    OM_TPList.adjustToAverage(averageSV, 0);
+    minInitSV = OM_TPList[0].getValue();
 
     // Set Maximum and Minimum
     ui->stutter_initSVSlider-> setMaximum(maxInitSV * 10);
@@ -362,20 +359,14 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 
     ui->stutter_initSVSlider-> setMinimum(minInitSV * 10);
     ui->stutter_initSVSpinBox->setMinimum(minInitSV);
-
 }
 
 // Stutter Generate Button
 void amber::on_stutter_generateButton_clicked()
 {
-
-    QStringList partList, inputList;
-    QString inputString;
-    QList<double> uniqueOffsetList;
-
     double threshold,
            initSV, secondSV, averageSV,
-           initOffset, secondOffset, endOffset;
+           endOffset;
 
     QPlainTextEdit *inputBox;
     inputBox  = ui->stutter_inputBox;
@@ -387,43 +378,44 @@ void amber::on_stutter_generateButton_clicked()
     ui->stutter_outputBox->clear();
 
     // Set input vector
-    inputList = CONVERT::OMtoBASIC(tb, true, true, false, inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+    cOM_HOList OM_HOList(inputBox, 1);
 
-    if (inputList.length() == 0){
+    if (OM_HOList.getSize() == 0) {
+        STATMSG("Got size 0.");
         return;
-    }
-    // Set up uniqueOffsetList
-    foreach (inputString, inputList)
+    } else if (OM_HOList.getLoadFail())
     {
-        partList = inputString.split("|");
-        if (!uniqueOffsetList.contains(partList[DEFARGS::HO_OFFSET].toDouble()))
-            uniqueOffsetList.append(partList[DEFARGS::HO_OFFSET].toDouble());
+        STATMSG("Load Unsuccessful.");
     }
+
+    OM_HOList.makeUnique();
 
     // Generate all SVs in basic format
-    for (int i = 0; i < (uniqueOffsetList.length() - 1); ++ i)
+    for (int i = 0; i < (OM_HOList.getSize() - 1); ++ i)
     {
-        initOffset = uniqueOffsetList.at(i);
-        secondOffset = (uniqueOffsetList.at(i + 1) - initOffset) * threshold + initOffset;
+        cOM_TPList OM_TPList;
+
+        // First SV
+        OM_TPList.append(cOM_TP(OM_HOList[i].getOffset(), initSV));
+
+        // Second SV
+        OM_TPList.append(cOM_TP(OM_HOList[i].getOffset()
+                                + (OM_HOList.getLength(i) * threshold), secondSV));
 
         //initSV append
-        ui->stutter_outputBox->append(COMPILE::OM_SV(tb,
-                                                     QString::number(initOffset),
-                                                     QString::number(-100.0 / initSV)));
+        ui->stutter_outputBox->append(OM_TPList[0].toString());
 
         //secondSV append
-        ui->stutter_outputBox->append(COMPILE::OM_SV(tb,
-                                                     QString::number(secondOffset),
-                                                     QString::number(-100.0 / secondSV)));
+        ui->stutter_outputBox->append(OM_TPList[1].toString());
     }
 
     //End SV for normalization
-    endOffset = uniqueOffsetList.at(uniqueOffsetList.length() - 1);
+    endOffset = OM_HOList[OM_HOList.getLength() - 1].getOffset();
+
+    cOM_TP endTP(endOffset, averageSV);
 
     //normalizeSV append
-    ui->stutter_outputBox->append(COMPILE::OM_SV(tb,
-                                                 QString::number(endOffset),
-                                                 QString::number(-100.0 / averageSV)));
+    ui->stutter_outputBox->append(endTP.toString());
 }
 
 // --------------------------------------------------------------------------------------------------------< COPIER >
@@ -439,112 +431,79 @@ void amber::on_copier_generateButton_clicked()
         QList<double> uniqueHitObjectOffsetList;
         double uniqueHitObjectOffset, timingPointOffset, initialTimingPointOffset;
 
-        enum class inputBoxType
+        cOM_TPList   OM_TPList;
+        cOM_HOList   OM_HOList;
+
+        cOM_Common::OMFlag  boxType1,
+                            boxType2;
+
+        boxType1 = cOM_Common::isOM_Type(ui->copier_inputBox);
+        boxType2 = cOM_Common::isOM_Type(ui->copier_inputBox_2);
+
+        // Invalid Cases
+        if (boxType1 == cOM_Common::OMFlag::INVALID)
         {
-            timingPoint, // 0
-            hitObject // 1
-        };
-
-        inputBoxType boxType1,
-                     boxType2;
-
-        inputList_1 = CONVERT::OMtoBASIC(tb,
-                                         true, true, true,
-                                         ui->copier_inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
-        inputList_2 = CONVERT::OMtoBASIC(tb,
-                                         true, true, true,
-                                         ui->copier_inputBox_2->toPlainText().split("\n", QString::SkipEmptyParts));
-
-        if (inputList_1.length() == 0 || inputList_2.length() == 0){
-            STATMSG("Empty inputs are not allowed")
+            STATMSG("Input Box 1 is Invalid.");
+            return;
+        }
+        if (boxType2 == cOM_Common::OMFlag::INVALID)
+        {
+            STATMSG("Input Box 2 is Invalid.");
             return;
         }
 
+        if (!( // Note: We invert the bool
+             // Acceptable Case 1: Box 1 is HO || EHO, Box 2 is TP
+            ((boxType1 == cOM_Common::OMFlag::HO_ONLY || boxType1 == cOM_Common::OMFlag::EHO_ONLY)
+           && boxType2 == cOM_Common::OMFlag::TP_ONLY)
+            ||
+             // Acceptable Case 2: Box 1 is TP, Box 2 is HO || EHO
+            ((boxType1 == cOM_Common::OMFlag::HO_ONLY || boxType1 == cOM_Common::OMFlag::EHO_ONLY)
+           && boxType2 == cOM_Common::OMFlag::TP_ONLY)
+           ))
+        {
+            STATMSG("Inputs should be different in type.");
+            return;
+        }
+
+        // We clear only after the input is invalid to prevent accidental clearing
         ui->copier_outputBox->clear();
 
-        //Checks for Type
-        if      (inputList_1[0].split("|")[DEFARGS::HO_LABEL] == "HITOBJECT")
-        {
-            boxType1 = inputBoxType::hitObject;
-        }
-        else if (inputList_1[0].split("|")[DEFARGS::TP_LABEL] == "TIMINGPOINT")
-        {
-            boxType1 = inputBoxType::timingPoint;
-        }
-        else
-        {
-            STATMSG("Input Box 1 is neither HITOBJECT nor TIMINGPOINT.");
-            return;
-        }
-
-        if (inputList_2[0].split("|")[DEFARGS::HO_LABEL] == "HITOBJECT")
-        {
-            boxType2 = inputBoxType::hitObject;
-        }
-        else if (inputList_2[0].split("|")[DEFARGS::TP_LABEL] == "TIMINGPOINT")
-        {
-            boxType2 = inputBoxType::timingPoint;
-        }
-        else
-        {
-            STATMSG("Input Box 2 is neither HITOBJECT nor TIMINGPOINT.");
-            STATMSG("Error has occured.");
-            return;
-        }
-
-        if ((boxType1 == inputBoxType::hitObject && boxType2 == inputBoxType::hitObject) ||
-            (boxType2 == inputBoxType::timingPoint && boxType1 == inputBoxType::timingPoint))
-        {
-            STATMSG("Make sure that both Inputs are different in type.");
-            return;
-        }
-
-        //Assign the Vectors
-        if (boxType1 == inputBoxType::hitObject)
-        {
-            HOList = inputList_1;
-            TPList = inputList_2;
-        }
-        else
-        {
-            HOList = inputList_2;
-            TPList = inputList_1;
+        switch (boxType1) {
+        case cOM_Common::OMFlag::HO_ONLY:
+        case cOM_Common::OMFlag::EHO_ONLY:
+            OM_HOList = ui->copier_inputBox;
+            OM_TPList = ui->copier_inputBox_2;
+            STATMSG("Assigned: HO <1> | TP <2>");
+            break;
+        case cOM_Common::OMFlag::TP_ONLY:
+            OM_HOList = ui->copier_inputBox_2;
+            OM_TPList = ui->copier_inputBox;
+            STATMSG("Assigned: HO <2> | TP <1>");
+            break;
+        default:
+            STATMSG("An unexpected error has occured");
+            break;
         }
 
         //Generate Unique Offset List
-        foreach (hitObjectString, HOList)
-        {
-            hitObjectPartList = hitObjectString.split("|");
-            if (!uniqueHitObjectOffsetList.contains(hitObjectPartList[DEFARGS::HO_OFFSET].toDouble()))
-                uniqueHitObjectOffsetList.append(hitObjectPartList[DEFARGS::HO_OFFSET].toDouble());
-        }
+        OM_HOList.makeUnique();
 
-        //Gets the offset from the First Timing Point in order to "zero" all Timing Points
-        initialTimingPointOffset = TPList[0].split("|")[DEFARGS::TP_OFFSET].toDouble();
+        // Zero the list to make use of OM_HO's initial offset
+        OM_TPList.zero();
 
-        //Generates Code
-        foreach (uniqueHitObjectOffset, uniqueHitObjectOffsetList)
+        for (int tempOM_HO = 0; tempOM_HO < OM_HOList.getSize(); tempOM_HO++)
         {
-            foreach (timingPointPart, TPList)
+            for (int tempOM_TP = 0; tempOM_TP < OM_TPList.getSize(); tempOM_TP++)
             {
-                timingPointOffset = timingPointPart.split("|", QString::SkipEmptyParts)[1].toDouble();
+                // We take the zero-ed list and add the offset from OM_HOList
+                OM_TPList.addOffset(OM_HOList[tempOM_HO].getOffset());
 
-                if (timingPointPart.split("|", QString::SkipEmptyParts)[DEFARGS::TP_TYPE] == "BPM")
-                {
-                    ui->copier_outputBox->append(
-                    COMPILE::OM_BPM(tb,
-                                    QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
-                                    QString::number(60000 / timingPointPart.split("|",QString::SkipEmptyParts)
-                                    [DEFARGS::TP_VALUE].toDouble())));
-                }
-                else
-                {
-                    ui->copier_outputBox->append(
-                    COMPILE::OM_SV(tb,
-                                   QString::number(timingPointOffset - initialTimingPointOffset + uniqueHitObjectOffset),
-                                   QString::number(-100 / timingPointPart.split("|", QString::SkipEmptyParts)
-                                   [DEFARGS::TP_VALUE].toDouble())));
-                }
+                // Append to output
+                ui->copier_outputBox->append(OM_TPList[tempOM_TP].toString());
+
+                // Zero it again
+                OM_TPList.zero();
             }
         }
         
@@ -754,16 +713,20 @@ void amber::on_TPF_generateButton_clicked()
 
     outputBox->clear();
 
+    cOM_HOList TPInput;
+
+    TPInput = ui->TPF_editorInputLine->text();
+
     //Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
     {
         STATMSG("No Input detected");
         return;
     }
-    else if (CONVERT::EHOtoOFFSETLIST(tb, ui->TPF_editorInputLine->text()).length() == 2)
+    else if (TPInput.getSize() == 2)
     {
-        initialOffset = CONVERT::EHOtoOFFSETLIST(tb, ui->TPF_editorInputLine->text())[0];
-        endOffset     = CONVERT::EHOtoOFFSETLIST(tb, ui->TPF_editorInputLine->text())[1];
+        initialOffset = TPInput[0].getOffset();
+        endOffset     = TPInput[1].getOffset();
 
         STATMSG("Detected Editor Hit Object Input");
     }
@@ -788,37 +751,33 @@ void amber::on_TPF_generateButton_clicked()
 
     for(int i = 0; i < intermediatePoints + 1; ++ i)
     {
+        cOM_TP OM_TP;
+
+
         xValue     = i / ((double) intermediatePoints);
         xData[i]   = (xValue * (endOffset - initialOffset)) + initialOffset;
         yLinear[i] = xValue * (endTP - initialTP) + initialTP;
         ySine[i]   = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
         yData[i]   = yLinear[i] + ySine[i];
 
-        //LIMIT VALUES
-        if (isSV)
-        {
-            yData[i] = yData[i] <= 0.1 ? 0.1 : yData[i];
-            yData[i] = yData[i] >= 10.0 ? 10.0 : yData[i];
-        }
-        else
-        {
-            yData[i] = yData[i] = 0 ? 0.00001 : yData[i];
-        }
+        OM_TP.setOffset(xData[i]);
+        OM_TP.setValue(yData[i]);
+
+        OM_TP.limitValues();
 
         if (isSV)
         {
-            outputBox->append(COMPILE::OM_SV(tb,
-                                             QString::number(xData[i]),
-                                             QString::number(yData[i] < 0.1 ? -1000 : -100 / yData[i])));
+            OM_TP.setIsBPM(false);
+            outputBox->append(OM_TP.toString());
         }
         else if (isBPM)
         {
-            outputBox->append(COMPILE::OM_BPM(tb,
-                                              QString::number(xData[i]),
-                                              QString::number(yData[i] == 0 ? 9999999 : 60000 / yData[i])));
+            OM_TP.setIsBPM(true);
+            outputBox->append(OM_TP.toString());
         }
         else
         {
+            STATMSG("An unexpected error has occurred.");
             return;
         }
     }
@@ -886,8 +845,6 @@ void amber::on_TPF_generateButton_clicked()
 
 void amber::on_normalizer_generateButton_clicked()
 {
-    QStringList   inputList, partList;
-    QString       inputString, partOffset, partBPM;
     QList<double> BPMList, offsetList;
 
     QPlainTextEdit *inputBox;
@@ -898,7 +855,6 @@ void amber::on_normalizer_generateButton_clicked()
     QLineEdit      *selectedBPMLine;
 
     double normalizeBPM;
-    double normalizeSV;
 
     inputBox =              ui->normalizer_inputBox;
     outputBox =             ui->normalizer_outputBox;
@@ -910,38 +866,33 @@ void amber::on_normalizer_generateButton_clicked()
     outputBox-> clear();
     listWidget->clear();
 
-    inputList = CONVERT::OMtoBASIC(tb,
-                                   false, false, true,
-                                   inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+    cOM_TPList OM_TPList(inputBox);
 
-    if (inputList.length() == 0){
+    if (OM_TPList.isEmpty()){
+        STATMSG("Input is empty.");
         return;
     }
 
-    foreach (inputString, inputList){
+    // We reassign OM_TPList to have only BPM Inputs
+    OM_TPList = OM_TPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
 
-        partList = inputString.split("|", QString::SkipEmptyParts);
+    if (OM_TPList.isEmpty()){
+        STATMSG("Input at least 1 BPM Point.");
+        return;
+    }
 
-        if (partList[DEFARGS::TP_TYPE] == "SV"){
-            continue;
-        }
+    for (int temp = 0; temp < OM_TPList.getSize(); temp++){
 
-        partOffset = partList[DEFARGS::TP_OFFSET];
-        partBPM = partList[DEFARGS::TP_VALUE];
+        double offset, BPM;
+        offset = OM_TPList[temp].getOffset();
+        BPM = OM_TPList[temp].getValue();
 
-        BPMList.append(partBPM.toDouble());
-        offsetList.append(partOffset.toDouble());
         listWidget->addItem(QString("BPM: ")
-                    .append(partBPM)
-                    .append(" | Offset: ")
-                    .append(partOffset));
+                            .append(QString::number(BPM))
+                            .append(" | Offset: ")
+                            .append(QString::number(offset)));
     }
 
-    if (BPMList.length() == 0){
-        STATMSG("Input at least 1 BPM Timing Point");
-
-        return;
-    }
 
     if (overrideCheck->isChecked())
     {
@@ -961,14 +912,10 @@ void amber::on_normalizer_generateButton_clicked()
                           + (QString::number(normalizeBPM))
                           + (" BPM"));
 
-
-
-    for(int cycle = 0; cycle < BPMList.length(); cycle ++)
+    for(int temp = 0; temp < BPMList.length(); temp ++)
     {
-        normalizeSV = -100 / (normalizeBPM / BPMList.at(cycle));
-        outputBox->append(COMPILE::OM_SV(tb,
-                                         QString::number(offsetList.at(cycle)),
-                                         QString::number(normalizeSV)));
+        OM_TPList[temp].setValue( -100 / (normalizeBPM / OM_TPList[temp].getValue()));
+        outputBox->append(OM_TPList[temp].toString());
     }
 
     return;
@@ -1071,6 +1018,8 @@ void amber::on_adjuster_generateButton_clicked()
     QStringList inputList, partList;
     QString inputString;
 
+    cOM_TPList OM_TPList(inputBox->toPlainText());
+
     double initialOffset,
            endOffset,
            minTP,
@@ -1081,69 +1030,47 @@ void amber::on_adjuster_generateButton_clicked()
          isBPM          = BPMRadio->isChecked(),
          isGraphLine    = graphLineRadio->isChecked();
 
-    inputList = CONVERT::OMtoBASIC(tb,
-                                   false, false, true,
-                                   inputBox->toPlainText().split("\n", QString::SkipEmptyParts));
+
     QVector<double> xData,
                     yData;
 
-    foreach (inputString, inputList)
+    // We trim the OM_TPList according to selection
+    if (isSV)
     {
-        partList = inputString.split("|", QString::SkipEmptyParts);
-
-        if ((partList[DEFARGS::TP_TYPE] == "SV" && isSV) ||
-            (partList[DEFARGS::TP_TYPE] == "BPM" && isBPM))
-        {
-            xData.append(partList[DEFARGS::TP_OFFSET].toDouble());
-            yData.append(partList[DEFARGS::TP_VALUE].toDouble());
-        }
-        else
-        {
-            continue;
-        }
+        OM_TPList = OM_TPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
+    }
+    else if (isBPM)
+    {
+        OM_TPList = OM_TPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
     }
 
-    //Adjust Functions
-    //ADJUST Y
-    for (QVector<double>::iterator i = yData.begin(); i != yData.end(); i++)
+    //Adjust Value
+    OM_TPList.subtractValue(zeroSpinBox->value()); //Zero +
+
+    if (invertCheck->isChecked())
     {
-        *i -= zeroSpinBox->value(); //Zero +
-
-        if (invertCheck->isChecked()) {*i = - *i;}
-
-        *i *= multiplySpinBox->value();
-        *i += addSpinBox->value();
-
-        *i += zeroSpinBox->value(); //Zero -
+        OM_TPList.multiplyValue(-1);
     }
 
-    //ADJUST X
-    for (QVector<double>::iterator i = xData.begin(); i != xData.end(); i++)
-    {
-        *i += offsetSpinBox->value();
-    }
+    OM_TPList.multiplyValue(multiplySpinBox->value());
+    OM_TPList.addValue(addSpinBox->value());
 
-    //LIMIT VALUES
-    for (int i = 0; i < yData.length(); i ++)
-    {
-        if (isSV)
-        {
-            yData[i] = yData[i] <= 0.1 ? 0.1 : yData[i];
-            yData[i] = yData[i] >= 10.0 ? 10.0 : yData[i];
-        }
-        else
-        {
-            yData[i] = yData[i] = 0 ? 0.00001 : yData[i];
-        }
-    }
+    OM_TPList.addValue(zeroSpinBox->value()); //Zero -
 
-    initialOffset  = *std::min_element(xData.constBegin(), xData.constEnd());
-    endOffset      = *std::max_element(xData.constBegin(), xData.constEnd());
+    //Adjust Offset
+    OM_TPList.addOffset(offsetSpinBox->value());
 
-    minTP = *std::min_element(yData.constBegin(),yData.constEnd());
-    maxTP = *std::max_element(yData.constBegin(),yData.constEnd());
+    //Limit Values
+    OM_TPList.limitValues();
+
+    initialOffset  = OM_TPList.getMinOffset();
+    endOffset      = OM_TPList.getMaxOffset();
+
+    minTP = OM_TPList.getMinValue();
+    maxTP = OM_TPList.getMaxValue();
 
     //If the values are too close together (threshold : 10), separate to at least 10
+    // Update: I'm not sure why i do this
     if (qFabs(maxTP - minTP) < 10 && isBPM)
     {
         minTP -= 5;
@@ -1151,17 +1078,7 @@ void amber::on_adjuster_generateButton_clicked()
     }
 
     //Calculate averageSV and averageBPM
-    if (xData.length() <= 1)
-    {
-        averageTP = xData.length() == 0 ? 0 : yData[0];
-    }
-    else
-    {
-        for (int i = 0; i < (xData.length() - 1); i ++)
-        {
-            averageTP += (yData.at(i) * (xData.at(i + 1) - xData.at(i))) / (endOffset - initialOffset);
-        }
-    }
+    averageTP = OM_TPList.getAverage(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     //Auto Zero
     if (autoZeroCheck->isChecked())
@@ -1194,26 +1111,11 @@ void amber::on_adjuster_generateButton_clicked()
     customPlot->replot(QCustomPlot::rpQueuedReplot);
 
     //Generate Output
-    if (isSV)
+    for (int temp = 0; temp < OM_TPList.getSize(); temp++)
     {
-        outputBox->clear();
-        for(int i = 0; i < xData.length(); i++)
-        {
-            outputBox->append(COMPILE::OM_SV(tb,
-                                             QString::number(xData[i]),
-                                             QString::number(yData[i] <= 0 ? -1000 : -100 / yData[i])));
-        }
+        outputBox->append(OM_TPList[temp].toString());
     }
-    else if (isBPM)
-    {
-        outputBox->clear();
-        for(int i = 0; i < xData.length(); i++)
-        {
-            outputBox->append(COMPILE::OM_BPM(tb,
-                                              QString::number(xData[i]),
-                                              QString::number(yData[i] == 0 ? 9999999 : 60000 / yData[i])));
-        }
-    }
+
     return;
 }
 

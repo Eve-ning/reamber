@@ -14,11 +14,11 @@
 **  GNU General Public License for more details.                          **
 **                                                                        **
 **  You should have received a copy of the GNU General Public License     **
-**  along with this program.  If not, see http://www.gnu.org/licenses/.   **
+**  along with this program.  If not, see http://ww.gnu.org/licenses/.   **
 **                                                                        **
 ****************************************************************************
 **           Author: Emanuel Eichhammer                                   **
-**  Website/Contact: http://www.qcustomplot.com/                          **
+**  Website/Contact: http://ww.qcustomplot.com/                          **
 **             Date: 04.09.17                                             **
 **          Version: 2.0.0                                                **
 ****************************************************************************/
@@ -2036,7 +2036,7 @@ QCPRange QCPRange::sanitizedForLogScale() const
   QCPRange sanitizedRange(lower, upper);
   sanitizedRange.normalize();
   // can't have range spanning negative and positive values in log plot, so change range to fix it
-  //if (qFuzzyCompare(sanitizedRange.lower+1, 1) && !qFuzzyCompare(sanitizedRange.upper+1, 1))
+  //f (qFuzzyCompare(sanitizedRange.lower+1, 1) && !qFuzzyCompare(sanitizedRange.upper+1, 1))
   if (sanitizedRange.lower == 0.0 && sanitizedRange.upper != 0.0)
   {
     // case lower is 0
@@ -2044,7 +2044,7 @@ QCPRange QCPRange::sanitizedForLogScale() const
       sanitizedRange.lower = rangeFac;
     else
       sanitizedRange.lower = sanitizedRange.upper*rangeFac;
-  } //else if (!qFuzzyCompare(lower+1, 1) && qFuzzyCompare(upper+1, 1))
+  } //lse if (!qFuzzyCompare(lower+1, 1) && qFuzzyCompare(upper+1, 1))
   else if (sanitizedRange.lower != 0.0 && sanitizedRange.upper == 0.0)
   {
     // case upper is 0
@@ -9393,8 +9393,8 @@ void QCPAxisPainterPrivate::draw(QCPPainter *painter)
   mTickLabelsSelectionBox = mTickLabelsSelectionBox.normalized();
   mLabelSelectionBox = mLabelSelectionBox.normalized();
   // draw hitboxes for debug purposes:
-  //painter->setBrush(Qt::NoBrush);
-  //painter->drawRects(QVector<QRect>() << mAxisSelectionBox << mTickLabelsSelectionBox << mLabelSelectionBox);
+  //ainter->setBrush(Qt::NoBrush);
+  //ainter->drawRects(QVector<QRect>() << mAxisSelectionBox << mTickLabelsSelectionBox << mLabelSelectionBox);
 }
 
 /*! \internal
@@ -10290,7 +10290,7 @@ void QCPScatterStyle::drawShape(QCPPainter *painter, double x, double y) const
 }
 /* end of 'src/scatterstyle.cpp' */
 
-//amalgamation: add datacontainer.cpp
+//malgamation: add datacontainer.cpp
 
 /* including file 'src/plottable.cpp', size 38845                            */
 /* commit 9868e55d3b412f2f89766bb482fcf299e93a0988 2017-09-04 01:56:22 +0200 */
@@ -12549,7 +12549,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
   interacts with the user.
   
   For tutorials on how to use QCustomPlot, see the website\n
-  http://www.qcustomplot.com/
+  http://ww.qcustomplot.com/
 */
 
 /* start of documentation of inline functions */
@@ -15716,7 +15716,7 @@ void QCustomPlot::toPainter(QCPPainter *painter, int width, int height)
 }
 /* end of 'src/core.cpp' */
 
-//amalgamation: add plottable1d.cpp
+//malgamation: add plottable1d.cpp
 
 /* including file 'src/colorgradient.cpp', size 24646                        */
 /* commit 9868e55d3b412f2f89766bb482fcf299e93a0988 2017-09-04 01:56:22 +0200 */

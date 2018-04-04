@@ -1,7 +1,7 @@
 #ifndef AMBER_H
 #define AMBER_H
 
-#define STATMSG(text) STATUSBOX::sendMsg(tb, text, __FUNCTION__);
+#define STATMSG(text) STATUSBOX::sendMsg(tb, text, __FUNCTION__)
 
 #include <QMainWindow>
 #include <QStringList>
@@ -22,14 +22,15 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 
-//Must be defined first
+//ust be defined first
 #include "statusbox.h"
 
 #include "check.h"
 #include "compile.h"
 #include "convert.h"
 #include "hyperlink.h"
-#include "
+
+#include "amber_base_inc.h"
 
 namespace Ui {
 class amber;
@@ -44,13 +45,12 @@ public:
     explicit amber(QWidget *parent = 0);
     ~amber();
 
-    //SET DEFAULT
+    //ET DEFAULT
     void saveDefaultValues();
 
-    //DEBUG MESSENGER
+    //EBUG MESSENGER
     void ERROR_MESSAGE(int ERROR_CODE);
     void PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST);
-
 
 private slots:
 
@@ -60,7 +60,9 @@ private slots:
     void on_stutter_thresholdSpinBox_valueChanged(double arg1);
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
     void on_stutter_generateButton_clicked();
+
     void on_copier_generateButton_clicked();
+
     void on_TPF_generateButton_clicked();
     void on_TPF_initialTPSpinBox_valueChanged(double arg1);
     void on_TPF_initialTPSlider_valueChanged(int value);
@@ -109,11 +111,8 @@ private slots:
     void on_adjuster_defaultButton_clicked();
 
     void on_PS_browseButton_clicked();
-
     void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
-
     void on_PS_controlSplitButton_clicked();
-
     void on_PS_controlOpenFolderButton_clicked();
 
     void on_home_wikiLabel_clicked();

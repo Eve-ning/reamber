@@ -7,17 +7,17 @@
 
 namespace STATUSBOX
 {
-    void sendMsg (QTextBrowser *tb, QString message, QString tag = ""); //Sends custom message through amber::appendMessages
-    void sendMsg (QTextBrowser *tb, QStringList messageList, QString tag = ""); //Sends custom message through amber::appendMessages
+    void sendMsg (QTextBrowser *tb, QString message, QString tag = ""); //ends custom message through amber::appendMessages
+    void sendMsg (QTextBrowser *tb, QStringList messageList, QString tag = ""); //ends custom message through amber::appendMessages
     void sendMsg (QTextBrowser *tb, QList<double> messageList, QString tag = "");
     void sendMsg (QTextBrowser *tb, QList<int> messageList, QString tag);
-    void clearBox(QTextBrowser *tb); //Clears status box
+    void clearBox(QTextBrowser *tb); //lears status box
 }
 
 /* Redacted for other error parsing methods.
 enum STATUSENUM {
 
-    //CHECK
+    //HECK
     CHECK_EHO_PASS                  =   0,
     CHECK_HO_PASS                   =   1,
     CHECK_TP_PASS                   =   2,
@@ -26,7 +26,7 @@ enum STATUSENUM {
     CHECK_HO_FAIL                   =   4,
     CHECK_TP_FAIL                   =   5,
 
-    //CHECK
+    //HECK
     CHECK_HO_NN_PASS                =   6,
     CHECK_HO_LN_PASS                =   7,
     CHECK_TP_SV_PASS                =   8,
@@ -37,7 +37,7 @@ enum STATUSENUM {
     CHECK_TP_SV_FAIL                =   12,
     CHECK_TP_BPM_FAIL               =   13,
 
-    //CONVERT
+    //ONVERT
     CONVERT_COLUMN_CODEtoVALUE_PASS =   100,
     CONVERT_COLUMN_VALUEtoCODE_PASS =   101,
     CONVERT_EHOtoOFFSETLIST_PASS    =   102,
@@ -80,7 +80,7 @@ enum STATUSENUM {
     CONVERT_OMtoBASIC_FAIL          =   138,
     CONVERT_BASICtoOM_FAIL          =   139,
 
-    //COMPILE
+    //OMPILE
     COMPILE_OM_NN_PASS              =   200,
     COMPILE_OM_LN_PASS              =   201,
     COMPILE_OM_BPM_PASS             =   202,
@@ -95,7 +95,7 @@ enum STATUSENUM {
     COMPILE_BASIC_HO_FAIL           =   210,
     COMPILE_BASIC_TP_FAIL           =   211,
 
-    //LINK
+    //INK
     LINK_REPO_PASS                  =   300,
     LINK_WIKI_PASS                  =   301,
     LINK_RELEASES_PASS              =   302,

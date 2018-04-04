@@ -25,23 +25,44 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         amber.cpp \
-    qcustomplot.cpp \
-    check.cpp \
-    convert.cpp \
-    compile.cpp \
-    defargs.cpp \
-    hyperlink.cpp \
-    statusbox.cpp \
+        qcustomplot.cpp \
+        check.cpp \
+        convert.cpp \
+        compile.cpp \
+        defargs.cpp \
+        hyperlink.cpp \
+        statusbox.cpp \
+        amber_base/com_ho.cpp \
+        amber_base/com_tp.cpp \
+        amber_base/com_holist.cpp \
+        amber_base/com_tplist.cpp \
+        amber_base/com_mapset.cpp \
+        amber_base/com_map.cpp \
+        amber_base/com_breakp.cpp \
+        amber_base/com_breakplist.cpp \
+        amber_base/com_math.cpp \
+        amber_base/com_common.cpp
 
 HEADERS += \
         amber.h \
-    qcustomplot.h \
-    check.h \
-    convert.h \
-    compile.h \
-    defargs.h \
-    hyperlink.h \
-    statusbox.h \
+        qcustomplot.h \
+        check.h \
+        convert.h \
+        compile.h \
+        defargs.h \
+        hyperlink.h \
+        statusbox.h \
+        amber_base_inc.h \
+        amber_base/com_ho.h \
+        amber_base/com_tp.h \
+        amber_base/com_holist.h \
+        amber_base/com_tplist.h \
+        amber_base/com_mapset.h \
+        amber_base/com_map.h \
+        amber_base/com_breakp.h \
+        amber_base/com_breakplist.h \
+        amber_base/com_math.h \
+        amber_base/com_common.h
 
 LIBS += \
 
@@ -65,17 +86,4 @@ win32:RC_ICONS += amberResources/icons/amberIcn.ico
 
 QMAKE_LFLAGS += -static
 
-
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/release/ -lamber_base
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/debug/ -lamber_base
-else:unix: LIBS += -L$$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/ -lamber_base
-
 INCLUDEPATH += $$PWD/../amber_base
-DEPENDPATH += $$PWD/../amber_base
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/release/libamber_base.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/debug/libamber_base.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/release/amber_base.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/debug/amber_base.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../build-amberLib-Desktop_Qt_5_10_0_MinGW_32bit-Release/libamber_base.a
