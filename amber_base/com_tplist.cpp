@@ -1,4 +1,9 @@
 #include "com_tplist.h"
+#define CHECK_EMPTY(returnValue) if (isEmpty()) \
+                                 { \
+                                     qDebug() << __FUNCTION__ << ": OM_TP List is empty"; \
+                                     return returnValue; \
+                                 }
 
 // CONSTRUCTORS
 cOM_TPList::cOM_TPList()
@@ -145,6 +150,8 @@ void cOM_TPList::setValueList(QList<double> newValueList)
 // GETTERS
 QList<double> cOM_TPList::getOffsetList(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     cOM_TP OM_TP;
     QList<double> output;
     foreach (OM_TP, OM_TPList)
@@ -161,6 +168,8 @@ QList<double> cOM_TPList::getOffsetList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getCodeList(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     cOM_TP OM_TP;
     QList<double> output;
     foreach (OM_TP, OM_TPList)
@@ -177,6 +186,8 @@ QList<double> cOM_TPList::getCodeList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getValueList(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     cOM_TP OM_TP;
     QList<double> output;
     foreach (OM_TP, OM_TPList)
@@ -193,6 +204,8 @@ QList<double> cOM_TPList::getValueList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getLengthList(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     // Note: If cOM_Common::TPFlag is specified, length calculation will skip some timingPoints
     QList<double> output,
                   offsetList;
@@ -208,6 +221,8 @@ QList<double> cOM_TPList::getLengthList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getDistanceList(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     QList<double> lengthList,
                   valueList,
                   distanceList;
@@ -225,6 +240,8 @@ QList<double> cOM_TPList::getDistanceList(cOM_Common::TPFlag onlyFlag) const
 
 QList<double> cOM_TPList::getUnqOffsetList(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     QList<double> offsetList,
                   unqOffsetList;
 
@@ -245,9 +262,10 @@ QList<double> cOM_TPList::getUnqOffsetList(cOM_Common::TPFlag onlyFlag) const
 
 cOM_TPList cOM_TPList::splitByType(cOM_Common::TPFlag onlyFlag) const
 {
-    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY)
+    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        onlyFlag == cOM_Common::TPFlag::INVALID )
     {
-        qDebug() << __FUNCTION__ << "does not support cOM_Common::TPFlag::SV_BPM_ONLY";
+        qDebug() << __FUNCTION__ << "does not support SV_BPM_ONLY and INVALID";
         return cOM_TPList();
     }
 
@@ -283,6 +301,8 @@ cOM_TPList cOM_TPList::splitByType(cOM_Common::TPFlag onlyFlag) const
 
 double cOM_TPList::getMinOffset() const
 {
+    CHECK_EMPTY(0);
+
     double output;
     QList<double> offsetList;
     offsetList = getOffsetList();
@@ -291,31 +311,67 @@ double cOM_TPList::getMinOffset() const
 }
 double cOM_TPList::getMaxOffset() const
 {
+    CHECK_EMPTY(0);
+
     double output;
     QList<double> offsetList;
     offsetList = getOffsetList();
     output = *std::max_element(offsetList.begin(), offsetList.end());
     return output;
 }
-double cOM_TPList::getMinValue() const
+double cOM_TPList::getMinValue(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(0);
+
+    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        onlyFlag == cOM_Common::TPFlag::INVALID)
+    {
+        qDebug() << __FUNCTION__ << "does not support SV_BPM_ONLY and INVALID";
+        return 0;
+    }
+
     double output;
     QList<double> valueList;
-    valueList = getValueList();
-    output = *std::max_element(valueList.begin(), valueList.end());
+    valueList = getValueList(onlyFlag);
+
+    if (valueList.length() == 0)
+    {
+        qDebug() << __FUNCTION__ << "selected flagtype is empty";
+        return 0;
+    }
+
+    output = *std::min_element(valueList.begin(), valueList.end());
     return output;
 }
-double cOM_TPList::getMaxValue() const
+double cOM_TPList::getMaxValue(cOM_Common::TPFlag onlyFlag) const
 {
+    CHECK_EMPTY(0);
+
+    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        onlyFlag == cOM_Common::TPFlag::INVALID)
+    {
+        qDebug() << __FUNCTION__ << "does not support SV_BPM_ONLY and INVALID";
+        return 0;
+    }
+
     double output;
     QList<double> valueList;
-    valueList = getValueList();
-    output = *std::min_element(valueList.begin(), valueList.end());
+    valueList = getValueList(onlyFlag);
+
+    if (valueList.length() == 0)
+    {
+        qDebug() << __FUNCTION__ << "selected flagtype is empty";
+        return 0;
+    }
+
+    output = *std::max_element(valueList.begin(), valueList.end());
     return output;
 }
 
 double cOM_TPList::getLength() const
 {
+    CHECK_EMPTY(0);
+
     double output = 0;
     QList<double> offsetList;
 
@@ -327,6 +383,8 @@ double cOM_TPList::getLength() const
 }
 double cOM_TPList::getLength(int index)
 {
+    CHECK_EMPTY(0);
+
     sortOffset(true);
 
     if (!(index < (getSize() - 1)))
@@ -376,9 +434,12 @@ int    cOM_TPList::getSize(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getAverage(cOM_Common::TPFlag onlyFlag) const
 {
-    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY)
+    CHECK_EMPTY(0);
+
+    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        onlyFlag == cOM_Common::TPFlag::INVALID )
     {
-        qDebug() << __FUNCTION__ << "does not support cOM_Common::TPFlag::SV_BPM_ONLY";
+        qDebug() << __FUNCTION__ << "does not support SV_BPM_ONLY and INVALID";
         return 0;
     }
 
@@ -397,9 +458,12 @@ double cOM_TPList::getAverage(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getDistance(cOM_Common::TPFlag onlyFlag) const
 {
-    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY)
+    CHECK_EMPTY(0);
+
+    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        onlyFlag == cOM_Common::TPFlag::INVALID    )
     {
-        qDebug() << __FUNCTION__ << "does not support cOM_Common::TPFlag::SV_BPM_ONLY";
+        qDebug() << __FUNCTION__ << "does not support SV_BPM_ONLY and INVALID";
         return 0;
     }
 
@@ -419,6 +483,8 @@ double cOM_TPList::getDistance(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getDistance(int index)
 {
+    CHECK_EMPTY(0);
+
     double length,
            value;
 
@@ -429,6 +495,8 @@ double cOM_TPList::getDistance(int index)
 }
 QStringList cOM_TPList::toString() const
 {
+    CHECK_EMPTY(QStringList({}));
+
     cOM_TP temp;
     QStringList output;
     foreach (temp, OM_TPList) {
@@ -439,7 +507,7 @@ QStringList cOM_TPList::toString() const
 }
 
 // OPERS
-cOM_TP &cOM_TPList::operator [](int i) {
+cOM_TP &cOM_TPList::operator [](int i) {    
     if (i < OM_TPList.count()){
         return OM_TPList[i];
     } else {
@@ -458,6 +526,8 @@ cOM_TP cOM_TPList::operator [](int i) const {
 
 void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> lhsValueList,
                   rhsValueList,
                   lhsOffsetList,
@@ -533,6 +603,8 @@ void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 }
 void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> lhsValueList,
                   rhsValueList,
                   lhsOffsetList,
@@ -608,6 +680,8 @@ void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 }
 void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> lhsValueList,
                   rhsValueList,
                   lhsOffsetList,
@@ -683,6 +757,8 @@ void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 }
 void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> lhsValueList,
                   rhsValueList,
                   lhsOffsetList,
@@ -759,11 +835,13 @@ void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 
 void cOM_TPList::multiplyValue  (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newValueList,
                   oldValueList;
     double temp;
 
-    oldValueList = getValueList();
+    oldValueList = this->getValueList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldValueList) {
         newValueList.append(temp * rhsDouble);
@@ -777,11 +855,13 @@ void cOM_TPList::multiplyValue  (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::divideValue    (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newValueList,
                   oldValueList;
     double temp;
 
-    oldValueList = getValueList();
+    oldValueList = getValueList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldValueList) {
         newValueList.append(temp / rhsDouble);
@@ -795,11 +875,13 @@ void cOM_TPList::divideValue    (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::addValue       (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newValueList,
                   oldValueList;
     double temp;
 
-    oldValueList = getValueList();
+    oldValueList = getValueList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldValueList) {
         newValueList.append(temp + rhsDouble);
@@ -813,11 +895,13 @@ void cOM_TPList::addValue       (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::subtractValue  (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newValueList,
                   oldValueList;
     double temp;
 
-    oldValueList = getValueList();
+    oldValueList = getValueList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldValueList) {
         newValueList.append(temp - rhsDouble);
@@ -832,11 +916,13 @@ void cOM_TPList::subtractValue  (const double rhsDouble, bool limitFlag)
 
 void cOM_TPList::multiplyOffset (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newOffsetList,
                   oldOffsetList;
     double temp;
 
-    oldOffsetList = getOffsetList();
+    oldOffsetList = getOffsetList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldOffsetList) {
         newOffsetList.append(temp * rhsDouble);
@@ -850,11 +936,13 @@ void cOM_TPList::multiplyOffset (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::divideOffset   (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newOffsetList,
                   oldOffsetList;
     double temp;
 
-    oldOffsetList = getOffsetList();
+    oldOffsetList = getOffsetList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldOffsetList) {
         newOffsetList.append(temp / rhsDouble);
@@ -868,11 +956,13 @@ void cOM_TPList::divideOffset   (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::addOffset      (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newOffsetList,
                   oldOffsetList;
     double temp;
 
-    oldOffsetList = getOffsetList();
+    oldOffsetList = getOffsetList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldOffsetList) {
         newOffsetList.append(temp + rhsDouble);
@@ -886,11 +976,13 @@ void cOM_TPList::addOffset      (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::subtractOffset (const double rhsDouble, bool limitFlag)
 {
+    CHECK_EMPTY();
+
     QList<double> newOffsetList,
                   oldOffsetList;
     double temp;
 
-    oldOffsetList = getOffsetList();
+    oldOffsetList = getOffsetList(cOM_Common::TPFlag::SV_BPM_ONLY);
 
     foreach (temp, oldOffsetList) {
         newOffsetList.append(temp - rhsDouble);
@@ -905,6 +997,8 @@ void cOM_TPList::subtractOffset (const double rhsDouble, bool limitFlag)
 
 void cOM_TPList::zero()
 {
+    CHECK_EMPTY();
+
     QList<double> newOffsetList,
                   oldOffsetList;
 
@@ -925,6 +1019,8 @@ void cOM_TPList::zero()
 // MISC
 void cOM_TPList::sortOffset(bool isAscending)
 {
+    CHECK_EMPTY();
+
     if (isAscending)
     {
         std::sort(OM_TPList.begin(), OM_TPList.end());
@@ -936,9 +1032,7 @@ void cOM_TPList::sortOffset(bool isAscending)
 
 cOM_Common::TPFlag cOM_TPList::isUniform()
 {
-    if (isEmpty()){
-        qDebug() << "OM_TPList is Empty";
-    }
+    CHECK_EMPTY(cOM_Common::TPFlag::INVALID);
 
     cOM_TP temp;
 
@@ -954,12 +1048,14 @@ cOM_Common::TPFlag cOM_TPList::isUniform()
 
     return output;
 }
-bool cOM_TPList::isEmpty()
+bool cOM_TPList::isEmpty() const
 {
     return getSize() == 0;
 }
 void cOM_TPList::limitValues()
 {
+    CHECK_EMPTY();
+
     cOM_TP temp;
 
     foreach (temp, OM_TPList) {
@@ -968,9 +1064,13 @@ void cOM_TPList::limitValues()
 }
 QList<int> cOM_TPList::indexList(cOM_Common::TPFlag onlyFlag)
 {
-    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY)
+    CHECK_EMPTY(QList<int>({}));
+
+    if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        onlyFlag == cOM_Common::TPFlag::INVALID)
     {
-        qDebug() << __FUNCTION__ << "does not support cOM_Common::TPFlag::SV_BPM_ONLY";
+        qDebug() << __FUNCTION__ << "does not support SV_BPM_ONLY and INVALID";
+        return QList<int>({});
     }
 
     QList<int> indexList;
@@ -1001,9 +1101,13 @@ QList<int> cOM_TPList::indexList(cOM_Common::TPFlag onlyFlag)
 }
 void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
 {
-    if (isUniform() == cOM_Common::TPFlag::SV_BPM_ONLY)
+    CHECK_EMPTY();
+
+    if (isUniform() == cOM_Common::TPFlag::SV_BPM_ONLY ||
+        isUniform() == cOM_Common::TPFlag::INVALID)
     {
         qDebug() << __FUNCTION__ << "only works with uniform lists.";
+        return;
     }
 
     // To elaborate what this function does:
@@ -1069,6 +1173,8 @@ void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
 
 void cOM_TPList::makeUnique()
 {
+    CHECK_EMPTY();
+
     QList<double> offsetList,
                   newOffsetList;
     QList<cOM_TP> newOM_TPList;

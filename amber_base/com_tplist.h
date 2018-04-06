@@ -44,8 +44,8 @@ public:
 
     double getMinOffset  () const;
     double getMaxOffset  () const;
-    double getMinValue   () const;
-    double getMaxValue   () const;
+    double getMinValue   (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
+    double getMaxValue   (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
     double getLength     () const;
     double getLength     (int index);
     int    getSize       (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
@@ -82,7 +82,7 @@ public:
     // MISC
     void append     (cOM_TP newOM_TP) { OM_TPList.append(newOM_TP); }
     void deleteIndex(unsigned  index) { OM_TPList.removeAt(index); }
-    bool isEmpty    ();
+    bool isEmpty    () const;
     void limitValues();
     void adjustToAverage (double averageSV, int adjustIndex); // Adjusts a TP so that the average is met
     void makeUnique ();

@@ -56,6 +56,7 @@ public:
     void makeUnique ();
     void append     (cOM_HO newOM_HO) { OM_HOList.append(newOM_HO); }
     void deleteIndex(unsigned  index) { OM_HOList.removeAt(index); }
+    bool isEmpty    () const;
     void sortOffset (bool isAscending = true);
 
 private:

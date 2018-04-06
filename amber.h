@@ -25,9 +25,6 @@
 //ust be defined first
 #include "statusbox.h"
 
-#include "check.h"
-#include "compile.h"
-#include "convert.h"
 #include "hyperlink.h"
 
 #include "amber_base_inc.h"
@@ -45,15 +42,16 @@ public:
     explicit amber(QWidget *parent = 0);
     ~amber();
 
-    //ET DEFAULT
+    // SET DEFAULT
     void saveDefaultValues();
 
-    //EBUG MESSENGER
+    // DEBUG MESSENGER
     void ERROR_MESSAGE(int ERROR_CODE);
     void PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST);
 
 private slots:
 
+    // STUTTER
     void on_stutter_initSVSlider_valueChanged(int value);
     void on_stutter_initSVSpinBox_valueChanged(double arg1);
     void on_stutter_thresholdSlider_valueChanged(int value);
@@ -61,8 +59,10 @@ private slots:
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
     void on_stutter_generateButton_clicked();
 
+    // COPIER
     void on_copier_generateButton_clicked();
 
+    // TWO POINT FUNCTION
     void on_TPF_generateButton_clicked();
     void on_TPF_initialTPSpinBox_valueChanged(double arg1);
     void on_TPF_initialTPSlider_valueChanged(int value);
@@ -84,21 +84,24 @@ private slots:
     void on_TPF_SVRadio_clicked();
     void on_TPF_BPMRadio_clicked();
 
+    // NORMALIZER
     void on_normalizer_generateButton_clicked();
     void on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item);
 
+    // TOOLBAR
     void on_basicWidgetList_itemClicked(QListWidgetItem *item);
-
     void on_settingsWidgetList_itemClicked(QListWidgetItem *item);
-
     void on_toolBox_currentChanged(int index);
-
     void on_advancedWidgetList_itemClicked(QListWidgetItem *item);
-
     void on_default_savePreferencesButton_clicked();
 
+    // HOME
     void on_home_githubIconLabel_clicked();
+    void on_home_wikiLabel_clicked();
+    void on_home_releasesLabel_clicked();
+    void on_home_contactLabel_clicked();
 
+    // ADJUSTER
     void on_adjuster_generateButton_clicked();
     void on_adjuster_multiplySpinBox_editingFinished();
     void on_adjuster_zeroSpinBox_editingFinished();
@@ -107,19 +110,14 @@ private slots:
     void on_adjuster_autoZeroCheck_stateChanged(int arg1);
     void on_adjuster_adjustSVRadio_clicked();
     void on_adjuster_adjustBPMRadio_clicked();
-
     void on_adjuster_defaultButton_clicked();
 
+    // PACK SPLITTER
     void on_PS_browseButton_clicked();
     void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
     void on_PS_controlSplitButton_clicked();
     void on_PS_controlOpenFolderButton_clicked();
 
-    void on_home_wikiLabel_clicked();
-
-    void on_home_releasesLabel_clicked();
-
-    void on_home_contactLabel_clicked();
 
 private:
     QTextBrowser *tb;

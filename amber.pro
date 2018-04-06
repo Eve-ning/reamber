@@ -26,10 +26,6 @@ SOURCES += \
         main.cpp \
         amber.cpp \
         qcustomplot.cpp \
-        check.cpp \
-        convert.cpp \
-        compile.cpp \
-        defargs.cpp \
         hyperlink.cpp \
         statusbox.cpp \
         amber_base/com_ho.cpp \
@@ -46,10 +42,6 @@ SOURCES += \
 HEADERS += \
         amber.h \
         qcustomplot.h \
-        check.h \
-        convert.h \
-        compile.h \
-        defargs.h \
         hyperlink.h \
         statusbox.h \
         amber_base_inc.h \

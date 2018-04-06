@@ -992,7 +992,6 @@ void amber::on_adjuster_generateButton_clicked()
                    *invertCheck;
     QCustomPlot    *customPlot;
     QRadioButton   *SVRadio,
-                   *BPMRadio,
                    *graphLineRadio;
 
     inputBox          = ui->adjuster_inputBox;
@@ -1023,9 +1022,6 @@ void amber::on_adjuster_generateButton_clicked()
     cOM_Common::TPFlag TPFlag;
 
     TPFlag = isSV ? cOM_Common::TPFlag::SV_ONLY : cOM_Common::TPFlag::BPM_ONLY;
-
-    QVector<double> xData,
-                    yData;
 
     // We trim the OM_TPList according to selection
     OM_TPList = OM_TPList.splitByType(TPFlag);
@@ -1074,10 +1070,11 @@ void amber::on_adjuster_generateButton_clicked()
     }
 
 
-    //Generates Graph
+    // Generates Graph
     customPlot->clearItems();
     QCPItemText *averageLabel = new QCPItemText(customPlot);
 
+    // Declare Data
     customPlot->graph(0)->setData(OM_TPList.getOffsetList(TPFlag).toVector(),
                                   OM_TPList.getValueList(TPFlag).toVector());
     customPlot->graph(0)->setPen(QPen(isSV ? QColor(50,200,50,255) : QColor(200,50,50,255)));

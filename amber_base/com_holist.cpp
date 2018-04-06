@@ -1,4 +1,9 @@
 #include "com_holist.h"
+#define CHECK_EMPTY(returnValue) if (isEmpty()) \
+                                 { \
+                                     qDebug() << __FUNCTION__ << ": OM_HO List is empty"; \
+                                     return returnValue; \
+                                 }
 
 // CONSTRUCTORS
 cOM_HOList::cOM_HOList()
@@ -128,6 +133,8 @@ void cOM_HOList::loadEHOList(QString &EHO, int newKeys)
 // SETTERS
 void cOM_HOList::setOffsetList(QList<double> &newOffsetList)
 {
+    CHECK_EMPTY();
+
     if (OM_HOList.length() != newOffsetList.length())
     {
         qDebug() << __FUNCTION__ << ": Length Mismatch";
@@ -143,6 +150,8 @@ void cOM_HOList::setOffsetList(QList<double> &newOffsetList)
 }
 void cOM_HOList::setXAxisList(QList<double> &newXAxisList)
 {
+    CHECK_EMPTY();
+
     if (OM_HOList.length() != newXAxisList.length())
     {
         qDebug() << __FUNCTION__ << ": Length Mismatch";
@@ -158,6 +167,8 @@ void cOM_HOList::setXAxisList(QList<double> &newXAxisList)
 }
 void cOM_HOList::setColumnList(QList<double> &newColumnList)
 {
+    CHECK_EMPTY();
+
     if (OM_HOList.length() != newColumnList.length())
     {
         qDebug() << __FUNCTION__ << ": Length Mismatch";
@@ -173,6 +184,8 @@ void cOM_HOList::setColumnList(QList<double> &newColumnList)
 }
 void cOM_HOList::setKeys(unsigned short newKeys)
 {
+    CHECK_EMPTY();
+
     for (int temp = 0; temp < OM_HOList.length(); temp ++) {
         OM_HOList[temp].setKeys(newKeys);
     }
@@ -181,6 +194,8 @@ void cOM_HOList::setKeys(unsigned short newKeys)
 // GETTERS
 QList<double> cOM_HOList::getOffsetList() const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     cOM_HO OM_HO;
     QList<double> output;
     foreach (OM_HO, OM_HOList)
@@ -192,6 +207,8 @@ QList<double> cOM_HOList::getOffsetList() const
 }
 QList<double> cOM_HOList::getUnqOffsetList() const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     QList<double> unqOffsetList,
                   offsetList;
 
@@ -210,6 +227,8 @@ QList<double> cOM_HOList::getUnqOffsetList() const
 }
 QList<double> cOM_HOList::getXAxisList() const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     cOM_HO OM_HO;
     QList<double> output;
     foreach (OM_HO, OM_HOList)
@@ -221,6 +240,8 @@ QList<double> cOM_HOList::getXAxisList() const
 }
 QList<double> cOM_HOList::getColumnList() const
 {
+    CHECK_EMPTY(QList<double>({}));
+
     cOM_HO OM_HO;
     QList<double> output;
     foreach (OM_HO, OM_HOList)
@@ -232,6 +253,8 @@ QList<double> cOM_HOList::getColumnList() const
 }
 double cOM_HOList::getMinOffset() const
 {
+    CHECK_EMPTY(0);
+
     double output;
     QList<double> offsetList;
     offsetList = getOffsetList();
@@ -240,6 +263,8 @@ double cOM_HOList::getMinOffset() const
 }
 double cOM_HOList::getMaxOffset() const
 {
+    CHECK_EMPTY(0);
+
     double output;
     QList<double> offsetList;
     offsetList = getOffsetList();
@@ -248,6 +273,8 @@ double cOM_HOList::getMaxOffset() const
 }
 double cOM_HOList::getLength() const
 {
+    CHECK_EMPTY(0);
+
     double output;
     QList<double> offsetList;
     offsetList = getOffsetList();
@@ -258,6 +285,8 @@ double cOM_HOList::getLength() const
 
 double cOM_HOList::getLength(int index)
 {
+    CHECK_EMPTY(0);
+
     sortOffset(true);
 
     if (!(index < (getSize() - 1)))
@@ -275,6 +304,8 @@ double cOM_HOList::getSize() const
 }
 QStringList cOM_HOList::toString() const
 {
+    CHECK_EMPTY(QStringList({}));
+
     cOM_HO temp;
     QStringList output;
 
@@ -307,6 +338,8 @@ cOM_HO cOM_HOList::operator [](int i) const {
 
 void cOM_HOList::makeUnique()
 {
+    CHECK_EMPTY();
+
     QList<double> offsetList,
                   newOffsetList;
     QList<cOM_HO> newOM_HOList;
@@ -323,9 +356,10 @@ void cOM_HOList::makeUnique()
 
     loadHOList(newOM_HOList);
 }
-
 void cOM_HOList::sortOffset(bool isAscending)
 {
+    CHECK_EMPTY();
+
     if (isAscending)
     {
         std::sort(OM_HOList.begin(), OM_HOList.end());
@@ -334,7 +368,10 @@ void cOM_HOList::sortOffset(bool isAscending)
         std::sort(OM_HOList.rbegin(), OM_HOList.rend());
     }
 }
-
+bool cOM_HOList::isEmpty () const
+{
+    return (getSize() == 0);
+}
 
 
 
