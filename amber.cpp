@@ -172,7 +172,6 @@ void amber::on_home_contactLabel_clicked()
     HYPERLINK::CONTACT();
 }
 
-
 // --------------------------------------------------------------------------------------------------------< GENERAL >
 
 // --------------------------------------------------------------------------------------------------------< SETTINGS >
@@ -258,19 +257,11 @@ void amber::on_toolBox_currentChanged(int index)
 // Connect Stutter Widgets
 void amber::on_stutter_initSVSlider_valueChanged(int value)
 {
-    ui->stutter_initSVSpinBox->setValue(((double) value) / 100);
+    ui->stutter_initSVLabel->setText(QString::number(value / 100.0, 'f', 2));
 }
 void amber::on_stutter_thresholdSlider_valueChanged(int value)
 {
-    ui->stutter_thresholdSpinBox->setValue((double) value);
-}
-void amber::on_stutter_initSVSpinBox_valueChanged(double arg1)
-{
-    ui->stutter_initSVSlider->setValue((int) (arg1 * 100));
-}
-void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
-{
-    ui->stutter_thresholdSlider->setValue((int) (arg1));
+    ui->stutter_thresholdLabel->setText(QString::number(value / 100.0, 'f', 2));
 
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
@@ -279,19 +270,7 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
            averageSV, threshold;
 
     averageSV = ui->stutter_averageSVSpinBox->value();
-    threshold = arg1;
-
-    /* initSV CALCULATION
-     * solve for mininitSV by substitution;
-     *
-     * find initSV in terms of secondSV and threshold
-     * averageSV = initSV * threshold + (secondSV - secondSV * threshold)
-     * initSV = [ averageSV - secondSV * ( 100 - threshold ) ] / threshold
-     *
-     * (ave) = (th) * in + (1 - th) * sec
-     * (ave) = (th)(in) + (sec) - (th)(sec)
-     * [(ave) - (sec) + (th)(sec)] / (th) = (in)
-     */
+    threshold = value;
 
     cOM_TPList OM_TPList(QList<cOM_TP>({cOM_TP(), cOM_TP(), cOM_TP()}));
 
@@ -317,11 +296,9 @@ void amber::on_stutter_thresholdSpinBox_valueChanged(double arg1)
 
     // Set Maximum and Minimum
     ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV * 100));
-    ui->stutter_initSVSpinBox->setMaximum(maxInitSV);
-
     ui->stutter_initSVSlider-> setMinimum((int) (minInitSV * 100));
-    ui->stutter_initSVSpinBox->setMinimum(minInitSV);
-
+    ui->stutter_maxSVLabel->setText(QString::number(maxInitSV, 'f', 2));
+    ui->stutter_minSVLabel->setText(QString::number(minInitSV, 'f', 2));
 }
 void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 {
@@ -329,7 +306,7 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
            averageSV, threshold;
 
     averageSV = arg1;
-    threshold = ui->stutter_thresholdSpinBox->value() / 100;
+    threshold = ui->stutter_thresholdSlider->value() / 100;
 
     cOM_TPList OM_TPList(QList<cOM_TP>({cOM_TP(), cOM_TP(), cOM_TP()}));
 
@@ -344,6 +321,8 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
     // Where secondSV = 0.1
     OM_TPList[1].setValue(0.1);
 
+    ui->stutter_initSVSlider->maximum();
+
     OM_TPList.adjustToAverage(averageSV, 0);
     maxInitSV = OM_TPList[0].getValue();
 
@@ -355,10 +334,7 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 
     // Set Maximum and Minimum
     ui->stutter_initSVSlider-> setMaximum(maxInitSV * 10);
-    ui->stutter_initSVSpinBox->setMaximum(maxInitSV);
-
     ui->stutter_initSVSlider-> setMinimum(minInitSV * 10);
-    ui->stutter_initSVSpinBox->setMinimum(minInitSV);
 }
 
 // Stutter Generate Button
@@ -370,8 +346,8 @@ void amber::on_stutter_generateButton_clicked()
 
     QPlainTextEdit *inputBox;
     inputBox  = ui->stutter_inputBox;
-    threshold = ui->stutter_thresholdSpinBox->value() / 100;
-    initSV    = ui->stutter_initSVSpinBox->value();
+    threshold = ui->stutter_thresholdSlider->value() / 100;
+    initSV    = ui->stutter_initSVSlider->value() / 100;
     averageSV = ui->stutter_averageSVSpinBox->value();
     secondSV  = (averageSV - (initSV * threshold)) / (1 - threshold);
 
@@ -386,6 +362,7 @@ void amber::on_stutter_generateButton_clicked()
     } else if (OM_HOList.getLoadFail())
     {
         STATMSG("Load Unsuccessful.");
+        return;
     }
 
     OM_HOList.makeUnique();
@@ -511,11 +488,7 @@ void amber::on_copier_generateButton_clicked()
 
 void amber::on_TPF_initialTPSlider_valueChanged(int value)
 {
-    ui->TPF_initialTPSpinBox->setValue(((double) value) / 100);
-}
-void amber::on_TPF_initialTPSpinBox_valueChanged(double arg1)
-{
-    ui->TPF_initialTPSlider->setValue((int) (arg1 * 100));
+    ui->TPF_initialTPLabel->setText(QString::number(value, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
@@ -523,35 +496,25 @@ void amber::on_TPF_initialTPSpinBox_valueChanged(double arg1)
 
 void amber::on_TPF_endTPSlider_valueChanged(int value)
 {
-    ui->TPF_endTPSpinBox->setValue(((double) value) / 100);
-}
-void amber::on_TPF_endTPSpinBox_valueChanged(double arg1)
-{
-    ui->TPF_endTPSlider->setValue((int) (arg1 * 100));
+    ui->TPF_endTPLabel->setText(QString::number(value, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
+
 
 void amber::on_TPF_offsetSlider_valueChanged(int value)
 {
-    ui->TPF_offsetSpinBox->setValue(value);
-}
-void amber::on_TPF_offsetSpinBox_valueChanged(int arg1)
-{
-    ui->TPF_offsetSlider->setValue(arg1);
+    ui->TPF_offsetLabel->setText(QString::number(value, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 
+
 void amber::on_TPF_frequencySlider_valueChanged(int value)
 {
-    ui->TPF_frequencySpinBox->setValue(value);
-}
-void amber::on_TPF_frequencySpinBox_valueChanged(int arg1)
-{
-    ui->TPF_frequencySlider->setValue(arg1);
+    ui->TPF_frequencyLabel->setText(QString::number(value, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
@@ -559,46 +522,12 @@ void amber::on_TPF_frequencySpinBox_valueChanged(int arg1)
 
 void amber::on_TPF_amplitudeSlider_valueChanged(int value)
 {
-    ui->TPF_amplitudeSpinBox->setValue(value);
-}
-void amber::on_TPF_amplitudeSpinBox_valueChanged(int arg1)
-{
-    ui->TPF_amplitudeSlider->setValue(arg1);
+    ui->TPF_amplitudeLabel->setText(QString::number(value, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 
-void amber::on_TPF_initialTPSlider_sliderReleased()
-{
-    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
-        amber::on_TPF_generateButton_clicked();
-    }
-}
-void amber::on_TPF_endTPSlider_sliderReleased()
-{
-    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
-        amber::on_TPF_generateButton_clicked();
-    }
-}
-void amber::on_TPF_amplitudeSlider_sliderReleased()
-{
-    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
-        amber::on_TPF_generateButton_clicked();
-    };
-}
-void amber::on_TPF_offsetSlider_sliderReleased()
-{
-    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
-        amber::on_TPF_generateButton_clicked();
-    }
-}
-void amber::on_TPF_frequencySlider_sliderReleased()
-{
-    if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
-        amber::on_TPF_generateButton_clicked();
-    }
-}
 void amber::on_TPF_intermediateSpinBox_valueChanged(int arg1)
 {
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
@@ -622,43 +551,26 @@ void amber::on_TPF_defaultButton_clicked()
     {
         ui->TPF_initialTPSlider    ->setMaximum(1000);
         ui->TPF_initialTPSlider    ->setMinimum(10);
-        ui->TPF_initialTPSpinBox   ->setMaximum(10.0);
-        ui->TPF_initialTPSpinBox   ->setMinimum(0.1);
+        ui->TPF_initialTPSlider    ->setValue(100);
         ui->TPF_endTPSlider        ->setMaximum(1000);
         ui->TPF_endTPSlider        ->setMinimum(10);
-        ui->TPF_endTPSpinBox       ->setMaximum(10.0);
-        ui->TPF_endTPSpinBox       ->setMinimum(0.1);
+        ui->TPF_endTPSlider        ->setValue(100);
 
         ui->TPF_initialTPGroup     ->setTitle("Initial SV:");
         ui->TPF_endTPGroup         ->setTitle("End SV:");
-
-        ui->TPF_initialTPSpinBox   ->setValue(1.0);
-        ui->TPF_endTPSpinBox       ->setValue(1.0);
-        ui->TPF_amplitudeSpinBox   ->setValue(0);
-        ui->TPF_frequencySpinBox   ->setValue(100);
-        ui->TPF_offsetSpinBox      ->setValue(0);
-        ui->TPF_intermediateSpinBox->setValue(100);
     }
     else if (ui->TPF_BPMRadio->isChecked())
     {
         ui->TPF_initialTPSlider    ->setMaximum(500000);
         ui->TPF_initialTPSlider    ->setMinimum(100);
-        ui->TPF_initialTPSpinBox   ->setMaximum(5000);
-        ui->TPF_initialTPSpinBox   ->setMinimum(1);
+        ui->TPF_initialTPSlider    ->setValue(100);
         ui->TPF_endTPSlider        ->setMaximum(500000);
         ui->TPF_endTPSlider        ->setMinimum(100);
-        ui->TPF_endTPSpinBox       ->setMaximum(500);
-        ui->TPF_endTPSpinBox       ->setMinimum(1);
+        ui->TPF_endTPSlider        ->setValue(100);
 
         ui->TPF_initialTPGroup     ->setTitle("Initial BPM:");
         ui->TPF_endTPGroup         ->setTitle("End BPM:");
 
-        ui->TPF_initialTPSpinBox   ->setValue(120);
-        ui->TPF_endTPSpinBox       ->setValue(120);
-        ui->TPF_amplitudeSpinBox   ->setValue(0);
-        ui->TPF_frequencySpinBox   ->setValue(100);
-        ui->TPF_offsetSpinBox      ->setValue(0);
-        ui->TPF_intermediateSpinBox->setValue(100);
     }
     else
     {
@@ -730,11 +642,11 @@ void amber::on_TPF_generateButton_clicked()
     }
 
     //Set other parameters
-    initialTP          =          ui->TPF_initialTPSpinBox->value();
-    endTP              =          ui->TPF_endTPSpinBox->value();
-    offset             = (double) ui->TPF_offsetSpinBox->value() / 100;
-    amplitude          = (double) ui->TPF_amplitudeSpinBox->value() / 100;
-    frequency          = (double) ui->TPF_frequencySpinBox->value() / 100;
+    initialTP          = (double)  ui->TPF_initialTPSlider   ->value() / 100;
+    endTP              = (double)  ui->TPF_endTPSlider       ->value() / 100;
+    offset             = (double) ui->TPF_offsetSlider       ->value() / 100;
+    amplitude          = (double) ui->TPF_amplitudeSlider    ->value() / 100;
+    frequency          = (double) ui->TPF_frequencySlider    ->value() / 100;
     intermediatePoints =          ui->TPF_intermediateSpinBox->value();
 
     //Generate vectors for graph
@@ -913,7 +825,6 @@ void amber::on_normalizer_generateButton_clicked()
 
     return;
 }
-
 void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
 {
     ui->normalizer_selectedBPMLine->setText(item->text()
@@ -992,7 +903,6 @@ void amber::on_adjuster_generateButton_clicked()
                    *invertCheck;
     QCustomPlot    *customPlot;
     QRadioButton   *SVRadio,
-                   *BPMRadio,
                    *graphLineRadio;
 
     inputBox          = ui->adjuster_inputBox;
@@ -1005,7 +915,6 @@ void amber::on_adjuster_generateButton_clicked()
     invertCheck       = ui->adjuster_invertCheck;
     customPlot        = ui->adjuster_customPlot;
     SVRadio           = ui->adjuster_adjustSVRadio;
-    BPMRadio          = ui->adjuster_adjustBPMRadio;
     graphLineRadio    = ui->adjuster_graphLineRadio;
 
     cOM_TPList OM_TPList(inputBox->toPlainText());
@@ -1017,15 +926,11 @@ void amber::on_adjuster_generateButton_clicked()
            averageTP = 0;
 
     bool isSV           = SVRadio->isChecked(),
-         isBPM          = !isSV,
          isGraphLine    = graphLineRadio->isChecked();
 
     cOM_Common::TPFlag TPFlag;
 
     TPFlag = isSV ? cOM_Common::TPFlag::SV_ONLY : cOM_Common::TPFlag::BPM_ONLY;
-
-    QVector<double> xData,
-                    yData;
 
     // We trim the OM_TPList according to selection
     OM_TPList = OM_TPList.splitByType(TPFlag);
@@ -1058,7 +963,7 @@ void amber::on_adjuster_generateButton_clicked()
 
     //If the values are too close together (threshold : 10), separate to at least 10
     // Update: I'm not sure why i do this
-    if (qFabs(maxTP - minTP) < 10 && isBPM)
+    if (qFabs(maxTP - minTP) < 10 && !isSV)
     {
         minTP -= 5;
         maxTP += 5;
@@ -1074,10 +979,11 @@ void amber::on_adjuster_generateButton_clicked()
     }
 
 
-    //Generates Graph
+    // Generates Graph
     customPlot->clearItems();
     QCPItemText *averageLabel = new QCPItemText(customPlot);
 
+    // Declare Data
     customPlot->graph(0)->setData(OM_TPList.getOffsetList(TPFlag).toVector(),
                                   OM_TPList.getValueList(TPFlag).toVector());
     customPlot->graph(0)->setPen(QPen(isSV ? QColor(50,200,50,255) : QColor(200,50,50,255)));
@@ -1110,7 +1016,6 @@ void amber::on_adjuster_generateButton_clicked()
 
     return;
 }
-
 void amber::on_adjuster_adjustSVRadio_clicked()
 {
     ui->adjuster_addGroup   ->setTitle  ("Add (SV)");
@@ -1120,7 +1025,6 @@ void amber::on_adjuster_adjustSVRadio_clicked()
     ui->adjuster_zeroSpinBox->setMinimum(0.0);
     ui->adjuster_zeroSpinBox->setMaximum(10.0);
 }
-
 void amber::on_adjuster_adjustBPMRadio_clicked()
 {
     ui->adjuster_addGroup   ->setTitle  ("Add (BPM)");
@@ -1130,7 +1034,6 @@ void amber::on_adjuster_adjustBPMRadio_clicked()
     ui->adjuster_zeroSpinBox->setMinimum(0.0);
     ui->adjuster_zeroSpinBox->setMaximum(1000000.0);
 }
-
 void amber::on_adjuster_defaultButton_clicked()
 {
     ui->adjuster_adjustSVRadio    ->setChecked(true);
@@ -1245,6 +1148,7 @@ void amber::on_PS_controlSplitButton_clicked()
      * [difficultyBGFileName]
      * bg.jpg
      */
+
 
     songsFolderPath = browseLine->text();
     mapName         = mapListWidget->selectedItems()[0]->text();
@@ -1453,6 +1357,7 @@ void amber::on_PS_controlOpenFolderButton_clicked()
         return;
     }
 }
+
 
 
 

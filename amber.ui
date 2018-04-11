@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1656</width>
-    <height>748</height>
+    <height>776</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="homeSPage">
        <property name="enabled">
@@ -194,79 +194,21 @@
             <string>Stutter</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_31">
-            <item row="0" column="0" rowspan="4">
-             <widget class="QGroupBox" name="stutter_inputGroup">
-              <property name="title">
-               <string>Input</string>
+            <item row="6" column="1">
+             <widget class="QPushButton" name="stutter_generateButton">
+              <property name="text">
+               <string>Generate</string>
               </property>
-              <layout class="QGridLayout" name="gridLayout_2">
-               <item row="0" column="0">
-                <widget class="QPlainTextEdit" name="stutter_inputBox"/>
-               </item>
-              </layout>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QGroupBox" name="stutter_initSVGroup">
-              <property name="title">
-               <string>Initial SV</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_27">
-               <item row="0" column="0">
-                <widget class="QSlider" name="stutter_initSVSlider">
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>200</number>
-                 </property>
-                 <property name="pageStep">
-                  <number>1</number>
-                 </property>
-                 <property name="value">
-                  <number>100</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QDoubleSpinBox" name="stutter_initSVSpinBox">
-                 <property name="decimals">
-                  <number>2</number>
-                 </property>
-                 <property name="minimum">
-                  <double>0.100000000000000</double>
-                 </property>
-                 <property name="maximum">
-                  <double>10.000000000000000</double>
-                 </property>
-                 <property name="singleStep">
-                  <double>0.100000000000000</double>
-                 </property>
-                 <property name="value">
-                  <double>1.000000000000000</double>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="2" rowspan="4">
-             <widget class="QGroupBox" name="stutter_outputGroup">
-              <property name="title">
-               <string>Output</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_30">
-               <item row="0" column="0">
-                <widget class="QTextBrowser" name="stutter_outputBox"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="1">
+            <item row="3" column="1">
              <widget class="QGroupBox" name="stutter_thresholdGroup">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="title">
                <string>Threshold</string>
               </property>
@@ -284,27 +226,27 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
-                <widget class="QDoubleSpinBox" name="stutter_thresholdSpinBox">
-                 <property name="decimals">
-                  <number>0</number>
+               <item row="1" column="0">
+                <widget class="QLabel" name="stutter_thresholdLabel">
+                 <property name="text">
+                  <string>50</string>
                  </property>
-                 <property name="maximum">
-                  <double>100.000000000000000</double>
-                 </property>
-                 <property name="singleStep">
-                  <double>1.000000000000000</double>
-                 </property>
-                 <property name="value">
-                  <double>50.000000000000000</double>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
               </layout>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="4" column="1">
              <widget class="QGroupBox" name="stutter_averageSVGroup">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="title">
                <string>Average SV</string>
               </property>
@@ -328,11 +270,145 @@
               </layout>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QPushButton" name="stutter_generateButton">
-              <property name="text">
-               <string>Generate</string>
+            <item row="7" column="1">
+             <spacer name="verticalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
               </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="0" rowspan="8">
+             <widget class="QGroupBox" name="stutter_inputGroup">
+              <property name="title">
+               <string>Input</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QPlainTextEdit" name="stutter_inputBox"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="2" rowspan="8">
+             <widget class="QGroupBox" name="stutter_outputGroup">
+              <property name="title">
+               <string>Output</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_30">
+               <item row="0" column="0">
+                <widget class="QTextBrowser" name="stutter_outputBox"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <spacer name="verticalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="2" column="1">
+             <widget class="QGroupBox" name="stutter_initSVGroup">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Initial SV</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_27">
+               <item row="1" column="0">
+                <widget class="QLabel" name="stutter_minSVLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="text">
+                  <string>0.1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="stutter_maxSVLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>1.9</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" colspan="2">
+                <widget class="QSlider" name="stutter_initSVSlider">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>200</number>
+                 </property>
+                 <property name="pageStep">
+                  <number>1</number>
+                 </property>
+                 <property name="value">
+                  <number>100</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0" colspan="2">
+                <widget class="QLabel" name="stutter_initSVLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>1.00</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -450,18 +526,9 @@
                     </widget>
                    </item>
                    <item row="1" column="0">
-                    <widget class="QDoubleSpinBox" name="TPF_initialTPSpinBox">
-                     <property name="minimum">
-                      <double>0.100000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>10.000000000000000</double>
-                     </property>
-                     <property name="singleStep">
-                      <double>0.010000000000000</double>
-                     </property>
-                     <property name="value">
-                      <double>1.000000000000000</double>
+                    <widget class="QLabel" name="TPF_initialTPLabel">
+                     <property name="text">
+                      <string>1.00</string>
                      </property>
                     </widget>
                    </item>
@@ -491,18 +558,9 @@
                     </widget>
                    </item>
                    <item row="1" column="0">
-                    <widget class="QDoubleSpinBox" name="TPF_endTPSpinBox">
-                     <property name="minimum">
-                      <double>0.100000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>10.000000000000000</double>
-                     </property>
-                     <property name="singleStep">
-                      <double>0.010000000000000</double>
-                     </property>
-                     <property name="value">
-                      <double>1.000000000000000</double>
+                    <widget class="QLabel" name="TPF_endTPLabel">
+                     <property name="text">
+                      <string>1.00</string>
                      </property>
                     </widget>
                    </item>
@@ -532,15 +590,9 @@
                     </widget>
                    </item>
                    <item row="1" column="0">
-                    <widget class="QSpinBox" name="TPF_amplitudeSpinBox">
-                     <property name="suffix">
-                      <string/>
-                     </property>
-                     <property name="minimum">
-                      <number>-1000</number>
-                     </property>
-                     <property name="maximum">
-                      <number>1000</number>
+                    <widget class="QLabel" name="TPF_amplitudeLabel">
+                     <property name="text">
+                      <string>0</string>
                      </property>
                     </widget>
                    </item>
@@ -570,15 +622,9 @@
                     </widget>
                    </item>
                    <item row="1" column="0">
-                    <widget class="QSpinBox" name="TPF_offsetSpinBox">
-                     <property name="suffix">
-                      <string>%</string>
-                     </property>
-                     <property name="minimum">
-                      <number>-200</number>
-                     </property>
-                     <property name="maximum">
-                      <number>200</number>
+                    <widget class="QLabel" name="TPF_offsetLabel">
+                     <property name="text">
+                      <string>0%</string>
                      </property>
                     </widget>
                    </item>
@@ -591,22 +637,6 @@
                    <string>Frequency</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_23">
-                   <item row="1" column="0">
-                    <widget class="QSpinBox" name="TPF_frequencySpinBox">
-                     <property name="suffix">
-                      <string>%</string>
-                     </property>
-                     <property name="minimum">
-                      <number>0</number>
-                     </property>
-                     <property name="maximum">
-                      <number>10000</number>
-                     </property>
-                     <property name="value">
-                      <number>100</number>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="0" column="0">
                     <widget class="QSlider" name="TPF_frequencySlider">
                      <property name="minimum">
@@ -626,6 +656,13 @@
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="TPF_frequencyLabel">
+                     <property name="text">
+                      <string>100%</string>
                      </property>
                     </widget>
                    </item>
@@ -2386,15 +2423,15 @@
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="homePage">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>172</width>
-            <height>536</height>
+            <width>162</width>
+            <height>550</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -2427,8 +2464,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>172</width>
-            <height>536</height>
+            <width>162</width>
+            <height>550</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -2480,8 +2517,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>172</width>
-            <height>536</height>
+            <width>162</width>
+            <height>550</height>
            </rect>
           </property>
           <attribute name="label">
@@ -2507,8 +2544,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>172</width>
-            <height>536</height>
+            <width>162</width>
+            <height>550</height>
            </rect>
           </property>
           <attribute name="label">
@@ -2559,7 +2596,7 @@
      <x>0</x>
      <y>0</y>
      <width>1656</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

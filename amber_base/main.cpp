@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
 void calibrate(){
 
-    bool mapDebugBool     = false,
+    bool mapDebugBool     = true,
          TPDebugBool      = false,
          sortDebugBool    = false,
          unqDebugBool     = false,
@@ -233,16 +233,5 @@ void calibrate(){
                  << "IVL: " << (cOM_Common::isOM_Type(INV) == cOM_Common::OMFlag::INVALID)       << "\n";
     }
 
-    cOM_TPList TPList_A = QStringList({
-                                                   "10000,-200,4,2,1,80,0,0" , // [1]
-                                                   "30000,-100,4,2,1,80,0,0" , // [3]
-                                                   "40000,-50,4,2,1,80,0,0"  , // [4]
-                                                   "70000,-1000,4,2,1,80,0,0", // [7]
-                                                   "80000,-200,4,2,1,80,0,0"   // [8]
-                                             });
-
-    qDebug() << TPList_A.getOffsetList();
-    TPList_A.addOffset(10, false);
-    qDebug() << TPList_A.getOffsetList();
 
 }

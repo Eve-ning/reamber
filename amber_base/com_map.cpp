@@ -4,6 +4,7 @@
 cOM_Map::cOM_Map()
 {
     // Load Default Map
+    osuFileName      = ""                  ;
     audioFileName    = "audio.mp3"         ;
     specialStyle     = false               ;
     widescreen       = false               ;
@@ -56,6 +57,10 @@ void cOM_Map::loadMap(QFileInfo newMapPath)
                  << newMapFile.fileName();
     }
 
+    newMapFile.close();
+
+    osuFileName = newMapPath.filePath();
+
     loadMap(mapStringList);
 }
 void cOM_Map::loadMap(QStringList newMapStringList)
@@ -101,8 +106,33 @@ void cOM_Map::loadMap(QStringList newMapStringList)
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt(); }
     if (indexMapStringList[3]  != -1) { countdown
                 = bool (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()); }
-    if (indexMapStringList[4]  != -1) { sampleSet
-                = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt(); }
+    if (indexMapStringList[4]  != -1) { // sampleSet
+
+        QString temp;
+
+        temp = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt();
+
+        if (temp == "None")
+        {
+            sampleSet = cOM_Map::cSampleSet::AUTO;
+        }
+        else if (temp == "Soft")
+        {
+            sampleSet = cOM_Map::cSampleSet::SOFT;
+        }
+        else if (temp == "Normal")
+        {
+            sampleSet = cOM_Map::cSampleSet::NORMAL;
+        }
+        else if (temp == "Drum")
+        {
+            sampleSet = cOM_Map::cSampleSet::DRUM;
+        }
+        else
+        {
+            sampleSet = cOM_Map::cSampleSet::AUTO;
+        }
+    }
     if (indexMapStringList[5]  != -1) { stackLeniency
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toDouble(); }
     if (indexMapStringList[6]  != -1) { gameMode
@@ -159,7 +189,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
                      newMapStringList[indexMapStringList[20]].length() -newMapStringList[indexMapStringList[20]].indexOf(":") - 1
                   ).simplified();
     }
-    if (indexMapStringList[21] != -1) { //tags
+    if (indexMapStringList[21] != -1) { // tags
         QString trimTag;
 
         trimTag =newMapStringList[indexMapStringList[21]].right
@@ -187,7 +217,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
                 = newMapStringList[indexMapStringList[28]].split(":")[1].simplified().toDouble(); }
     if (indexMapStringList[29] != -1) { sliderTick
                 = newMapStringList[indexMapStringList[29]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[30] != -1) { //bgFileName
+    if (indexMapStringList[30] != -1) { // bgFileName
         QString lineBGFileName,
                 trimBGFileName;
         int firstQuoteIndex,
@@ -202,7 +232,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
 
         bgFileName = trimBGFileName;
                  }
-    if (indexMapStringList[31] != -1) { //videoFileName
+    if (indexMapStringList[31] != -1) { // videoFileName
         QString lineVideoFileName;
         int firstQuoteIndex,
             secondQuoteIndex;
@@ -214,7 +244,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
 
         videoFileName = lineVideoFileName.mid(firstQuoteIndex + 1, secondQuoteIndex - firstQuoteIndex - 1);
                  }
-    if (indexMapStringList[32] != -1) { //BreakP
+    if (indexMapStringList[32] != -1) { // BreakP
 
         int startBreakPIndex,
             endBreakPIndex;
@@ -238,7 +268,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
             }
         }
                  }
-    if (indexMapStringList[33] != -1) { //OM_TPList
+    if (indexMapStringList[33] != -1) { // OM_TPList
         int startOM_TPIndex,
             endOM_TPIndex;
 
@@ -256,7 +286,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
         }
 
     }
-    if (indexMapStringList[34] != -1) { //OM_HOList
+    if (indexMapStringList[34] != -1) { // OM_HOList
         int startOM_HOIndex,
             endOM_HOIndex;
 
@@ -282,13 +312,33 @@ void cOM_Map::loadMap(QStringList newMapStringList)
 // GETTERS
 void cOM_Map::getInfo() const
 {
+    QString sampleSetStr;
+
+    // CONVERT SAMPLESET TO STR
+    switch (sampleSet) {
+    case cOM_Map::cSampleSet::AUTO:
+        sampleSetStr = "AUTO";
+        break;
+    case cOM_Map::cSampleSet::SOFT:
+        sampleSetStr = "SOFT";
+        break;
+    case cOM_Map::cSampleSet::NORMAL:
+        sampleSetStr = "NORMAL";
+        break;
+    case cOM_Map::cSampleSet::DRUM:
+        sampleSetStr = "DRUM";
+        break;
+    default:
+        break;
+    }
+
     qDebug() << "\r\n"
              << "[---- Map Info ----]" << "\r\n"
              << "AUDIOFILENAME    : " << audioFileName        << "\r\n"
              << "AUDIOLEADIN      : " << audioLeadIn          << "\r\n"
              << "PREVIEWTIME      : " << previewTime          << "\r\n"
              << "COUNTDOWN        : " << countdown            << "\r\n"
-             << "SAMPLESET        : " << sampleSet            << "\r\n"
+             << "SAMPLESET        : " << sampleSetStr         << "\r\n"
              << "STACKLENIENCY    : " << stackLeniency        << "\r\n"
              << "GAMEMODE         : " << gameMode             << "\r\n"
              << "LETTERBOX        : " << letterbox            << "\r\n"
@@ -319,6 +369,40 @@ void cOM_Map::getInfo() const
              << "BreakPList <SIZE>: " << breakPList.getSize() << "\r\n"
              << "OM_TPLIST  <SIZE>: " << OM_TPList.getSize()  << "\r\n"
              << "OM_HOLIST  <SIZE>: " << OM_HOList.getSize()  << "\r\n";
+}
+
+void cOM_Map::copyAudioFileTo(QFileInfo copyLocation)
+{
+    QFile oldLocation(getAudioFileName());
+
+    if (oldLocation.copy(copyLocation.filePath()))
+    {
+        qDebug() << __FUNCTION__ << ": Copy Failed.";
+    }
+}
+void cOM_Map::copyOsuFileTo(QFileInfo copyLocation)
+{
+    QFile oldLocation(getOsuFileName());
+
+    if (oldLocation.copy(copyLocation.filePath()))
+    {
+        qDebug() << __FUNCTION__ << ": Copy Failed.";
+    }
+}
+void cOM_Map::copyBGFileTo(QFileInfo copyLocation)
+{
+    QFile oldLocation(getBGFileName());
+
+    if (oldLocation.copy(copyLocation.filePath()))
+    {
+        qDebug() << __FUNCTION__ << ": Copy Failed.";
+    }
+}
+void cOM_Map::copyAllTo(QFileInfo copyLocation)
+{
+    copyAudioFileTo(copyLocation);
+    copyOsuFileTo(copyLocation);
+    copyBGFileTo(copyLocation);
 }
 
 // OPERS

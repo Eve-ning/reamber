@@ -28,16 +28,16 @@ SOURCES += \
         qcustomplot.cpp \
         hyperlink.cpp \
         statusbox.cpp \
-        amber_base/com_ho.cpp \
-        amber_base/com_tp.cpp \
-        amber_base/com_holist.cpp \
-        amber_base/com_tplist.cpp \
-        amber_base/com_mapset.cpp \
-        amber_base/com_map.cpp \
-        amber_base/com_breakp.cpp \
-        amber_base/com_breakplist.cpp \
-        amber_base/com_math.cpp \
-        amber_base/com_common.cpp
+#        amber_base/com_ho.cpp \
+#        amber_base/com_tp.cpp \
+#        amber_base/com_holist.cpp \
+#        amber_base/com_tplist.cpp \
+#        amber_base/com_mapset.cpp \
+#        amber_base/com_map.cpp \
+#        amber_base/com_breakp.cpp \
+#        amber_base/com_breakplist.cpp \
+#        amber_base/com_math.cpp \
+#        amber_base/com_common.cpp
 
 HEADERS += \
         amber.h \
@@ -45,16 +45,16 @@ HEADERS += \
         hyperlink.h \
         statusbox.h \
         amber_base_inc.h \
-        amber_base/com_ho.h \
-        amber_base/com_tp.h \
-        amber_base/com_holist.h \
-        amber_base/com_tplist.h \
-        amber_base/com_mapset.h \
-        amber_base/com_map.h \
-        amber_base/com_breakp.h \
-        amber_base/com_breakplist.h \
-        amber_base/com_math.h \
-        amber_base/com_common.h
+#        amber_base/com_ho.h \
+#        amber_base/com_tp.h \
+#        amber_base/com_holist.h \
+#        amber_base/com_tplist.h \
+#        amber_base/com_mapset.h \
+#        amber_base/com_map.h \
+#        amber_base/com_breakp.h \
+#        amber_base/com_breakplist.h \
+#        amber_base/com_math.h \
+#        amber_base/com_common.h
 
 LIBS += \
 

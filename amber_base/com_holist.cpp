@@ -27,7 +27,7 @@ cOM_HOList::cOM_HOList(QLineEdit *line, int newKeys) : cOM_HOList()
 {
     loadHOList(line, newKeys);
 }
-cOM_HOList::cOM_HOList(QPlainTextEdit *pte, int newKeys)
+cOM_HOList::cOM_HOList(QPlainTextEdit *pte, int newKeys) : cOM_HOList()
 {
     loadHOList(pte, newKeys);
 }

@@ -52,10 +52,7 @@ public:
 private slots:
 
     // STUTTER
-    void on_stutter_initSVSlider_valueChanged(int value);
-    void on_stutter_initSVSpinBox_valueChanged(double arg1);
     void on_stutter_thresholdSlider_valueChanged(int value);
-    void on_stutter_thresholdSpinBox_valueChanged(double arg1);
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
     void on_stutter_generateButton_clicked();
 
@@ -64,22 +61,12 @@ private slots:
 
     // TWO POINT FUNCTION
     void on_TPF_generateButton_clicked();
-    void on_TPF_initialTPSpinBox_valueChanged(double arg1);
     void on_TPF_initialTPSlider_valueChanged(int value);
-    void on_TPF_endTPSpinBox_valueChanged(double arg1);
     void on_TPF_endTPSlider_valueChanged(int value);
     void on_TPF_offsetSlider_valueChanged(int value);
-    void on_TPF_offsetSpinBox_valueChanged(int arg1);
-    void on_TPF_frequencySpinBox_valueChanged(int arg1);
     void on_TPF_frequencySlider_valueChanged(int value);
     void on_TPF_amplitudeSlider_valueChanged(int value);
-    void on_TPF_amplitudeSpinBox_valueChanged(int arg1);
     void on_TPF_defaultButton_clicked();
-    void on_TPF_initialTPSlider_sliderReleased();
-    void on_TPF_endTPSlider_sliderReleased();
-    void on_TPF_amplitudeSlider_sliderReleased();
-    void on_TPF_offsetSlider_sliderReleased();
-    void on_TPF_frequencySlider_sliderReleased();
     void on_TPF_intermediateSpinBox_valueChanged(int arg1);
     void on_TPF_SVRadio_clicked();
     void on_TPF_BPMRadio_clicked();
@@ -118,6 +105,8 @@ private slots:
     void on_PS_controlSplitButton_clicked();
     void on_PS_controlOpenFolderButton_clicked();
 
+
+    void on_stutter_initSVSlider_valueChanged(int value);
 
 private:
     QTextBrowser *tb;

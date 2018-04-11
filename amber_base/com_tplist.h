@@ -83,9 +83,16 @@ public:
     void append     (cOM_TP newOM_TP) { OM_TPList.append(newOM_TP); }
     void deleteIndex(unsigned  index) { OM_TPList.removeAt(index); }
     bool isEmpty    () const;
+
+    // LIMITS VALUES DEPENDING ON THEIR ISBPM VALUE
     void limitValues();
-    void adjustToAverage (double averageSV, int adjustIndex); // Adjusts a TP so that the average is met
+
+    // ADJUSTS A TP SO THAT THE AVERAGE IS MET
+    void adjustToAverage (double averageSV, int adjustIndex);
+
+    // REMOVES TP THAT HAVE SIMILAR OFFSET
     void makeUnique ();
+
 
     cOM_Common::TPFlag isUniform  ();
 
