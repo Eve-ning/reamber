@@ -55,6 +55,7 @@ private slots:
     void on_stutter_thresholdSlider_valueChanged(int value);
     void on_stutter_averageSVSpinBox_valueChanged(double arg1);
     void on_stutter_generateButton_clicked();
+    void on_stutter_initSVSlider_valueChanged(int value);
 
     // COPIER
     void on_copier_generateButton_clicked();
@@ -106,11 +107,21 @@ private slots:
     void on_PS_controlOpenFolderButton_clicked();
 
 
-    void on_stutter_initSVSlider_valueChanged(int value);
+    // ADVANCED ADJUSTER
+    void on_AA_generate_clicked();
+    void on_AA_addEffect_clicked();
 
 private:
     QTextBrowser *tb;
     Ui::amber *ui;
+
+    enum class AA_comboType {
+
+
+
+    };
+
+
 };
 
 

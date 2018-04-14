@@ -135,8 +135,25 @@ void cOM_Map::loadMap(QStringList newMapStringList)
     }
     if (indexMapStringList[5]  != -1) { stackLeniency
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[6]  != -1) { gameMode
-                = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt(); }
+    if (indexMapStringList[6]  != -1) { // gameMode
+        switch (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()) {
+        case 0:
+            gameMode = cGameMode::STANDARD;
+            break;
+        case 1:
+            gameMode = cGameMode::TAIKO;
+            break;
+        case 2:
+            gameMode = cGameMode::CTB;
+            break;
+        case 3:
+            gameMode = cGameMode::MANIA;
+            break;
+        default:
+            gameMode = cGameMode::STANDARD;
+            break;
+        }
+       }
     if (indexMapStringList[7]  != -1) { letterbox
                 = bool (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()); }
     if (indexMapStringList[8]  != -1) { specialStyle
@@ -312,7 +329,8 @@ void cOM_Map::loadMap(QStringList newMapStringList)
 // GETTERS
 void cOM_Map::getInfo() const
 {
-    QString sampleSetStr;
+    QString sampleSetStr,
+            gameModeStr;
 
     // CONVERT SAMPLESET TO STR
     switch (sampleSet) {
@@ -332,6 +350,24 @@ void cOM_Map::getInfo() const
         break;
     }
 
+    // CONVERT SAMPLESET TO STR
+    switch (gameMode) {
+    case cOM_Map::cGameMode::STANDARD:
+        gameModeStr = "STANDARD";
+        break;
+    case cOM_Map::cGameMode::TAIKO:
+        gameModeStr = "TAIKO";
+        break;
+    case cOM_Map::cGameMode::CTB:
+        gameModeStr = "CTB";
+        break;
+    case cOM_Map::cGameMode::MANIA:
+        gameModeStr = "MANIA";
+        break;
+    default:
+        break;
+    }
+
     qDebug() << "\r\n"
              << "[---- Map Info ----]" << "\r\n"
              << "AUDIOFILENAME    : " << audioFileName        << "\r\n"
@@ -340,7 +376,7 @@ void cOM_Map::getInfo() const
              << "COUNTDOWN        : " << countdown            << "\r\n"
              << "SAMPLESET        : " << sampleSetStr         << "\r\n"
              << "STACKLENIENCY    : " << stackLeniency        << "\r\n"
-             << "GAMEMODE         : " << gameMode             << "\r\n"
+             << "GAMEMODE         : " << gameModeStr          << "\r\n"
              << "LETTERBOX        : " << letterbox            << "\r\n"
              << "SPECIALSTYLE     : " << specialStyle         << "\r\n"
              << "WIDESCREEN       : " << widescreen           << "\r\n"

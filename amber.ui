@@ -18,7 +18,7 @@
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="homeSPage">
        <property name="enabled">
@@ -487,7 +487,53 @@
               </layout>
              </widget>
             </item>
-            <item row="0" column="1" rowspan="2">
+            <item row="1" column="0">
+             <widget class="QGroupBox" name="TPF_settingsGroup">
+              <property name="title">
+               <string>Settings</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_33">
+               <item row="1" column="0">
+                <widget class="QRadioButton" name="TPF_BPMRadio">
+                 <property name="text">
+                  <string>BPM</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QRadioButton" name="TPF_SVRadio">
+                 <property name="text">
+                  <string>SV</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QPushButton" name="TPF_generateButton">
+                 <property name="text">
+                  <string>Generate</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <spacer name="verticalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="1" rowspan="3">
              <widget class="QTabWidget" name="TPF_adjustTab">
               <property name="minimumSize">
                <size>
@@ -702,7 +748,7 @@
               </widget>
              </widget>
             </item>
-            <item row="0" column="2" rowspan="2">
+            <item row="0" column="2" rowspan="3">
              <widget class="QGroupBox" name="TPF_outputGroup">
               <property name="title">
                <string>Output</string>
@@ -728,7 +774,7 @@
               </layout>
              </widget>
             </item>
-            <item row="0" column="3" rowspan="2">
+            <item row="0" column="3" rowspan="3">
              <widget class="QCustomPlot" name="TPF_customPlot" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -736,39 +782,6 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QGroupBox" name="TPF_settingsGroup">
-              <property name="title">
-               <string>Settings</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_33">
-               <item row="1" column="0">
-                <widget class="QRadioButton" name="TPF_BPMRadio">
-                 <property name="text">
-                  <string>BPM</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QRadioButton" name="TPF_SVRadio">
-                 <property name="text">
-                  <string>SV</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QPushButton" name="TPF_generateButton">
-                 <property name="text">
-                  <string>Generate</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
             </item>
            </layout>
@@ -1296,7 +1309,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="advancedTabWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tabPackSplitter">
            <attribute name="title">
@@ -1387,6 +1400,224 @@
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabAdvAdjuster">
+           <attribute name="title">
+            <string>Advanced Adjuster</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_55">
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="AA_inputGroup">
+              <property name="title">
+               <string>Input</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_57">
+               <item row="0" column="0">
+                <widget class="QPlainTextEdit" name="AA_inputBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>800</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QGroupBox" name="AA_outputGroup">
+              <property name="title">
+               <string>Output</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_58">
+               <item row="0" column="0">
+                <widget class="QTextBrowser" name="AA_outputBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>800</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="1" rowspan="3">
+             <widget class="QGroupBox" name="AA_effectGroup">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>Effects</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_56">
+               <item row="0" column="0" rowspan="7">
+                <widget class="QListWidget" name="AA_effectList">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="AA_comboBox">
+                 <item>
+                  <property name="text">
+                   <string>Add Offset</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Add TP</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Multiply Offset</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Multiply TP</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Remove SV</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Remove BPM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Convert To BPM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Convert To SV</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Add TPList</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Subtract TPList</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Multiply TPList</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Divide TPList</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Invert</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Limit Values</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="AA_addEffect">
+                 <property name="text">
+                  <string>Add Effect</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QPushButton" name="AA_dupeEffect">
+                 <property name="text">
+                  <string>Duplicate Effect</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1" colspan="2">
+                <widget class="QPushButton" name="AA_editEffect">
+                 <property name="text">
+                  <string>Edit Effect</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1" colspan="2">
+                <widget class="QPushButton" name="AA_moveUpEffect">
+                 <property name="text">
+                  <string>Move Up Effect</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1" colspan="2">
+                <widget class="QPushButton" name="AA_moveDownEffect">
+                 <property name="text">
+                  <string>Move Down Effect</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1" colspan="2">
+                <widget class="QPushButton" name="AA_delEffect">
+                 <property name="text">
+                  <string>Delete Effect</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1" colspan="2">
+                <spacer name="AA_vertSpac">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>275</width>
+                   <height>429</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="AA_generate">
+              <property name="text">
+               <string>Generate</string>
+              </property>
              </widget>
             </item>
            </layout>

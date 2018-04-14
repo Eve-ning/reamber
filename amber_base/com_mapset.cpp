@@ -1,10 +1,412 @@
 #include "com_mapset.h"
 
+// CONSTRUCTORS
 cOM_MapSet::cOM_MapSet()
 {
 
 }
 
+// LOADERS
+
+// SETTERS
+void cOM_MapSet::setOsuFileNameList      (QStringList                newOsuFileNameList    )
+{
+    if (newOsuFileNameList.length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newOsuFileNameList    .length(); temp ++)
+    {
+        OM_MapList[temp].setOsuFileName        (newOsuFileNameList    [temp]);
+    }
+}
+void cOM_MapSet::setAudioFileNameList    (QStringList                newAudioFileNameList  )
+{
+    if (newAudioFileNameList  .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newAudioFileNameList  .length(); temp ++)
+    {
+        OM_MapList[temp].setAudioFileName      (newAudioFileNameList  [temp]);
+    }
+}
+void cOM_MapSet::setAudioLeadInList      (QList<int                > newAudioLeadInList    )
+{
+    if (newAudioLeadInList    .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newAudioLeadInList    .length(); temp ++)
+    {
+        OM_MapList[temp].setAudioLeadIn        (newAudioLeadInList    [temp]);
+    }
+}
+void cOM_MapSet::setPreviewTimeList      (QList<int                > newPreviewTimeList    )
+{
+    if (newPreviewTimeList    .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newPreviewTimeList    .length(); temp ++)
+    {
+        OM_MapList[temp].setPreviewTime        (newPreviewTimeList    [temp]);
+    }
+}
+void cOM_MapSet::setCountdownList        (QList<bool               > newCountdownList      )
+{
+    if (newCountdownList      .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newCountdownList      .length(); temp ++)
+    {
+        OM_MapList[temp].setCountdown          (newCountdownList      [temp]);
+    }
+}
+void cOM_MapSet::setSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSetList      )
+{
+    if (newSampleSetList      .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newSampleSetList      .length(); temp ++)
+    {
+        OM_MapList[temp].setSampleSet          (newSampleSetList      [temp]);
+    }
+}
+void cOM_MapSet::setStackLeniencyList    (QList<double             > newStackLeniencyList  )
+{
+    if (newStackLeniencyList  .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newStackLeniencyList  .length(); temp ++)
+    {
+        OM_MapList[temp].setStackLeniency      (newStackLeniencyList  [temp]);
+    }
+}
+void cOM_MapSet::setGameModeList         (QList<cOM_Map::cGameMode > newGameModeList       )
+{
+    if (newGameModeList       .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newGameModeList       .length(); temp ++)
+    {
+        OM_MapList[temp].setGameMode           (newGameModeList       [temp]);
+    }
+}
+void cOM_MapSet::setLetterboxList        (QList<bool               > newLetterboxList      )
+{
+    if (newLetterboxList      .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newLetterboxList      .length(); temp ++)
+    {
+        OM_MapList[temp].setLetterbox          (newLetterboxList      [temp]);
+    }
+}
+void cOM_MapSet::setSpecialStyleList     (QList<bool               > newSpecialStyleList   )
+{
+    if (newSpecialStyleList   .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newSpecialStyleList   .length(); temp ++)
+    {
+        OM_MapList[temp].setSpecialStyle       (newSpecialStyleList   [temp]);
+    }
+}
+void cOM_MapSet::setWidescreenList       (QList<bool               > newWidescreenList     )
+{
+    if (newWidescreenList     .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newWidescreenList     .length(); temp ++)
+    {
+        OM_MapList[temp].setWidescreen         (newWidescreenList     [temp]);
+    }
+}
+void cOM_MapSet::setDistanceSpacingList  (QList<double             > newDistanceSpacingList)
+{
+    if (newDistanceSpacingList.length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newDistanceSpacingList.length(); temp ++)
+    {
+        OM_MapList[temp].setDistanceSpacing    (newDistanceSpacingList[temp]);
+    }
+}
+void cOM_MapSet::setBeatDivisorList      (QList<int                > newBeatDivisorList    )
+{
+    if (newBeatDivisorList    .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newBeatDivisorList    .length(); temp ++)
+    {
+        OM_MapList[temp].setBeatDivisor        (newBeatDivisorList    [temp]);
+    }
+}
+void cOM_MapSet::setGridSizeList         (QList<int                > newGridSizeList       )
+{
+    if (newGridSizeList       .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newGridSizeList       .length(); temp ++)
+    {
+        OM_MapList[temp].setGridSize           (newGridSizeList       [temp]);
+    }
+}
+void cOM_MapSet::setTimelineZoomList     (QList<double             > newTimelineZoomList   )
+{
+    if (newTimelineZoomList   .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newTimelineZoomList   .length(); temp ++)
+    {
+        OM_MapList[temp].setTimelineZoom       (newTimelineZoomList   [temp]);
+    }
+}
+void cOM_MapSet::setTitleList            (QStringList                newTitleList          )
+{
+    if (newTitleList          .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newTitleList          .length(); temp ++)
+    {
+        OM_MapList[temp].setTitle              (newTitleList          [temp]);
+    }
+}
+void cOM_MapSet::setUnicodeTitleList     (QStringList                newUnicodeTitleList   )
+{
+    if (newUnicodeTitleList   .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newUnicodeTitleList   .length(); temp ++)
+    {
+        OM_MapList[temp].setUnicodeTitle       (newUnicodeTitleList   [temp]);
+    }
+}
+void cOM_MapSet::setArtistList           (QStringList                newArtistList         )
+{
+    if (newArtistList         .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newArtistList         .length(); temp ++)
+    {
+        OM_MapList[temp].setArtist             (newArtistList         [temp]);
+    }
+}
+void cOM_MapSet::setUnicodeArtistList    (QStringList                newUnicodeArtistList  )
+{
+    if (newUnicodeArtistList  .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newUnicodeArtistList  .length(); temp ++)
+    {
+        OM_MapList[temp].setUnicodeArtist      (newUnicodeArtistList  [temp]);
+    }
+}
+void cOM_MapSet::setCreatorList          (QStringList                newCreatorList        )
+{
+    if (newCreatorList        .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newCreatorList        .length(); temp ++)
+    {
+        OM_MapList[temp].setCreator            (newCreatorList        [temp]);
+    }
+}
+void cOM_MapSet::setDifficultyNameList   (QStringList                newDifficultyNameList )
+{
+    if (newDifficultyNameList .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newDifficultyNameList .length(); temp ++)
+    {
+        OM_MapList[temp].setDifficultyName     (newDifficultyNameList [temp]);
+    }
+}
+void cOM_MapSet::setSourceList           (QStringList                newSourceList         )
+{
+    if (newSourceList         .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newSourceList         .length(); temp ++)
+    {
+        OM_MapList[temp].setSource             (newSourceList         [temp]);
+    }
+}
+void cOM_MapSet::setTagsList             (QList<QStringList        > newTagsList           )
+{
+    if (newTagsList           .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newTagsList           .length(); temp ++)
+    {
+        OM_MapList[temp].setTags               (newTagsList           [temp]);
+    }
+}
+void cOM_MapSet::setBeatmapIDList        (QList<int                > newBeatmapIDList      )
+{
+    if (newBeatmapIDList      .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newBeatmapIDList      .length(); temp ++)
+    {
+        OM_MapList[temp].setBeatmapID          (newBeatmapIDList      [temp]);
+    }
+}
+void cOM_MapSet::setBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   )
+{
+    if (newBeatmapSetIDList   .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newBeatmapSetIDList   .length(); temp ++)
+    {
+        OM_MapList[temp].setBeatmapSetID       (newBeatmapSetIDList   [temp]);
+    }
+}
+void cOM_MapSet::setHPList               (QList<double             > newHPList             )
+{
+    if (newHPList             .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newHPList             .length(); temp ++)
+    {
+        OM_MapList[temp].setHP                 (newHPList             [temp]);
+    }
+}
+void cOM_MapSet::setCSList               (QList<double             > newCSList             )
+{
+    if (newCSList             .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newCSList             .length(); temp ++)
+    {
+        OM_MapList[temp].setCS                 (newCSList             [temp]);
+    }
+}
+void cOM_MapSet::setODList               (QList<double             > newODList             )
+{
+    if (newODList             .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newODList             .length(); temp ++)
+    {
+        OM_MapList[temp].setOD                 (newODList             [temp]);
+    }
+}
+void cOM_MapSet::setARList               (QList<double             > newARList             )
+{
+    if (newARList             .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newARList             .length(); temp ++)
+    {
+        OM_MapList[temp].setAR                 (newARList             [temp]);
+    }
+}
+void cOM_MapSet::setSliderMultList       (QList<double             > newSliderMultList     )
+{
+    if (newSliderMultList     .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newSliderMultList     .length(); temp ++)
+    {
+        OM_MapList[temp].setSliderMult         (newSliderMultList     [temp]);
+    }
+}
+void cOM_MapSet::setSliderTickList       (QList<double             > newSliderTickList     )
+{
+    if (newSliderTickList     .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newSliderTickList     .length(); temp ++)
+    {
+        OM_MapList[temp].setSliderTick         (newSliderTickList     [temp]);
+    }
+}
+void cOM_MapSet::setBGFileNameList       (QStringList                newBGFileNameList     )
+{
+    if (newBGFileNameList     .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newBGFileNameList     .length(); temp ++)
+    {
+        OM_MapList[temp].setBGFileName         (newBGFileNameList     [temp]);
+    }
+}
+void cOM_MapSet::setVideoFileNameList    (QStringList                newVideoFileNameList  )
+{
+    if (newVideoFileNameList  .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newVideoFileNameList  .length(); temp ++)
+    {
+        OM_MapList[temp].setVideoFileName      (newVideoFileNameList  [temp]);
+    }
+}
+void cOM_MapSet::setBreakPListList       (QList<cOM_BreakPList     > newBreakPListList     )
+{
+    if (newBreakPListList     .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newBreakPListList     .length(); temp ++)
+    {
+        OM_MapList[temp].setBreakPList             (newBreakPListList     [temp]);
+    }
+}
+void cOM_MapSet::setOM_HOListList        (QList<cOM_HOList         > newOM_HOListList      )
+{
+    if (newOM_HOListList      .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newOM_HOListList      .length(); temp ++)
+    {
+        OM_MapList[temp].setOM_HOList              (newOM_HOListList      [temp]);
+    }
+}
+void cOM_MapSet::setOM_TPListList        (QList<cOM_TPList         > newOM_TPListList      )
+{
+    if (newOM_TPListList      .length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+    }
+    for (int temp = 0; temp < newOM_TPListList      .length(); temp ++)
+    {
+        OM_MapList[temp].setOM_TPList              (newOM_TPListList      [temp]);
+    }
+}
+
+// GETTERS
 QStringList               cOM_MapSet::getOsuFileNameList      () const
 {
     cOM_Map temp;
@@ -82,10 +484,10 @@ QList<double             >cOM_MapSet::getStackLeniencyList    () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getGameModeList         () const
+QList<cOM_Map::cGameMode >cOM_MapSet::getGameModeList         () const
 {
     cOM_Map temp;
-    QList<int> output;
+    QList<cOM_Map::cGameMode> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getGameMode());
@@ -402,399 +804,4 @@ QList<cOM_TPList         >cOM_MapSet::getOM_TPListList        () const
     return output;
 }
 
-void cOM_MapSet::getOsuFileNameList      (QStringList                newOsuFileNameList    )
-{
-    if (newOsuFileNameList.length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newOsuFileNameList    .length(); temp ++)
-    {
-        OM_MapList[temp].setOsuFileName        (newOsuFileNameList    [temp]);
-    }
-}
-void cOM_MapSet::getAudioFileNameList    (QStringList                newAudioFileNameList  )
-{
-    if (newAudioFileNameList  .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newAudioFileNameList  .length(); temp ++)
-    {
-        OM_MapList[temp].setAudioFileName      (newAudioFileNameList  [temp]);
-    }
-}
-void cOM_MapSet::getAudioLeadInList      (QList<int                > newAudioLeadInList    )
-{
-    if (newAudioLeadInList    .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newAudioLeadInList    .length(); temp ++)
-    {
-        OM_MapList[temp].setAudioLeadIn        (newAudioLeadInList    [temp]);
-    }
-}
-void cOM_MapSet::getPreviewTimeList      (QList<int                > newPreviewTimeList    )
-{
-    if (newPreviewTimeList    .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newPreviewTimeList    .length(); temp ++)
-    {
-        OM_MapList[temp].setPreviewTime        (newPreviewTimeList    [temp]);
-    }
-}
-void cOM_MapSet::getCountdownList        (QList<bool               > newCountdownList      )
-{
-    if (newCountdownList      .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newCountdownList      .length(); temp ++)
-    {
-        OM_MapList[temp].setCountdown          (newCountdownList      [temp]);
-    }
-}
-void cOM_MapSet::getSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSetList      )
-{
-    if (newSampleSetList      .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newSampleSetList      .length(); temp ++)
-    {
-        OM_MapList[temp].setSampleSet          (newSampleSetList      [temp]);
-    }
-}
-void cOM_MapSet::getStackLeniencyList    (QList<double             > newStackLeniencyList  )
-{
-    if (newStackLeniencyList  .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newStackLeniencyList  .length(); temp ++)
-    {
-        OM_MapList[temp].setStackLeniency      (newStackLeniencyList  [temp]);
-    }
-}
-void cOM_MapSet::getGameModeList         (QList<int                > newGameModeList       )
-{
-    if (newGameModeList       .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newGameModeList       .length(); temp ++)
-    {
-        OM_MapList[temp].setGameMode           (newGameModeList       [temp]);
-    }
-}
-void cOM_MapSet::getLetterboxList        (QList<bool               > newLetterboxList      )
-{
-    if (newLetterboxList      .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newLetterboxList      .length(); temp ++)
-    {
-        OM_MapList[temp].setLetterbox          (newLetterboxList      [temp]);
-    }
-}
-void cOM_MapSet::getSpecialStyleList     (QList<bool               > newSpecialStyleList   )
-{
-    if (newSpecialStyleList   .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newSpecialStyleList   .length(); temp ++)
-    {
-        OM_MapList[temp].setSpecialStyle       (newSpecialStyleList   [temp]);
-    }
-}
-void cOM_MapSet::getWidescreenList       (QList<bool               > newWidescreenList     )
-{
-    if (newWidescreenList     .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newWidescreenList     .length(); temp ++)
-    {
-        OM_MapList[temp].setWidescreen         (newWidescreenList     [temp]);
-    }
-}
-void cOM_MapSet::getDistanceSpacingList  (QList<double             > newDistanceSpacingList)
-{
-    if (newDistanceSpacingList.length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newDistanceSpacingList.length(); temp ++)
-    {
-        OM_MapList[temp].setDistanceSpacing    (newDistanceSpacingList[temp]);
-    }
-}
-void cOM_MapSet::getBeatDivisorList      (QList<int                > newBeatDivisorList    )
-{
-    if (newBeatDivisorList    .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newBeatDivisorList    .length(); temp ++)
-    {
-        OM_MapList[temp].setBeatDivisor        (newBeatDivisorList    [temp]);
-    }
-}
-void cOM_MapSet::getGridSizeList         (QList<int                > newGridSizeList       )
-{
-    if (newGridSizeList       .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newGridSizeList       .length(); temp ++)
-    {
-        OM_MapList[temp].setGridSize           (newGridSizeList       [temp]);
-    }
-}
-void cOM_MapSet::getTimelineZoomList     (QList<double             > newTimelineZoomList   )
-{
-    if (newTimelineZoomList   .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newTimelineZoomList   .length(); temp ++)
-    {
-        OM_MapList[temp].setTimelineZoom       (newTimelineZoomList   [temp]);
-    }
-}
-void cOM_MapSet::getTitleList            (QStringList                newTitleList          )
-{
-    if (newTitleList          .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newTitleList          .length(); temp ++)
-    {
-        OM_MapList[temp].setTitle              (newTitleList          [temp]);
-    }
-}
-void cOM_MapSet::getUnicodeTitleList     (QStringList                newUnicodeTitleList   )
-{
-    if (newUnicodeTitleList   .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newUnicodeTitleList   .length(); temp ++)
-    {
-        OM_MapList[temp].setUnicodeTitle       (newUnicodeTitleList   [temp]);
-    }
-}
-void cOM_MapSet::getArtistList           (QStringList                newArtistList         )
-{
-    if (newArtistList         .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newArtistList         .length(); temp ++)
-    {
-        OM_MapList[temp].setArtist             (newArtistList         [temp]);
-    }
-}
-void cOM_MapSet::getUnicodeArtistList    (QStringList                newUnicodeArtistList  )
-{
-    if (newUnicodeArtistList  .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newUnicodeArtistList  .length(); temp ++)
-    {
-        OM_MapList[temp].setUnicodeArtist      (newUnicodeArtistList  [temp]);
-    }
-}
-void cOM_MapSet::getCreatorList          (QStringList                newCreatorList        )
-{
-    if (newCreatorList        .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newCreatorList        .length(); temp ++)
-    {
-        OM_MapList[temp].setCreator            (newCreatorList        [temp]);
-    }
-}
-void cOM_MapSet::getDifficultyNameList   (QStringList                newDifficultyNameList )
-{
-    if (newDifficultyNameList .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newDifficultyNameList .length(); temp ++)
-    {
-        OM_MapList[temp].setDifficultyName     (newDifficultyNameList [temp]);
-    }
-}
-void cOM_MapSet::getSourceList           (QStringList                newSourceList         )
-{
-    if (newSourceList         .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newSourceList         .length(); temp ++)
-    {
-        OM_MapList[temp].setSource             (newSourceList         [temp]);
-    }
-}
-void cOM_MapSet::getTagsList             (QList<QStringList        > newTagsList           )
-{
-    if (newTagsList           .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newTagsList           .length(); temp ++)
-    {
-        OM_MapList[temp].setTags               (newTagsList           [temp]);
-    }
-}
-void cOM_MapSet::getBeatmapIDList        (QList<int                > newBeatmapIDList      )
-{
-    if (newBeatmapIDList      .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newBeatmapIDList      .length(); temp ++)
-    {
-        OM_MapList[temp].setBeatmapID          (newBeatmapIDList      [temp]);
-    }
-}
-void cOM_MapSet::getBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   )
-{
-    if (newBeatmapSetIDList   .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newBeatmapSetIDList   .length(); temp ++)
-    {
-        OM_MapList[temp].setBeatmapSetID       (newBeatmapSetIDList   [temp]);
-    }
-}
-void cOM_MapSet::getHPList               (QList<double             > newHPList             )
-{
-    if (newHPList             .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newHPList             .length(); temp ++)
-    {
-        OM_MapList[temp].setHP                 (newHPList             [temp]);
-    }
-}
-void cOM_MapSet::getCSList               (QList<double             > newCSList             )
-{
-    if (newCSList             .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newCSList             .length(); temp ++)
-    {
-        OM_MapList[temp].setCS                 (newCSList             [temp]);
-    }
-}
-void cOM_MapSet::getODList               (QList<double             > newODList             )
-{
-    if (newODList             .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newODList             .length(); temp ++)
-    {
-        OM_MapList[temp].setOD                 (newODList             [temp]);
-    }
-}
-void cOM_MapSet::getARList               (QList<double             > newARList             )
-{
-    if (newARList             .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newARList             .length(); temp ++)
-    {
-        OM_MapList[temp].setAR                 (newARList             [temp]);
-    }
-}
-void cOM_MapSet::getSliderMultList       (QList<double             > newSliderMultList     )
-{
-    if (newSliderMultList     .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newSliderMultList     .length(); temp ++)
-    {
-        OM_MapList[temp].setSliderMult         (newSliderMultList     [temp]);
-    }
-}
-void cOM_MapSet::getSliderTickList       (QList<double             > newSliderTickList     )
-{
-    if (newSliderTickList     .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newSliderTickList     .length(); temp ++)
-    {
-        OM_MapList[temp].setSliderTick         (newSliderTickList     [temp]);
-    }
-}
-void cOM_MapSet::getBGFileNameList       (QStringList                newBGFileNameList     )
-{
-    if (newBGFileNameList     .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newBGFileNameList     .length(); temp ++)
-    {
-        OM_MapList[temp].setBGFileName         (newBGFileNameList     [temp]);
-    }
-}
-void cOM_MapSet::getVideoFileNameList    (QStringList                newVideoFileNameList  )
-{
-    if (newVideoFileNameList  .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newVideoFileNameList  .length(); temp ++)
-    {
-        OM_MapList[temp].setVideoFileName      (newVideoFileNameList  [temp]);
-    }
-}
-void cOM_MapSet::getBreakPListList       (QList<cOM_BreakPList     > newBreakPListList     )
-{
-    if (newBreakPListList     .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newBreakPListList     .length(); temp ++)
-    {
-        OM_MapList[temp].setBreakPList             (newBreakPListList     [temp]);
-    }
-}
-void cOM_MapSet::getOM_HOListList        (QList<cOM_HOList         > newOM_HOListList      )
-{
-    if (newOM_HOListList      .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newOM_HOListList      .length(); temp ++)
-    {
-        OM_MapList[temp].setOM_HOList              (newOM_HOListList      [temp]);
-    }
-}
-void cOM_MapSet::getOM_TPListList        (QList<cOM_TPList         > newOM_TPListList      )
-{
-    if (newOM_TPListList      .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newOM_TPListList      .length(); temp ++)
-    {
-        OM_MapList[temp].setOM_TPList              (newOM_TPListList      [temp]);
-    }
-}
+

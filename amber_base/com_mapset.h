@@ -6,8 +6,10 @@
 class  cOM_MapSet
 {
 public:
+    // CONSTRUCTORS
     cOM_MapSet();
 
+    // SETTERS
     QStringList               getOsuFileNameList      () const;
     QStringList               getAudioFileNameList    () const;
     QList<int                >getAudioLeadInList      () const;
@@ -15,7 +17,7 @@ public:
     QList<bool               >getCountdownList        () const;
     QList<cOM_Map::cSampleSet>getSampleSetList        () const;
     QList<double             >getStackLeniencyList    () const;
-    QList<int                >getGameModeList         () const;
+    QList<cOM_Map::cGameMode> getGameModeList         () const;
     QList<bool               >getLetterboxList        () const;
     QList<bool               >getSpecialStyleList     () const;
     QList<bool               >getWidescreenList       () const;
@@ -45,42 +47,45 @@ public:
     QList<cOM_HOList         >getOM_HOListList        () const;
     QList<cOM_TPList         >getOM_TPListList        () const;
 
-    void getOsuFileNameList      (QStringList                newOsuFileNameList    );
-    void getAudioFileNameList    (QStringList                newAudioFileNameList  );
-    void getAudioLeadInList      (QList<int                > newAudioLeadInList    );
-    void getPreviewTimeList      (QList<int                > newPreviewTimeList    );
-    void getCountdownList        (QList<bool               > newCountdownList      );
-    void getSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSetList      );
-    void getStackLeniencyList    (QList<double             > newStackLeniencyList  );
-    void getGameModeList         (QList<int                > newGameModeList       );
-    void getLetterboxList        (QList<bool               > newLetterboxList      );
-    void getSpecialStyleList     (QList<bool               > newSpecialStyleList   );
-    void getWidescreenList       (QList<bool               > newWidescreenList     );
-    void getDistanceSpacingList  (QList<double             > newDistanceSpacingList);
-    void getBeatDivisorList      (QList<int                > newBeatDivisorList    );
-    void getGridSizeList         (QList<int                > newGridSizeList       );
-    void getTimelineZoomList     (QList<double             > newTimelineZoomList   );
-    void getTitleList            (QStringList                newTitleList          );
-    void getUnicodeTitleList     (QStringList                newUnicodeTitleList   );
-    void getArtistList           (QStringList                newArtistList         );
-    void getUnicodeArtistList    (QStringList                newUnicodeArtistList  );
-    void getCreatorList          (QStringList                newCreatorList        );
-    void getDifficultyNameList   (QStringList                newDifficultyNameList );
-    void getSourceList           (QStringList                newSourceList         );
-    void getTagsList             (QList<QStringList        > newTagsList           );
-    void getBeatmapIDList        (QList<int                > newBeatmapIDList      );
-    void getBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   );
-    void getHPList               (QList<double             > newHPList             );
-    void getCSList               (QList<double             > newCSList             );
-    void getODList               (QList<double             > newODList             );
-    void getARList               (QList<double             > newARList             );
-    void getSliderMultList       (QList<double             > newSliderMultList     );
-    void getSliderTickList       (QList<double             > newSliderTickList     );
-    void getBGFileNameList       (QStringList                newBGFileNameList     );
-    void getVideoFileNameList    (QStringList                newVideoFileNameList  );
-    void getBreakPListList       (QList<cOM_BreakPList     > newBreakPListList     );
-    void getOM_HOListList        (QList<cOM_HOList         > newOM_HOListList      );
-    void getOM_TPListList        (QList<cOM_TPList         > newOM_TPListList      );
+    void setOsuFileNameList      (QStringList                newOsuFileNameList    );
+    void setAudioFileNameList    (QStringList                newAudioFileNameList  );
+    void setAudioLeadInList      (QList<int                > newAudioLeadInList    );
+    void setPreviewTimeList      (QList<int                > newPreviewTimeList    );
+    void setCountdownList        (QList<bool               > newCountdownList      );
+    void setSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSetList      );
+    void setStackLeniencyList    (QList<double             > newStackLeniencyList  );
+    void setGameModeList         (QList<cOM_Map::cGameMode > newGameModeList       );
+    void setLetterboxList        (QList<bool               > newLetterboxList      );
+    void setSpecialStyleList     (QList<bool               > newSpecialStyleList   );
+    void setWidescreenList       (QList<bool               > newWidescreenList     );
+    void setDistanceSpacingList  (QList<double             > newDistanceSpacingList);
+    void setBeatDivisorList      (QList<int                > newBeatDivisorList    );
+    void setGridSizeList         (QList<int                > newGridSizeList       );
+    void setTimelineZoomList     (QList<double             > newTimelineZoomList   );
+    void setTitleList            (QStringList                newTitleList          );
+    void setUnicodeTitleList     (QStringList                newUnicodeTitleList   );
+    void setArtistList           (QStringList                newArtistList         );
+    void setUnicodeArtistList    (QStringList                newUnicodeArtistList  );
+    void setCreatorList          (QStringList                newCreatorList        );
+    void setDifficultyNameList   (QStringList                newDifficultyNameList );
+    void setSourceList           (QStringList                newSourceList         );
+    void setTagsList             (QList<QStringList        > newTagsList           );
+    void setBeatmapIDList        (QList<int                > newBeatmapIDList      );
+    void setBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   );
+    void setHPList               (QList<double             > newHPList             );
+    void setCSList               (QList<double             > newCSList             );
+    void setODList               (QList<double             > newODList             );
+    void setARList               (QList<double             > newARList             );
+    void setSliderMultList       (QList<double             > newSliderMultList     );
+    void setSliderTickList       (QList<double             > newSliderTickList     );
+    void setBGFileNameList       (QStringList                newBGFileNameList     );
+    void setVideoFileNameList    (QStringList                newVideoFileNameList  );
+    void setBreakPListList       (QList<cOM_BreakPList     > newBreakPListList     );
+    void setOM_HOListList        (QList<cOM_HOList         > newOM_HOListList      );
+    void setOM_TPListList        (QList<cOM_TPList         > newOM_TPListList      );
+
+    // MISC
+    void append(cOM_Map);
 
 private:
 

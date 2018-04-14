@@ -493,7 +493,6 @@ void amber::on_TPF_initialTPSlider_valueChanged(int value)
         amber::on_TPF_generateButton_clicked();
     }
 }
-
 void amber::on_TPF_endTPSlider_valueChanged(int value)
 {
     ui->TPF_endTPLabel->setText(QString::number(value, 'f', 2));
@@ -501,8 +500,6 @@ void amber::on_TPF_endTPSlider_valueChanged(int value)
         amber::on_TPF_generateButton_clicked();
     }
 }
-
-
 void amber::on_TPF_offsetSlider_valueChanged(int value)
 {
     ui->TPF_offsetLabel->setText(QString::number(value, 'f', 2));
@@ -510,8 +507,6 @@ void amber::on_TPF_offsetSlider_valueChanged(int value)
         amber::on_TPF_generateButton_clicked();
     }
 }
-
-
 void amber::on_TPF_frequencySlider_valueChanged(int value)
 {
     ui->TPF_frequencyLabel->setText(QString::number(value, 'f', 2));
@@ -519,7 +514,6 @@ void amber::on_TPF_frequencySlider_valueChanged(int value)
         amber::on_TPF_generateButton_clicked();
     }
 }
-
 void amber::on_TPF_amplitudeSlider_valueChanged(int value)
 {
     ui->TPF_amplitudeLabel->setText(QString::number(value, 'f', 2));
@@ -527,7 +521,6 @@ void amber::on_TPF_amplitudeSlider_valueChanged(int value)
         amber::on_TPF_generateButton_clicked();
     }
 }
-
 void amber::on_TPF_intermediateSpinBox_valueChanged(int arg1)
 {
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
@@ -1357,6 +1350,41 @@ void amber::on_PS_controlOpenFolderButton_clicked()
         return;
     }
 }
+
+// --------------------------------------------------------------------------------------------------------< ADV ADJUSTER >
+
+void amber::on_AA_generate_clicked()
+{
+
+}
+
+void amber::on_AA_addEffect_clicked()
+{
+    QListWidget *effectList = ui->AA_effectList;
+    QComboBox   *comboBox   = ui->AA_comboBox;
+
+    comboBox->currentIndex();
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
