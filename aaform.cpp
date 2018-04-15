@@ -388,9 +388,10 @@ bool AAForm::enableRadio (int index)
     return true;
 }
 
-bool AAForm::setChkbxTitle(QString newTitle)
+void AAForm::setChkbxTitle(QString newTitle)
 {
     ui->chkbxGrp->setTitle(newTitle);
+
 }
 bool AAForm::setChkbxText (QString newText , int index)
 {
@@ -459,7 +460,7 @@ bool AAForm::setPTETitle  (QString newTitle, int index,  QString hintText)
 
     return true;
 }
-bool AAForm::setRadioTitle(QString newTitle)
+void AAForm::setRadioTitle(QString newTitle)
 {
     ui->radioGrp->setTitle(newTitle);
 }
@@ -549,6 +550,9 @@ bool AAForm::getRadioState(int index)
     case 2:
         return ui->radio_2->isChecked();
         break;
+    default:
+        qDebug() << __FUNCTION__ << "Out of Index: " << index;
+        return true;
     }
 }
 

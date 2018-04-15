@@ -27,11 +27,11 @@ public:
     bool disableRadio(int index = -1);
     bool enableRadio (int index = -1);
 
-    bool setChkbxTitle(QString newTitle);
+    void setChkbxTitle(QString newTitle);
     bool setChkbxText (QString newText , int index);
     bool setLineTitle (QString newTitle, int index, QString hintText = "");
     bool setPTETitle  (QString newTitle, int index, QString hintText = "");
-    bool setRadioTitle(QString newTitle);
+    void setRadioTitle(QString newTitle);
     bool setRadioText (QString newText , int index);
 
     bool getChkbxState  (int index);

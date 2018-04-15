@@ -25,33 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         amber.cpp \
-<<<<<<< HEAD
-    qcustomplot.cpp \
-    check.cpp \
-    convert.cpp \
-    compile.cpp \
-    defargs.cpp \
-    hyperlink.cpp \
-    statusbox.cpp \
-    com_ho.cpp \
-    com_tp.cpp \
-    com_holist.cpp
-
-HEADERS += \
-        amber.h \
-    qcustomplot.h \
-    check.h \
-    convert.h \
-    compile.h \
-    defargs.h \
-    hyperlink.h \
-    statusbox.h \
-    om_nn.h \
-    com_ho.h \
-    com_tp.h \
-    com_holist.h
-=======
         qcustomplot.cpp \
+        archive/check.cpp \
+        archive/convert.cpp \
+        archive/compile.cpp \
+        archive/defargs.cpp \
         hyperlink.cpp \
         statusbox.cpp \
         amber_base/com_ho.cpp \
@@ -64,12 +42,17 @@ HEADERS += \
         amber_base/com_breakplist.cpp \
         amber_base/com_math.cpp \
         amber_base/com_common.cpp \
-    aaobj.cpp \
-    aaform.cpp
+        aaobj.cpp \
+        aaform.cpp
+
 
 HEADERS += \
         amber.h \
         qcustomplot.h \
+        archive/check.h \
+        archive/convert.h \
+        archive/compile.h \
+        archive/defargs.h \
         hyperlink.h \
         statusbox.h \
         amber_base_inc.h \
@@ -83,16 +66,14 @@ HEADERS += \
         amber_base/com_breakplist.h \
         amber_base/com_math.h \
         amber_base/com_common.h \
-    aaobj.h \
-    aaform.h
+        aaobj.h \
+        aaform.h
 
 LIBS += \
 
->>>>>>> base_merge
-
 FORMS += \
         amber.ui \
-    aaform.ui
+        aaform.ui
 
 DISTFILES += \
     documentation \
