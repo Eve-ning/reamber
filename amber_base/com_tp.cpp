@@ -230,19 +230,41 @@ void cOM_TP::subtractOffset (const double rhsDouble, bool limitFlag)
 }
 
 // MISC
-void cOM_TP::limitValues()
+void cOM_TP::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
 {
-    if (isBPM) {
+    // Make sure min < max
+    if ((maxSV != 0 && minSV != 0) && (minSV > maxSV))
+    {
+        qDebug() << __FUNCTION__ << "minSV > maxSV: " << minSV << " > " << maxSV;
+    }
+
+    if ((maxBPM != 0 && minBPM != 0) && (minBPM > maxBPM))
+    {
+        qDebug() << __FUNCTION__ << "minBPM > maxBPM: " << minBPM << " > " << maxBPM;
+    }
+
+    // If any value is exactly 0, we take it that the user doesn't want to limit it.
+    if (isBPM)
+    {
         // BOUND 0 ~ infinity
-        if (getValue() <= 0) {
-            setValue(0.000001);
+        if ((minBPM != 0) && (getValue() < minBPM))
+        {
+            setValue(minBPM);
         }
-    } else { //isSV
+        else if ((maxBPM != 0) && getValue() > maxBPM)
+        {
+            setValue(maxBPM);
+        }
+    } else
+    { //isSV
         // BOUND 0.1 ~ 10.0
-        if (getValue() < 0.1) {
-            setValue(0.1);
-        } else if (getValue() > 10.0) {
-            setValue(10.0);
+        if ((minSV != 0) && getValue() < minSV)
+        {
+            setValue(minSV);
+        }
+        else if ((maxBPM != 0) && getValue() > maxSV)
+        {
+            setValue(maxSV);
         }
     }
 }

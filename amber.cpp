@@ -28,6 +28,7 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
     tb = ui->statusBox;
+    AAObjList = {};
 
     ui->toolBox->setCurrentIndex(0);
 
@@ -1363,7 +1364,101 @@ void amber::on_AA_addEffect_clicked()
     QListWidget *effectList = ui->AA_effectList;
     QComboBox   *comboBox   = ui->AA_comboBox;
 
-    comboBox->currentIndex();
+    AAObj *newObject;
+
+    // Add to ListWidget and our AAObjList
+    effectList->addItem(comboBox->currentText());
+
+    switch (comboBox->currentIndex()) {
+    case 0:
+    {
+        newObject = new AAObj(AAObj::AAType::ADD_OFFSET     );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 1:
+    {
+        newObject = new AAObj(AAObj::AAType::ADD_VALUE      );
+        AAObjList.append(newObject); break;
+    }
+    case 2:
+    {
+        newObject = new AAObj(AAObj::AAType::MULT_OFFSET    );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 3:
+    {
+        newObject = new AAObj(AAObj::AAType::MULT_VALUE     );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 4:
+    {
+        newObject = new AAObj(AAObj::AAType::DEL_SV         );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 5:
+    {
+        newObject = new AAObj(AAObj::AAType::DEL_BPM        );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 6:
+    {
+        newObject = new AAObj(AAObj::AAType::CONV_SV        );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 7:
+    {
+        newObject = new AAObj(AAObj::AAType::CONV_BPM       );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 8:
+    {
+        newObject = new AAObj(AAObj::AAType::ADD_TPLIST     );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 9:
+    {
+        newObject = new AAObj(AAObj::AAType::SUBTRACT_TPLIST);
+        AAObjList.append(newObject);
+        break;
+    }
+    case 10:
+    {
+        newObject = new AAObj(AAObj::AAType::MULT_TPLIST    );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 11:
+    {
+        newObject = new AAObj(AAObj::AAType::DIV_TPLIST     );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 12:
+    {
+        newObject = new AAObj(AAObj::AAType::INVERT         );
+        AAObjList.append(newObject);
+        break;
+    }
+    case 13:
+    {
+        newObject = new AAObj(AAObj::AAType::LIMITVAL       );
+        AAObjList.append(newObject);
+        break;
+    }
+    default:
+    {
+        STATMSG("Index does not exist");
+        return;
+    }
+    }
 
 
 }

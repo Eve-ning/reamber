@@ -122,37 +122,105 @@ void AAObj::setForm()
 
 cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
 {
+    cOM_TPList newTPList,
+               tempTPList;
+
     switch (objType)
     {
     case AAType::ADD_OFFSET     :
+        if (!ui->getLineText(0).isEmpty())
+        {
+            oldTPList.addOffset(ui->getLineText(0).toDouble());
+        }
+        newTPList = oldTPList;
         break;
     case AAType::ADD_VALUE      :
+        if (!ui->getLineText(0).isEmpty())
+        {
+            oldTPList.addValue(ui->getLineText(0).toDouble());
+        }
+        newTPList = oldTPList;
         break;
     case AAType::MULT_OFFSET    :
+        if (!ui->getLineText(0).isEmpty())
+        {
+            oldTPList.multiplyOffset(ui->getLineText(0).toDouble());
+        }
+        newTPList = oldTPList;
         break;
     case AAType::MULT_VALUE     :
+        if (!ui->getLineText(0).isEmpty())
+        {
+            oldTPList.multiplyValue(ui->getLineText(0).toDouble());
+        }
+        newTPList = oldTPList;
         break;
     case AAType::DEL_SV         :
+        newTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
         break;
     case AAType::DEL_BPM        :
+        newTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
         break;
     case AAType::CONV_SV        :
         break;
     case AAType::CONV_BPM       :
         break;
     case AAType::ADD_TPLIST     :
+        if (!ui->getPTEText(0).isEmpty())
+        {
+            oldTPList.addValue(cOM_TPList(ui->getPTEText(0)));
+        }
+        newTPList = oldTPList;
         break;
     case AAType::SUBTRACT_TPLIST:
+        if (!ui->getPTEText(0).isEmpty())
+        {
+            oldTPList.subtractValue(cOM_TPList(ui->getPTEText(0)));
+        }
+        newTPList = oldTPList;
         break;
     case AAType::MULT_TPLIST    :
+        if (!ui->getPTEText(0).isEmpty())
+        {
+            oldTPList.multiplyValue(cOM_TPList(ui->getPTEText(0)));
+        }
+        newTPList = oldTPList;
         break;
     case AAType::DIV_TPLIST     :
+        if (!ui->getPTEText(0).isEmpty())
+        {
+            oldTPList.divideValue(cOM_TPList(ui->getPTEText(0)));
+        }
+        newTPList = oldTPList;
         break;
     case AAType::INVERT         :
+        if (ui->getChkbxState(0) && ui->getChkbxState(1)) // SV & BPM
+        {
+            newTPList = oldTPList;
+        } else if (!ui->getChkbxState(0) && ui->getChkbxState(1)) // BPM ONLY
+        {
+            newTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
+            tempTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
+        } else // SV ONLY
+        {
+            newTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
+            tempTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
+        }
+        newTPList.subtractValue(ui->getLineText(0).toDouble());
+        newTPList.multiplyValue(-1.0);
+        newTPList.addValue(ui->getLineText(0).toDouble());
+        newTPList.append(tempTPList);
         break;
     case AAType::LIMITVAL       :
+        oldTPList.limitValues(ui->getLineText(0).toDouble(),
+                              ui->getLineText(2).toDouble(),
+                              ui->getLineText(1).toDouble(),
+                              ui->getLineText(3).toDouble());
+        newTPList = oldTPList;
         break;
     };
+
+    return newTPList;
 }
 
 AAObj::AAType AAObj::getEffect()

@@ -66,7 +66,7 @@ public:
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
     // MISC
-    void limitValues();
+    void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001);
 
 
 

@@ -81,11 +81,12 @@ public:
 
     // MISC
     void append     (cOM_TP newOM_TP) { OM_TPList.append(newOM_TP); }
+    void append     (cOM_TPList newOM_TPList);
     void deleteIndex(unsigned  index) { OM_TPList.removeAt(index); }
     bool isEmpty    () const;
 
     // LIMITS VALUES DEPENDING ON THEIR ISBPM VALUE
-    void limitValues();
+    void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001); // ADD CUSTOM LIMITS
 
     // ADJUSTS A TP SO THAT THE AVERAGE IS MET
     void adjustToAverage (double averageSV, int adjustIndex);

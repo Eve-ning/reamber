@@ -29,6 +29,8 @@
 
 #include "amber_base_inc.h"
 
+#include "aaobj.h"
+
 namespace Ui {
 class amber;
 }
@@ -115,11 +117,7 @@ private:
     QTextBrowser *tb;
     Ui::amber *ui;
 
-    enum class AA_comboType {
-
-
-
-    };
+    QList<AAObj*> AAObjList;
 
 
 };

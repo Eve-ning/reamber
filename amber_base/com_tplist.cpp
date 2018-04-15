@@ -1030,6 +1030,13 @@ void cOM_TPList::sortOffset(bool isAscending)
     }
 }
 
+void cOM_TPList::append(cOM_TPList newOM_TPList)
+{
+    for (int temp = 0; temp < newOM_TPList.getSize(); temp++) {
+        OM_TPList.append(newOM_TPList[temp]);
+    }
+}
+
 cOM_Common::TPFlag cOM_TPList::isUniform()
 {
     CHECK_EMPTY(cOM_Common::TPFlag::INVALID);
@@ -1052,14 +1059,14 @@ bool cOM_TPList::isEmpty() const
 {
     return getSize() == 0;
 }
-void cOM_TPList::limitValues()
+void cOM_TPList::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
 {
     CHECK_EMPTY();
 
     cOM_TP temp;
 
     foreach (temp, OM_TPList) {
-        temp.limitValues();
+        temp.limitValues(maxSV, minSV, maxBPM, minBPM);
     }
 }
 QList<int> cOM_TPList::indexList(cOM_Common::TPFlag onlyFlag)
