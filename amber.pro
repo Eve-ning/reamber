@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         amber.cpp \
+<<<<<<< HEAD
     qcustomplot.cpp \
     check.cpp \
     convert.cpp \
@@ -49,9 +50,49 @@ HEADERS += \
     com_ho.h \
     com_tp.h \
     com_holist.h
+=======
+        qcustomplot.cpp \
+        hyperlink.cpp \
+        statusbox.cpp \
+        amber_base/com_ho.cpp \
+        amber_base/com_tp.cpp \
+        amber_base/com_holist.cpp \
+        amber_base/com_tplist.cpp \
+        amber_base/com_mapset.cpp \
+        amber_base/com_map.cpp \
+        amber_base/com_breakp.cpp \
+        amber_base/com_breakplist.cpp \
+        amber_base/com_math.cpp \
+        amber_base/com_common.cpp \
+    aaobj.cpp \
+    aaform.cpp
+
+HEADERS += \
+        amber.h \
+        qcustomplot.h \
+        hyperlink.h \
+        statusbox.h \
+        amber_base_inc.h \
+        amber_base/com_ho.h \
+        amber_base/com_tp.h \
+        amber_base/com_holist.h \
+        amber_base/com_tplist.h \
+        amber_base/com_mapset.h \
+        amber_base/com_map.h \
+        amber_base/com_breakp.h \
+        amber_base/com_breakplist.h \
+        amber_base/com_math.h \
+        amber_base/com_common.h \
+    aaobj.h \
+    aaform.h
+
+LIBS += \
+
+>>>>>>> base_merge
 
 FORMS += \
-        amber.ui
+        amber.ui \
+    aaform.ui
 
 DISTFILES += \
     documentation \
@@ -68,3 +109,5 @@ RESOURCES += \
 win32:RC_ICONS += amberResources/icons/amberIcn.ico
 
 QMAKE_LFLAGS += -static
+
+INCLUDEPATH += $$PWD/../amber_base
