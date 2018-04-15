@@ -14,11 +14,11 @@
 **  GNU General Public License for more details.                          **
 **                                                                        **
 **  You should have received a copy of the GNU General Public License     **
-**  along with this program.  If not, see http://www.gnu.org/licenses/.   **
+**  along with this program.  If not, see http://ww.gnu.org/licenses/.   **
 **                                                                        **
 ****************************************************************************
 **           Author: Emanuel Eichhammer                                   **
-**  Website/Contact: http://www.qcustomplot.com/                          **
+**  Website/Contact: http://ww.qcustomplot.com/                          **
 **             Date: 04.09.17                                             **
 **          Version: 2.0.0                                                **
 ****************************************************************************/
@@ -2127,31 +2127,31 @@ protected:
   // axis base:
   AxisType mAxisType;
   QCPAxisRect *mAxisRect;
-  //int mOffset; // in QCPAxisPainter
+  //nt mOffset; // in QCPAxisPainter
   int mPadding;
   Qt::Orientation mOrientation;
   SelectableParts mSelectableParts, mSelectedParts;
   QPen mBasePen, mSelectedBasePen;
-  //QCPLineEnding mLowerEnding, mUpperEnding; // in QCPAxisPainter
+  //CPLineEnding mLowerEnding, mUpperEnding; // in QCPAxisPainter
   // axis label:
-  //int mLabelPadding; // in QCPAxisPainter
+  //nt mLabelPadding; // in QCPAxisPainter
   QString mLabel;
   QFont mLabelFont, mSelectedLabelFont;
   QColor mLabelColor, mSelectedLabelColor;
   // tick labels:
-  //int mTickLabelPadding; // in QCPAxisPainter
+  //nt mTickLabelPadding; // in QCPAxisPainter
   bool mTickLabels;
-  //double mTickLabelRotation; // in QCPAxisPainter
+  //ouble mTickLabelRotation; // in QCPAxisPainter
   QFont mTickLabelFont, mSelectedTickLabelFont;
   QColor mTickLabelColor, mSelectedTickLabelColor;
   int mNumberPrecision;
   QLatin1Char mNumberFormatChar;
   bool mNumberBeautifulPowers;
-  //bool mNumberMultiplyCross; // QCPAxisPainter
+  //ool mNumberMultiplyCross; // QCPAxisPainter
   // ticks and subticks:
   bool mTicks;
   bool mSubTicks;
-  //int mTickLengthIn, mTickLengthOut, mSubTickLengthIn, mSubTickLengthOut; // QCPAxisPainter
+  //nt mTickLengthIn, mTickLengthOut, mSubTickLengthIn, mSubTickLengthOut; // QCPAxisPainter
   QPen mTickPen, mSelectedTickPen;
   QPen mSubTickPen, mSelectedSubTickPen;
   // scale and range:
