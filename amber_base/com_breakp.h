@@ -3,6 +3,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDebug>
+#include "com_common.h"
 
 class cOM_BreakP
 {

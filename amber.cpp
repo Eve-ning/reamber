@@ -28,15 +28,12 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
 {
     ui->setupUi(this);
     tb = ui->statusBox;
-    AAObjList = {};
 
     ui->toolBox->setCurrentIndex(0);
 
-    QIcon windowIcon = QIcon(":/amberResources/icons/amberIcn.ico");
-
     setWindowIcon(QIcon(":/amberResources/icons/amberIcn.ico"));
 
-    //Pre-RenderGraphs
+    // Pre-RenderGraphs
     ui->adjuster_customPlot->addGraph();
     ui->adjuster_customPlot->xAxis->setLabel("Offset");
     ui->adjuster_customPlot->yAxis->setLabel("SV");
@@ -44,6 +41,19 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->TPF_customPlot->addGraph();
     ui->TPF_customPlot->xAxis->setLabel("Offset");
     ui->TPF_customPlot->yAxis->setLabel("SV");
+
+    //
+
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->QA_Adv, "color");
+    animation->setDuration(2000);
+    animation->setStartValue(QColor(0, 0, 0));
+    animation->setEndValue(QColor(240, 240, 240));
+    animation->start();
+
+    // AA ComboBox
+    AAObjList = {};
+
+    ui->AA_comboBox->addItems(AAType::getNameList());
 
 }
 
@@ -195,23 +205,23 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
 
     if      (itemString == "Stutter")
     {
-        ui->basicTabWidget->setCurrentIndex(0);
+        ui->basicStackedWidget->setCurrentIndex(0);
     }
     else if (itemString == "Copier")
     {
-        ui->basicTabWidget->setCurrentIndex(1);
+        ui->basicStackedWidget->setCurrentIndex(1);
     }
     else if (itemString == "2-Point Function")
     {
-        ui->basicTabWidget->setCurrentIndex(2);
+        ui->basicStackedWidget->setCurrentIndex(2);
     }
     else if (itemString == "Normalizer")
     {
-        ui->basicTabWidget->setCurrentIndex(3);
+        ui->basicStackedWidget->setCurrentIndex(3);
     }
     else if (itemString == "Adjuster")
     {
-        ui->basicTabWidget->setCurrentIndex(4);
+        ui->basicStackedWidget->setCurrentIndex(4);
     }
 
 }
@@ -224,7 +234,7 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
 
     if      (itemString == "Pack Splitter")
     {
-        ui->advancedTabWidget->setCurrentIndex(0);
+        ui->advancedStackedWidget->setCurrentIndex(0);
     }
 }
 void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
@@ -1369,119 +1379,22 @@ void amber::on_AA_addEffect_clicked()
     // Add to ListWidget and our AAObjList
     effectList->addItem(comboBox->currentText());
 
-    switch (comboBox->currentIndex()) {
-    case 0:
-    {
-        newObject = new AAObj(AAObj::AAType::ADD_OFFSET     );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 1:
-    {
-        newObject = new AAObj(AAObj::AAType::ADD_VALUE      );
-        AAObjList.append(newObject); break;
-    }
-    case 2:
-    {
-        newObject = new AAObj(AAObj::AAType::MULT_OFFSET    );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 3:
-    {
-        newObject = new AAObj(AAObj::AAType::MULT_VALUE     );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 4:
-    {
-        newObject = new AAObj(AAObj::AAType::DEL_SV         );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 5:
-    {
-        newObject = new AAObj(AAObj::AAType::DEL_BPM        );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 6:
-    {
-        newObject = new AAObj(AAObj::AAType::CONV_SV        );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 7:
-    {
-        newObject = new AAObj(AAObj::AAType::CONV_BPM       );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 8:
-    {
-        newObject = new AAObj(AAObj::AAType::ADD_TPLIST     );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 9:
-    {
-        newObject = new AAObj(AAObj::AAType::SUBTRACT_TPLIST);
-        AAObjList.append(newObject);
-        break;
-    }
-    case 10:
-    {
-        newObject = new AAObj(AAObj::AAType::MULT_TPLIST    );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 11:
-    {
-        newObject = new AAObj(AAObj::AAType::DIV_TPLIST     );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 12:
-    {
-        newObject = new AAObj(AAObj::AAType::INVERT         );
-        AAObjList.append(newObject);
-        break;
-    }
-    case 13:
-    {
-        newObject = new AAObj(AAObj::AAType::LIMITVAL       );
-        AAObjList.append(newObject);
-        break;
-    }
-    default:
-    {
-        STATMSG("Index does not exist");
-        return;
-    }
-    }
-
+    newObject = new AAObj(AAType(comboBox->currentText()));
+    AAObjList.append(newObject);
 
 }
 
 
+void amber::on_AA_effectList_itemDoubleClicked(QListWidgetItem *item)
+{
+    int currentIndex;
+    AAObj *currentAAObj;
 
 
+    currentIndex = ui->AA_effectList->row(item);
+    currentAAObj = AAObjList[currentIndex];
 
+    currentAAObj->setForm();
+    currentAAObj->showForm();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

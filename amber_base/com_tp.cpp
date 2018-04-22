@@ -29,9 +29,19 @@ cOM_TP::cOM_TP(double newOffset, double newValue) : cOM_TP()
 // LOADERS
 void cOM_TP::loadTP(QString TP)
 {
+    omInfo info;
+
+    cOM_Common::whatOM_Type(info, TP);
+
+    if (!info.getIsTP())
+    {
+        cOM_Common::assertTP(TP);
+        loadFail = true;
+        return;
+    }
+
     //            [0] [1]              [2][3][4][5][6][7]
     // REFERENCE: 638,231.660231660231,4, 1, 0, 5, 1, 0
-    cOM_TP{}; // Set Defaults
 
     QStringList TP_splitComma;
 
@@ -50,7 +60,6 @@ void cOM_TP::loadTP(QString TP)
     }
     else
     {
-        // STATMSG("Failed to Convert QString.");
         loadFail = true;
     }
 }
@@ -60,14 +69,8 @@ void cOM_TP::loadTP(QLineEdit *line)
 
     lineText = line->text();
 
-    if (cOM_Common::isTP(lineText) == cOM_Common::TPFlag::INVALID)
-    {
-        loadFail = true;
-        return;
-    } else
-    {
-        loadTP(lineText);
-    }
+    loadTP(lineText);
+
 }
 void cOM_TP::loadTP(double newOffset, double newValue)
 {
@@ -75,9 +78,17 @@ void cOM_TP::loadTP(double newOffset, double newValue)
     setValue(newValue);
 }
 
+void cOM_TP::setOffset(double newOffset)
+{
+    cOM_Common::assertOffsetValid(newOffset);
+    offset = newOffset;
+}
+
 // SETTERS
 void cOM_TP::setValue(double newValue)
 {
+    cOM_Common::assertDivByZero(newValue);
+
     // This will indirectly set code instead
     if (isBPM)
     {
@@ -140,6 +151,8 @@ void cOM_TP::multiplyValue(const cOM_TP rhsOM_TP, bool limitFlag)
 }
 void cOM_TP::divideValue(const cOM_TP rhsOM_TP, bool limitFlag)
 {
+    cOM_Common::assertDivByZero(rhsOM_TP.getValue());
+
     setValue(getValue() / rhsOM_TP.getValue());
     if (limitFlag)
     {
@@ -173,6 +186,8 @@ void cOM_TP::multiplyValue  (const double rhsDouble, bool limitFlag)
 }
 void cOM_TP::divideValue    (const double rhsDouble, bool limitFlag)
 {
+    cOM_Common::assertDivByZero(rhsDouble);
+
     setValue(getValue() / rhsDouble);
     if (limitFlag)
     {
@@ -206,6 +221,8 @@ void cOM_TP::multiplyOffset (const double rhsDouble, bool limitFlag)
 }
 void cOM_TP::divideOffset   (const double rhsDouble, bool limitFlag)
 {
+    cOM_Common::assertDivByZero(rhsDouble);
+
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
     {
@@ -236,11 +253,13 @@ void cOM_TP::limitValues(double maxSV, double minSV, double maxBPM, double minBP
     if ((maxSV != 0 && minSV != 0) && (minSV > maxSV))
     {
         qDebug() << __FUNCTION__ << "minSV > maxSV: " << minSV << " > " << maxSV;
+        return;
     }
 
     if ((maxBPM != 0 && minBPM != 0) && (minBPM > maxBPM))
     {
         qDebug() << __FUNCTION__ << "minBPM > maxBPM: " << minBPM << " > " << maxBPM;
+        return;
     }
 
     // If any value is exactly 0, we take it that the user doesn't want to limit it.
@@ -266,6 +285,18 @@ void cOM_TP::limitValues(double maxSV, double minSV, double maxBPM, double minBP
         {
             setValue(maxSV);
         }
+    }
+}
+
+void cOM_TP::limitOffset(double minOffset, double maxOffset)
+{
+    if (offset > maxOffset)
+    {
+        setOffset(minOffset);
+    }
+    else if (offset < minOffset)
+    {
+        setOffset(minOffset);
     }
 }
 

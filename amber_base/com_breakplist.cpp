@@ -19,7 +19,7 @@ cOM_BreakP &cOM_BreakPList::operator [](int i) {
     if (i < OM_BreakPList.count()){
         return OM_BreakPList[i];
     } else {
-        qDebug() << "cOM_BreakP Index Does not Exist, returning first index." << "\r\n";
+        ER_DEBUG("cOM_BreakP Index Does not Exist, returning first index.");
         return OM_BreakPList[0];
     }
 }
@@ -27,7 +27,7 @@ cOM_BreakP cOM_BreakPList::operator [](int i) const {
     if (i < OM_BreakPList.count()){
         return OM_BreakPList[i];
     } else {
-        qDebug() << "cOM_BreakP Index Does not Exist, returning default." << "\r\n";
+        ER_DEBUG("cOM_BreakP Index Does not Exist, returning default.");
         return cOM_BreakP();
     }
 }

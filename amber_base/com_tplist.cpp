@@ -1,9 +1,4 @@
 #include "com_tplist.h"
-#define CHECK_EMPTY(returnValue) if (isEmpty()) \
-                                 { \
-                                     qDebug() << __FUNCTION__ << ": OM_TP List is empty"; \
-                                     return returnValue; \
-                                 }
 
 // CONSTRUCTORS
 cOM_TPList::cOM_TPList()
@@ -69,27 +64,19 @@ void cOM_TPList::loadTPList(QString &str)
 {
     QStringList strSplit;
 
-    bool boolTP;
-    boolTP = (int(cOM_Common::isTP(str)) != int(cOM_Common::TPFlag::INVALID));
-
-    if (!boolTP)
-    {
-        loadFail = true;
-        return;
-    }
-
     strSplit = str.split("\n", QString::SkipEmptyParts);
 
     loadTPList(strSplit);
 }
 void cOM_TPList::loadTPList(QStringList &strList)
 {
-    bool boolTP;
-    QString     temp;
+    QString temp;
+    omInfo info;
 
-    boolTP = (int(cOM_Common::isTP(strList)) != int(cOM_Common::TPFlag::INVALID));
+    cOM_Common::whatOM_Type(info, strList);
+    cOM_Common::assertTP(strList);
 
-    if (!boolTP)
+    if (!info.getIsTP())
     {
         loadFail = true;
         return;
@@ -102,12 +89,8 @@ void cOM_TPList::loadTPList(QStringList &strList)
 
 // SETTERS
 void cOM_TPList::setOffsetList(QList<double> newOffsetList)
-{
-    if (OM_TPList.length() != newOffsetList.length())
-    {
-        qDebug() << __FUNCTION__ << ": Length Mismatch";
-        return;
-    }
+{ 
+    cOM_Common::assertLengthMatch(OM_TPList.length(), newOffsetList.length());
 
     for (int i = 0; i < newOffsetList.length(); i ++)
     {
@@ -118,11 +101,7 @@ void cOM_TPList::setOffsetList(QList<double> newOffsetList)
 }
 void cOM_TPList::setCodeList(QList<double> newCodeList)
 {
-    if (OM_TPList.length() != newCodeList.length())
-    {
-        qDebug() << __FUNCTION__ << ": Length Mismatch";
-        return;
-    }
+    cOM_Common::assertLengthMatch(OM_TPList.length(), newCodeList.length());
 
     for (int i = 0; i < newCodeList.length(); i ++)
     {
@@ -133,11 +112,7 @@ void cOM_TPList::setCodeList(QList<double> newCodeList)
 }
 void cOM_TPList::setValueList(QList<double> newValueList)
 {
-    if (OM_TPList.length() != newValueList.length())
-    {
-        qDebug() << __FUNCTION__ << ": Length Mismatch";
-        return;
-    }
+    cOM_Common::assertLengthMatch(OM_TPList.length(), newValueList.length());
 
     for (int i = 0; i < newValueList.length(); i ++)
     {
@@ -150,7 +125,7 @@ void cOM_TPList::setValueList(QList<double> newValueList)
 // GETTERS
 QList<double> cOM_TPList::getOffsetList(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     cOM_TP OM_TP;
     QList<double> output;
@@ -168,7 +143,7 @@ QList<double> cOM_TPList::getOffsetList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getCodeList(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     cOM_TP OM_TP;
     QList<double> output;
@@ -186,7 +161,7 @@ QList<double> cOM_TPList::getCodeList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getValueList(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     cOM_TP OM_TP;
     QList<double> output;
@@ -204,7 +179,7 @@ QList<double> cOM_TPList::getValueList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getLengthList(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     // Note: If cOM_Common::TPFlag is specified, length calculation will skip some timingPoints
     QList<double> output,
@@ -221,7 +196,7 @@ QList<double> cOM_TPList::getLengthList(cOM_Common::TPFlag onlyFlag) const
 }
 QList<double> cOM_TPList::getDistanceList(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> lengthList,
                   valueList,
@@ -240,7 +215,7 @@ QList<double> cOM_TPList::getDistanceList(cOM_Common::TPFlag onlyFlag) const
 
 QList<double> cOM_TPList::getUnqOffsetList(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> offsetList,
                   unqOffsetList;
@@ -301,7 +276,7 @@ cOM_TPList cOM_TPList::splitByType(cOM_Common::TPFlag onlyFlag) const
 
 double cOM_TPList::getMinOffset() const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     double output;
     QList<double> offsetList;
@@ -311,7 +286,7 @@ double cOM_TPList::getMinOffset() const
 }
 double cOM_TPList::getMaxOffset() const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     double output;
     QList<double> offsetList;
@@ -321,7 +296,7 @@ double cOM_TPList::getMaxOffset() const
 }
 double cOM_TPList::getMinValue(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
         onlyFlag == cOM_Common::TPFlag::INVALID)
@@ -345,7 +320,7 @@ double cOM_TPList::getMinValue(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getMaxValue(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
         onlyFlag == cOM_Common::TPFlag::INVALID)
@@ -370,7 +345,7 @@ double cOM_TPList::getMaxValue(cOM_Common::TPFlag onlyFlag) const
 
 double cOM_TPList::getLength() const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     double output = 0;
     QList<double> offsetList;
@@ -383,7 +358,7 @@ double cOM_TPList::getLength() const
 }
 double cOM_TPList::getLength(int index)
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     sortOffset(true);
 
@@ -434,7 +409,7 @@ int    cOM_TPList::getSize(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getAverage(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
         onlyFlag == cOM_Common::TPFlag::INVALID )
@@ -458,7 +433,7 @@ double cOM_TPList::getAverage(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getDistance(cOM_Common::TPFlag onlyFlag) const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
         onlyFlag == cOM_Common::TPFlag::INVALID    )
@@ -483,7 +458,7 @@ double cOM_TPList::getDistance(cOM_Common::TPFlag onlyFlag) const
 }
 double cOM_TPList::getDistance(int index)
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_TPList);
 
     double length,
            value;
@@ -495,7 +470,7 @@ double cOM_TPList::getDistance(int index)
 }
 QStringList cOM_TPList::toString() const
 {
-    CHECK_EMPTY(QStringList({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     cOM_TP temp;
     QStringList output;
@@ -526,7 +501,7 @@ cOM_TP cOM_TPList::operator [](int i) const {
 
 void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -603,7 +578,7 @@ void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 }
 void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -680,7 +655,7 @@ void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 }
 void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -757,7 +732,7 @@ void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 }
 void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -835,7 +810,7 @@ void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
 
 void cOM_TPList::multiplyValue  (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newValueList,
                   oldValueList;
@@ -855,7 +830,7 @@ void cOM_TPList::multiplyValue  (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::divideValue    (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newValueList,
                   oldValueList;
@@ -875,7 +850,7 @@ void cOM_TPList::divideValue    (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::addValue       (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newValueList,
                   oldValueList;
@@ -895,7 +870,7 @@ void cOM_TPList::addValue       (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::subtractValue  (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newValueList,
                   oldValueList;
@@ -916,7 +891,7 @@ void cOM_TPList::subtractValue  (const double rhsDouble, bool limitFlag)
 
 void cOM_TPList::multiplyOffset (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -936,7 +911,7 @@ void cOM_TPList::multiplyOffset (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::divideOffset   (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -956,7 +931,7 @@ void cOM_TPList::divideOffset   (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::addOffset      (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -976,7 +951,7 @@ void cOM_TPList::addOffset      (const double rhsDouble, bool limitFlag)
 }
 void cOM_TPList::subtractOffset (const double rhsDouble, bool limitFlag)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -997,7 +972,7 @@ void cOM_TPList::subtractOffset (const double rhsDouble, bool limitFlag)
 
 void cOM_TPList::zero()
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -1019,7 +994,7 @@ void cOM_TPList::zero()
 // MISC
 void cOM_TPList::sortOffset(bool isAscending)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (isAscending)
     {
@@ -1039,7 +1014,7 @@ void cOM_TPList::append(cOM_TPList newOM_TPList)
 
 cOM_Common::TPFlag cOM_TPList::isUniform()
 {
-    CHECK_EMPTY(cOM_Common::TPFlag::INVALID);
+    cOM_Common::assertEmpty(OM_TPList);
 
     cOM_TP temp;
 
@@ -1061,7 +1036,7 @@ bool cOM_TPList::isEmpty() const
 }
 void cOM_TPList::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     cOM_TP temp;
 
@@ -1069,9 +1044,20 @@ void cOM_TPList::limitValues(double maxSV, double minSV, double maxBPM, double m
         temp.limitValues(maxSV, minSV, maxBPM, minBPM);
     }
 }
+
+void cOM_TPList::limitOffset(double minOffset, double maxOffset)
+{
+    cOM_Common::assertEmpty(OM_TPList);
+
+    cOM_TP temp;
+
+    foreach (temp, OM_TPList) {
+        temp.limitOffset(minOffset, maxOffset);
+    }
+}
 QList<int> cOM_TPList::indexList(cOM_Common::TPFlag onlyFlag)
 {
-    CHECK_EMPTY(QList<int>({}));
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (onlyFlag == cOM_Common::TPFlag::SV_BPM_ONLY ||
         onlyFlag == cOM_Common::TPFlag::INVALID)
@@ -1108,7 +1094,7 @@ QList<int> cOM_TPList::indexList(cOM_Common::TPFlag onlyFlag)
 }
 void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     if (isUniform() == cOM_Common::TPFlag::SV_BPM_ONLY ||
         isUniform() == cOM_Common::TPFlag::INVALID)
@@ -1180,7 +1166,7 @@ void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
 
 void cOM_TPList::makeUnique()
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_TPList);
 
     QList<double> offsetList,
                   newOffsetList;

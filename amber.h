@@ -113,11 +113,13 @@ private slots:
     void on_AA_generate_clicked();
     void on_AA_addEffect_clicked();
 
+    void on_AA_effectList_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     QTextBrowser *tb;
     Ui::amber *ui;
 
-    QList<AAObj*> AAObjList;
+    QList<AAObj*> AAObjList = {};
 
 
 };

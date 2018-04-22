@@ -84,15 +84,15 @@ bool AAForm::enableChkbx (int index)
     {
         switch (index) {
         case 0:
-            ui->chkbx_0->setEnabled(false);
+            ui->chkbx_0->setEnabled(true);
             ui->chkbx_0->setChecked(false);
             break;
         case 1:
-            ui->chkbx_1->setEnabled(false);
+            ui->chkbx_1->setEnabled(true);
             ui->chkbx_1->setChecked(false);
             break;
         case 2:
-            ui->chkbx_2->setEnabled(false);
+            ui->chkbx_2->setEnabled(true);
             ui->chkbx_2->setChecked(false);
         default:
             qDebug() << __FUNCTION__ << "Out of Index: " << index;
@@ -315,17 +315,17 @@ bool AAForm::disableRadio(int index)
         {
         case 0:
             ui->radioGrp->setTitle("In Use");
-            ui->radio_0->setEnabled(true);
+            ui->radio_0->setEnabled(false);
             ui->radio_0->setChecked(false);
             break;
         case 1:
             ui->radioGrp->setTitle("In Use");
-            ui->radio_1->setEnabled(true);
+            ui->radio_1->setEnabled(false);
             ui->radio_1->setChecked(false);
             break;
         case 2:
             ui->radioGrp->setTitle("In Use");
-            ui->radio_2->setEnabled(true);
+            ui->radio_2->setEnabled(false);
             ui->radio_2->setChecked(false);
             break;
         default:
@@ -355,17 +355,17 @@ bool AAForm::enableRadio (int index)
         {
         case 0:
             ui->radioGrp->setTitle("Unused");
-            ui->radio_0->setEnabled(false);
+            ui->radio_0->setEnabled(true);
             ui->radio_2->setChecked(false);
             break;
         case 1:
             ui->radioGrp->setTitle("Unused");
-            ui->radio_1->setEnabled(false);
+            ui->radio_1->setEnabled(true);
             ui->radio_2->setChecked(false);
             break;
         case 2:
             ui->radioGrp->setTitle("Unused");
-            ui->radio_2->setEnabled(false);
+            ui->radio_2->setEnabled(true);
             ui->radio_2->setChecked(false);
             break;
         default:
@@ -377,9 +377,9 @@ bool AAForm::enableRadio (int index)
     {
         ui->radioGrp->setTitle("Unused");
 
-        ui->radio_0->setEnabled(false);
-        ui->radio_1->setEnabled(false);
-        ui->radio_2->setEnabled(false);
+        ui->radio_0->setEnabled(true);
+        ui->radio_1->setEnabled(true);
+        ui->radio_2->setEnabled(true);
 
         ui->radio_0->setChecked(false);
         ui->radio_1->setChecked(false);

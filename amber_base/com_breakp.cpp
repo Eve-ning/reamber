@@ -19,9 +19,8 @@ void cOM_BreakP::loadBreakP(QString newBreakP)
     BreakPList = newBreakP.split(",", QString::KeepEmptyParts);
 
     if (BreakPList.count() != 3) {
-        qDebug () << "\r\n"
-                  << "Break Period Invalid" << "\r\n"
-                  << "Input: " << newBreakP;
+        ER_DEBUG("Break Period Invalid");
+        ER_DEBUG("Input: " + newBreakP);
         cOM_BreakP();
     }
 
@@ -34,10 +33,9 @@ void cOM_BreakP::loadBreakP(QString newBreakP)
 // GETTERS
 void cOM_BreakP::getInfo() const
 {
-    qDebug() << "\r\n"
-             << "[---- Break Info ----]" << "\r\n"
-             << "STARTBREAK : " << startBreak << "\r\n"
-             << "ENDBREAK   : " << endBreak   << "\r\n";
+    INF_DEBUG("[---- Break Info ----]"    );
+    INF_DEBUG("STARTBREAK : " + QString::number(startBreak));
+    INF_DEBUG("ENDBREAK   : " + QString::number(endBreak  ));
 }
 
 // OPERS

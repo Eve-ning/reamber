@@ -87,6 +87,7 @@ public:
 
     // LIMITS VALUES DEPENDING ON THEIR ISBPM VALUE
     void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001); // ADD CUSTOM LIMITS
+    void limitOffset(double minOffset = 0, double maxOffset = 360000);
 
     // ADJUSTS A TP SO THAT THE AVERAGE IS MET
     void adjustToAverage (double averageSV, int adjustIndex);

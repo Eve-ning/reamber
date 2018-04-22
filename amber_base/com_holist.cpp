@@ -1,9 +1,4 @@
 #include "com_holist.h"
-#define CHECK_EMPTY(returnValue) if (isEmpty()) \
-                                 { \
-                                     qDebug() << __FUNCTION__ << ": OM_HO List is empty"; \
-                                     return returnValue; \
-                                 }
 
 // CONSTRUCTORS
 cOM_HOList::cOM_HOList()
@@ -66,8 +61,12 @@ void cOM_HOList::loadHOList(QString &EHOorHO, int newKeys)
     bool boolEHO,
          boolHO;
 
-    boolEHO = cOM_Common::isOM_Type(EHOorHO) == cOM_Common::OMFlag::EHO_ONLY;
-    boolHO  = cOM_Common::isOM_Type(EHOorHO) == cOM_Common::OMFlag::HO_ONLY;
+    omInfo info();
+
+    cOM_Common::whatOM_Type(info, EHOorHO);
+
+    boolEHO = info.getIsEHO();
+    boolHO  = info.getIsHO();
 
     // IF NOT HO CALL EHO
     if (boolEHO)
@@ -85,6 +84,7 @@ void cOM_HOList::loadHOList(QString &EHOorHO, int newKeys)
     }
     else
     {
+        cOM_Common::assertInvalidFormat(EHOorHO);
         loadFail = true;
         return;
     }
@@ -133,13 +133,8 @@ void cOM_HOList::loadEHOList(QString &EHO, int newKeys)
 // SETTERS
 void cOM_HOList::setOffsetList(QList<double> &newOffsetList)
 {
-    CHECK_EMPTY();
-
-    if (OM_HOList.length() != newOffsetList.length())
-    {
-        qDebug() << __FUNCTION__ << ": Length Mismatch";
-        return;
-    }
+    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertLengthMatch(OM_HOList.length(), newOffsetList.length());
 
     for (int i = 0; i < newOffsetList.length(); i ++)
     {
@@ -150,13 +145,8 @@ void cOM_HOList::setOffsetList(QList<double> &newOffsetList)
 }
 void cOM_HOList::setXAxisList(QList<double> &newXAxisList)
 {
-    CHECK_EMPTY();
-
-    if (OM_HOList.length() != newXAxisList.length())
-    {
-        qDebug() << __FUNCTION__ << ": Length Mismatch";
-        return;
-    }
+    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertLengthMatch(OM_HOList.length(), newXAxisList.length());
 
     for (int i = 0; i < newXAxisList.length(); i ++)
     {
@@ -165,15 +155,10 @@ void cOM_HOList::setXAxisList(QList<double> &newXAxisList)
 
     return;
 }
-void cOM_HOList::setColumnList(QList<double> &newColumnList)
+void cOM_HOList::setColumnList(QList<int> &newColumnList)
 {
-    CHECK_EMPTY();
-
-    if (OM_HOList.length() != newColumnList.length())
-    {
-        qDebug() << __FUNCTION__ << ": Length Mismatch";
-        return;
-    }
+    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertLengthMatch(OM_HOList.length(), newColumnList.length());
 
     for (int i = 0; i < newColumnList.length(); i ++)
     {
@@ -184,7 +169,7 @@ void cOM_HOList::setColumnList(QList<double> &newColumnList)
 }
 void cOM_HOList::setKeys(unsigned short newKeys)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_HOList);
 
     for (int temp = 0; temp < OM_HOList.length(); temp ++) {
         OM_HOList[temp].setKeys(newKeys);
@@ -194,7 +179,7 @@ void cOM_HOList::setKeys(unsigned short newKeys)
 // GETTERS
 QList<double> cOM_HOList::getOffsetList() const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_HOList);
 
     cOM_HO OM_HO;
     QList<double> output;
@@ -207,7 +192,7 @@ QList<double> cOM_HOList::getOffsetList() const
 }
 QList<double> cOM_HOList::getUnqOffsetList() const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_HOList);
 
     QList<double> unqOffsetList,
                   offsetList;
@@ -227,7 +212,7 @@ QList<double> cOM_HOList::getUnqOffsetList() const
 }
 QList<double> cOM_HOList::getXAxisList() const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_HOList);
 
     cOM_HO OM_HO;
     QList<double> output;
@@ -238,12 +223,12 @@ QList<double> cOM_HOList::getXAxisList() const
 
     return output;
 }
-QList<double> cOM_HOList::getColumnList() const
+QList<int> cOM_HOList::getColumnList() const
 {
-    CHECK_EMPTY(QList<double>({}));
+    cOM_Common::assertEmpty(OM_HOList);
 
     cOM_HO OM_HO;
-    QList<double> output;
+    QList<int> output;
     foreach (OM_HO, OM_HOList)
     {
         output.append(OM_HO.getColumn());
@@ -253,7 +238,7 @@ QList<double> cOM_HOList::getColumnList() const
 }
 double cOM_HOList::getMinOffset() const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_HOList);
 
     double output;
     QList<double> offsetList;
@@ -263,7 +248,7 @@ double cOM_HOList::getMinOffset() const
 }
 double cOM_HOList::getMaxOffset() const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_HOList);
 
     double output;
     QList<double> offsetList;
@@ -273,7 +258,7 @@ double cOM_HOList::getMaxOffset() const
 }
 double cOM_HOList::getLength() const
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_HOList);
 
     double output;
     QList<double> offsetList;
@@ -282,19 +267,13 @@ double cOM_HOList::getLength() const
            - *std::min_element(offsetList.begin(), offsetList.end());
     return output;
 }
-
 double cOM_HOList::getLength(int index)
 {
-    CHECK_EMPTY(0);
+    cOM_Common::assertEmpty(OM_HOList);
 
     sortOffset(true);
 
-    if (!(index < (getSize() - 1)))
-    {
-        qDebug() << __FUNCTION__ << "Index is out of bounds, cannot get length" << "\n"
-                 << "Returning 0;";
-        return 0;
-    }
+    cOM_Common::assertIndex(index, getSize());
 
     return OM_HOList[index + 1].getOffset() - OM_HOList[index].getOffset();
 }
@@ -304,7 +283,7 @@ double cOM_HOList::getSize() const
 }
 QStringList cOM_HOList::toString() const
 {
-    CHECK_EMPTY(QStringList({}));
+    cOM_Common::assertEmpty(OM_HOList);
 
     cOM_HO temp;
     QStringList output;
@@ -321,24 +300,145 @@ cOM_HO &cOM_HOList::operator [](int i) {
     if (i < OM_HOList.count()){
         return OM_HOList[i];
     } else {
-        qDebug() << "cOM_HO Index Does not Exist, returning first index." << "\r\n";
+        cOM_Common::assertIndex(i, getSize());
         return OM_HOList[0];
     }
 }
-cOM_HO cOM_HOList::operator [](int i) const {
+cOM_HO cOM_HOList ::operator [](int i) const {
     if (i < OM_HOList.count()){
         return OM_HOList[i];
     } else {
-        qDebug() << "cOM_HO Index Does not Exist, returning default." << "\r\n";
+        cOM_Common::assertIndex(i, getSize());
         return cOM_HO();
     }
 }
 
 // MISC
+void cOM_HOList::addColumn      (const int rhsInt)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    QList<int> newColumnList,
+               oldColumnList;
+    int temp;
+
+    oldColumnList = this->getColumnList();
+
+    foreach (temp, oldColumnList) {
+        newColumnList.append(temp + rhsInt);
+    }
+
+    setColumnList(newColumnList);
+
+    limitColumn();
+}
+void cOM_HOList::subtractColumn (const int rhsInt)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    QList<int> newColumnList,
+               oldColumnList;
+    int temp;
+
+    oldColumnList = this->getColumnList();
+
+    foreach (temp, oldColumnList) {
+        newColumnList.append(temp - rhsInt);
+    }
+
+    setColumnList(newColumnList);
+
+    limitColumn();
+}
+
+void cOM_HOList::multiplyOffset (const double rhsDouble, bool limitFlag)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    QList<double> newOffsetList,
+                  oldOffsetList;
+    int temp;
+
+    oldOffsetList = this->getOffsetList();
+
+    foreach (temp, oldOffsetList) {
+        newOffsetList.append(temp * rhsDouble);
+    }
+
+    setOffsetList(newOffsetList);
+
+    if (limitFlag)
+    {
+        limitOffset();
+    }
+}
+void cOM_HOList::divideOffset   (const double rhsDouble, bool limitFlag)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    QList<double> newOffsetList,
+                  oldOffsetList;
+    int temp;
+
+    oldOffsetList = this->getOffsetList();
+
+    foreach (temp, oldOffsetList) {
+        newOffsetList.append(temp / rhsDouble);
+    }
+
+    setOffsetList(newOffsetList);
+
+    if (limitFlag)
+    {
+        limitOffset();
+    }
+}
+void cOM_HOList::addOffset      (const double rhsDouble, bool limitFlag)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    QList<double> newOffsetList,
+                  oldOffsetList;
+    int temp;
+
+    oldOffsetList = this->getOffsetList();
+
+    foreach (temp, oldOffsetList) {
+        newOffsetList.append(temp + rhsDouble);
+    }
+
+    setOffsetList(newOffsetList);
+
+    if (limitFlag)
+    {
+        limitOffset();
+    }
+}
+void cOM_HOList::subtractOffset (const double rhsDouble, bool limitFlag)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    QList<double> newOffsetList,
+                  oldOffsetList;
+    int temp;
+
+    oldOffsetList = this->getOffsetList();
+
+    foreach (temp, oldOffsetList) {
+        newOffsetList.append(temp - rhsDouble);
+    }
+
+    setOffsetList(newOffsetList);
+
+    if (limitFlag)
+    {
+        limitOffset();
+    }
+}
 
 void cOM_HOList::makeUnique()
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_HOList);
 
     QList<double> offsetList,
                   newOffsetList;
@@ -358,7 +458,7 @@ void cOM_HOList::makeUnique()
 }
 void cOM_HOList::sortOffset(bool isAscending)
 {
-    CHECK_EMPTY();
+    cOM_Common::assertEmpty(OM_HOList);
 
     if (isAscending)
     {
@@ -368,6 +468,42 @@ void cOM_HOList::sortOffset(bool isAscending)
         std::sort(OM_HOList.rbegin(), OM_HOList.rend());
     }
 }
+void cOM_HOList::limitColumn(int &maxColumn, int &minColumn)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    cOM_HO temp;
+
+    foreach (temp, OM_HOList)
+    {
+        temp.limitColumn(maxColumn, minColumn);
+    }
+}
+void cOM_HOList::limitColumn()
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    cOM_HO temp;
+
+    foreach (temp, OM_HOList)
+    {
+        temp.limitColumn();
+    }
+}
+
+void cOM_HOList::limitOffset(double minOffset, double maxOffset)
+{
+    cOM_Common::assertEmpty(OM_HOList);
+
+    cOM_HO temp;
+
+    foreach (temp, OM_HOList) {
+        temp.limitOffset(minOffset, maxOffset);
+    }
+}
+
+
+
 bool cOM_HOList::isEmpty () const
 {
     return (getSize() == 0);

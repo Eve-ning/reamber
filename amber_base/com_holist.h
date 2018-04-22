@@ -30,14 +30,14 @@ public:
     // SETTERS
     void setOffsetList(QList<double>  &newOffsetList);
     void setXAxisList (QList<double>  &newXAxisList );
-    void setColumnList(QList<double>  &newColumnList);
+    void setColumnList(QList<int>     &newColumnList);
     void setKeys      (unsigned short newKeys       );
 
     // GETTERS
     QList<double> getOffsetList   () const;
     QList<double> getUnqOffsetList() const;
     QList<double> getXAxisList    () const;
-    QList<double> getColumnList   () const;
+    QList<int>    getColumnList   () const;
     double        getMinOffset    () const;
     double        getMaxOffset    () const;
     double        getLength       () const;
@@ -51,13 +51,21 @@ public:
     cOM_HO & operator [](int i);
 
     // MISC
-
+    void addColumn      (const int rhsInt);
+    void subtractColumn (const int rhsInt);
+    void multiplyOffset (const double rhsDouble, bool limitFlag = false);
+    void divideOffset   (const double rhsDouble, bool limitFlag = false);
+    void addOffset      (const double rhsDouble, bool limitFlag = false);
+    void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
     void makeUnique ();
     void append     (cOM_HO newOM_HO) { OM_HOList.append(newOM_HO); }
     void deleteIndex(unsigned  index) { OM_HOList.removeAt(index); }
     bool isEmpty    () const;
     void sortOffset (bool isAscending = true);
+    void limitColumn (int maxColumn, int minColumn);
+    void limitColumn ();
+    void limitOffset(double minOffset = 0, double maxOffset = 360000);
 
 private:
 

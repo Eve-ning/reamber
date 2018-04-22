@@ -24,59 +24,89 @@ void AAObj::setFormDefault()
 {
     ui->disableAll();
 }
+
+void AAObj::setObjType(AAType newObjType)
+{
+    objType = newObjType;
+}
 void AAObj::setForm()
 {
     // Reset everything to default
     setFormDefault();
 
     // Sets UI Form according to Object Type
-    switch (objType)
+    switch (objType.getIndex())
     {
-    case AAType::ADD_OFFSET     :
+    case 0: // Add Offset
+    {
         ui->enableLine(0);
         ui->setLineTitle("Offset (+ms):", 0, "Insert Offset Here.");
         break;
-    case AAType::ADD_VALUE      :
+    }
+    case 1: // Add Value
+    {
         ui->enableLine(0);
         ui->setLineTitle("Value (+):", 0, "Insert Value Here.");
         break;
-    case AAType::MULT_OFFSET    :
+    }
+    case 2: // Multiply Offset
+    {
         ui->enableLine(0);
         ui->setLineTitle("Value (*):", 0, "Insert Offset Here.");
         break;
-    case AAType::MULT_VALUE     :
+    }
+    case 3: // Multiply Value
+    {
         ui->enableLine(0);
         ui->setLineTitle("Value (*):", 0, "Insert Value Here.");
         break;
-    case AAType::DEL_SV         :
+    }
+    case 4: // Delete SV
+    {
         // No Form
         break;
-    case AAType::DEL_BPM        :
+    }
+    case 5: // Delete BPM
+    {
         // No Form
         break;
-    case AAType::CONV_SV        :
+    }
+    case 6: // Convert To SV
+    {
         // No Form
         break;
-    case AAType::CONV_BPM       :
+    }
+    case 7: // Convert To BPM
+    {
         // No Form
         break;
-    case AAType::ADD_TPLIST     :
+    }
+    case 8: // Add TPList
+    {
         ui->enablePTE(0);
         ui->setPTETitle("Insert TP List", 0, "<Insert TP or TPList to Add.>");
         break;
-    case AAType::SUBTRACT_TPLIST:
+    }
+    case 9: // Subtract TPList
+    {
         ui->enablePTE(0);
         ui->setPTETitle("Insert TP List", 0, "<Insert TP or TPList to Subtract.>");
         break;
-    case AAType::MULT_TPLIST    :
+    }
+    case 10: // Multiply TPList
+    {
         ui->enablePTE(0);
         ui->setPTETitle("Insert TP List", 0, "<Insert TP or TPList to Multiply.>");
         break;
-    case AAType::DIV_TPLIST     :
+    }
+    case 11: // Divide TPList
+    {
         ui->enablePTE(0);
         ui->setPTETitle("Insert TP List", 0, "<Insert TP or TPList to Divide.>");
         break;
-    case AAType::INVERT         :
+    }
+    case 12: // Invert
+    {
         ui->enableLine(0);
 
         ui->setLineTitle("Invert along X-axis", 0,"y = ?");
@@ -93,7 +123,9 @@ void AAObj::setForm()
         ui->checkChkbx(1, true);
 
         break;
-    case AAType::LIMITVAL       :
+    }
+    case 13: // Limit Values
+    {
         ui->enableLine(0);
         ui->enableLine(1);
         ui->enableLine(2);
@@ -116,6 +148,7 @@ void AAObj::setForm()
         ui->checkChkbx(1, true);
 
         break;
+    }
     };
 }
 
@@ -125,75 +158,115 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
     cOM_TPList newTPList,
                tempTPList;
 
-    switch (objType)
+    // Add Offset
+    // Add Value
+    // Multiply Offset
+    // Multiply Value
+    // Delete SV
+    // Delete BPM
+    // Convert To SV
+    // Convert To BPM
+    // Add TPList
+    // Subtract TPList
+    // Multiply TPList
+    // Divide TPList
+    // Invert
+    // Limit Values
+
+    switch (objType.getIndex())
     {
-    case AAType::ADD_OFFSET     :
+    case 0: // Add Offset
+    {
         if (!ui->getLineText(0).isEmpty())
         {
             oldTPList.addOffset(ui->getLineText(0).toDouble());
         }
         newTPList = oldTPList;
         break;
-    case AAType::ADD_VALUE      :
+    }
+    case 1: // Add Value
+    {
         if (!ui->getLineText(0).isEmpty())
         {
             oldTPList.addValue(ui->getLineText(0).toDouble());
         }
         newTPList = oldTPList;
         break;
-    case AAType::MULT_OFFSET    :
+    }
+    case 2: // Multiply Offset
+    {
         if (!ui->getLineText(0).isEmpty())
         {
             oldTPList.multiplyOffset(ui->getLineText(0).toDouble());
         }
         newTPList = oldTPList;
         break;
-    case AAType::MULT_VALUE     :
+    }
+    case 3: // Multiply Value
+    {
         if (!ui->getLineText(0).isEmpty())
         {
             oldTPList.multiplyValue(ui->getLineText(0).toDouble());
         }
         newTPList = oldTPList;
         break;
-    case AAType::DEL_SV         :
+    }
+    case 4: // Delete SV
+    {
         newTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
         break;
-    case AAType::DEL_BPM        :
+    }
+    case 5: // Delete BPM
+    {
         newTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
         break;
-    case AAType::CONV_SV        :
+    }
+    case 6: // Convert To SV
+    {
         break;
-    case AAType::CONV_BPM       :
+    }
+    case 7: // Convert To BPM
+    {
         break;
-    case AAType::ADD_TPLIST     :
+    }
+    case 8: // Add TPList
+    {
         if (!ui->getPTEText(0).isEmpty())
         {
             oldTPList.addValue(cOM_TPList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
-    case AAType::SUBTRACT_TPLIST:
+    }
+    case 9: // Subtract TPList
+    {
         if (!ui->getPTEText(0).isEmpty())
         {
             oldTPList.subtractValue(cOM_TPList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
-    case AAType::MULT_TPLIST    :
+    }
+    case 10: // Multiply TPList
+    {
         if (!ui->getPTEText(0).isEmpty())
         {
             oldTPList.multiplyValue(cOM_TPList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
-    case AAType::DIV_TPLIST     :
+    }
+    case 11: // Divide TPList
+    {
         if (!ui->getPTEText(0).isEmpty())
         {
             oldTPList.divideValue(cOM_TPList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
-    case AAType::INVERT         :
+    }
+    case 12: // Invert
+    {
         if (ui->getChkbxState(0) && ui->getChkbxState(1)) // SV & BPM
         {
             newTPList = oldTPList;
@@ -211,128 +284,127 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
         newTPList.addValue(ui->getLineText(0).toDouble());
         newTPList.append(tempTPList);
         break;
-    case AAType::LIMITVAL       :
+    }
+    case 13: // Limit Values
+    {
         oldTPList.limitValues(ui->getLineText(0).toDouble(),
                               ui->getLineText(2).toDouble(),
                               ui->getLineText(1).toDouble(),
                               ui->getLineText(3).toDouble());
         newTPList = oldTPList;
         break;
+    }
     };
 
     return newTPList;
 }
 
-AAObj::AAType AAObj::getEffect()
+AAType AAObj::getEffect()
 {
     return objType;
 }
 QString AAObj::getEffectName(bool getInfo)
 {
     QString name;
-    switch (objType) // Get Name
-    {
-    case AAType::ADD_OFFSET     :
-        name = "ADD_OFFSET";
-        break;
-    case AAType::ADD_VALUE      :
-        name = "ADD_VALUE";
-        break;
-    case AAType::MULT_OFFSET    :
-        name = "MULT_OFFSET";
-        break;
-    case AAType::MULT_VALUE     :
-        name = "MULT_VALUE";
-        break;
-    case AAType::DEL_SV         :
-        name = "DEL_SV";
-        break;
-    case AAType::DEL_BPM        :
-        name = "DEL_BPM";
-        break;
-    case AAType::CONV_SV        :
-        name = "CONV_SV";
-        break;
-    case AAType::CONV_BPM       :
-        name = "CONV_BPM";
-        break;
-    case AAType::ADD_TPLIST     :
-        name = "ADD_TPLIST";
-        break;
-    case AAType::SUBTRACT_TPLIST:
-        name = "SUBTRACT_TPLIST";
-        break;
-    case AAType::MULT_TPLIST    :
-        name = "MULT_TPLIST";
-        break;
-    case AAType::DIV_TPLIST     :
-        name = "DIV_TPLIST";
-        break;
-    case AAType::INVERT         :
-        name = "INVERT";
-        break;
-    case AAType::LIMITVAL       :
-        name = "LIMITVAL";
-        break;
-    default:
-        name = "";
-        break;
-    };
+    name = objType.getName();
+
+ // Add Offset
+ // Add Value
+ // Multiply Offset
+ // Multiply Value
+ // Delete SV
+ // Delete BPM
+ // Convert To SV
+ // Convert To BPM
+ // Add TPList
+ // Subtract TPList
+ // Multiply TPList
+ // Divide TPList
+ // Invert
+ // Limit Values
+
     if (getInfo){ // Get Info
-        switch (objType)
+        switch (objType.getIndex())
         {
-        case AAType::ADD_OFFSET     :
+        case 0: // Add Offset
+        {
             qDebug() << "[Add Offset]" << "\n"
                      << "Offset (+ms): " << ui->getLineText(0) << "\n";
             break;
-        case AAType::ADD_VALUE      :
+        }
+        case 1: // Add Value
+        {
             qDebug() << "[Add Value]" << "\n"
                      << "Value (+): " << ui->getLineText(0) << "\n";
             break;
-        case AAType::MULT_OFFSET    :
+        }
+        case 2: // Multiply Offset
+        {
             qDebug() << "[Multiply Offset]" << "\n"
                      << "Offset (*): " << ui->getLineText(0) << "\n";
             break;
-        case AAType::MULT_VALUE     :
+        }
+        case 3: // Multiply Value
+        {
             qDebug() << "[Multiply Value]" << "\n"
                      << "Value (*): " << ui->getLineText(0) << "\n";
             break;
-        case AAType::DEL_SV         :
+        }
+        case 4: // Delete SV
+        {
             qDebug() << "[Delete SVs]" << "\n";
             break;
-        case AAType::DEL_BPM        :
+        }
+        case 5: // Delete BPM
+        {
             qDebug() << "[Delete BPMs]" << "\n";
             break;
-        case AAType::CONV_SV        :
+        }
+        case 6: // Convert To SV
+        {
             qDebug() << "[Convert to SV]" << "\n";
             break;
-        case AAType::CONV_BPM       :
+        }
+        case 7: // Convert To BPM
+        {
             qDebug() << "[Convert to BPM]" << "\n";
             break;
-        case AAType::ADD_TPLIST     :
+        }
+        case 8: // Add TPList
+        {
             qDebug() << "[Add TPList]" << "\n"
                      << "TPList: " << ui->getPTEText(0) << "\n";
             break;
-        case AAType::SUBTRACT_TPLIST:
+        }
+        case 9: // Subtract TPList
+        {
             qDebug() << "[Subtract TPList]" << "\n"
                      << "TPList: " << ui->getPTEText(0) << "\n";
             break;
-        case AAType::MULT_TPLIST    :
+        }
+        case 10: // Multiply TPList
+        {
             qDebug() << "[Multiply TPList]" << "\n"
                      << "TPList: " << ui->getPTEText(0) << "\n";
             break;
-        case AAType::DIV_TPLIST     :
+        }
+        case 11: // Divide TPList
+        {
             qDebug() << "[Divide TPList]" << "\n"
                      << "TPList: " << "\n"
                      << ui->getPTEText(0).split("\n") << "\n";
             break;
-        case AAType::INVERT         :
+        }
+        case 12: // Invert
+        {
             qDebug() << "[Invert]" << "\n"
                      << "Axis: y = " << ui->getLineText(0) << "\n"
                      << "Invert SV: " << (ui->getChkbxState(0) ? "TRUE" : "FALSE")  << "\n"
                      << "Invert BPM: " << (ui->getChkbxState(1) ? "TRUE" : "FALSE") << "\n";
             break;
-        case AAType::LIMITVAL       :
+        }
+        case 13: // Limit Values
+        {
             qDebug() << "[Limit Values]" << "\n"
                      << "Max SV: "  << (ui->getLineText(0)) << "\n"
                      << "Max BPM: " << (ui->getLineText(1)) << "\n"
@@ -341,10 +413,51 @@ QString AAObj::getEffectName(bool getInfo)
                      << "Limit SV: " << (ui->getChkbxState(0) ? "TRUE" : "FALSE")  << "\n"
                      << "Limit BPM: " << (ui->getChkbxState(1) ? "TRUE" : "FALSE") << "\n";
             break;
+        }
         default:
+        {
             qDebug() << "Invalid Effect." << "\n";
             break;
+        }
         };
     }
     return name;
+}
+
+// FOR AATYPE
+const QStringList AAType::nameList
+{
+    "Add Offset",      /* ADD_OFFSET      */
+    "Add Value",       /* ADD_VALUE       */
+    "Multiply Offset", /* MULT_OFFSET     */
+    "Multiply Value",  /* MULT_VALUE      */
+    "Delete SV",       /* DEL_SV          */
+    "Delete BPM",      /* DEL_BPM         */
+    "Convert To SV",   /* CONV_SV         */
+    "Convert To BPM",  /* CONV_BPM        */
+    "Add TPList",      /* ADD_TPLIST      */
+    "Subtract TPList", /* SUBTRACT_TPLIST */
+    "Multiply TPList", /* MULT_TPLIST     */
+    "Divide TPList",   /* DIV_TPLIST      */
+    "Invert",          /* INVERT          */
+    "Limit Values"     /* LIMITVAL        */
+};
+
+void AAType::load(QString newName)
+{
+    if (!nameList.contains(newName))
+    {
+        qDebug() << __FUNCTION__ << "Failed to load via name.";
+        return;
+    }
+    name = newName;
+}
+void AAType::load(int newIndex)
+{
+    if (newIndex >= nameList.length())
+    {
+        qDebug() << __FUNCTION__ << "Index out of range.";
+        return;
+    }
+    name = nameList[newIndex];
 }

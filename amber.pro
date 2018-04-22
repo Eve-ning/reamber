@@ -43,7 +43,8 @@ SOURCES += \
         amber_base/com_math.cpp \
         amber_base/com_common.cpp \
         aaobj.cpp \
-        aaform.cpp
+        aaform.cpp \
+    qabutton.cpp
 
 
 HEADERS += \
@@ -67,7 +68,8 @@ HEADERS += \
         amber_base/com_math.h \
         amber_base/com_common.h \
         aaobj.h \
-        aaform.h
+        aaform.h \
+    qabutton.h
 
 LIBS += \
 

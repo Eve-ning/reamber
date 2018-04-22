@@ -65,8 +65,11 @@ public:
     void addOffset      (const double rhsDouble, bool limitFlag = false);
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
+
     // MISC
     void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001);
+    void limitOffset(double minOffset = 0, double maxOffset = 360000);
+
 
 
 
