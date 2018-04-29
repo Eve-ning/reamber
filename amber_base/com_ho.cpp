@@ -2,6 +2,10 @@
 
 // CONSTRUCTORS
 cOM_HO::cOM_HO()
+
+
+
+
 {
     xAxis           =   256;
     yAxis           =   192;
@@ -47,12 +51,13 @@ void cOM_HO::loadHO(QLineEdit *line, int newKeys)
 }
 void cOM_HO::loadHO(QString &HO, int newKeys)
 {
-    if (!cOM_Common::isHO(HO))
+    if (!cOM_Common::isHO(HO)) // Case: Invalid
     {
         loadFail = true;
-        failMsg  = QString("Input not HO: ") + HO;
-        return;
+        throw HOLoadFail(QString("Input not HO: ") + HO);
     }
+
+    // Case: HO
 
     /* REFERENCE FOR .osu HO
     // NN
@@ -112,7 +117,7 @@ void cOM_HO::loadHO(QString &HO, int newKeys)
         hitsoundFile    = (HO_splitColon[5])           ;
     } else {
         loadFail = true;
-        throw loadInputFail(HO);
+        throw amberException("An unexpected error has occured.");
     }
 }
 
@@ -151,10 +156,6 @@ void cOM_HO::printInfo() const
     << ("HITSOUNDFILE : " + hitsoundFile)                  << "\n"
     << ("KEYS         : " + QString::number(keys        )) << "\n"
     << ("COLUMN       : " + QString::number(getColumn() )) << "\n";
-}
-QString cOM_HO::getFailMsg() const
-{
-    return failMsg;
 }
 unsigned short cOM_HO::getColumn() const
 {
@@ -210,43 +211,43 @@ void cOM_HO::subtractOffset (const double &rhsDouble)
     setOffset(getOffset() - rhsDouble);
 }
 
-void cOM_HO::assertColumnValid()
+void cOM_HO::assertColumnValid() const
 {
-    if (getColumn() < MINIMUM_COLUMN || getColumn() > keys - 1)
+    if (getColumn() > MAXIMUM_COLUMN)
     {
-        throw columnOutOfRange(getColumn(), MINIMUM_COLUMN, keys - 1);
+        throw columnOutOfRange(getColumn(), MINIMUM_COLUMN, MAXIMUM_COLUMN);
     }
 }
-void cOM_HO::assertColumnValid(int &newColumn)
+void cOM_HO::assertColumnValid(int newColumn)
 {
-    if (newColumn < MINIMUM_COLUMN || newColumn > keys - 1)
+    if (newColumn < MINIMUM_COLUMN || newColumn > MAXIMUM_COLUMN)
     {
-        throw columnOutOfRange(newColumn, MINIMUM_COLUMN, keys - 1);
+        throw columnOutOfRange(newColumn, MINIMUM_COLUMN, MAXIMUM_COLUMN);
     }
 }
 
-void cOM_HO::assertXAxisValid()
+void cOM_HO::assertXAxisValid() const
 {
-    if (xAxis < MINIMUM_XAXIS || xAxis > MAXIMUM_XAXIS)
+    if (xAxis > MAXIMUM_XAXIS)
     {
-        throw offsetOutOfRange(offset, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
+        throw xAxisOutOfRange(xAxis, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
     }
 }
-void cOM_HO::assertXAxisValid(int &newXAxis)
+void cOM_HO::assertXAxisValid(int newXAxis)
 {
     if (newXAxis < MINIMUM_XAXIS || newXAxis > MAXIMUM_XAXIS)
     {
-        throw offsetOutOfRange(offset, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
+        throw xAxisOutOfRange(newXAxis, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
     }
 }
-void cOM_HO::assertKeysValid()
+void cOM_HO::assertKeysValid() const
 {
     if (keys < MINIMUM_KEYS || keys > MAXIMUM_KEYS)
     {
-        throw offsetOutOfRange(keys, cOM_Common::MINIMUM_KEYS, MAXIMUM_KEYS);
+        throw offsetOutOfRange(keys, MINIMUM_KEYS, MAXIMUM_KEYS);
     }
 }
-void cOM_HO::assertKeysValid(int &newKeys)
+void cOM_HO::assertKeysValid(int newKeys)
 {
     if (newKeys < MINIMUM_KEYS || newKeys > MAXIMUM_KEYS)
     {
@@ -293,12 +294,6 @@ void cOM_HO::limitOffset(double minOffset, double maxOffset)
         setOffset(minOffset);
     }
 }
-
-void cOM_HO::setFailMsg(const QString &value)
-{
-    failMsg = value;
-}
-
 // MISC
 
 

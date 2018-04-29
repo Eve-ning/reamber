@@ -1,43 +1,41 @@
 #include "com_common.h"
 
-namespace cOM_Common{
-cOM_Common()
+
+cOM_Common::cOM_Common()
 {
 
 }
 
-void whatHO(omInfo &info, QTextBrowser   *tb)
+omInfo cOM_Common::whatHO(const QTextBrowser   *tb)
 {
-    whatHO(info, tb->toPlainText());
+    QString temp = tb->toPlainText();
+    return whatHO(temp);
 }
-void whatHO(omInfo &info, QLineEdit      *line)
+omInfo cOM_Common::whatHO(const QLineEdit      *line)
 {
-    whatHO(info, line->text());
+    QString temp = line->text();
+    return whatHO(temp);
 }
-void whatHO(omInfo &info, QPlainTextEdit *pte)
+omInfo cOM_Common::whatHO(const QPlainTextEdit *pte)
 {
-    whatHO(info, pte->toPlainText());
+    QString temp = pte->toPlainText();
+    return whatHO(temp);
 }
-void whatHO(omInfo &info, QString &HO)
+omInfo cOM_Common::whatHO(const QString &HO)
 {
     QStringList HOSplit;
 
     HOSplit = HO.split("\n", QString::SkipEmptyParts);
 
-    whatHO(info, HOSplit);
+    return whatHO(HOSplit);
 }
-void whatHO(omInfo &info, QStringList &HOList)
+omInfo cOM_Common::whatHO(const QStringList &HOList)
 {
     // Empty Load Fail
-    if (HOList.isEmpty())
-    {
-        info.setLoadFail(true);
-        info.setfailMsg("Recieved Empty Input.");
-        return;
-    }
-
+    assertEmpty(HOList, __FUNCTION__);
 
     QString temp;
+    omInfo info = omInfo();
 
     short colonIndex,
           openBrIndex,
@@ -54,15 +52,14 @@ void whatHO(omInfo &info, QStringList &HOList)
 
         // EHO CASE
         if (
-            colonIndex   < 0 ||
-            openBrIndex  < 0 ||
-            pipeIndex    < 0 ||
-            closeBrIndex < 0 || // If index is -1, means that the character does not exist.
+            colonIndex   > 0 &&
+            openBrIndex  > 0 &&
+            pipeIndex    > 0 &&
+            closeBrIndex > 0 && // If index is -1, means that the character does not exist.
 
-            colonIndex   > openBrIndex  ||
-            openBrIndex  > pipeIndex    ||
-            pipeIndex    > closeBrIndex ||
-            closeBrIndex < colonIndex   // As the indexes should be increasing, all of these conditions shouldn't be true
+            colonIndex   < openBrIndex  &&
+            openBrIndex  < pipeIndex    &&
+            pipeIndex    < closeBrIndex   // As the indexes should be increasing, all of these conditions should be true
            )
         {
             info.setIsEHO(true);
@@ -86,54 +83,55 @@ void whatHO(omInfo &info, QStringList &HOList)
         else
         {
             info.setLoadFail(true);
-            info.setfailMsg(QString("Bad Input: ") + temp);
-            return;
+            info.setFailMsg(QString("Bad Input: ") + temp);
         }
     }
+
+    return info;
 }
 
-void whatTP(omInfo &info, QTextBrowser   *tb)
+omInfo cOM_Common::whatTP(const QTextBrowser   *tb)
 {
-    whatTP(info, tb->toPlainText());
+    QString temp = tb->toPlainText();
+    return whatTP(temp);
 }
-void whatTP(omInfo &info, QLineEdit      *line)
+omInfo cOM_Common::whatTP(const QLineEdit      *line)
 {
-    whatTP(info, line->text());
+    QString temp = line->text();
+    return whatTP(temp);
 }
-void whatTP(omInfo &info, QPlainTextEdit *pte)
+omInfo cOM_Common::whatTP(const QPlainTextEdit *pte)
 {
-    whatTP(info, pte->toPlainText());
+    QString temp = pte->toPlainText();
+    return whatTP(temp);
 }
-void whatTP(omInfo &info, QString &TP)
+omInfo cOM_Common::whatTP(const QString &TP)
 {
     QStringList TPSplit;
 
     TPSplit = TP.split("\n", QString::SkipEmptyParts);
 
-    whatTP(info, TPSplit);
+    return whatTP(TPSplit);
 }
-void whatTP(omInfo &info, QStringList &TPList)
+omInfo cOM_Common::whatTP(const QStringList &TPList)
 {
     // Empty Load Fail
-    if (TPList.isEmpty())
-    {
-        info.setLoadFail(true);
-        info.setfailMsg("Recieved Empty Input.");
-        return;
-    }
+    assertEmpty(TPList, __FUNCTION__);
 
+    omInfo info = omInfo();
     QString temp;
 
-    foreach (temp, TP) {
+    foreach (temp, TPList) {
 
         if (temp.split(",").count() != 8) // All TP must have 7 commas <Hence 8 parts>
         {
             info.setLoadFail(true);
-            info.setfailMsg(QString("Bad Input: ") + temp);
-            return;
+            info.setFailMsg(QString("Bad Input: ") + temp);
+            return info;
         }
 
-        switch (temp.split(",")[6].toInt()) {
+        switch (temp.split(",")[6].toInt())
+        {
         // All TP will have a parameter on the 7th index that indicates the type
         case 0: // 0 indicates the TP is SV
             info.setIsSV(true);
@@ -145,25 +143,83 @@ void whatTP(omInfo &info, QStringList &TPList)
 
         default: // Otherwise it doesn't make sense
             info.setLoadFail(true);
-            info.setfailMsg(QString("Bad Input: ") + temp);
+            info.setFailMsg(QString("Bad Input: ") + temp);
             break;
         }
     }
+
+    return info;
 }
 
-bool isHO(QTextBrowser *tb)
+omInfo cOM_Common::whatOM_Type(const QTextBrowser *tb)
 {
-    return isHO(tb->toPlainText());
+    QString temp = tb->toPlainText();
+    return whatOM_Type(temp);
 }
-bool isHO(QLineEdit *line)
+omInfo cOM_Common::whatOM_Type(const QLineEdit *line)
 {
-    return isHO(line->text());
+    QString temp = line->text();
+    return whatOM_Type(temp);
 }
-bool isHO(QPlainTextEdit *pte)
+omInfo cOM_Common::whatOM_Type(const QPlainTextEdit *pte)
 {
-    return isHO(pte->toPlainText());
+    QString temp = pte->toPlainText();
+    return whatOM_Type(temp);
 }
-bool isHO(QString &HO)
+omInfo cOM_Common::whatOM_Type(const QString &input)
+{
+    QStringList inputSplit;
+
+    inputSplit = input.split("\n", QString::SkipEmptyParts);
+
+    return whatOM_Type(inputSplit);
+}
+omInfo cOM_Common::whatOM_Type(const QStringList &input)
+{
+    // Empty Load Fail
+    assertEmpty(input, __FUNCTION__);
+
+    omInfo info;
+
+    // If it's not a HO, it will trigger loadFail
+    info = whatHO(input);
+    if (!info.getLoadFail())
+    {
+        return info; // This means it's a HO
+    }
+
+    // We reset loadFail for TP
+    info.setLoadFail(false);
+
+    // If it's not a TP, it will trigger loadFail
+    info = whatTP(input);
+    if (!info.getLoadFail())
+    {
+        return info; // This means it's a TP
+    }
+
+    // Since both failed, we return true for loadFail
+    info.setLoadFail(true);
+    return info;
+}
+
+
+bool cOM_Common::isHO(const QTextBrowser *tb)
+{
+    QString temp = tb->toPlainText();
+    return isHO(temp);
+}
+bool cOM_Common::isHO(const QLineEdit *line)
+{
+    QString temp = line->text();
+    return isHO(temp);
+}
+bool cOM_Common::isHO(const QPlainTextEdit *pte)
+{
+    QString temp = pte->toPlainText();
+    return isHO(temp);
+}
+bool cOM_Common::isHO(const QString &HO)
 {
     QStringList HOSplit;
 
@@ -171,27 +227,26 @@ bool isHO(QString &HO)
 
     return isHO(HOSplit);
 }
-bool isHO(QStringList &HOList)
+bool cOM_Common::isHO(const QStringList &HOList)
 {
-    omInfo info();
-    whatHO(info, HOList);
-
-    return info.getIsHO();
+    return whatHO(HOList).getIsHO();
 }
-
-bool isTP(QTextBrowser *tb)
+bool cOM_Common::isTP(const QTextBrowser *tb)
 {
-    return isTP(tb->toPlainText());
+    QString temp = tb->toPlainText();
+    return isTP(temp);
 }
-bool isTP(QLineEdit *line)
+bool cOM_Common::isTP(const QLineEdit *line)
 {
-    return isTP(line->text());
+    QString temp = line->text();
+    return isTP(temp);
 }
-bool isTP(QPlainTextEdit *pte)
+bool cOM_Common::isTP(const QPlainTextEdit *pte)
 {
-    return isTP(pte->toPlainText());
+    QString temp = pte->toPlainText();
+    return isTP(temp);
 }
-bool isTP(QString &TP)
+bool cOM_Common::isTP(const QString &TP)
 {
     QStringList TPSplit;
 
@@ -199,27 +254,26 @@ bool isTP(QString &TP)
 
     return isTP(TPSplit);
 }
-bool isTP(QStringList &TPList)
+bool cOM_Common::isTP(const QStringList &TPList)
 {
-    omInfo info();
-    whatTP(info, TPList);
-
-    return info.getIsTP();
+    return whatTP(TPList).getIsTP();
 }
-
-bool isEHO(QTextBrowser   *tb)
+bool cOM_Common::isEHO(const QTextBrowser   *tb)
 {
-    return isEHO(tb->toPlainText());
+    QString temp = tb->toPlainText();
+    return isEHO(temp);
 }
-bool isEHO(QLineEdit      *line)
+bool cOM_Common::isEHO(const QLineEdit      *line)
 {
-    return isEHO(line->text());
+    QString temp = line->text();
+    return isEHO(temp);
 }
-bool isEHO(QPlainTextEdit *pte)
+bool cOM_Common::isEHO(const QPlainTextEdit *pte)
 {
-    return isEHO(pte->toPlainText());
+    QString temp = pte->toPlainText();
+    return isEHO(temp);
 }
-bool isEHO(QString &EHO)
+bool cOM_Common::isEHO(const QString &EHO)
 {
     // Reference: 01:52:511 (112511|3) -
 
@@ -229,105 +283,28 @@ bool isEHO(QString &EHO)
 
     return isEHO(EHOSplit);
 }
-bool isEHO(QStringList &EHO)
+bool cOM_Common::isEHO(const QStringList &EHO)
 {
-    // Reference: 01:52:511 (112511|3) -
-    QString temp;
-
-    short colonIndex,
-          openBrIndex,
-          pipeIndex,
-          closeBrIndex;
-
-    foreach (temp, EHO) {
-
-        colonIndex   = temp.indexOf(":");
-        openBrIndex  = temp.indexOf("(");
-        pipeIndex    = temp.indexOf("|");
-        closeBrIndex = temp.indexOf(")");
-
-        if (
-            colonIndex   < 0 ||
-            openBrIndex  < 0 ||
-            pipeIndex    < 0 ||
-            closeBrIndex < 0 || // If index is -1, means that the character does not exist.
-
-            colonIndex   > openBrIndex  ||
-            openBrIndex  > pipeIndex    ||
-            pipeIndex    > closeBrIndex ||
-            closeBrIndex < colonIndex   // As the indexes should be increasing, all of these conditions shouldn't be true
-           )
-        {
-            return false;
-        }
-    }
-    return true;
+    return whatHO(EHO).getIsEHO();
 }
 
-void whatOM_Type(omInfo &info, QTextBrowser *tb)
-{
-    whatOM_Type(info, tb->toPlainText());
-}
-void whatOM_Type(omInfo &info, QLineEdit *line)
-{
-    whatOM_Type(info, line->text());
-}
-void whatOM_Type(omInfo &info, QPlainTextEdit *pte)
-{
-    whatOM_Type(info, pte->toPlainText());
-}
-void whatOM_Type(omInfo &info, QString &input)
-{
-    QStringList inputSplit;
 
-    inputSplit = input.split("\n", QString::SkipEmptyParts);
-
-    whatOM_Type(info, inputSplit);
-}
-void whatOM_Type(omInfo &info, QStringList &input)
+void cOM_Common::assertHO(const QTextBrowser *tb)
 {
-    // Empty Load Fail
-    if (input.isEmpty())
-    {
-        info.setLoadFail(true);
-        info.setfailMsg("Recieved Empty Input.");
-        return;
-    }
-
-    // If it's not a HO, it will trigger loadFail
-    whatHO(info, input);
-    if (!info.getLoadFail())
-    {
-        return; // This means it's a HO
-    }
-
-    // We reset loadFail for TP
-    info.setLoadFail(false);
-
-    // If it's not a TP, it will trigger loadFail
-    whatTP(info, input);
-    if (!info.getLoadFail())
-    {
-        return; // This means it's a TP
-    }
-
-    // Since both failed, we return true for loadFail
-    info.setLoadFail(true);
+    QString temp = tb->toPlainText();
+    assertHO(temp);
 }
-
-void assertHO(QTextBrowser *tb)
+void cOM_Common::assertHO(const QLineEdit *line)
 {
-    assertHO(tb->toPlainText());
+    QString temp = line->text();
+    assertHO(temp);
 }
-void assertHO(QLineEdit *line)
+void cOM_Common::assertHO(const QPlainTextEdit *pte)
 {
-    assertHO(line->text());
+    QString temp = pte->toPlainText();
+    assertHO(temp);
 }
-void assertHO(QPlainTextEdit *pte)
-{
-    assertHO(pte->toPlainText());
-}
-void assertHO(QString &HO)
+void cOM_Common::assertHO(const QString &HO)
 {
     QStringList HOSplit;
 
@@ -335,30 +312,29 @@ void assertHO(QString &HO)
 
     assertHO(HOSplit);
 }
-void assertHO(QStringList &HOList)
+void cOM_Common::assertHO(const QStringList &HOList)
 {
-    omInfo info();
-    whatHO(info, HOList);
-
-    if (!info.getIsHO())
+    if (!whatHO(HOList).getIsHO())
     {
         throw HOLoadFail(HOList);
     }
 }
-
-void assertTP(QTextBrowser *tb)
+void cOM_Common::assertTP(const QTextBrowser *tb)
 {
-    assertTP(tb->toPlainText());
+    QString temp = tb->toPlainText();
+    assertTP(temp);
 }
-void assertTP(QLineEdit *line)
+void cOM_Common::assertTP(const QLineEdit *line)
 {
-    assertTP(line->text());
+    QString temp = line->text();
+    assertTP(temp);
 }
-void assertTP(QPlainTextEdit *pte)
+void cOM_Common::assertTP(const QPlainTextEdit *pte)
 {
-    assertTP(pte->toPlainText());
+    QString temp = pte->toPlainText();
+    assertTP(temp);
 }
-void assertTP(QString &TP)
+void cOM_Common::assertTP(const QString &TP)
 {
     QStringList TPSplit;
 
@@ -366,68 +342,64 @@ void assertTP(QString &TP)
 
     assertTP(TPSplit);
 }
-void assertTP(QStringList &TPList)
+void cOM_Common::assertTP(const QStringList &TPList)
 {
-    omInfo info();
-    whatTP(info, TPList);
-
-    if (!info.getIsTP())
+    if (!whatTP(TPList).getIsTP())
     {
         throw TPLoadFail(TPList);
     }
 }
-
-void assertIndex(int &value, int &max)
+void cOM_Common::assertIndex(const int &value, const int &max)
 {
-    if (value < 0 || value >= max)
+    if (value < 0 || value > max)
     {
         throw indexOutOfRange(value, max);
     }
 }
-void assertEmpty(QList &value)
+void cOM_Common::assertEmpty(const QList<T> &value, const QString &funcName)
 {
     if (value.isEmpty())
     {
-        throw emptyException("cOM_HOList");
+        throw emptyException(funcName);
     }
 }
-void assertDivByZero(double &value)
+void cOM_Common::assertEmpty(const QStringList &value, const QString &funcName)
+{
+    if (value.isEmpty())
+    {
+        throw emptyException(funcName);
+    }
+}
+void cOM_Common::assertDivByZero(const double &value)
 {
     if (value == 0)
     {
         throw divideByZeroException();
     }
 }
-void assertOffsetValid(int &newOffset)
+void cOM_Common::assertOffsetValid(const int &newOffset)
 {
     if (newOffset < cOM_Common::MINIMUM_OFFSET || newOffset > cOM_Common::MAXIMUM_OFFSET)
     {
         throw offsetOutOfRange(newOffset, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
     }
 }
-void assertLengthMatch(int &given, int &expected)
+void cOM_Common::assertLengthMatch(const int &given, const int &expected)
 {
     if (given != expected)
     {
         throw lengthMismatch(given, expected);
     }
 }
-void assertInvalidFormat(QString &value)
+void cOM_Common::assertLoadFail(const omInfo &info)
 {
-    omInfo info;
-    whatOM_Type(info, value);
-
     if (info.getLoadFail())
     {
-        throw invalidFormat(value, info.getFailMsg());
+        throw loadFailException(info);
     }
 }
 
-}
-
-namespace omInfo
-{
-omInfo()
+omInfo::omInfo()
 {
     isHO     = false;
     isTP     = false;
@@ -438,101 +410,173 @@ omInfo()
     isLN     = false;
     loadFail = false;
 }
+omInfo::omInfo(const bool &allCondition)
+{
+    isHO     = allCondition;
+    isTP     = allCondition;
+    isEHO    = allCondition;
+    isSV     = allCondition;
+    isBPM    = allCondition;
+    isNN     = allCondition;
+    isLN     = allCondition;
+    loadFail = false;
+}
 
-bool getIsHO() const
+QString omInfo::toString(const bool &type) const
+{
+    QString output;
+
+    if (type)
+    {
+        if (isHO    ){ output.append("isHO"    ); }
+        if (isTP    ){ output.append("isTP"    ); }
+        if (isEHO   ){ output.append("isEHO"   ); }
+        if (isSV    ){ output.append("isSV"    ); }
+        if (isBPM   ){ output.append("isBPM"   ); }
+        if (isNN    ){ output.append("isNN"    ); }
+        if (isLN    ){ output.append("isLN"    ); }
+        if (loadFail){ output.append("loadFail"); }
+    }
+    else
+    {
+        if (!isHO    ){ output.append("isHO"    ); }
+        if (!isTP    ){ output.append("isTP"    ); }
+        if (!isEHO   ){ output.append("isEHO"   ); }
+        if (!isSV    ){ output.append("isSV"    ); }
+        if (!isBPM   ){ output.append("isBPM"   ); }
+        if (!isNN    ){ output.append("isNN"    ); }
+        if (!isLN    ){ output.append("isLN"    ); }
+        if (!loadFail){ output.append("loadFail"); }
+    }
+    return output;
+}
+
+bool omInfo::getIsHO() const
 {
     return isHO;
 }
-bool getIsTP() const
+bool omInfo::getIsTP() const
 {
     return isTP;
 }
-bool getIsEHO() const
+bool omInfo::getIsEHO() const
 {
     return isEHO;
 }
-bool getIsSV() const
+bool omInfo::getIsSV() const
 {
     return isSV;
 }
-bool getIsBPM() const
+bool omInfo::getIsBPM() const
 {
     return isBPM;
 }
-bool getIsNN() const
+bool omInfo::getIsNN() const
 {
     return isNN;
 }
-bool getIsLN() const
+bool omInfo::getIsLN() const
 {
     return isLN;
 }
-bool getLoadFail() const
+bool omInfo::getLoadFail() const
 {
     return loadFail;
 }
 
-void setIsHO(bool value)
+void omInfo::setIsHO(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
+    isNN = value; // We set NN & LN & EHO as according to the value as HO is the super
+    isLN = value;
+    isEHO = value;
+
     isHO = value;
 }
-void setIsTP(bool value)
+void omInfo::setIsTP(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
+    isSV  = value; // We set SV & BPM as according to the value as TP is the super
+    isBPM = value;
+
     isTP = value;
 }
-void setIsEHO(bool value)
+void omInfo::setIsEHO(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
     if (value)
     {
-        setIsHO(true); // EHO is a HO
+        isHO = true; // EHO is a HO
     }
 
     isEHO = value;
+
+    if (!(isEHO || isNN || isLN)) // If all of them are false we disable isHO
+    {
+        isHO = false;
+    }
 }
-void setIsSV(bool value)
+void omInfo::setIsSV(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
     if (value)
     {
-        setIsTP(true); // SV is a TP
+        isTP = true; // SV is a TP
     }
 
     isSV = value;
+
+    if (!(isSV || isBPM)) // If both are false, we disable isTP
+    {
+        isTP = false;
+    }
 }
-void setIsBPM(bool value)
+void omInfo::setIsBPM(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
     if (value)
     {
-        setIsTP(true); // BPM is a TP
+        isTP = true; // BPM is a TP
     }
 
     isBPM = value;
+
+    if (!(isSV || isBPM)) // If both are false, we disable isTP
+    {
+        isTP = false;
+    }
 }
-void setIsNN(bool value)
+void omInfo::setIsNN(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
     if (value)
     {
-        setIsHO(true); // NN is a HO
+        isHO = true; // NN is a HO
     }
 
     isNN = value;
+
+    if (!(isEHO || isNN || isLN)) // If all of them are false we disable isHO
+    {
+        isHO = false;
+    }
 }
-void setIsLN(bool value)
+void omInfo::setIsLN(bool value)
 {
     if (getLoadFail()) { return; } // Cannot change value when input is bad
     if (value)
     {
-        setIsHO(true); // LN is a HO
+        isHO = true; // LN is a HO
     }
 
     isLN = value;
+
+    if (!(isEHO || isNN || isLN)) // If all of them are false we disable isHO
+    {
+        isHO = false;
+    }
 }
-void setLoadFail(bool value)
+void omInfo::setLoadFail(bool value)
 {
     // On load fail, all other values will be set to false
     loadFail = value;
@@ -548,36 +592,64 @@ void setLoadFail(bool value)
     }
 }
 
-QString getfailMsg() const
+QStringList omInfo::getAllTrue() const
+{
+    QStringList output;
+    if(isHO    ){ output.append("isHO\t"    ); }
+    if(isTP    ){ output.append("isTP\t"    ); }
+    if(isEHO   ){ output.append("isEHO\t"   ); }
+    if(isSV    ){ output.append("isSV\t"    ); }
+    if(isBPM   ){ output.append("isBPM\t"   ); }
+    if(isNN    ){ output.append("isNN\t"    ); }
+    if(isLN    ){ output.append("isLN\t"    ); }
+    if(loadFail){ output.append("loadFail\t"); }
+
+    return output;
+}
+QStringList omInfo::getAllFalse() const
+{
+    QStringList output;
+    if(!isHO    ){ output.append("isHO\t"    ); }
+    if(!isTP    ){ output.append("isTP\t"    ); }
+    if(!isEHO   ){ output.append("isEHO\t"   ); }
+    if(!isSV    ){ output.append("isSV\t"    ); }
+    if(!isBPM   ){ output.append("isBPM\t"   ); }
+    if(!isNN    ){ output.append("isNN\t"    ); }
+    if(!isLN    ){ output.append("isLN\t"    ); }
+    if(!loadFail){ output.append("loadFail\t"); }
+
+    return output;
+}
+
+QString omInfo::getFailMsg() const
 {
     return failMsg;
 }
-void setfailMsg(const QString value)
+void omInfo::setFailMsg(const QString value)
 {
     failMsg = value;
 }
-}
 
-columnOutOfRange::columnOutOfRange(double newValue, double min, double max)
+columnOutOfRange::columnOutOfRange(const double newValue, const double min, const double max)
 {
     msg = QString("Attempt to use column out of range [%1 - %2]: %3")
             .arg(min).arg(max).arg(newValue);
     badValue = newValue;
 }
-offsetOutOfRange::offsetOutOfRange(double newValue, double min, double max)
+offsetOutOfRange::offsetOutOfRange(const double newValue, const double min, const double max)
 {
     msg = QString("Attempt to use offset out of range [%1 - %2]: %3")
             .arg(min).arg(max).arg(newValue);
     badValue = newValue;
 }
-keysOutOfRange::keysOutOfRange(int newValue, int min, int max)
+keysOutOfRange::keysOutOfRange(const int newValue, const int min, const int max)
 {
     msg = QString("Attempt to use key out of range [%1 - %2]: %3")
             .arg(min).arg(max).arg(newValue)
-            << "(Did you forget to set the key?)";
+            + "(Did you forget to set the key?)";
     badValue = newValue;
 }
-xAxisOutOfRange::xAxisOutOfRange(int newValue, int min, int max)
+xAxisOutOfRange::xAxisOutOfRange(const int newValue, const int min, const int max)
 {
     msg = QString("Attempt to use x-Axis out of range [%1 - %2]: %3")
             .arg(min).arg(max).arg(newValue);
@@ -588,44 +660,44 @@ emptyException::emptyException(QString objName)
     msg = QString("%1 is empty, therefore most functions are not available.")
             .arg(objName);
 }
-TPLoadFail::TPLoadFail(QString newValue)
+TPLoadFail::TPLoadFail(const QString newValue)
 {
     msg = QString("Failed to load input as TP: %1").arg(newValue);
     badValue = newValue;
 }
-TPLoadFail::TPLoadFail(QStringList newValue)
+TPLoadFail::TPLoadFail(const QStringList newValue)
 {
     msg = QString("Failed to load input as TP: %1").arg(newValue.join("\n"));
-    badValue = newValue;
+    badValue = newValue.join("\n");
 }
-HOLoadFail::HOLoadFail(QString newValue)
+HOLoadFail::HOLoadFail(const QString newValue)
 {
     msg = QString("Failed to load input as HO: %1").arg(newValue);
     badValue = newValue;
 }
-HOLoadFail::HOLoadFail(QStringList newValue)
+HOLoadFail::HOLoadFail(const QStringList newValue)
 {
     msg = QString("Failed to load input as TP: %1").arg(newValue.join("\n"));
-    badValue = newValue;
+    badValue = newValue.join("\n");
 }
-indexOutOfRange::indexOutOfRange(int newValue, int max)
+indexOutOfRange::indexOutOfRange(const int newValue, const int max)
 {
     msg = QString("Index is out of bounds (Given: %1), (Expected: %2)")
             .arg(newValue).arg(max);
     badValue = newValue;
 }
-lengthMismatch::lengthMismatch(int givenLength, int expectedLength)
+lengthMismatch::lengthMismatch(const int givenLength, const int expectedLength)
 {
     msg = QString("Length Mismatch (Given: %1), (Expected: %2)")
             .arg(givenLength).arg(expectedLength);
     givenValue = givenLength;
     expectedValue = expectedLength;
 }
-invalidFormat::invalidFormat(QString &newValue, QString &newFailMsg)
+divideByZeroException::divideByZeroException()
 {
-    msg = QString("Invalid input: %1").arg(newValue)
-            << "\n" << newFailMsg;
-                                                        ;
-    badValue = newValue;
-    failMsg = newFailMsg;
+    msg = "Attempted to divide by Zero";
+}
+loadFailException::loadFailException(const omInfo info)
+{
+    msg = QString("loadFail is active. loadFailMsg: ").append(info.getFailMsg());
 }

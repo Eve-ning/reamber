@@ -19,6 +19,8 @@ public:
     cOM_TPList(QString str)               ;
     cOM_TPList(QStringList strList)       ;
 
+    operator QStringList() const { return toString(); }
+
     // LOADERS
     void loadTPList(QList<cOM_TP>  newOM_TPList);
     void loadTPList(QTextBrowser   *tb);
@@ -32,25 +34,27 @@ public:
     void setCodeList  (QList<double> newCodeList);
     void setValueList (QList<double> newValueList);
 
-    // GETTERS
-    QList<double> getOffsetList    (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
-    QList<double> getCodeList      (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
-    QList<double> getValueList     (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
-    QList<double> getLengthList    (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
-    QList<double> getDistanceList  (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
-    QList<double> getUnqOffsetList (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
+    omInfo getInfo();
 
-    cOM_TPList splitByType (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
+    // GETTERS
+    QList<double> getOffsetList    (const omInfo &info = omInfo(true)) const;
+    QList<double> getCodeList      (const omInfo &info = omInfo(true)) const;
+    QList<double> getValueList     (const omInfo &info = omInfo(true)) const;
+    QList<double> getLengthList    (const omInfo &info = omInfo(true)) const;
+    QList<double> getDistanceList  (const omInfo &info = omInfo(true)) const;
+    QList<double> getUnqOffsetList (const omInfo &info = omInfo(true)) const;
+
+    cOM_TPList splitByType (const omInfo &info) const;
 
     double getMinOffset  () const;
     double getMaxOffset  () const;
-    double getMinValue   (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
-    double getMaxValue   (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
+    double getMinValue   (const omInfo &info) const;
+    double getMaxValue   (const omInfo &info) const;
     double getLength     () const;
     double getLength     (int index);
-    int    getSize       (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_BPM_ONLY) const;
-    double getAverage    (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
-    double getDistance   (cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY) const;
+    int    getSize       (const omInfo &info = omInfo(true)) const;
+    double getAverage    (const omInfo &info) const;
+    double getDistance   (const omInfo &info) const;
     double getDistance   (int index);
     bool   getLoadFail   () const { return loadFail; }
     QStringList toString () const;
@@ -95,14 +99,9 @@ public:
     // REMOVES TP THAT HAVE SIMILAR OFFSET
     void makeUnique ();
 
+    void isUniform(omInfo &info);
 
-    cOM_Common::TPFlag isUniform  ();
-
-    QList<int> indexList(cOM_Common::TPFlag onlyFlag = cOM_Common::TPFlag::SV_ONLY);
-
-
-
-
+    QList<int> indexList(omInfo &info);
 
 protected:
     QList<cOM_TP> OM_TPList;

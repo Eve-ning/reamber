@@ -16,20 +16,12 @@ void cOM_BreakPList::loadBreakPList(QList<cOM_BreakP> newOM_BreakPList)
 }
 
 cOM_BreakP &cOM_BreakPList::operator [](int i) {
-    if (i < OM_BreakPList.count()){
-        return OM_BreakPList[i];
-    } else {
-        ER_DEBUG("cOM_BreakP Index Does not Exist, returning first index.");
-        return OM_BreakPList[0];
-    }
+    cOM_Common::assertIndex(i, getSize() - 1);
+    return OM_BreakPList[i];
 }
 cOM_BreakP cOM_BreakPList::operator [](int i) const {
-    if (i < OM_BreakPList.count()){
-        return OM_BreakPList[i];
-    } else {
-        ER_DEBUG("cOM_BreakP Index Does not Exist, returning default.");
-        return cOM_BreakP();
-    }
+    cOM_Common::assertIndex(i, getSize() - 1);
+    return OM_BreakPList[i];
 }
 
 QList<double> cOM_BreakPList::getStartList() const

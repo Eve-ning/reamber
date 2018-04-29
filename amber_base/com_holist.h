@@ -19,6 +19,8 @@ public:
     cOM_HOList(QPlainTextEdit *pte   , int newKeys = 0);
     cOM_HOList(QStringList    strList, int newKeys = 0);
 
+    operator QStringList() const { return toString(); }
+
     // LOADERS
     void loadHOList (QList<cOM_HO>  newOM_HOList); // Initialize via array of OM_HO
     void loadHOList (QTextBrowser   *tb     , int newKeys = 0); // TextBrowser Handler
@@ -63,9 +65,10 @@ public:
     void deleteIndex(unsigned  index) { OM_HOList.removeAt(index); }
     bool isEmpty    () const;
     void sortOffset (bool isAscending = true);
-    void limitColumn (int maxColumn, int minColumn);
+    void limitColumn (int &maxColumn, int &minColumn);
     void limitColumn ();
     void limitOffset(double minOffset = 0, double maxOffset = 360000);
+
 
 private:
 

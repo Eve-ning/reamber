@@ -14,19 +14,22 @@ public:
     cOM_TP(QLineEdit *line);
     cOM_TP(double newOffset, double newValue);
 
+    operator QString() const { return toString(); }
+
     // LOADERS
     void loadTP(QString TP);
     void loadTP(QLineEdit *line);
     void loadTP(double newOffset, double newValue);
 
     // SETTERS
-    void setOffset        (double          newOffset        ){ offset         = newOffset        ; return; }
+    void setOffset        (double          newOffset        );
     void setCode          (double          newCode          ){ code           = newCode          ; return; }
     void setMetronome     (unsigned short  newMetronome     ){ metronome      = newMetronome     ; return; }
     void setSampleSet     (unsigned short  newSampleSet     ){ sampleSet      = newSampleSet     ; return; }
     void setSampleSetIndex(unsigned short  newSampleSetIndex){ sampleSetIndex = newSampleSetIndex; return; }
     void setVolume        (unsigned short  newVolume        ){ volume         = newVolume        ; return; }
     void setIsBPM         (bool            newIsBPM         ){ isBPM          = newIsBPM         ; return; }
+    void setIsSV          (bool            newIsSV          ){ isBPM          = !newIsSV         ; return; }
     void setIsKiai        (bool            newIsKiai        ){ isKiai         = newIsKiai        ; return; }
     void setValue         (double newValue) ;
 
@@ -39,6 +42,7 @@ public:
     unsigned short  getSampleSetIndex() const { return sampleSetIndex; }
     unsigned short  getVolume        () const { return volume        ; }
     bool            getIsBPM         () const { return isBPM         ; }
+    bool            getIsSV          () const { return !isBPM        ; }
     bool            getIsKiai        () const { return isKiai        ; }
     bool            getLoadFail      () const { return loadFail; }
     double          getValue         () const;
@@ -65,13 +69,9 @@ public:
     void addOffset      (const double rhsDouble, bool limitFlag = false);
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
-
     // MISC
     void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001);
     void limitOffset(double minOffset = 0, double maxOffset = 360000);
-
-
-
 
 protected:
     double          offset        ;

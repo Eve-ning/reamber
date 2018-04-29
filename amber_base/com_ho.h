@@ -1,7 +1,6 @@
 #ifndef COM_HO_H
 #define COM_HO_H
 
-
 #include <QLineEdit>
 #include "com_common.h"
 
@@ -14,6 +13,8 @@ public:
     cOM_HO(QString &HO, int newKeys = 0);
     cOM_HO(double newOffset, int newColumn, int newKeys = 0);
     cOM_HO(QLineEdit *line, int newKeys = 0);
+
+    operator QString() const { return toString(); }
 
     // LOADERS
     void loadHO(QString &HO, int newKeys = 0);
@@ -53,7 +54,6 @@ public:
     bool            getLoadFail     () const { return loadFail; }
     unsigned short  getColumn       () const;
     QString         toString        () const;
-    QString         getFailMsg      () const;
 
     // OPERS
     void addColumn      (const int &rhsInt);
@@ -69,31 +69,23 @@ public:
     bool operator <(cOM_HO  OM_HO) { return offset < OM_HO.getOffset(); }
     bool operator >(cOM_HO  OM_HO) { return offset > OM_HO.getOffset(); }
 
-           void assertColumnValid ();                // Checks w.r.t. current column
-    static void assertColumnValid (int &newColumn);  // Checks w.r.t. specified column
-           void assertOffsetValid ();                // Checks w.r.t. current offset
-    static void assertOffsetValid (int &newOffset);  // Checks w.r.t. specified offset
-           void assertKeysValid   ();                // Checks w.r.t. current key
-    static void assertKeysValid   (int &newKeys  );  // Checks w.r.t. specified key
-           void assertXAxisValid  ();                // Checks w.r.t. current xAxis
-    static void assertXAxisValid  (int &newXAxis  ); // Checks w.r.t. specified xAxis
+           void assertColumnValid ()               const; // Checks w.r.t. current column
+    static void assertColumnValid (int newColumn)       ; // Checks w.r.t. specified column
+           void assertKeysValid   ()               const; // Checks w.r.t. current key
+    static void assertKeysValid   (int newKeys  )       ; // Checks w.r.t. specified key
+           void assertXAxisValid  ()               const; // Checks w.r.t. current xAxis
+    static void assertXAxisValid  (int newXAxis  )      ; // Checks w.r.t. specified xAxis
 
     void limitColumn (int &maxColumn, int &minColumn);
     void limitColumn ();
-    void limitOffset (double minOffset = MINIMUM_OFFSET, double maxOffset = MAXIMUM_OFFSET);
+    void limitOffset (double minOffset = cOM_Common::MINIMUM_OFFSET, double maxOffset = cOM_Common::MAXIMUM_OFFSET);
 
-
-    const double MINIMUM_OFFSET = 360000; // 1 Hour in (ms)
-    const double MAXIMUM_OFFSET = 0;
-    const int    MINIMUM_KEYS   = 1;
-    const int    MAXIMUM_KEYS   = 18;
-    const double MINIMUM_COLUMN = 0;
-    const int    MINIMUM_XAXIS  = 0;
-    const int    MAXIMUM_XAXIS  = 512;
-
-
-protected:
-    void setFailMsg(const QString &value);
+    static const int MINIMUM_KEYS   = 1;
+    static const int MAXIMUM_KEYS   = 18;
+    static const int MINIMUM_COLUMN = MINIMUM_KEYS - 1;
+    static const int MAXIMUM_COLUMN = MAXIMUM_KEYS - 1;
+    static const int MINIMUM_XAXIS  = 0;
+    static const int MAXIMUM_XAXIS  = 512;
 
 protected:
 
@@ -115,8 +107,6 @@ protected:
     unsigned short  keys;
 
     bool            loadFail;
-    QString         failMsg;
-
 };
 
 #endif // COM_HO_H

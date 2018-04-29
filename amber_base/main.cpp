@@ -9,18 +9,24 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    calibrate();
-
+    try
+    {
+        calibrate();
+    }
+    catch (amberException &e)
+    {
+        qDebug() << e.msg;
+    }
     return a.exec();
 }
 
 void calibrate(){
 
     bool mapDebugBool     = true,
-         TPDebugBool      = false,
-         sortDebugBool    = false,
-         unqDebugBool     = false,
-         omTypeDebugBool  = false;
+         TPDebugBool      = true,
+         sortDebugBool    = true,
+         unqDebugBool     = true,
+         omTypeDebugBool  = true;
 
     // Map Debug
     if (mapDebugBool){
@@ -86,7 +92,7 @@ void calibrate(){
         qDebug() << "          " << TPList_A_add.getValueList();
         qDebug() << "Expected : (0.5, 3, 7, 2.1, 2.5)" << "\n";
 
-        qDebug() << "[--- subtract ---]";
+        qDebug() << "[--- SUBTRACT ---]";
         qDebug() << "          " << TPList_A_subtract.getValueList();
         qDebug() << "Expected : (0.5, -1, -3, -1.9, -1.5)" << "\n";
 
@@ -138,17 +144,29 @@ void calibrate(){
         qDebug() << "         " << TPList_A_adjust.getValueList();
         qDebug() << "Expected: (0.5, 1, 1.63333, 2.2, 0.5)" << "\n";
 
-        TPList_A_adjust.adjustToAverage(10.0,2);
-
+        try
+        {
+            TPList_A_adjust.adjustToAverage(10.0,2);
+        }
+        catch (amberException &e)
+        {
+            qDebug() << e.msg;
+        }
         qDebug() << "[--- ADJUST TO AVERAGE <MAX EXCEED> ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
-        qDebug() << "Expected: (0.5, 1, 10, 2.2, 0.5)" << "\n";
+        qDebug() << "Expected: Error Thrown" << "\n";
 
-        TPList_A_adjust.adjustToAverage(10.0,4);
-
+        try
+        {
+            TPList_A_adjust.adjustToAverage(10.0,4);
+        }
+        catch (amberException &e)
+        {
+            qDebug() << e.msg;
+        }
         qDebug() << "[--- ATTEMPT TO ADJUST LAST INDEX ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
-        qDebug() << "Expected: (0.5, 1, 10, 2.2, 0.5)" << "\n";
+        qDebug() << "Expected: Error Thrown" << "\n";
 
 
     }
@@ -198,39 +216,34 @@ void calibrate(){
               "192,192,22259,1,0,0:0:0:0:";
 
         qDebug() << "[--- EHO ---]";
-        qDebug() << "EHO: " << (cOM_Common::isOM_Type(EHO) == cOM_Common::OMFlag::EHO_ONLY)      << " | "
-                 << "HO : " << (cOM_Common::isOM_Type(EHO) == cOM_Common::OMFlag::HO_ONLY)       << " | "
-                 << "TP : " << (cOM_Common::isOM_Type(EHO) == cOM_Common::OMFlag::TP_ONLY)       << " | "
-                 << "MLT: " << (cOM_Common::isOM_Type(EHO) == cOM_Common::OMFlag::MULTIPLETYPES) << " | "
-                 << "IVL: " << (cOM_Common::isOM_Type(EHO) == cOM_Common::OMFlag::INVALID)       << "\n";
+        qDebug() << "EHO: " << cOM_Common::whatOM_Type(EHO).getIsEHO() << " | "
+                 << "HO : " << cOM_Common::whatOM_Type(EHO).getIsHO()  << " | "
+                 << "TP : " << cOM_Common::whatOM_Type(EHO).getIsTP()  << " | "
+                 << "IVL: " << cOM_Common::whatOM_Type(EHO).getLoadFail() << "\n";
 
         qDebug() << "[--- HO ---]";
-        qDebug() << "EHO: " << (cOM_Common::isOM_Type(HO) == cOM_Common::OMFlag::EHO_ONLY)      << " | "
-                 << "HO : " << (cOM_Common::isOM_Type(HO) == cOM_Common::OMFlag::HO_ONLY)       << " | "
-                 << "TP : " << (cOM_Common::isOM_Type(HO) == cOM_Common::OMFlag::TP_ONLY)       << " | "
-                 << "MLT: " << (cOM_Common::isOM_Type(HO) == cOM_Common::OMFlag::MULTIPLETYPES) << " | "
-                 << "IVL: " << (cOM_Common::isOM_Type(HO) == cOM_Common::OMFlag::INVALID)       << "\n";
+        qDebug() << "EHO: " << cOM_Common::whatOM_Type(HO).getIsEHO() << " | "
+                 << "HO : " << cOM_Common::whatOM_Type(HO).getIsHO()  << " | "
+                 << "TP : " << cOM_Common::whatOM_Type(HO).getIsTP()  << " | "
+                 << "IVL: " << cOM_Common::whatOM_Type(HO).getLoadFail() << "\n";
 
         qDebug() << "[--- TP ---]";
-        qDebug() << "EHO: " << (cOM_Common::isOM_Type(TP) == cOM_Common::OMFlag::EHO_ONLY)      << " | "
-                 << "HO : " << (cOM_Common::isOM_Type(TP) == cOM_Common::OMFlag::HO_ONLY)       << " | "
-                 << "TP : " << (cOM_Common::isOM_Type(TP) == cOM_Common::OMFlag::TP_ONLY)       << " | "
-                 << "MLT: " << (cOM_Common::isOM_Type(TP) == cOM_Common::OMFlag::MULTIPLETYPES) << " | "
-                 << "IVL: " << (cOM_Common::isOM_Type(TP) == cOM_Common::OMFlag::INVALID)       << "\n";
+        qDebug() << "EHO: " << cOM_Common::whatOM_Type(TP).getIsEHO() << " | "
+                 << "HO : " << cOM_Common::whatOM_Type(TP).getIsHO()  << " | "
+                 << "TP : " << cOM_Common::whatOM_Type(TP).getIsTP()  << " | "
+                 << "IVL: " << cOM_Common::whatOM_Type(TP).getLoadFail() << "\n";
 
         qDebug() << "[--- MLT ---]";
-        qDebug() << "EHO: " << (cOM_Common::isOM_Type(MLT) == cOM_Common::OMFlag::EHO_ONLY)      << " | "
-                 << "HO : " << (cOM_Common::isOM_Type(MLT) == cOM_Common::OMFlag::HO_ONLY)       << " | "
-                 << "TP : " << (cOM_Common::isOM_Type(MLT) == cOM_Common::OMFlag::TP_ONLY)       << " | "
-                 << "MLT: " << (cOM_Common::isOM_Type(MLT) == cOM_Common::OMFlag::MULTIPLETYPES) << " | "
-                 << "IVL: " << (cOM_Common::isOM_Type(MLT) == cOM_Common::OMFlag::INVALID)       << "\n";
+        qDebug() << "EHO: " << cOM_Common::whatOM_Type(MLT).getIsEHO() << " | "
+                 << "HO : " << cOM_Common::whatOM_Type(MLT).getIsHO()  << " | "
+                 << "TP : " << cOM_Common::whatOM_Type(MLT).getIsTP()  << " | "
+                 << "IVL: " << cOM_Common::whatOM_Type(MLT).getLoadFail() << "\n";
 
         qDebug() << "[--- INV ---]";
-        qDebug() << "EHO: " << (cOM_Common::isOM_Type(INV) == cOM_Common::OMFlag::EHO_ONLY)      << " | "
-                 << "HO : " << (cOM_Common::isOM_Type(INV) == cOM_Common::OMFlag::HO_ONLY)       << " | "
-                 << "TP : " << (cOM_Common::isOM_Type(INV) == cOM_Common::OMFlag::TP_ONLY)       << " | "
-                 << "MLT: " << (cOM_Common::isOM_Type(INV) == cOM_Common::OMFlag::MULTIPLETYPES) << " | "
-                 << "IVL: " << (cOM_Common::isOM_Type(INV) == cOM_Common::OMFlag::INVALID)       << "\n";
+        qDebug() << "EHO: " << cOM_Common::whatOM_Type(INV).getIsEHO() << " | "
+                 << "HO : " << cOM_Common::whatOM_Type(INV).getIsHO()  << " | "
+                 << "TP : " << cOM_Common::whatOM_Type(INV).getIsTP()  << " | "
+                 << "IVL: " << cOM_Common::whatOM_Type(INV).getLoadFail() << "\n";
     }
 
 

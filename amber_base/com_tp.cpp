@@ -31,13 +31,12 @@ void cOM_TP::loadTP(QString TP)
 {
     omInfo info;
 
-    cOM_Common::whatOM_Type(info, TP);
+    info = cOM_Common::whatOM_Type(TP);
 
-    if (!info.getIsTP())
+    if (!info.getIsTP()) // Case: Invalid
     {
-        cOM_Common::assertTP(TP);
         loadFail = true;
-        return;
+        throw TPLoadFail(QString("Input not TP: ") + TP);
     }
 
     //            [0] [1]              [2][3][4][5][6][7]
@@ -61,6 +60,7 @@ void cOM_TP::loadTP(QString TP)
     else
     {
         loadFail = true;
+        throw amberException("An unexpected error has occured.");
     }
 }
 void cOM_TP::loadTP(QLineEdit *line)
@@ -136,7 +136,7 @@ QString cOM_TP::toString() const
             +   QString::number(sampleSet     ) + ","
             +   QString::number(sampleSetIndex) + ","
             +   QString::number(volume        ) + ","
-            +   (isBPM  ? "1" : "0")                  + ","
+            +   (isBPM  ? "1" : "0")            + ","
             +   (isKiai ? "1" : "0") ;
 }
 
@@ -252,14 +252,12 @@ void cOM_TP::limitValues(double maxSV, double minSV, double maxBPM, double minBP
     // Make sure min < max
     if ((maxSV != 0 && minSV != 0) && (minSV > maxSV))
     {
-        qDebug() << __FUNCTION__ << "minSV > maxSV: " << minSV << " > " << maxSV;
-        return;
+        throw amberException(QString(__FUNCTION__) + "minSV > maxSV: " + minSV + " > " + maxSV);
     }
 
     if ((maxBPM != 0 && minBPM != 0) && (minBPM > maxBPM))
     {
-        qDebug() << __FUNCTION__ << "minBPM > maxBPM: " << minBPM << " > " << maxBPM;
-        return;
+        throw amberException(QString(__FUNCTION__) + "minBPM > maxBPM: " + minBPM + " > " + maxBPM);
     }
 
     // If any value is exactly 0, we take it that the user doesn't want to limit it.

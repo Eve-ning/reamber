@@ -61,20 +61,21 @@ void cOM_HOList::loadHOList(QString &EHOorHO, int newKeys)
     bool boolEHO,
          boolHO;
 
-    omInfo info();
+    omInfo info;
 
-    cOM_Common::whatOM_Type(info, EHOorHO);
+    info = cOM_Common::whatOM_Type(EHOorHO);
 
     boolEHO = info.getIsEHO();
     boolHO  = info.getIsHO();
 
     // IF NOT HO CALL EHO
-    if (boolEHO)
+
+    if (boolEHO) // Case: EHO
     {
         loadEHOList(EHOorHO, newKeys); // Pass to EHO Handler
         return;
     }
-    else if (boolHO)
+    else if (boolHO) // Case: HO
     {
         // Convert to StringList and pass towards QStringList Handler
         QStringList HOList;
@@ -82,11 +83,11 @@ void cOM_HOList::loadHOList(QString &EHOorHO, int newKeys)
 
         loadHOList(HOList); // Pass to QStringList Handler
     }
-    else
+    else // Case: Invalid
     {
-        cOM_Common::assertInvalidFormat(EHOorHO);
         loadFail = true;
-        return;
+
+        throw HOLoadFail(QString("Input not HO: ") + EHOorHO);
     }
 }
 void cOM_HOList::loadHOList(QStringList &HOList, int newKeys)
@@ -133,7 +134,7 @@ void cOM_HOList::loadEHOList(QString &EHO, int newKeys)
 // SETTERS
 void cOM_HOList::setOffsetList(QList<double> &newOffsetList)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
     cOM_Common::assertLengthMatch(OM_HOList.length(), newOffsetList.length());
 
     for (int i = 0; i < newOffsetList.length(); i ++)
@@ -145,7 +146,7 @@ void cOM_HOList::setOffsetList(QList<double> &newOffsetList)
 }
 void cOM_HOList::setXAxisList(QList<double> &newXAxisList)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
     cOM_Common::assertLengthMatch(OM_HOList.length(), newXAxisList.length());
 
     for (int i = 0; i < newXAxisList.length(); i ++)
@@ -157,7 +158,7 @@ void cOM_HOList::setXAxisList(QList<double> &newXAxisList)
 }
 void cOM_HOList::setColumnList(QList<int> &newColumnList)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
     cOM_Common::assertLengthMatch(OM_HOList.length(), newColumnList.length());
 
     for (int i = 0; i < newColumnList.length(); i ++)
@@ -169,7 +170,7 @@ void cOM_HOList::setColumnList(QList<int> &newColumnList)
 }
 void cOM_HOList::setKeys(unsigned short newKeys)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     for (int temp = 0; temp < OM_HOList.length(); temp ++) {
         OM_HOList[temp].setKeys(newKeys);
@@ -179,7 +180,7 @@ void cOM_HOList::setKeys(unsigned short newKeys)
 // GETTERS
 QList<double> cOM_HOList::getOffsetList() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     cOM_HO OM_HO;
     QList<double> output;
@@ -192,7 +193,7 @@ QList<double> cOM_HOList::getOffsetList() const
 }
 QList<double> cOM_HOList::getUnqOffsetList() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> unqOffsetList,
                   offsetList;
@@ -212,7 +213,7 @@ QList<double> cOM_HOList::getUnqOffsetList() const
 }
 QList<double> cOM_HOList::getXAxisList() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     cOM_HO OM_HO;
     QList<double> output;
@@ -225,7 +226,7 @@ QList<double> cOM_HOList::getXAxisList() const
 }
 QList<int> cOM_HOList::getColumnList() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     cOM_HO OM_HO;
     QList<int> output;
@@ -238,7 +239,7 @@ QList<int> cOM_HOList::getColumnList() const
 }
 double cOM_HOList::getMinOffset() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     double output;
     QList<double> offsetList;
@@ -248,7 +249,7 @@ double cOM_HOList::getMinOffset() const
 }
 double cOM_HOList::getMaxOffset() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     double output;
     QList<double> offsetList;
@@ -258,7 +259,7 @@ double cOM_HOList::getMaxOffset() const
 }
 double cOM_HOList::getLength() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     double output;
     QList<double> offsetList;
@@ -269,11 +270,11 @@ double cOM_HOList::getLength() const
 }
 double cOM_HOList::getLength(int index)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     sortOffset(true);
 
-    cOM_Common::assertIndex(index, getSize());
+    cOM_Common::assertIndex(index, getSize() - 1);
 
     return OM_HOList[index + 1].getOffset() - OM_HOList[index].getOffset();
 }
@@ -283,8 +284,6 @@ double cOM_HOList::getSize() const
 }
 QStringList cOM_HOList::toString() const
 {
-    cOM_Common::assertEmpty(OM_HOList);
-
     cOM_HO temp;
     QStringList output;
 
@@ -297,26 +296,18 @@ QStringList cOM_HOList::toString() const
 
 // OPERS
 cOM_HO &cOM_HOList::operator [](int i) {
-    if (i < OM_HOList.count()){
-        return OM_HOList[i];
-    } else {
-        cOM_Common::assertIndex(i, getSize());
-        return OM_HOList[0];
-    }
+    cOM_Common::assertIndex(i, getSize() - 1);
+    return OM_HOList[i];
 }
 cOM_HO cOM_HOList ::operator [](int i) const {
-    if (i < OM_HOList.count()){
-        return OM_HOList[i];
-    } else {
-        cOM_Common::assertIndex(i, getSize());
-        return cOM_HO();
-    }
+    cOM_Common::assertIndex(i, getSize() - 1);
+    return OM_HOList[i];
 }
 
 // MISC
 void cOM_HOList::addColumn      (const int rhsInt)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<int> newColumnList,
                oldColumnList;
@@ -334,7 +325,7 @@ void cOM_HOList::addColumn      (const int rhsInt)
 }
 void cOM_HOList::subtractColumn (const int rhsInt)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<int> newColumnList,
                oldColumnList;
@@ -353,7 +344,7 @@ void cOM_HOList::subtractColumn (const int rhsInt)
 
 void cOM_HOList::multiplyOffset (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -374,7 +365,7 @@ void cOM_HOList::multiplyOffset (const double rhsDouble, bool limitFlag)
 }
 void cOM_HOList::divideOffset   (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -395,7 +386,7 @@ void cOM_HOList::divideOffset   (const double rhsDouble, bool limitFlag)
 }
 void cOM_HOList::addOffset      (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -416,7 +407,7 @@ void cOM_HOList::addOffset      (const double rhsDouble, bool limitFlag)
 }
 void cOM_HOList::subtractOffset (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -438,7 +429,7 @@ void cOM_HOList::subtractOffset (const double rhsDouble, bool limitFlag)
 
 void cOM_HOList::makeUnique()
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> offsetList,
                   newOffsetList;
@@ -458,7 +449,7 @@ void cOM_HOList::makeUnique()
 }
 void cOM_HOList::sortOffset(bool isAscending)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     if (isAscending)
     {
@@ -470,7 +461,7 @@ void cOM_HOList::sortOffset(bool isAscending)
 }
 void cOM_HOList::limitColumn(int &maxColumn, int &minColumn)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     cOM_HO temp;
 
@@ -481,7 +472,7 @@ void cOM_HOList::limitColumn(int &maxColumn, int &minColumn)
 }
 void cOM_HOList::limitColumn()
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     cOM_HO temp;
 
@@ -493,7 +484,7 @@ void cOM_HOList::limitColumn()
 
 void cOM_HOList::limitOffset(double minOffset, double maxOffset)
 {
-    cOM_Common::assertEmpty(OM_HOList);
+    cOM_Common::assertEmpty(toString(), __FUNCTION__);
 
     cOM_HO temp;
 
@@ -501,8 +492,6 @@ void cOM_HOList::limitOffset(double minOffset, double maxOffset)
         temp.limitOffset(minOffset, maxOffset);
     }
 }
-
-
 
 bool cOM_HOList::isEmpty () const
 {

@@ -46,14 +46,17 @@ void cOM_Map::loadMap(QFileInfo newMapPath)
     QFile newMapFile;
 
     newMapFile.setFileName(newMapPath.filePath());
+
     if (newMapFile.open(QFile::ReadOnly)) {
         QTextStream mapStream(&newMapFile);
         while (!mapStream.atEnd()) {
             mapStringList.append(mapStream.readLine());
         }
-    } else {
-        WR_DEBUG("Map cannot be opened. \n"          );
-        WR_DEBUG("Map Path: " + newMapFile.fileName());
+    }
+    else
+    {
+        throw amberException("Map cannot be opened. \n"          );
+        throw amberException(QString("Map Path: ") + newMapFile.fileName());
     }
 
     newMapFile.close();
@@ -291,8 +294,8 @@ void cOM_Map::loadMap(QStringList newMapStringList)
         startOM_TPIndex = indexMapStringList[33] + 1;
         endOM_TPIndex = indexMapStringList[34] - 1;
 
-        INF_DEBUG("startOM_TPIndex: " + startOM_TPIndex);
-        INF_DEBUG("endOM_TPIndex: "   + endOM_TPIndex  );
+        //("startOM_TPIndex: " + startOM_TPIndex);
+        //("endOM_TPIndex: "   + endOM_TPIndex  );
 
         for (int temp = startOM_TPIndex; temp <= endOM_TPIndex; temp ++)
         {
@@ -309,8 +312,8 @@ void cOM_Map::loadMap(QStringList newMapStringList)
         startOM_HOIndex = indexMapStringList[34] + 1;
         endOM_HOIndex = newMapStringList.length();
 
-        INF_DEBUG("startOM_HOIndex: " + startOM_HOIndex);
-        INF_DEBUG("endOM_HOIndex: "   + endOM_HOIndex  );
+        //("startOM_HOIndex: " + startOM_HOIndex);
+        //("endOM_HOIndex: "   + endOM_HOIndex  );
 
         for (int temp = startOM_HOIndex; temp < endOM_HOIndex; temp ++)
         {
@@ -367,51 +370,51 @@ void cOM_Map::getInfo() const
         break;
     }
 
-    INF_DEBUG("[---- Map Info ----]");
-    INF_DEBUG("AUDIOFILENAME    : " + audioFileName                   );
-    INF_DEBUG("AUDIOLEADIN      : " + QString::number(audioLeadIn    ));
-    INF_DEBUG("PREVIEWTIME      : " + QString::number(previewTime    ));
-    INF_DEBUG("COUNTDOWN        : " + countdown                       );
-    INF_DEBUG("SAMPLESET        : " + sampleSetStr                    );
-    INF_DEBUG("STACKLENIENCY    : " + QString::number(stackLeniency  ));
-    INF_DEBUG("GAMEMODE         : " + gameModeStr                     );
-    INF_DEBUG("LETTERBOX        : " + letterbox                       );
-    INF_DEBUG("SPECIALSTYLE     : " + specialStyle                    );
-    INF_DEBUG("WIDESCREEN       : " + widescreen                      );
-    INF_DEBUG("DISTANCESPACING  : " + QString::number(distanceSpacing));
-    INF_DEBUG("BEATDIVISOR      : " + QString::number(beatDivisor    ));
-    INF_DEBUG("GRIDSIZE         : " + QString::number(gridSize       ));
-    INF_DEBUG("TIMELINEZOOM     : " + QString::number(timelineZoom   ));
-    INF_DEBUG("TITLE            : " + title                           );
-    INF_DEBUG("UNICODETITLE     : " + unicodeTitle                    );
-    INF_DEBUG("ARTIST           : " + artist                          );
-    INF_DEBUG("UNICODEARTIST    : " + unicodeArtist                   );
-    INF_DEBUG("CREATOR          : " + creator                         );
-    INF_DEBUG("DIFFICULTYNAME   : " + difficultyName                  );
-    INF_DEBUG("SOURCE           : " + source                          );
-    INF_DEBUG("TAGS             : " + tags                            );
-    INF_DEBUG("BEATMAPID        : " + QString::number(beatmapID      ));
-    INF_DEBUG("BEATMAPSETID     : " + QString::number(beatmapSetID   ));
-    INF_DEBUG("HP               : " + QString::number(HP             ));
-    INF_DEBUG("CS               : " + QString::number(CS             ));
-    INF_DEBUG("OD               : " + QString::number(OD             ));
-    INF_DEBUG("AR               : " + QString::number(AR             ));
-    INF_DEBUG("SLIDERMULT       : " + QString::number(sliderMult     ));
-    INF_DEBUG("SLIDERTICK       : " + QString::number(sliderTick     ));
-    INF_DEBUG("BGFILENAME       : " + bgFileName                      );
-    INF_DEBUG("VIDEOFILENAME    : " + videoFileName                   );
-    INF_DEBUG("BreakPList <SIZE>: " + breakPList.getSize()            );
-    INF_DEBUG("OM_TPLIST  <SIZE>: " + OM_TPList.getSize()             );
-    INF_DEBUG("OM_HOLIST  <SIZE>: " + OM_HOList.getSize()             );
+    qDebug() << "[---- Map Info ----]";
+    qDebug() << "AUDIOFILENAME    : " << audioFileName                   ;
+    qDebug() << "AUDIOLEADIN      : " << QString::number(audioLeadIn    );
+    qDebug() << "PREVIEWTIME      : " << QString::number(previewTime    );
+    qDebug() << "COUNTDOWN        : " << countdown                       ;
+    qDebug() << "SAMPLESET        : " << sampleSetStr                    ;
+    qDebug() << "STACKLENIENCY    : " << QString::number(stackLeniency  );
+    qDebug() << "GAMEMODE         : " << gameModeStr                     ;
+    qDebug() << "LETTERBOX        : " << letterbox                       ;
+    qDebug() << "SPECIALSTYLE     : " << specialStyle                    ;
+    qDebug() << "WIDESCREEN       : " << widescreen                      ;
+    qDebug() << "DISTANCESPACING  : " << QString::number(distanceSpacing);
+    qDebug() << "BEATDIVISOR      : " << QString::number(beatDivisor    );
+    qDebug() << "GRIDSIZE         : " << QString::number(gridSize       );
+    qDebug() << "TIMELINEZOOM     : " << QString::number(timelineZoom   );
+    qDebug() << "TITLE            : " << title                           ;
+    qDebug() << "UNICODETITLE     : " << unicodeTitle                    ;
+    qDebug() << "ARTIST           : " << artist                          ;
+    qDebug() << "UNICODEARTIST    : " << unicodeArtist                   ;
+    qDebug() << "CREATOR          : " << creator                         ;
+    qDebug() << "DIFFICULTYNAME   : " << difficultyName                  ;
+    qDebug() << "SOURCE           : " << source                          ;
+    qDebug() << "TAGS             : " << tags                            ;
+    qDebug() << "BEATMAPID        : " << QString::number(beatmapID      );
+    qDebug() << "BEATMAPSETID     : " << QString::number(beatmapSetID   );
+    qDebug() << "HP               : " << QString::number(HP             );
+    qDebug() << "CS               : " << QString::number(CS             );
+    qDebug() << "OD               : " << QString::number(OD             );
+    qDebug() << "AR               : " << QString::number(AR             );
+    qDebug() << "SLIDERMULT       : " << QString::number(sliderMult     );
+    qDebug() << "SLIDERTICK       : " << QString::number(sliderTick     );
+    qDebug() << "BGFILENAME       : " << bgFileName                      ;
+    qDebug() << "VIDEOFILENAME    : " << videoFileName                   ;
+    qDebug() << "BreakPList <SIZE>: " << breakPList.getSize()            ;
+    qDebug() << "OM_TPLIST  <SIZE>: " << OM_TPList.getSize()             ;
+    qDebug() << "OM_HOLIST  <SIZE>: " << OM_HOList.getSize()             ;
 }
 
 void cOM_Map::copyAudioFileTo(QFileInfo copyLocation)
 {
     QFile oldLocation(getAudioFileName());
 
-    if (oldLocation.copy(copyLocation.filePath()))
+    if (!oldLocation.copy(copyLocation.filePath()))
     {
-        ER_DEBUG("Copy Failed.");
+        throw amberException("Copy Failed.");
     }
 }
 void cOM_Map::copyOsuFileTo(QFileInfo copyLocation)
@@ -420,7 +423,7 @@ void cOM_Map::copyOsuFileTo(QFileInfo copyLocation)
 
     if (oldLocation.copy(copyLocation.filePath()))
     {
-        ER_DEBUG("Copy Failed.");
+        throw amberException("Copy Failed.");
     }
 }
 void cOM_Map::copyBGFileTo(QFileInfo copyLocation)
@@ -429,7 +432,7 @@ void cOM_Map::copyBGFileTo(QFileInfo copyLocation)
 
     if (oldLocation.copy(copyLocation.filePath()))
     {
-        ER_DEBUG("Copy Failed.");
+        throw amberException("Copy Failed.");
     }
 }
 void cOM_Map::copyAllTo(QFileInfo copyLocation)
@@ -597,7 +600,7 @@ QList<int> cOM_Map::findMapSettings(QStringList &mapSList)
                    FLAG_OM_TPList      ,
                    FLAG_OM_HOList      };
 
-    INF_DEBUG("[---- RegEx Matching ----]");
+    qDebug() << "[---- RegEx Matching ----]";
 
     for (int tempS = 0; tempS < mapSList.length(); tempS ++)
     {
@@ -611,9 +614,9 @@ QList<int> cOM_Map::findMapSettings(QStringList &mapSList)
             else if (settingsRegList[tempR].exactMatch(mapSList[tempS])) {
                 settingsRegList[tempR].setPatternSyntax(QRegExp::Wildcard);
 
-                INF_DEBUG("Pattern : " << settingsRegList[tempR].pattern());
-                INF_DEBUG("Match to: " << mapSList[tempS]                 );
-                INF_DEBUG("Found at: " << QString::number(tempS)          );
+                qDebug() << "Pattern : " << settingsRegList[tempR].pattern();
+                qDebug() << "Match to: " << mapSList[tempS]                 ;
+                qDebug() << "Found at: " << QString::number(tempS)          ;
 
                 flagRegList[tempR] = true; // Set to true to skip this parameter next loop
                 output[tempR] = tempS; // We return the line number where the parameter is located
