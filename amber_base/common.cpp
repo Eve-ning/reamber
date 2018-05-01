@@ -1,27 +1,26 @@
-#include "com_common.h"
+#include "common.h"
 
-
-cOM_Common::cOM_Common()
+amberCommon::amberCommon()
 {
 
 }
 
-omInfo cOM_Common::whatHO(const QTextBrowser   *tb)
+omInfo amberCommon::whatHO(const QTextBrowser   *tb)
 {
     QString temp = tb->toPlainText();
     return whatHO(temp);
 }
-omInfo cOM_Common::whatHO(const QLineEdit      *line)
+omInfo amberCommon::whatHO(const QLineEdit      *line)
 {
     QString temp = line->text();
     return whatHO(temp);
 }
-omInfo cOM_Common::whatHO(const QPlainTextEdit *pte)
+omInfo amberCommon::whatHO(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     return whatHO(temp);
 }
-omInfo cOM_Common::whatHO(const QString &HO)
+omInfo amberCommon::whatHO(const QString &HO)
 {
     QStringList HOSplit;
 
@@ -29,7 +28,7 @@ omInfo cOM_Common::whatHO(const QString &HO)
 
     return whatHO(HOSplit);
 }
-omInfo cOM_Common::whatHO(const QStringList &HOList)
+omInfo amberCommon::whatHO(const QStringList &HOList)
 {
     // Empty Load Fail
     assertEmpty(HOList, __FUNCTION__);
@@ -90,22 +89,22 @@ omInfo cOM_Common::whatHO(const QStringList &HOList)
     return info;
 }
 
-omInfo cOM_Common::whatTP(const QTextBrowser   *tb)
+omInfo amberCommon::whatTP(const QTextBrowser   *tb)
 {
     QString temp = tb->toPlainText();
     return whatTP(temp);
 }
-omInfo cOM_Common::whatTP(const QLineEdit      *line)
+omInfo amberCommon::whatTP(const QLineEdit      *line)
 {
     QString temp = line->text();
     return whatTP(temp);
 }
-omInfo cOM_Common::whatTP(const QPlainTextEdit *pte)
+omInfo amberCommon::whatTP(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     return whatTP(temp);
 }
-omInfo cOM_Common::whatTP(const QString &TP)
+omInfo amberCommon::whatTP(const QString &TP)
 {
     QStringList TPSplit;
 
@@ -113,7 +112,7 @@ omInfo cOM_Common::whatTP(const QString &TP)
 
     return whatTP(TPSplit);
 }
-omInfo cOM_Common::whatTP(const QStringList &TPList)
+omInfo amberCommon::whatTP(const QStringList &TPList)
 {
     // Empty Load Fail
     assertEmpty(TPList, __FUNCTION__);
@@ -151,22 +150,22 @@ omInfo cOM_Common::whatTP(const QStringList &TPList)
     return info;
 }
 
-omInfo cOM_Common::whatOM_Type(const QTextBrowser *tb)
+omInfo amberCommon::whatOM_Type(const QTextBrowser *tb)
 {
     QString temp = tb->toPlainText();
     return whatOM_Type(temp);
 }
-omInfo cOM_Common::whatOM_Type(const QLineEdit *line)
+omInfo amberCommon::whatOM_Type(const QLineEdit *line)
 {
     QString temp = line->text();
     return whatOM_Type(temp);
 }
-omInfo cOM_Common::whatOM_Type(const QPlainTextEdit *pte)
+omInfo amberCommon::whatOM_Type(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     return whatOM_Type(temp);
 }
-omInfo cOM_Common::whatOM_Type(const QString &input)
+omInfo amberCommon::whatOM_Type(const QString &input)
 {
     QStringList inputSplit;
 
@@ -174,7 +173,7 @@ omInfo cOM_Common::whatOM_Type(const QString &input)
 
     return whatOM_Type(inputSplit);
 }
-omInfo cOM_Common::whatOM_Type(const QStringList &input)
+omInfo amberCommon::whatOM_Type(const QStringList &input)
 {
     // Empty Load Fail
     assertEmpty(input, __FUNCTION__);
@@ -203,23 +202,22 @@ omInfo cOM_Common::whatOM_Type(const QStringList &input)
     return info;
 }
 
-
-bool cOM_Common::isHO(const QTextBrowser *tb)
+bool amberCommon::isHO(const QTextBrowser *tb)
 {
     QString temp = tb->toPlainText();
     return isHO(temp);
 }
-bool cOM_Common::isHO(const QLineEdit *line)
+bool amberCommon::isHO(const QLineEdit *line)
 {
     QString temp = line->text();
     return isHO(temp);
 }
-bool cOM_Common::isHO(const QPlainTextEdit *pte)
+bool amberCommon::isHO(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     return isHO(temp);
 }
-bool cOM_Common::isHO(const QString &HO)
+bool amberCommon::isHO(const QString &HO)
 {
     QStringList HOSplit;
 
@@ -227,26 +225,26 @@ bool cOM_Common::isHO(const QString &HO)
 
     return isHO(HOSplit);
 }
-bool cOM_Common::isHO(const QStringList &HOList)
+bool amberCommon::isHO(const QStringList &HOList)
 {
     return whatHO(HOList).getIsHO();
 }
-bool cOM_Common::isTP(const QTextBrowser *tb)
+bool amberCommon::isTP(const QTextBrowser *tb)
 {
     QString temp = tb->toPlainText();
     return isTP(temp);
 }
-bool cOM_Common::isTP(const QLineEdit *line)
+bool amberCommon::isTP(const QLineEdit *line)
 {
     QString temp = line->text();
     return isTP(temp);
 }
-bool cOM_Common::isTP(const QPlainTextEdit *pte)
+bool amberCommon::isTP(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     return isTP(temp);
 }
-bool cOM_Common::isTP(const QString &TP)
+bool amberCommon::isTP(const QString &TP)
 {
     QStringList TPSplit;
 
@@ -254,26 +252,26 @@ bool cOM_Common::isTP(const QString &TP)
 
     return isTP(TPSplit);
 }
-bool cOM_Common::isTP(const QStringList &TPList)
+bool amberCommon::isTP(const QStringList &TPList)
 {
     return whatTP(TPList).getIsTP();
 }
-bool cOM_Common::isEHO(const QTextBrowser   *tb)
+bool amberCommon::isEHO(const QTextBrowser   *tb)
 {
     QString temp = tb->toPlainText();
     return isEHO(temp);
 }
-bool cOM_Common::isEHO(const QLineEdit      *line)
+bool amberCommon::isEHO(const QLineEdit      *line)
 {
     QString temp = line->text();
     return isEHO(temp);
 }
-bool cOM_Common::isEHO(const QPlainTextEdit *pte)
+bool amberCommon::isEHO(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     return isEHO(temp);
 }
-bool cOM_Common::isEHO(const QString &EHO)
+bool amberCommon::isEHO(const QString &EHO)
 {
     // Reference: 01:52:511 (112511|3) -
 
@@ -283,28 +281,27 @@ bool cOM_Common::isEHO(const QString &EHO)
 
     return isEHO(EHOSplit);
 }
-bool cOM_Common::isEHO(const QStringList &EHO)
+bool amberCommon::isEHO(const QStringList &EHO)
 {
     return whatHO(EHO).getIsEHO();
 }
 
-
-void cOM_Common::assertHO(const QTextBrowser *tb)
+void amberCommon::assertHO(const QTextBrowser *tb)
 {
     QString temp = tb->toPlainText();
     assertHO(temp);
 }
-void cOM_Common::assertHO(const QLineEdit *line)
+void amberCommon::assertHO(const QLineEdit *line)
 {
     QString temp = line->text();
     assertHO(temp);
 }
-void cOM_Common::assertHO(const QPlainTextEdit *pte)
+void amberCommon::assertHO(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     assertHO(temp);
 }
-void cOM_Common::assertHO(const QString &HO)
+void amberCommon::assertHO(const QString &HO)
 {
     QStringList HOSplit;
 
@@ -312,29 +309,29 @@ void cOM_Common::assertHO(const QString &HO)
 
     assertHO(HOSplit);
 }
-void cOM_Common::assertHO(const QStringList &HOList)
+void amberCommon::assertHO(const QStringList &HOList)
 {
     if (!whatHO(HOList).getIsHO())
     {
         throw HOLoadFail(HOList);
     }
 }
-void cOM_Common::assertTP(const QTextBrowser *tb)
+void amberCommon::assertTP(const QTextBrowser *tb)
 {
     QString temp = tb->toPlainText();
     assertTP(temp);
 }
-void cOM_Common::assertTP(const QLineEdit *line)
+void amberCommon::assertTP(const QLineEdit *line)
 {
     QString temp = line->text();
     assertTP(temp);
 }
-void cOM_Common::assertTP(const QPlainTextEdit *pte)
+void amberCommon::assertTP(const QPlainTextEdit *pte)
 {
     QString temp = pte->toPlainText();
     assertTP(temp);
 }
-void cOM_Common::assertTP(const QString &TP)
+void amberCommon::assertTP(const QString &TP)
 {
     QStringList TPSplit;
 
@@ -342,56 +339,56 @@ void cOM_Common::assertTP(const QString &TP)
 
     assertTP(TPSplit);
 }
-void cOM_Common::assertTP(const QStringList &TPList)
+void amberCommon::assertTP(const QStringList &TPList)
 {
     if (!whatTP(TPList).getIsTP())
     {
         throw TPLoadFail(TPList);
     }
 }
-void cOM_Common::assertIndex(const int &value, const int &max)
+void amberCommon::assertIndex(const int &value, const int &max)
 {
     if (value < 0 || value > max)
     {
         throw indexOutOfRange(value, max);
     }
 }
-void cOM_Common::assertEmpty(const QList<T> &value, const QString &funcName)
+void amberCommon::assertEmpty(const QList<T> &value, const QString &funcName)
 {
     if (value.isEmpty())
     {
         throw emptyException(funcName);
     }
 }
-void cOM_Common::assertEmpty(const QStringList &value, const QString &funcName)
+void amberCommon::assertEmpty(const QStringList &value, const QString &funcName)
 {
     if (value.isEmpty())
     {
         throw emptyException(funcName);
     }
 }
-void cOM_Common::assertDivByZero(const double &value)
+void amberCommon::assertDivByZero(const double &value)
 {
     if (value == 0)
     {
         throw divideByZeroException();
     }
 }
-void cOM_Common::assertOffsetValid(const int &newOffset)
+void amberCommon::assertOffsetValid(const int &newOffset)
 {
-    if (newOffset < cOM_Common::MINIMUM_OFFSET || newOffset > cOM_Common::MAXIMUM_OFFSET)
+    if (newOffset < amberCommon::MINIMUM_OFFSET || newOffset > amberCommon::MAXIMUM_OFFSET)
     {
-        throw offsetOutOfRange(newOffset, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
+        throw offsetOutOfRange(newOffset, amberCommon::MINIMUM_OFFSET, amberCommon::MAXIMUM_OFFSET);
     }
 }
-void cOM_Common::assertLengthMatch(const int &given, const int &expected)
+void amberCommon::assertLengthMatch(const int &given, const int &expected)
 {
     if (given != expected)
     {
         throw lengthMismatch(given, expected);
     }
 }
-void cOM_Common::assertLoadFail(const omInfo &info)
+void amberCommon::assertLoadFail(const omInfo &info)
 {
     if (info.getLoadFail())
     {

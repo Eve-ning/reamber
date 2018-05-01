@@ -2,27 +2,27 @@
 #define cOM_TPLIST_H
 
 #include <cstdlib>
-#include "com_tp.h"
+#include "timingpoint.h"
 #include <QTextBrowser>
 #include <QLineEdit>
 #include <QPlainTextEdit>
 
-class  cOM_TPList
+class  TimingPointList
 {
 public:
     // CONSTRUCTORS
-    cOM_TPList()                          ;
-    cOM_TPList(QList<cOM_TP> newOM_TPList);
-    cOM_TPList(QTextBrowser *tb)          ;
-    cOM_TPList(QLineEdit *line)           ;
-    cOM_TPList(QPlainTextEdit *pte)       ;
-    cOM_TPList(QString str)               ;
-    cOM_TPList(QStringList strList)       ;
+    TimingPointList()                          ;
+    TimingPointList(QList<TimingPoint> newTimingPointList);
+    TimingPointList(QTextBrowser *tb)          ;
+    TimingPointList(QLineEdit *line)           ;
+    TimingPointList(QPlainTextEdit *pte)       ;
+    TimingPointList(QString str)               ;
+    TimingPointList(QStringList strList)       ;
 
     operator QStringList() const { return toString(); }
 
     // LOADERS
-    void loadTPList(QList<cOM_TP>  newOM_TPList);
+    void loadTPList(QList<TimingPoint>  newTimingPointList);
     void loadTPList(QTextBrowser   *tb);
     void loadTPList(QLineEdit      *line);
     void loadTPList(QPlainTextEdit *pte);
@@ -44,7 +44,7 @@ public:
     QList<double> getDistanceList  (const omInfo &info = omInfo(true)) const;
     QList<double> getUnqOffsetList (const omInfo &info = omInfo(true)) const;
 
-    cOM_TPList splitByType (const omInfo &info) const;
+    TimingPointList splitByType (const omInfo &info) const;
 
     double getMinOffset  () const;
     double getMaxOffset  () const;
@@ -60,13 +60,13 @@ public:
     QStringList toString () const;
 
     // OPERS
-    cOM_TP   operator [](int i) const;
-    cOM_TP & operator [](int i);
+    TimingPoint   operator [](int i) const;
+    TimingPoint & operator [](int i);
 
-    void multiplyValue  (const cOM_TPList rhsOM_TPList, bool limitFlag = false);
-    void divideValue    (const cOM_TPList rhsOM_TPList, bool limitFlag = false);
-    void addValue       (const cOM_TPList rhsOM_TPList, bool limitFlag = false);
-    void subtractValue  (const cOM_TPList rhsOM_TPList, bool limitFlag = false);
+    void multiplyValue  (const TimingPointList rhsTimingPointList, bool limitFlag = false);
+    void divideValue    (const TimingPointList rhsTimingPointList, bool limitFlag = false);
+    void addValue       (const TimingPointList rhsTimingPointList, bool limitFlag = false);
+    void subtractValue  (const TimingPointList rhsTimingPointList, bool limitFlag = false);
 
     void multiplyValue  (const double rhsDouble, bool limitFlag = false);
     void divideValue    (const double rhsDouble, bool limitFlag = false);
@@ -84,9 +84,9 @@ public:
     void sortOffset (const bool isAscending = true);
 
     // MISC
-    void append     (cOM_TP newOM_TP) { OM_TPList.append(newOM_TP); }
-    void append     (cOM_TPList newOM_TPList);
-    void deleteIndex(unsigned  index) { OM_TPList.removeAt(index); }
+    void append     (TimingPoint newTimingPoint) { curTimingPointList.append(newTimingPoint); }
+    void append     (TimingPointList newTimingPointList);
+    void deleteIndex(unsigned  index) { curTimingPointList.removeAt(index); }
     bool isEmpty    () const;
 
     // LIMITS VALUES DEPENDING ON THEIR ISBPM VALUE
@@ -104,7 +104,7 @@ public:
     QList<int> indexList(omInfo &info);
 
 protected:
-    QList<cOM_TP> OM_TPList;
+    QList<TimingPoint> curTimingPointList;
     bool          loadFail;
 };
 

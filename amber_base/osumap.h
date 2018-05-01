@@ -2,12 +2,12 @@
 #define COM_MAP_H
 
 
-#include "com_holist.h"
-#include "com_tplist.h"
-#include "com_breakplist.h"
+#include "hitobjectlist.h"
+#include "timingpointlist.h"
+#include "breakpointlist.h"
 #include <QDebug>
 
-class  cOM_Map
+class  osuMap
 {
 public:
 
@@ -27,7 +27,7 @@ public:
     };
 
     // CONSTRUCTORS
-    cOM_Map();
+    osuMap();
 
     // LOADERS
     void loadMap(QString newMapString);
@@ -71,9 +71,9 @@ public:
     void setSliderTick       (double         newSliderTick     ){ sliderTick      = newSliderTick     ; }
     void setBGFileName       (QString        newBGFileName     ){ bgFileName      = newBGFileName     ; }
     void setVideoFileName    (QString        newVideoFileName  ){ videoFileName   = newVideoFileName  ; }
-    void setBreakPList       (cOM_BreakPList newBreakPList     ){ breakPList      = newBreakPList     ; }
-    void setOM_HOList        (cOM_HOList     newOM_HOList      ){ OM_HOList       = newOM_HOList      ; }
-    void setOM_TPList        (cOM_TPList     newOM_TPList      ){ OM_TPList       = newOM_TPList      ; }
+    void setBreakPList       (BreakPointList newBreakPList     ){ breakPList      = newBreakPList     ; }
+    void setOM_HOList        (HitObjectList     newHOList      ){ OM_HOList       = newHOList      ; }
+    void setOM_TPList        (TimingPointList     newTimingPointList      ){ curTimingPointList       = newTimingPointList      ; }
 
     // GETTERS
     QString        getOsuFileName      () const { return osuFileName     ; }
@@ -109,9 +109,9 @@ public:
     double         getSliderTick       () const { return sliderTick      ; }
     QString        getBGFileName       () const { return bgFileName      ; }
     QString        getVideoFileName    () const { return videoFileName   ; }
-    cOM_BreakPList getBreakPList       () const { return breakPList      ; }
-    cOM_HOList     getOM_HOList        () const { return OM_HOList       ; }
-    cOM_TPList     getOM_TPList        () const { return OM_TPList       ; }
+    BreakPointList getBreakPList       () const { return breakPList      ; }
+    HitObjectList     getOM_HOList        () const { return OM_HOList       ; }
+    TimingPointList     getOM_TPList        () const { return curTimingPointList       ; }
 
     // OPERS
 
@@ -167,11 +167,11 @@ protected:
     QString osuFileName;
 
     // Breaks
-    cOM_BreakPList breakPList;
+    BreakPointList breakPList;
 
     // HitObject and TimingPoint
-    cOM_HOList OM_HOList;
-    cOM_TPList OM_TPList;
+    HitObjectList OM_HOList;
+    TimingPointList curTimingPointList;
 
 private:
 

@@ -1,7 +1,7 @@
-#include "com_mapset.h"
+#include "osumapset.h"
 
 // CONSTRUCTORS
-cOM_MapSet::cOM_MapSet()
+osuMapSet::osuMapSet()
 {
 
 }
@@ -9,7 +9,7 @@ cOM_MapSet::cOM_MapSet()
 // LOADERS
 
 // SETTERS
-void cOM_MapSet::setOsuFileNameList      (QStringList                newOsuFileNameList    )
+void osuMapSet::setOsuFileNameList      (QStringList                newOsuFileNameList    )
 {
     if (newOsuFileNameList.length() != OM_MapList.length())
     {
@@ -20,7 +20,7 @@ void cOM_MapSet::setOsuFileNameList      (QStringList                newOsuFileN
         OM_MapList[temp].setOsuFileName        (newOsuFileNameList    [temp]);
     }
 }
-void cOM_MapSet::setAudioFileNameList    (QStringList                newAudioFileNameList  )
+void osuMapSet::setAudioFileNameList    (QStringList                newAudioFileNameList  )
 {
     if (newAudioFileNameList  .length() != OM_MapList.length())
     {
@@ -31,7 +31,7 @@ void cOM_MapSet::setAudioFileNameList    (QStringList                newAudioFil
         OM_MapList[temp].setAudioFileName      (newAudioFileNameList  [temp]);
     }
 }
-void cOM_MapSet::setAudioLeadInList      (QList<int                > newAudioLeadInList    )
+void osuMapSet::setAudioLeadInList      (QList<int                > newAudioLeadInList    )
 {
     if (newAudioLeadInList    .length() != OM_MapList.length())
     {
@@ -42,7 +42,7 @@ void cOM_MapSet::setAudioLeadInList      (QList<int                > newAudioLea
         OM_MapList[temp].setAudioLeadIn        (newAudioLeadInList    [temp]);
     }
 }
-void cOM_MapSet::setPreviewTimeList      (QList<int                > newPreviewTimeList    )
+void osuMapSet::setPreviewTimeList      (QList<int                > newPreviewTimeList    )
 {
     if (newPreviewTimeList    .length() != OM_MapList.length())
     {
@@ -53,7 +53,7 @@ void cOM_MapSet::setPreviewTimeList      (QList<int                > newPreviewT
         OM_MapList[temp].setPreviewTime        (newPreviewTimeList    [temp]);
     }
 }
-void cOM_MapSet::setCountdownList        (QList<bool               > newCountdownList      )
+void osuMapSet::setCountdownList        (QList<bool               > newCountdownList      )
 {
     if (newCountdownList      .length() != OM_MapList.length())
     {
@@ -64,7 +64,7 @@ void cOM_MapSet::setCountdownList        (QList<bool               > newCountdow
         OM_MapList[temp].setCountdown          (newCountdownList      [temp]);
     }
 }
-void cOM_MapSet::setSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSetList      )
+void osuMapSet::setSampleSetList        (QList<osuMap::cSampleSet> newSampleSetList      )
 {
     if (newSampleSetList      .length() != OM_MapList.length())
     {
@@ -75,7 +75,7 @@ void cOM_MapSet::setSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSe
         OM_MapList[temp].setSampleSet          (newSampleSetList      [temp]);
     }
 }
-void cOM_MapSet::setStackLeniencyList    (QList<double             > newStackLeniencyList  )
+void osuMapSet::setStackLeniencyList    (QList<double             > newStackLeniencyList  )
 {
     if (newStackLeniencyList  .length() != OM_MapList.length())
     {
@@ -86,7 +86,7 @@ void cOM_MapSet::setStackLeniencyList    (QList<double             > newStackLen
         OM_MapList[temp].setStackLeniency      (newStackLeniencyList  [temp]);
     }
 }
-void cOM_MapSet::setGameModeList         (QList<cOM_Map::cGameMode > newGameModeList       )
+void osuMapSet::setGameModeList         (QList<osuMap::cGameMode > newGameModeList       )
 {
     if (newGameModeList       .length() != OM_MapList.length())
     {
@@ -97,7 +97,7 @@ void cOM_MapSet::setGameModeList         (QList<cOM_Map::cGameMode > newGameMode
         OM_MapList[temp].setGameMode           (newGameModeList       [temp]);
     }
 }
-void cOM_MapSet::setLetterboxList        (QList<bool               > newLetterboxList      )
+void osuMapSet::setLetterboxList        (QList<bool               > newLetterboxList      )
 {
     if (newLetterboxList      .length() != OM_MapList.length())
     {
@@ -108,7 +108,7 @@ void cOM_MapSet::setLetterboxList        (QList<bool               > newLetterbo
         OM_MapList[temp].setLetterbox          (newLetterboxList      [temp]);
     }
 }
-void cOM_MapSet::setSpecialStyleList     (QList<bool               > newSpecialStyleList   )
+void osuMapSet::setSpecialStyleList     (QList<bool               > newSpecialStyleList   )
 {
     if (newSpecialStyleList   .length() != OM_MapList.length())
     {
@@ -119,7 +119,7 @@ void cOM_MapSet::setSpecialStyleList     (QList<bool               > newSpecialS
         OM_MapList[temp].setSpecialStyle       (newSpecialStyleList   [temp]);
     }
 }
-void cOM_MapSet::setWidescreenList       (QList<bool               > newWidescreenList     )
+void osuMapSet::setWidescreenList       (QList<bool               > newWidescreenList     )
 {
     if (newWidescreenList     .length() != OM_MapList.length())
     {
@@ -130,7 +130,7 @@ void cOM_MapSet::setWidescreenList       (QList<bool               > newWidescre
         OM_MapList[temp].setWidescreen         (newWidescreenList     [temp]);
     }
 }
-void cOM_MapSet::setDistanceSpacingList  (QList<double             > newDistanceSpacingList)
+void osuMapSet::setDistanceSpacingList  (QList<double             > newDistanceSpacingList)
 {
     if (newDistanceSpacingList.length() != OM_MapList.length())
     {
@@ -141,7 +141,7 @@ void cOM_MapSet::setDistanceSpacingList  (QList<double             > newDistance
         OM_MapList[temp].setDistanceSpacing    (newDistanceSpacingList[temp]);
     }
 }
-void cOM_MapSet::setBeatDivisorList      (QList<int                > newBeatDivisorList    )
+void osuMapSet::setBeatDivisorList      (QList<int                > newBeatDivisorList    )
 {
     if (newBeatDivisorList    .length() != OM_MapList.length())
     {
@@ -152,7 +152,7 @@ void cOM_MapSet::setBeatDivisorList      (QList<int                > newBeatDivi
         OM_MapList[temp].setBeatDivisor        (newBeatDivisorList    [temp]);
     }
 }
-void cOM_MapSet::setGridSizeList         (QList<int                > newGridSizeList       )
+void osuMapSet::setGridSizeList         (QList<int                > newGridSizeList       )
 {
     if (newGridSizeList       .length() != OM_MapList.length())
     {
@@ -163,7 +163,7 @@ void cOM_MapSet::setGridSizeList         (QList<int                > newGridSize
         OM_MapList[temp].setGridSize           (newGridSizeList       [temp]);
     }
 }
-void cOM_MapSet::setTimelineZoomList     (QList<double             > newTimelineZoomList   )
+void osuMapSet::setTimelineZoomList     (QList<double             > newTimelineZoomList   )
 {
     if (newTimelineZoomList   .length() != OM_MapList.length())
     {
@@ -174,7 +174,7 @@ void cOM_MapSet::setTimelineZoomList     (QList<double             > newTimeline
         OM_MapList[temp].setTimelineZoom       (newTimelineZoomList   [temp]);
     }
 }
-void cOM_MapSet::setTitleList            (QStringList                newTitleList          )
+void osuMapSet::setTitleList            (QStringList                newTitleList          )
 {
     if (newTitleList          .length() != OM_MapList.length())
     {
@@ -185,7 +185,7 @@ void cOM_MapSet::setTitleList            (QStringList                newTitleLis
         OM_MapList[temp].setTitle              (newTitleList          [temp]);
     }
 }
-void cOM_MapSet::setUnicodeTitleList     (QStringList                newUnicodeTitleList   )
+void osuMapSet::setUnicodeTitleList     (QStringList                newUnicodeTitleList   )
 {
     if (newUnicodeTitleList   .length() != OM_MapList.length())
     {
@@ -196,7 +196,7 @@ void cOM_MapSet::setUnicodeTitleList     (QStringList                newUnicodeT
         OM_MapList[temp].setUnicodeTitle       (newUnicodeTitleList   [temp]);
     }
 }
-void cOM_MapSet::setArtistList           (QStringList                newArtistList         )
+void osuMapSet::setArtistList           (QStringList                newArtistList         )
 {
     if (newArtistList         .length() != OM_MapList.length())
     {
@@ -207,7 +207,7 @@ void cOM_MapSet::setArtistList           (QStringList                newArtistLi
         OM_MapList[temp].setArtist             (newArtistList         [temp]);
     }
 }
-void cOM_MapSet::setUnicodeArtistList    (QStringList                newUnicodeArtistList  )
+void osuMapSet::setUnicodeArtistList    (QStringList                newUnicodeArtistList  )
 {
     if (newUnicodeArtistList  .length() != OM_MapList.length())
     {
@@ -218,7 +218,7 @@ void cOM_MapSet::setUnicodeArtistList    (QStringList                newUnicodeA
         OM_MapList[temp].setUnicodeArtist      (newUnicodeArtistList  [temp]);
     }
 }
-void cOM_MapSet::setCreatorList          (QStringList                newCreatorList        )
+void osuMapSet::setCreatorList          (QStringList                newCreatorList        )
 {
     if (newCreatorList        .length() != OM_MapList.length())
     {
@@ -229,7 +229,7 @@ void cOM_MapSet::setCreatorList          (QStringList                newCreatorL
         OM_MapList[temp].setCreator            (newCreatorList        [temp]);
     }
 }
-void cOM_MapSet::setDifficultyNameList   (QStringList                newDifficultyNameList )
+void osuMapSet::setDifficultyNameList   (QStringList                newDifficultyNameList )
 {
     if (newDifficultyNameList .length() != OM_MapList.length())
     {
@@ -240,7 +240,7 @@ void cOM_MapSet::setDifficultyNameList   (QStringList                newDifficul
         OM_MapList[temp].setDifficultyName     (newDifficultyNameList [temp]);
     }
 }
-void cOM_MapSet::setSourceList           (QStringList                newSourceList         )
+void osuMapSet::setSourceList           (QStringList                newSourceList         )
 {
     if (newSourceList         .length() != OM_MapList.length())
     {
@@ -251,7 +251,7 @@ void cOM_MapSet::setSourceList           (QStringList                newSourceLi
         OM_MapList[temp].setSource             (newSourceList         [temp]);
     }
 }
-void cOM_MapSet::setTagsList             (QList<QStringList        > newTagsList           )
+void osuMapSet::setTagsList             (QList<QStringList        > newTagsList           )
 {
     if (newTagsList           .length() != OM_MapList.length())
     {
@@ -262,7 +262,7 @@ void cOM_MapSet::setTagsList             (QList<QStringList        > newTagsList
         OM_MapList[temp].setTags               (newTagsList           [temp]);
     }
 }
-void cOM_MapSet::setBeatmapIDList        (QList<int                > newBeatmapIDList      )
+void osuMapSet::setBeatmapIDList        (QList<int                > newBeatmapIDList      )
 {
     if (newBeatmapIDList      .length() != OM_MapList.length())
     {
@@ -273,7 +273,7 @@ void cOM_MapSet::setBeatmapIDList        (QList<int                > newBeatmapI
         OM_MapList[temp].setBeatmapID          (newBeatmapIDList      [temp]);
     }
 }
-void cOM_MapSet::setBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   )
+void osuMapSet::setBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   )
 {
     if (newBeatmapSetIDList   .length() != OM_MapList.length())
     {
@@ -284,7 +284,7 @@ void cOM_MapSet::setBeatmapSetIDList     (QList<int                > newBeatmapS
         OM_MapList[temp].setBeatmapSetID       (newBeatmapSetIDList   [temp]);
     }
 }
-void cOM_MapSet::setHPList               (QList<double             > newHPList             )
+void osuMapSet::setHPList               (QList<double             > newHPList             )
 {
     if (newHPList             .length() != OM_MapList.length())
     {
@@ -295,7 +295,7 @@ void cOM_MapSet::setHPList               (QList<double             > newHPList  
         OM_MapList[temp].setHP                 (newHPList             [temp]);
     }
 }
-void cOM_MapSet::setCSList               (QList<double             > newCSList             )
+void osuMapSet::setCSList               (QList<double             > newCSList             )
 {
     if (newCSList             .length() != OM_MapList.length())
     {
@@ -306,7 +306,7 @@ void cOM_MapSet::setCSList               (QList<double             > newCSList  
         OM_MapList[temp].setCS                 (newCSList             [temp]);
     }
 }
-void cOM_MapSet::setODList               (QList<double             > newODList             )
+void osuMapSet::setODList               (QList<double             > newODList             )
 {
     if (newODList             .length() != OM_MapList.length())
     {
@@ -317,7 +317,7 @@ void cOM_MapSet::setODList               (QList<double             > newODList  
         OM_MapList[temp].setOD                 (newODList             [temp]);
     }
 }
-void cOM_MapSet::setARList               (QList<double             > newARList             )
+void osuMapSet::setARList               (QList<double             > newARList             )
 {
     if (newARList             .length() != OM_MapList.length())
     {
@@ -328,7 +328,7 @@ void cOM_MapSet::setARList               (QList<double             > newARList  
         OM_MapList[temp].setAR                 (newARList             [temp]);
     }
 }
-void cOM_MapSet::setSliderMultList       (QList<double             > newSliderMultList     )
+void osuMapSet::setSliderMultList       (QList<double             > newSliderMultList     )
 {
     if (newSliderMultList     .length() != OM_MapList.length())
     {
@@ -339,7 +339,7 @@ void cOM_MapSet::setSliderMultList       (QList<double             > newSliderMu
         OM_MapList[temp].setSliderMult         (newSliderMultList     [temp]);
     }
 }
-void cOM_MapSet::setSliderTickList       (QList<double             > newSliderTickList     )
+void osuMapSet::setSliderTickList       (QList<double             > newSliderTickList     )
 {
     if (newSliderTickList     .length() != OM_MapList.length())
     {
@@ -350,7 +350,7 @@ void cOM_MapSet::setSliderTickList       (QList<double             > newSliderTi
         OM_MapList[temp].setSliderTick         (newSliderTickList     [temp]);
     }
 }
-void cOM_MapSet::setBGFileNameList       (QStringList                newBGFileNameList     )
+void osuMapSet::setBGFileNameList       (QStringList                newBGFileNameList     )
 {
     if (newBGFileNameList     .length() != OM_MapList.length())
     {
@@ -361,7 +361,7 @@ void cOM_MapSet::setBGFileNameList       (QStringList                newBGFileNa
         OM_MapList[temp].setBGFileName         (newBGFileNameList     [temp]);
     }
 }
-void cOM_MapSet::setVideoFileNameList    (QStringList                newVideoFileNameList  )
+void osuMapSet::setVideoFileNameList    (QStringList                newVideoFileNameList  )
 {
     if (newVideoFileNameList  .length() != OM_MapList.length())
     {
@@ -372,7 +372,7 @@ void cOM_MapSet::setVideoFileNameList    (QStringList                newVideoFil
         OM_MapList[temp].setVideoFileName      (newVideoFileNameList  [temp]);
     }
 }
-void cOM_MapSet::setBreakPListList       (QList<cOM_BreakPList     > newBreakPListList     )
+void osuMapSet::setBreakPListList       (QList<BreakPointList     > newBreakPListList     )
 {
     if (newBreakPListList     .length() != OM_MapList.length())
     {
@@ -383,7 +383,7 @@ void cOM_MapSet::setBreakPListList       (QList<cOM_BreakPList     > newBreakPLi
         OM_MapList[temp].setBreakPList             (newBreakPListList     [temp]);
     }
 }
-void cOM_MapSet::setOM_HOListList        (QList<cOM_HOList         > newOM_HOListList      )
+void osuMapSet::setOM_HOListList        (QList<HitObjectList         > newOM_HOListList      )
 {
     if (newOM_HOListList      .length() != OM_MapList.length())
     {
@@ -394,7 +394,7 @@ void cOM_MapSet::setOM_HOListList        (QList<cOM_HOList         > newOM_HOLis
         OM_MapList[temp].setOM_HOList              (newOM_HOListList      [temp]);
     }
 }
-void cOM_MapSet::setOM_TPListList        (QList<cOM_TPList         > newOM_TPListList      )
+void osuMapSet::setOM_TPListList        (QList<TimingPointList         > newOM_TPListList      )
 {
     if (newOM_TPListList      .length() != OM_MapList.length())
     {
@@ -407,9 +407,9 @@ void cOM_MapSet::setOM_TPListList        (QList<cOM_TPList         > newOM_TPLis
 }
 
 // GETTERS
-QStringList               cOM_MapSet::getOsuFileNameList      () const
+QStringList               osuMapSet::getOsuFileNameList      () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -418,9 +418,9 @@ QStringList               cOM_MapSet::getOsuFileNameList      () const
 
     return output;
 }
-QStringList               cOM_MapSet::getAudioFileNameList    () const
+QStringList               osuMapSet::getAudioFileNameList    () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -429,9 +429,9 @@ QStringList               cOM_MapSet::getAudioFileNameList    () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getAudioLeadInList      () const
+QList<int                >osuMapSet::getAudioLeadInList      () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<int> output;
     foreach (temp, OM_MapList)
     {
@@ -440,9 +440,9 @@ QList<int                >cOM_MapSet::getAudioLeadInList      () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getPreviewTimeList      () const
+QList<int                >osuMapSet::getPreviewTimeList      () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<int> output;
     foreach (temp, OM_MapList)
     {
@@ -451,9 +451,9 @@ QList<int                >cOM_MapSet::getPreviewTimeList      () const
 
     return output;
 }
-QList<bool               >cOM_MapSet::getCountdownList        () const
+QList<bool               >osuMapSet::getCountdownList        () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<bool> output;
     foreach (temp, OM_MapList)
     {
@@ -462,10 +462,10 @@ QList<bool               >cOM_MapSet::getCountdownList        () const
 
     return output;
 }
-QList<cOM_Map::cSampleSet>cOM_MapSet::getSampleSetList        () const
+QList<osuMap::cSampleSet>osuMapSet::getSampleSetList        () const
 {
-    cOM_Map temp;
-    QList<cOM_Map::cSampleSet> output;
+    osuMap temp;
+    QList<osuMap::cSampleSet> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getSampleSet());
@@ -473,9 +473,9 @@ QList<cOM_Map::cSampleSet>cOM_MapSet::getSampleSetList        () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getStackLeniencyList    () const
+QList<double             >osuMapSet::getStackLeniencyList    () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -484,10 +484,10 @@ QList<double             >cOM_MapSet::getStackLeniencyList    () const
 
     return output;
 }
-QList<cOM_Map::cGameMode >cOM_MapSet::getGameModeList         () const
+QList<osuMap::cGameMode >osuMapSet::getGameModeList         () const
 {
-    cOM_Map temp;
-    QList<cOM_Map::cGameMode> output;
+    osuMap temp;
+    QList<osuMap::cGameMode> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getGameMode());
@@ -495,9 +495,9 @@ QList<cOM_Map::cGameMode >cOM_MapSet::getGameModeList         () const
 
     return output;
 }
-QList<bool               >cOM_MapSet::getLetterboxList        () const
+QList<bool               >osuMapSet::getLetterboxList        () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<bool> output;
     foreach (temp, OM_MapList)
     {
@@ -506,9 +506,9 @@ QList<bool               >cOM_MapSet::getLetterboxList        () const
 
     return output;
 }
-QList<bool               >cOM_MapSet::getSpecialStyleList     () const
+QList<bool               >osuMapSet::getSpecialStyleList     () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<bool> output;
     foreach (temp, OM_MapList)
     {
@@ -517,9 +517,9 @@ QList<bool               >cOM_MapSet::getSpecialStyleList     () const
 
     return output;
 }
-QList<bool               >cOM_MapSet::getWidescreenList       () const
+QList<bool               >osuMapSet::getWidescreenList       () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<bool> output;
     foreach (temp, OM_MapList)
     {
@@ -528,9 +528,9 @@ QList<bool               >cOM_MapSet::getWidescreenList       () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getDistanceSpacingList  () const
+QList<double             >osuMapSet::getDistanceSpacingList  () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -539,9 +539,9 @@ QList<double             >cOM_MapSet::getDistanceSpacingList  () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getBeatDivisorList      () const
+QList<int                >osuMapSet::getBeatDivisorList      () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<int> output;
     foreach (temp, OM_MapList)
     {
@@ -550,9 +550,9 @@ QList<int                >cOM_MapSet::getBeatDivisorList      () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getGridSizeList         () const
+QList<int                >osuMapSet::getGridSizeList         () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<int> output;
     foreach (temp, OM_MapList)
     {
@@ -561,9 +561,9 @@ QList<int                >cOM_MapSet::getGridSizeList         () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getTimelineZoomList     () const
+QList<double             >osuMapSet::getTimelineZoomList     () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -572,9 +572,9 @@ QList<double             >cOM_MapSet::getTimelineZoomList     () const
 
     return output;
 }
-QStringList               cOM_MapSet::getTitleList            () const
+QStringList               osuMapSet::getTitleList            () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -583,9 +583,9 @@ QStringList               cOM_MapSet::getTitleList            () const
 
     return output;
 }
-QStringList               cOM_MapSet::getUnicodeTitleList     () const
+QStringList               osuMapSet::getUnicodeTitleList     () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -594,9 +594,9 @@ QStringList               cOM_MapSet::getUnicodeTitleList     () const
 
     return output;
 }
-QStringList               cOM_MapSet::getArtistList           () const
+QStringList               osuMapSet::getArtistList           () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -605,9 +605,9 @@ QStringList               cOM_MapSet::getArtistList           () const
 
     return output;
 }
-QStringList               cOM_MapSet::getUnicodeArtistList    () const
+QStringList               osuMapSet::getUnicodeArtistList    () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -616,9 +616,9 @@ QStringList               cOM_MapSet::getUnicodeArtistList    () const
 
     return output;
 }
-QStringList               cOM_MapSet::getCreatorList          () const
+QStringList               osuMapSet::getCreatorList          () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -627,9 +627,9 @@ QStringList               cOM_MapSet::getCreatorList          () const
 
     return output;
 }
-QStringList               cOM_MapSet::getDifficultyNameList   () const
+QStringList               osuMapSet::getDifficultyNameList   () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -638,9 +638,9 @@ QStringList               cOM_MapSet::getDifficultyNameList   () const
 
     return output;
 }
-QStringList               cOM_MapSet::getSourceList           () const
+QStringList               osuMapSet::getSourceList           () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -649,9 +649,9 @@ QStringList               cOM_MapSet::getSourceList           () const
 
     return output;
 }
-QList<QStringList        >cOM_MapSet::getTagsList             () const
+QList<QStringList        >osuMapSet::getTagsList             () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<QStringList> output;
     foreach (temp, OM_MapList)
     {
@@ -660,9 +660,9 @@ QList<QStringList        >cOM_MapSet::getTagsList             () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getBeatmapIDList        () const
+QList<int                >osuMapSet::getBeatmapIDList        () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<int> output;
     foreach (temp, OM_MapList)
     {
@@ -671,9 +671,9 @@ QList<int                >cOM_MapSet::getBeatmapIDList        () const
 
     return output;
 }
-QList<int                >cOM_MapSet::getBeatmapSetIDList     () const
+QList<int                >osuMapSet::getBeatmapSetIDList     () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<int> output;
     foreach (temp, OM_MapList)
     {
@@ -682,9 +682,9 @@ QList<int                >cOM_MapSet::getBeatmapSetIDList     () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getHPList               () const
+QList<double             >osuMapSet::getHPList               () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -693,9 +693,9 @@ QList<double             >cOM_MapSet::getHPList               () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getCSList               () const
+QList<double             >osuMapSet::getCSList               () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -704,9 +704,9 @@ QList<double             >cOM_MapSet::getCSList               () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getODList               () const
+QList<double             >osuMapSet::getODList               () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -715,9 +715,9 @@ QList<double             >cOM_MapSet::getODList               () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getARList               () const
+QList<double             >osuMapSet::getARList               () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -726,9 +726,9 @@ QList<double             >cOM_MapSet::getARList               () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getSliderMultList       () const
+QList<double             >osuMapSet::getSliderMultList       () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -737,9 +737,9 @@ QList<double             >cOM_MapSet::getSliderMultList       () const
 
     return output;
 }
-QList<double             >cOM_MapSet::getSliderTickList       () const
+QList<double             >osuMapSet::getSliderTickList       () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QList<double> output;
     foreach (temp, OM_MapList)
     {
@@ -748,9 +748,9 @@ QList<double             >cOM_MapSet::getSliderTickList       () const
 
     return output;
 }
-QStringList               cOM_MapSet::getBGFileNameList       () const
+QStringList               osuMapSet::getBGFileNameList       () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -759,9 +759,9 @@ QStringList               cOM_MapSet::getBGFileNameList       () const
 
     return output;
 }
-QStringList               cOM_MapSet::getVideoFileNameList    () const
+QStringList               osuMapSet::getVideoFileNameList    () const
 {
-    cOM_Map temp;
+    osuMap temp;
     QStringList output;
     foreach (temp, OM_MapList)
     {
@@ -770,10 +770,10 @@ QStringList               cOM_MapSet::getVideoFileNameList    () const
 
     return output;
 }
-QList<cOM_BreakPList     >cOM_MapSet::getBreakPListList       () const
+QList<BreakPointList     >osuMapSet::getBreakPListList       () const
 {
-    cOM_Map temp;
-    QList<cOM_BreakPList> output;
+    osuMap temp;
+    QList<BreakPointList> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getBreakPList());
@@ -781,10 +781,10 @@ QList<cOM_BreakPList     >cOM_MapSet::getBreakPListList       () const
 
     return output;
 }
-QList<cOM_HOList         >cOM_MapSet::getOM_HOListList        () const
+QList<HitObjectList         >osuMapSet::getOM_HOListList        () const
 {
-    cOM_Map temp;
-    QList<cOM_HOList> output;
+    osuMap temp;
+    QList<HitObjectList> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getOM_HOList());
@@ -792,10 +792,10 @@ QList<cOM_HOList         >cOM_MapSet::getOM_HOListList        () const
 
     return output;
 }
-QList<cOM_TPList         >cOM_MapSet::getOM_TPListList        () const
+QList<TimingPointList         >osuMapSet::getOM_TPListList        () const
 {
-    cOM_Map temp;
-    QList<cOM_TPList> output;
+    osuMap temp;
+    QList<TimingPointList> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getOM_TPList());

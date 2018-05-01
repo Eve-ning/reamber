@@ -1,7 +1,7 @@
-#include "com_map.h"
+#include "osumap.h"
 
 // CONSTRUCTORS
-cOM_Map::cOM_Map()
+osuMap::osuMap()
 {
     // Load Default Map
     osuFileName      = ""                  ;
@@ -29,17 +29,17 @@ cOM_Map::cOM_Map()
     sliderMult       = 1.0                 ;
     sliderTick       = 1                   ;
     bgFileName       = "bg.jpg"            ;
-    OM_HOList        = cOM_HOList()        ;
-    OM_TPList        = cOM_TPList()        ;
+    OM_HOList        = HitObjectList()        ;
+    curTimingPointList        = TimingPointList()        ;
 }
 
 // LOADERS
-void cOM_Map::loadMap(QString newMapString)
+void osuMap::loadMap(QString newMapString)
 {
     // Convert to StringList then pass to StringList Handler
     loadMap(newMapString.split("\n",QString::KeepEmptyParts));
 }
-void cOM_Map::loadMap(QFileInfo newMapPath)
+void osuMap::loadMap(QFileInfo newMapPath)
 {
     // Convert to StringList then pass to StringList Handler
     QStringList mapStringList;
@@ -65,7 +65,7 @@ void cOM_Map::loadMap(QFileInfo newMapPath)
 
     loadMap(mapStringList);
 }
-void cOM_Map::loadMap(QStringList newMapStringList)
+void osuMap::loadMap(QStringList newMapStringList)
 {
     QList<int> indexMapStringList;
     indexMapStringList = findMapSettings(newMapStringList);
@@ -96,8 +96,8 @@ void cOM_Map::loadMap(QStringList newMapStringList)
     sliderMult       = 1.0                 ;
     sliderTick       = 1                   ;
     bgFileName       = "bg.jpg"            ;
-    OM_HOList        = cOM_HOList()        ;
-    OM_TPList        = cOM_TPList()        ;
+    OM_HOList        = HitObjectList()        ;
+    curTimingPointList        = TimingPointList()        ;
 
 
     if (indexMapStringList[0]  != -1) { audioFileName
@@ -116,23 +116,23 @@ void cOM_Map::loadMap(QStringList newMapStringList)
 
         if (temp == "None")
         {
-            sampleSet = cOM_Map::cSampleSet::AUTO;
+            sampleSet = osuMap::cSampleSet::AUTO;
         }
         else if (temp == "Soft")
         {
-            sampleSet = cOM_Map::cSampleSet::SOFT;
+            sampleSet = osuMap::cSampleSet::SOFT;
         }
         else if (temp == "Normal")
         {
-            sampleSet = cOM_Map::cSampleSet::NORMAL;
+            sampleSet = osuMap::cSampleSet::NORMAL;
         }
         else if (temp == "Drum")
         {
-            sampleSet = cOM_Map::cSampleSet::DRUM;
+            sampleSet = osuMap::cSampleSet::DRUM;
         }
         else
         {
-            sampleSet = cOM_Map::cSampleSet::AUTO;
+            sampleSet = osuMap::cSampleSet::AUTO;
         }
     }
     if (indexMapStringList[5]  != -1) { stackLeniency
@@ -283,11 +283,11 @@ void cOM_Map::loadMap(QStringList newMapStringList)
         for (int temp = startBreakPIndex; temp <= endBreakPIndex; temp ++)
         {
             if (newMapStringList[temp].simplified() != ""){
-                breakPList.append(cOM_BreakP(newMapStringList[temp]));
+                breakPList.append(BreakPoint(newMapStringList[temp]));
             }
         }
                  }
-    if (indexMapStringList[33] != -1) { // OM_TPList
+    if (indexMapStringList[33] != -1) { // curTimingPointList
         int startOM_TPIndex,
             endOM_TPIndex;
 
@@ -300,7 +300,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
         for (int temp = startOM_TPIndex; temp <= endOM_TPIndex; temp ++)
         {
             if (newMapStringList[temp].simplified() != ""){
-                OM_TPList.append(cOM_TP(newMapStringList[temp]));
+                curTimingPointList.append(TimingPoint(newMapStringList[temp]));
             }
         }
 
@@ -318,7 +318,7 @@ void cOM_Map::loadMap(QStringList newMapStringList)
         for (int temp = startOM_HOIndex; temp < endOM_HOIndex; temp ++)
         {
             if (newMapStringList[temp].simplified() != ""){
-                OM_HOList.append(cOM_HO(newMapStringList[temp], CS));
+                OM_HOList.append(HitObject(newMapStringList[temp], CS));
             }
         }
     }
@@ -329,23 +329,23 @@ void cOM_Map::loadMap(QStringList newMapStringList)
 // SETTERS
 
 // GETTERS
-void cOM_Map::getInfo() const
+void osuMap::getInfo() const
 {
     QString sampleSetStr,
             gameModeStr;
 
     // CONVERT SAMPLESET TO STR
     switch (sampleSet) {
-    case cOM_Map::cSampleSet::AUTO:
+    case osuMap::cSampleSet::AUTO:
         sampleSetStr = "AUTO";
         break;
-    case cOM_Map::cSampleSet::SOFT:
+    case osuMap::cSampleSet::SOFT:
         sampleSetStr = "SOFT";
         break;
-    case cOM_Map::cSampleSet::NORMAL:
+    case osuMap::cSampleSet::NORMAL:
         sampleSetStr = "NORMAL";
         break;
-    case cOM_Map::cSampleSet::DRUM:
+    case osuMap::cSampleSet::DRUM:
         sampleSetStr = "DRUM";
         break;
     default:
@@ -354,16 +354,16 @@ void cOM_Map::getInfo() const
 
     // CONVERT SAMPLESET TO STR
     switch (gameMode) {
-    case cOM_Map::cGameMode::STANDARD:
+    case osuMap::cGameMode::STANDARD:
         gameModeStr = "STANDARD";
         break;
-    case cOM_Map::cGameMode::TAIKO:
+    case osuMap::cGameMode::TAIKO:
         gameModeStr = "TAIKO";
         break;
-    case cOM_Map::cGameMode::CTB:
+    case osuMap::cGameMode::CTB:
         gameModeStr = "CTB";
         break;
-    case cOM_Map::cGameMode::MANIA:
+    case osuMap::cGameMode::MANIA:
         gameModeStr = "MANIA";
         break;
     default:
@@ -404,11 +404,11 @@ void cOM_Map::getInfo() const
     qDebug() << "BGFILENAME       : " << bgFileName                      ;
     qDebug() << "VIDEOFILENAME    : " << videoFileName                   ;
     qDebug() << "BreakPList <SIZE>: " << breakPList.getSize()            ;
-    qDebug() << "OM_TPLIST  <SIZE>: " << OM_TPList.getSize()             ;
+    qDebug() << "OM_TPLIST  <SIZE>: " << curTimingPointList.getSize()             ;
     qDebug() << "OM_HOLIST  <SIZE>: " << OM_HOList.getSize()             ;
 }
 
-void cOM_Map::copyAudioFileTo(QFileInfo copyLocation)
+void osuMap::copyAudioFileTo(QFileInfo copyLocation)
 {
     QFile oldLocation(getAudioFileName());
 
@@ -417,7 +417,7 @@ void cOM_Map::copyAudioFileTo(QFileInfo copyLocation)
         throw amberException("Copy Failed.");
     }
 }
-void cOM_Map::copyOsuFileTo(QFileInfo copyLocation)
+void osuMap::copyOsuFileTo(QFileInfo copyLocation)
 {
     QFile oldLocation(getOsuFileName());
 
@@ -426,7 +426,7 @@ void cOM_Map::copyOsuFileTo(QFileInfo copyLocation)
         throw amberException("Copy Failed.");
     }
 }
-void cOM_Map::copyBGFileTo(QFileInfo copyLocation)
+void osuMap::copyBGFileTo(QFileInfo copyLocation)
 {
     QFile oldLocation(getBGFileName());
 
@@ -435,7 +435,7 @@ void cOM_Map::copyBGFileTo(QFileInfo copyLocation)
         throw amberException("Copy Failed.");
     }
 }
-void cOM_Map::copyAllTo(QFileInfo copyLocation)
+void osuMap::copyAllTo(QFileInfo copyLocation)
 {
     copyAudioFileTo(copyLocation);
     copyOsuFileTo(copyLocation);
@@ -445,7 +445,7 @@ void cOM_Map::copyAllTo(QFileInfo copyLocation)
 // OPERS
 
 // MISC
-QList<int> cOM_Map::findMapSettings(QStringList &mapSList)
+QList<int> osuMap::findMapSettings(QStringList &mapSList)
 {
     QList<QRegExp> settingsRegList;
     QList<bool> flagRegList;

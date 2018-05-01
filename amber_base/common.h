@@ -45,58 +45,65 @@ private:
     QString failMsg;
 };
 
-class cOM_Common
+class amberCommon
 {
 public:
-    cOM_Common();
+    amberCommon();
 
-    static omInfo whatHO(const QTextBrowser   *tb)    ;
-    static omInfo whatHO(const QLineEdit      *line)  ;
-    static omInfo whatHO(const QPlainTextEdit *pte)   ;
-    static omInfo whatHO(const QString        &HO)    ;
+    // Returns info about a HitObject
+    static omInfo whatHO(const QTextBrowser   *tb)    ; // V
+    static omInfo whatHO(const QLineEdit      *line)  ; // V
+    static omInfo whatHO(const QPlainTextEdit *pte)   ; // V
+    static omInfo whatHO(const QString        &HO)    ; // V
     static omInfo whatHO(const QStringList    &HOList); // FUNNEL TARGET
 
-    static omInfo whatTP(const QTextBrowser   *tb)    ;
-    static omInfo whatTP(const QLineEdit      *line)  ;
-    static omInfo whatTP(const QPlainTextEdit *pte)   ;
-    static omInfo whatTP(const QString        &TP)    ;
+    // Returns info about a TimingPoint
+    static omInfo whatTP(const QTextBrowser   *tb)    ; // V
+    static omInfo whatTP(const QLineEdit      *line)  ; // V
+    static omInfo whatTP(const QPlainTextEdit *pte)   ; // V
+    static omInfo whatTP(const QString        &TP)    ; // V
     static omInfo whatTP(const QStringList    &TPList); // FUNNEL TARGET
 
-    // isOM_Type checks both TP and OM
-    static omInfo whatOM_Type(const QTextBrowser   *tb)   ;
-    static omInfo whatOM_Type(const QLineEdit      *line) ;
-    static omInfo whatOM_Type(const QPlainTextEdit *pte)  ;
-    static omInfo whatOM_Type(const QString        &input);
+    // Returns info that checks both TP and OM
+    static omInfo whatOM_Type(const QTextBrowser   *tb)   ; // V
+    static omInfo whatOM_Type(const QLineEdit      *line) ; // V
+    static omInfo whatOM_Type(const QPlainTextEdit *pte)  ; // V
+    static omInfo whatOM_Type(const QString        &input); // V
     static omInfo whatOM_Type(const QStringList    &input); // FUNNEL TARGET
 
-    static bool isHO(const QTextBrowser   *tb)    ;
-    static bool isHO(const QLineEdit      *line)  ;
-    static bool isHO(const QPlainTextEdit *pte)   ;
-    static bool isHO(const QString        &HO)    ;
+    // Returns if it's a HitObject
+    static bool isHO(const QTextBrowser   *tb)    ; // V
+    static bool isHO(const QLineEdit      *line)  ; // V
+    static bool isHO(const QPlainTextEdit *pte)   ; // V
+    static bool isHO(const QString        &HO)    ; // V
     static bool isHO(const QStringList    &HOList); // FUNNEL TARGET
 
-    static bool isTP(const QTextBrowser   *tb)    ;
-    static bool isTP(const QLineEdit      *line)  ;
-    static bool isTP(const QPlainTextEdit *pte)   ;
-    static bool isTP(const QString        &HO)    ;
+    // Returns if it's a TimingPoint
+    static bool isTP(const QTextBrowser   *tb)    ; // V
+    static bool isTP(const QLineEdit      *line)  ; // V
+    static bool isTP(const QPlainTextEdit *pte)   ; // V
+    static bool isTP(const QString        &HO)    ; // V
     static bool isTP(const QStringList    &HOList); // FUNNEL TARGET
 
-    static bool isEHO(const QTextBrowser   *tb)    ;
-    static bool isEHO(const QLineEdit      *line)  ;
-    static bool isEHO(const QPlainTextEdit *pte)   ;
-    static bool isEHO(const QString        &HO)    ;
+    // Returns if it's a Editor HitObject
+    static bool isEHO(const QTextBrowser   *tb)    ; // V
+    static bool isEHO(const QLineEdit      *line)  ; // V
+    static bool isEHO(const QPlainTextEdit *pte)   ; // V
+    static bool isEHO(const QString        &HO)    ; // V
     static bool isEHO(const QStringList    &HOList); // FUNNEL TARGET
 
-    static void assertHO(const QTextBrowser   *tb)    ;
-    static void assertHO(const QLineEdit      *line)  ;
-    static void assertHO(const QPlainTextEdit *pte)   ;
-    static void assertHO(const QString        &HO)    ;
+    // Throws HOLoadFail if it's not a HitObject
+    static void assertHO(const QTextBrowser   *tb)    ; // V
+    static void assertHO(const QLineEdit      *line)  ; // V
+    static void assertHO(const QPlainTextEdit *pte)   ; // V
+    static void assertHO(const QString        &HO)    ; // V
     static void assertHO(const QStringList    &HOList); // FUNNEL TARGET
 
-    static void assertTP(const QTextBrowser   *tb)    ;
-    static void assertTP(const QLineEdit      *line)  ;
-    static void assertTP(const QPlainTextEdit *pte)   ;
-    static void assertTP(const QString        &HO)    ;
+    // Throws TPLoadFail if it's not a TimingPoint
+    static void assertTP(const QTextBrowser   *tb)    ; // V
+    static void assertTP(const QLineEdit      *line)  ; // V
+    static void assertTP(const QPlainTextEdit *pte)   ; // V
+    static void assertTP(const QString        &HO)    ; // V
     static void assertTP(const QStringList    &HOList); // FUNNEL TARGET
 
     static void assertIndex        (const int &value, const int &max);

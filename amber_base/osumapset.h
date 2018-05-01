@@ -1,13 +1,13 @@
 #ifndef cMAPSET_H
 #define cMAPSET_H
 
-#include "com_map.h"
+#include "osumap.h"
 
-class  cOM_MapSet
+class  osuMapSet
 {
 public:
     // CONSTRUCTORS
-    cOM_MapSet();
+    osuMapSet();
 
     // SETTERS
     QStringList               getOsuFileNameList      () const;
@@ -15,9 +15,9 @@ public:
     QList<int                >getAudioLeadInList      () const;
     QList<int                >getPreviewTimeList      () const;
     QList<bool               >getCountdownList        () const;
-    QList<cOM_Map::cSampleSet>getSampleSetList        () const;
+    QList<osuMap::cSampleSet>getSampleSetList        () const;
     QList<double             >getStackLeniencyList    () const;
-    QList<cOM_Map::cGameMode> getGameModeList         () const;
+    QList<osuMap::cGameMode> getGameModeList         () const;
     QList<bool               >getLetterboxList        () const;
     QList<bool               >getSpecialStyleList     () const;
     QList<bool               >getWidescreenList       () const;
@@ -43,18 +43,18 @@ public:
     QList<double             >getSliderTickList       () const;
     QStringList               getBGFileNameList       () const;
     QStringList               getVideoFileNameList    () const;
-    QList<cOM_BreakPList     >getBreakPListList       () const;
-    QList<cOM_HOList         >getOM_HOListList        () const;
-    QList<cOM_TPList         >getOM_TPListList        () const;
+    QList<BreakPointList     >getBreakPListList       () const;
+    QList<HitObjectList         >getOM_HOListList        () const;
+    QList<TimingPointList         >getOM_TPListList        () const;
 
     void setOsuFileNameList      (QStringList                newOsuFileNameList    );
     void setAudioFileNameList    (QStringList                newAudioFileNameList  );
     void setAudioLeadInList      (QList<int                > newAudioLeadInList    );
     void setPreviewTimeList      (QList<int                > newPreviewTimeList    );
     void setCountdownList        (QList<bool               > newCountdownList      );
-    void setSampleSetList        (QList<cOM_Map::cSampleSet> newSampleSetList      );
+    void setSampleSetList        (QList<osuMap::cSampleSet> newSampleSetList      );
     void setStackLeniencyList    (QList<double             > newStackLeniencyList  );
-    void setGameModeList         (QList<cOM_Map::cGameMode > newGameModeList       );
+    void setGameModeList         (QList<osuMap::cGameMode > newGameModeList       );
     void setLetterboxList        (QList<bool               > newLetterboxList      );
     void setSpecialStyleList     (QList<bool               > newSpecialStyleList   );
     void setWidescreenList       (QList<bool               > newWidescreenList     );
@@ -80,16 +80,16 @@ public:
     void setSliderTickList       (QList<double             > newSliderTickList     );
     void setBGFileNameList       (QStringList                newBGFileNameList     );
     void setVideoFileNameList    (QStringList                newVideoFileNameList  );
-    void setBreakPListList       (QList<cOM_BreakPList     > newBreakPListList     );
-    void setOM_HOListList        (QList<cOM_HOList         > newOM_HOListList      );
-    void setOM_TPListList        (QList<cOM_TPList         > newOM_TPListList      );
+    void setBreakPListList       (QList<BreakPointList     > newBreakPListList     );
+    void setOM_HOListList        (QList<HitObjectList         > newOM_HOListList      );
+    void setOM_TPListList        (QList<TimingPointList         > newOM_TPListList      );
 
     // MISC
-    void append(cOM_Map);
+    void append(osuMap);
 
 private:
 
-    QList<cOM_Map> OM_MapList;
+    QList<osuMap> OM_MapList;
 
 
 };

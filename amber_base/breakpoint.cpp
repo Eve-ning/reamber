@@ -1,27 +1,27 @@
-#include "com_breakp.h"
+#include "breakpoint.h"
 
 // CONSTRUCTORS
-cOM_BreakP::cOM_BreakP()
+BreakPoint::BreakPoint()
 {
     startBreak = 0;
     endBreak   = 1;
 }
-cOM_BreakP::cOM_BreakP(QString newBreakP) : cOM_BreakP()
+BreakPoint::BreakPoint(QString newBreakPoint) : BreakPoint()
 {
-    loadBreakP(newBreakP);
+    loadBreakP(newBreakPoint);
 }
 
 // LOADERS
-void cOM_BreakP::loadBreakP(QString newBreakP)
+void BreakPoint::loadBreakP(QString newBreakPoint)
 {
     QStringList BreakPList;
 
-    BreakPList = newBreakP.split(",", QString::KeepEmptyParts);
+    BreakPList = newBreakPoint.split(",", QString::KeepEmptyParts);
 
     if (BreakPList.count() != 3) {
         qDebug() << ("Break Period Invalid");
-        qDebug() << ("Input: " + newBreakP);
-        cOM_BreakP();
+        qDebug() << ("Input: " + newBreakPoint);
+        BreakPoint();
     }
 
     startBreak = BreakPList[1].toDouble();
@@ -31,7 +31,7 @@ void cOM_BreakP::loadBreakP(QString newBreakP)
 // SETTERS
 
 // GETTERS
-void cOM_BreakP::getInfo() const
+void BreakPoint::getInfo() const
 {
     qDebug() << ("[---- Break Info ----]");
     qDebug() << ("STARTBREAK : " + QString::number(startBreak));

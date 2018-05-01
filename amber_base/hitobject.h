@@ -2,17 +2,17 @@
 #define COM_HO_H
 
 #include <QLineEdit>
-#include "com_common.h"
+#include "common.h"
 
-class  cOM_HO
+class  HitObject
 {
 public:
 
     // CONSTRUCTORS
-    cOM_HO();
-    cOM_HO(QString &HO, int newKeys = 0);
-    cOM_HO(double newOffset, int newColumn, int newKeys = 0);
-    cOM_HO(QLineEdit *line, int newKeys = 0);
+    HitObject();
+    HitObject(QString &HO, int newKeys = 0);
+    HitObject(double newOffset, int newColumn, int newKeys = 0);
+    HitObject(QLineEdit *line, int newKeys = 0);
 
     operator QString() const { return toString(); }
 
@@ -64,10 +64,10 @@ public:
     void addOffset      (const double &rhsDouble);
     void subtractOffset (const double &rhsDouble);
 
-    bool operator <(cOM_HO *OM_HO) { return offset < OM_HO->getOffset(); }
-    bool operator >(cOM_HO *OM_HO) { return offset > OM_HO->getOffset(); }
-    bool operator <(cOM_HO  OM_HO) { return offset < OM_HO.getOffset(); }
-    bool operator >(cOM_HO  OM_HO) { return offset > OM_HO.getOffset(); }
+    bool operator <(HitObject *OM_HO) { return offset < OM_HO->getOffset(); }
+    bool operator >(HitObject *OM_HO) { return offset > OM_HO->getOffset(); }
+    bool operator <(HitObject  OM_HO) { return offset < OM_HO.getOffset(); }
+    bool operator >(HitObject  OM_HO) { return offset > OM_HO.getOffset(); }
 
            void assertColumnValid ()               const; // Checks w.r.t. current column
     static void assertColumnValid (int newColumn)       ; // Checks w.r.t. specified column
@@ -78,7 +78,7 @@ public:
 
     void limitColumn (int &maxColumn, int &minColumn);
     void limitColumn ();
-    void limitOffset (double minOffset = cOM_Common::MINIMUM_OFFSET, double maxOffset = cOM_Common::MAXIMUM_OFFSET);
+    void limitOffset (double minOffset = amberCommon::MINIMUM_OFFSET, double maxOffset = amberCommon::MAXIMUM_OFFSET);
 
     static const int MINIMUM_KEYS   = 1;
     static const int MAXIMUM_KEYS   = 18;

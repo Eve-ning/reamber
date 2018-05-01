@@ -2,17 +2,17 @@
 #define COM_TP_H
 
 #include <QLineEdit>
-#include "com_common.h"
+#include "common.h"
 
-class  cOM_TP
+class  TimingPoint
 {
 public:
 
     // CONSTRUCTORS
-    cOM_TP();
-    cOM_TP(QString TP);
-    cOM_TP(QLineEdit *line);
-    cOM_TP(double newOffset, double newValue);
+    TimingPoint();
+    TimingPoint(QString newString);
+    TimingPoint(QLineEdit *line);
+    TimingPoint(double newOffset, double newValue);
 
     operator QString() const { return toString(); }
 
@@ -49,15 +49,15 @@ public:
     QString         toString         () const;
 
     // OPERS
-    bool operator <(cOM_TP *OM_TP) { return offset < OM_TP->getOffset(); }
-    bool operator >(cOM_TP *OM_TP) { return offset > OM_TP->getOffset(); }
-    bool operator <(cOM_TP  OM_TP) { return offset < OM_TP.getOffset(); }
-    bool operator >(cOM_TP  OM_TP) { return offset > OM_TP.getOffset(); }
+    bool operator <(TimingPoint *curTP) { return offset < curTP->getOffset(); }
+    bool operator >(TimingPoint *curTP) { return offset > curTP->getOffset(); }
+    bool operator <(TimingPoint  curTP) { return offset < curTP.getOffset(); }
+    bool operator >(TimingPoint  curTP) { return offset > curTP.getOffset(); }
 
-    void multiplyValue  (const cOM_TP rhsOM_TP, bool limitFlag = false);
-    void divideValue    (const cOM_TP rhsOM_TP, bool limitFlag = false);
-    void addValue       (const cOM_TP rhsOM_TP, bool limitFlag = false);
-    void subtractValue  (const cOM_TP rhsOM_TP, bool limitFlag = false);
+    void multiplyValue  (const TimingPoint rhsTimingPoint, bool limitFlag = false);
+    void divideValue    (const TimingPoint rhsTimingPoint, bool limitFlag = false);
+    void addValue       (const TimingPoint rhsTimingPoint, bool limitFlag = false);
+    void subtractValue  (const TimingPoint rhsTimingPoint, bool limitFlag = false);
 
     void multiplyValue  (const double rhsDouble, bool limitFlag = false);
     void divideValue    (const double rhsDouble, bool limitFlag = false);

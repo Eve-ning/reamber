@@ -3,17 +3,17 @@
 #include <QString>
 #include <QStringList>
 #include <QDebug>
-#include "com_common.h"
+#include "common.h"
 
-class cOM_BreakP
+class BreakPoint
 {
 public:
     // CONSTRUCTORS
-    cOM_BreakP();
-    cOM_BreakP(QString newBreakP);
+    BreakPoint();
+    BreakPoint(QString newBreakPoint);
 
     // LOADERS
-    void loadBreakP(QString newBreakP);
+    void loadBreakP(QString newBreakPoint);
 
     // SETTERS
     void setStartBreak(double newStartBreak){ startBreak = newStartBreak; return; }

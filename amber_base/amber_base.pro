@@ -15,29 +15,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    com_ho.cpp \
-    com_tp.cpp \
-    com_holist.cpp \
-    com_tplist.cpp \
-    com_mapset.cpp \
-    com_map.cpp \
-    com_breakp.cpp \
-    com_breakplist.cpp \
-    com_math.cpp \
-    com_common.cpp
+    hitobject.cpp \
+    timingpoint.cpp \
+    hitobjectlist.cpp \
+    timingpointlist.cpp \
+    osumapset.cpp \
+    osumap.cpp \
+    breakpoint.cpp \
+    breakpointlist.cpp \
+    common.cpp
 
 HEADERS += \
-    com_ho.h \
-    com_tp.h \
-    com_holist.h \
-    com_tplist.h \
-    com_mapset.h \
-    com_mapset.h \
-    com_map.h \
-    com_breakp.h \
-    com_breakplist.h \
-    com_math.h \
-    com_common.h
+    hitobject.h \
+    timingpoint.h \
+    hitobjectlist.h \
+    timingpointlist.h \
+    osumapset.h \
+    osumap.h \
+    breakpoint.h \
+    breakpointlist.h \
+    common.h
 
 DISTFILES += \
     documentation.txt

@@ -1,42 +1,42 @@
-#include "com_tplist.h"
+#include "timingpointlist.h"
 
 // CONSTRUCTORS
-cOM_TPList::cOM_TPList()
+TimingPointList::TimingPointList()
 {
-    OM_TPList = {};
+    curTimingPointList = {};
     loadFail = false;
 }
-cOM_TPList::cOM_TPList(QList<cOM_TP> newOM_TPList) : cOM_TPList()
+TimingPointList::TimingPointList(QList<TimingPoint> newTimingPointList) : TimingPointList()
 {
-    loadTPList(newOM_TPList);
+    loadTPList(newTimingPointList);
 }
-cOM_TPList::cOM_TPList(QTextBrowser *tb) : cOM_TPList()
+TimingPointList::TimingPointList(QTextBrowser *tb) : TimingPointList()
 {
     loadTPList(tb);
 }
-cOM_TPList::cOM_TPList(QLineEdit *line) : cOM_TPList()
+TimingPointList::TimingPointList(QLineEdit *line) : TimingPointList()
 {
     loadTPList(line);
 }
-cOM_TPList::cOM_TPList(QPlainTextEdit *pte)
+TimingPointList::TimingPointList(QPlainTextEdit *pte)
 {
     loadTPList(pte);
 }
-cOM_TPList::cOM_TPList(QString str)
+TimingPointList::TimingPointList(QString str)
 {
     loadTPList(str);
 }
-cOM_TPList::cOM_TPList(QStringList strList)
+TimingPointList::TimingPointList(QStringList strList)
 {
     loadTPList(strList);
 }
 
 // LOADERS
-void cOM_TPList::loadTPList(QList<cOM_TP> newOM_TPList)
+void TimingPointList::loadTPList(QList<TimingPoint> newTimingPointList)
 {
-    OM_TPList = newOM_TPList;
+    curTimingPointList = newTimingPointList;
 }
-void cOM_TPList::loadTPList(QTextBrowser *tb)
+void TimingPointList::loadTPList(QTextBrowser *tb)
 {
     QString tbText;
     QStringList tbTextSplit;
@@ -45,7 +45,7 @@ void cOM_TPList::loadTPList(QTextBrowser *tb)
     tbTextSplit = tbText.split("\n", QString::SkipEmptyParts);
     loadTPList(tbTextSplit);
 }
-void cOM_TPList::loadTPList(QLineEdit *line)
+void TimingPointList::loadTPList(QLineEdit *line)
 {
     QString lineText;
     lineText = line->text();
@@ -53,14 +53,14 @@ void cOM_TPList::loadTPList(QLineEdit *line)
     loadTPList(lineText);
 }
 
-void cOM_TPList::loadTPList(QPlainTextEdit *pte)
+void TimingPointList::loadTPList(QPlainTextEdit *pte)
 {
     QString pteText;
     pteText = pte->toPlainText();
 
     loadTPList(pteText);
 }
-void cOM_TPList::loadTPList(QString &str)
+void TimingPointList::loadTPList(QString &str)
 {
     QStringList strSplit;
 
@@ -68,13 +68,13 @@ void cOM_TPList::loadTPList(QString &str)
 
     loadTPList(strSplit);
 }
-void cOM_TPList::loadTPList(QStringList &strList)
+void TimingPointList::loadTPList(QStringList &strList)
 {
     QString temp;
 
-    cOM_Common::assertTP(strList);
+    amberCommon::assertTP(strList);
 
-    if (!cOM_Common::whatOM_Type(strList).getIsTP())
+    if (!amberCommon::whatOM_Type(strList).getIsTP())
     {
         loadFail = true;
         throw TPLoadFail(QString("Input not TP: ") + strList.join("\n"));
@@ -82,112 +82,112 @@ void cOM_TPList::loadTPList(QStringList &strList)
     }
 
     foreach (temp, strList) {
-        OM_TPList.append(cOM_TP(temp));
+        curTimingPointList.append(TimingPoint(temp));
     }
 }
 
 // SETTERS
-void cOM_TPList::setOffsetList(QList<double> newOffsetList)
+void TimingPointList::setOffsetList(QList<double> newOffsetList)
 { 
-    cOM_Common::assertLengthMatch(OM_TPList.length(), newOffsetList.length());
+    amberCommon::assertLengthMatch(curTimingPointList.length(), newOffsetList.length());
 
     for (int i = 0; i < newOffsetList.length(); i ++)
     {
-        OM_TPList[i].setOffset(newOffsetList[i]);
+        curTimingPointList[i].setOffset(newOffsetList[i]);
     }
 
     return;
 }
-void cOM_TPList::setCodeList(QList<double> newCodeList)
+void TimingPointList::setCodeList(QList<double> newCodeList)
 {
-    cOM_Common::assertLengthMatch(OM_TPList.length(), newCodeList.length());
+    amberCommon::assertLengthMatch(curTimingPointList.length(), newCodeList.length());
 
     for (int i = 0; i < newCodeList.length(); i ++)
     {
-        OM_TPList[i].setCode(newCodeList[i]);
+        curTimingPointList[i].setCode(newCodeList[i]);
     }
 
     return;
 }
-void cOM_TPList::setValueList(QList<double> newValueList)
+void TimingPointList::setValueList(QList<double> newValueList)
 {
-    cOM_Common::assertLengthMatch(OM_TPList.length(), newValueList.length());
+    amberCommon::assertLengthMatch(curTimingPointList.length(), newValueList.length());
 
     for (int i = 0; i < newValueList.length(); i ++)
     {
-        OM_TPList[i].setValue(newValueList[i]);
+        curTimingPointList[i].setValue(newValueList[i]);
     }
 
     return;
 }
 
-omInfo cOM_TPList::getInfo()
+omInfo TimingPointList::getInfo()
 {
     QStringList temp = toString();
-    return cOM_Common::whatTP(temp);
+    return amberCommon::whatTP(temp);
 }
 
 // GETTERS
-QList<double> cOM_TPList::getOffsetList(const omInfo &info) const
+QList<double> TimingPointList::getOffsetList(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
-    cOM_TP OM_TP;
+    TimingPoint TimingPoint;
     QList<double> output;
-    foreach (OM_TP, OM_TPList)
+    foreach (TimingPoint, curTimingPointList)
     {
-        if (    ((info.getIsBPM()) && OM_TP.getIsBPM()) // continue if foreach is BPM and we only accept SV
-             || ((info.getIsSV())  && OM_TP.getIsSV())) // continue if foreach is SV  and we only accept BPM
+        if (    ((info.getIsBPM()) && TimingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
+             || ((info.getIsSV())  && TimingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
-            output.append(OM_TP.getOffset());
+            output.append(TimingPoint.getOffset());
         }        
     }
 
     return output;
 }
-QList<double> cOM_TPList::getCodeList(const omInfo &info) const
+QList<double> TimingPointList::getCodeList(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
-    cOM_TP OM_TP;
+    TimingPoint TimingPoint;
     QList<double> output;
-    foreach (OM_TP, OM_TPList)
+    foreach (TimingPoint, curTimingPointList)
     {
-        if (    ((info.getIsBPM()) && OM_TP.getIsBPM()) // continue if foreach is BPM and we only accept SV
-             || ((info.getIsSV())  && OM_TP.getIsSV())) // continue if foreach is SV  and we only accept BPM
+        if (    ((info.getIsBPM()) && TimingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
+             || ((info.getIsSV())  && TimingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
-            output.append(OM_TP.getCode());
+            output.append(TimingPoint.getCode());
         }
     }
 
     return output;
 }
-QList<double> cOM_TPList::getValueList(const omInfo &info) const
+QList<double> TimingPointList::getValueList(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
-    cOM_TP OM_TP;
+    TimingPoint TimingPoint;
     QList<double> output;
-    foreach (OM_TP, OM_TPList)
+    foreach (TimingPoint, curTimingPointList)
     {
-        if (    ((info.getIsBPM()) && OM_TP.getIsBPM()) // continue if foreach is BPM and we only accept SV
-             || ((info.getIsSV())  && OM_TP.getIsSV())) // continue if foreach is SV  and we only accept BPM
+        if (    ((info.getIsBPM()) && TimingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
+             || ((info.getIsSV())  && TimingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
-            output.append(OM_TP.getValue());
+            output.append(TimingPoint.getValue());
         }
     }
 
     return output;
 }
-QList<double> cOM_TPList::getLengthList(const omInfo &info) const
+QList<double> TimingPointList::getLengthList(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
-    // Note: If cOM_Common::TPFlag is specified, length calculation will skip some timingPoints
+    // Note: If amberCommon::TPFlag is specified, length calculation will skip some timingPoints
     QList<double> output,
                   offsetList;
 
@@ -200,10 +200,10 @@ QList<double> cOM_TPList::getLengthList(const omInfo &info) const
 
     return output;
 }
-QList<double> cOM_TPList::getDistanceList(const omInfo &info) const
+QList<double> TimingPointList::getDistanceList(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
     QList<double> lengthList,
                   valueList,
@@ -220,10 +220,10 @@ QList<double> cOM_TPList::getDistanceList(const omInfo &info) const
     return distanceList;
 }
 
-QList<double> cOM_TPList::getUnqOffsetList(const omInfo &info) const
+QList<double> TimingPointList::getUnqOffsetList(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
     QList<double> offsetList,
                   unqOffsetList;
@@ -243,35 +243,35 @@ QList<double> cOM_TPList::getUnqOffsetList(const omInfo &info) const
     return unqOffsetList;
 }
 
-cOM_TPList cOM_TPList::splitByType(const omInfo &info) const
+TimingPointList TimingPointList::splitByType(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
     if (info.getIsSV() && info.getIsBPM())
     {
         throw amberException(QString(__FUNCTION__) + "does not accept both SV & BPM input, pick only one");
     }
 
-    cOM_TPList output;
+    TimingPointList output;
 
     if (info.getIsSV())
     {
-        for (int temp = 0; temp < OM_TPList.length(); temp++)
+        for (int temp = 0; temp < curTimingPointList.length(); temp++)
         {
-            if (!OM_TPList[temp].getIsSV())
+            if (!curTimingPointList[temp].getIsSV())
             {
-                output.append(OM_TPList[temp]);
+                output.append(curTimingPointList[temp]);
             }
         }
     }
     if (info.getIsBPM())
     {
-        for (int temp = 0; temp < OM_TPList.length(); temp++)
+        for (int temp = 0; temp < curTimingPointList.length(); temp++)
         {
-            if (OM_TPList[temp].getIsBPM())
+            if (curTimingPointList[temp].getIsBPM())
             {
-                output.append(OM_TPList[temp]);
+                output.append(curTimingPointList[temp]);
             }
         }
     }
@@ -279,9 +279,9 @@ cOM_TPList cOM_TPList::splitByType(const omInfo &info) const
     return output;
 }
 
-double cOM_TPList::getMinOffset() const
+double TimingPointList::getMinOffset() const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     double output;
     QList<double> offsetList;
@@ -289,9 +289,9 @@ double cOM_TPList::getMinOffset() const
     output = *std::min_element(offsetList.begin(), offsetList.end());
     return output;
 }
-double cOM_TPList::getMaxOffset() const
+double TimingPointList::getMaxOffset() const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     double output;
     QList<double> offsetList;
@@ -300,9 +300,9 @@ double cOM_TPList::getMaxOffset() const
     return output;
 }
 
-double cOM_TPList::getMinValue(const omInfo &info) const
+double TimingPointList::getMinValue(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
     if (info.getIsSV() && info.getIsBPM())
     {
         throw amberException(QString(__FUNCTION__) + "does not accept both SV & BPM input, pick only one");
@@ -315,9 +315,9 @@ double cOM_TPList::getMinValue(const omInfo &info) const
     output = *std::min_element(valueList.begin(), valueList.end());
     return output;
 }
-double cOM_TPList::getMaxValue(const omInfo &info) const
+double TimingPointList::getMaxValue(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
     if (info.getIsSV() && info.getIsBPM())
     {
         throw amberException(QString(__FUNCTION__) + "does not accept both SV & BPM input, pick only one");
@@ -331,9 +331,9 @@ double cOM_TPList::getMaxValue(const omInfo &info) const
     return output;
 }
 
-double cOM_TPList::getLength() const
+double TimingPointList::getLength() const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     double output = 0;
     QList<double> offsetList;
@@ -344,28 +344,28 @@ double cOM_TPList::getLength() const
 
     return output;
 }
-double cOM_TPList::getLength(int index)
+double TimingPointList::getLength(int index)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertIndex(index, getSize() - 1);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertIndex(index, getSize() - 1);
 
     sortOffset(true);
 
-    return OM_TPList[index + 1].getOffset() - OM_TPList[index].getOffset();
+    return curTimingPointList[index + 1].getOffset() - curTimingPointList[index].getOffset();
 }
 
-int    cOM_TPList::getSize(const omInfo &info) const
+int    TimingPointList::getSize(const omInfo &info) const
 {
-    cOM_TP temp;
+    TimingPoint temp;
     int counter = 0;
 
     if (info.getIsSV() && info.getIsBPM()) // If user requests both
     {
-        counter = OM_TPList.count();
+        counter = curTimingPointList.count();
     }
     else if (info.getIsSV()) // SV Request
     {
-        foreach (temp, OM_TPList)
+        foreach (temp, curTimingPointList)
         {
             if (temp.getIsSV())
             {
@@ -375,7 +375,7 @@ int    cOM_TPList::getSize(const omInfo &info) const
     }
     else if (info.getIsBPM()) // BPM Request
     {
-        foreach (temp, OM_TPList)
+        foreach (temp, curTimingPointList)
         {
             if (temp.getIsBPM())
             {
@@ -386,10 +386,10 @@ int    cOM_TPList::getSize(const omInfo &info) const
 
     return counter;
 }
-double cOM_TPList::getAverage(const omInfo &info) const
+double TimingPointList::getAverage(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
     if (info.getIsSV() && info.getIsBPM())
     {
@@ -409,10 +409,10 @@ double cOM_TPList::getAverage(const omInfo &info) const
     output /= TPList.count();
     return output;
 }
-double cOM_TPList::getDistance(const omInfo &info) const
+double TimingPointList::getDistance(const omInfo &info) const
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
     if (info.getIsSV() && info.getIsBPM())
     {
@@ -433,23 +433,23 @@ double cOM_TPList::getDistance(const omInfo &info) const
 
     return distance;
 }
-double cOM_TPList::getDistance(int index)
+double TimingPointList::getDistance(int index)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     double length,
            value;
 
     length = getLength(index);
-    value  = OM_TPList[index].getValue();
+    value  = curTimingPointList[index].getValue();
 
     return length * value;
 }
-QStringList cOM_TPList::toString() const
+QStringList TimingPointList::toString() const
 {
-    cOM_TP temp;
+    TimingPoint temp;
     QStringList output;
-    foreach (temp, OM_TPList) {
+    foreach (temp, curTimingPointList) {
         output.append(temp.toString());
     }
 
@@ -457,20 +457,20 @@ QStringList cOM_TPList::toString() const
 }
 
 // OPERS
-cOM_TP &cOM_TPList::operator [](int i) {
-    cOM_Common::assertIndex(i, getSize() - 1);
+TimingPoint &TimingPointList::operator [](int i) {
+    amberCommon::assertIndex(i, getSize() - 1);
 
-    return OM_TPList[i];
+    return curTimingPointList[i];
 }
-cOM_TP cOM_TPList::operator [](int i) const {
-    cOM_Common::assertIndex(i, getSize() - 1);
+TimingPoint TimingPointList::operator [](int i) const {
+    amberCommon::assertIndex(i, getSize() - 1);
 
-    return OM_TPList[i];
+    return curTimingPointList[i];
 }
 
-void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
+void TimingPointList::multiplyValue(const TimingPointList rhsTimingPointList, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -493,9 +493,9 @@ void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     lhsTemp = rhsTemp = 0;
 
     lhsValueList = getValueList();
-    rhsValueList = rhsOM_TPList.getValueList();
+    rhsValueList = rhsTimingPointList.getValueList();
     lhsOffsetList = getOffsetList();
-    rhsOffsetList = rhsOM_TPList.getOffsetList();
+    rhsOffsetList = rhsTimingPointList.getOffsetList();
     rhsOffsetList.append(9999999); // Append to prevent out of index
 
     /* CONDITION 1 <LHS FIRST>
@@ -545,9 +545,9 @@ void cOM_TPList::multiplyValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     }
     return;
 }
-void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
+void TimingPointList::divideValue(const TimingPointList rhsTimingPointList, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -570,9 +570,9 @@ void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     lhsTemp = rhsTemp = 0;
 
     lhsValueList = getValueList();
-    rhsValueList = rhsOM_TPList.getValueList();
+    rhsValueList = rhsTimingPointList.getValueList();
     lhsOffsetList = getOffsetList();
-    rhsOffsetList = rhsOM_TPList.getOffsetList();
+    rhsOffsetList = rhsTimingPointList.getOffsetList();
     rhsOffsetList.append(9999999); // Append to prevent out of index
 
     /* CONDITION 1 <LHS FIRST>
@@ -622,9 +622,9 @@ void cOM_TPList::divideValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     }
     return;
 }
-void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
+void TimingPointList::addValue(const TimingPointList rhsTimingPointList, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -647,9 +647,9 @@ void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     lhsTemp = rhsTemp = 0;
 
     lhsValueList = getValueList();
-    rhsValueList = rhsOM_TPList.getValueList();
+    rhsValueList = rhsTimingPointList.getValueList();
     lhsOffsetList = getOffsetList();
-    rhsOffsetList = rhsOM_TPList.getOffsetList();
+    rhsOffsetList = rhsTimingPointList.getOffsetList();
     rhsOffsetList.append(9999999); // Append to prevent out of index
 
     /* CONDITION 1 <LHS FIRST>
@@ -699,9 +699,9 @@ void cOM_TPList::addValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     }
     return;
 }
-void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
+void TimingPointList::subtractValue(const TimingPointList rhsTimingPointList, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> lhsValueList,
                   rhsValueList,
@@ -724,9 +724,9 @@ void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     lhsTemp = rhsTemp = 0;
 
     lhsValueList = getValueList();
-    rhsValueList = rhsOM_TPList.getValueList();
+    rhsValueList = rhsTimingPointList.getValueList();
     lhsOffsetList = getOffsetList();
-    rhsOffsetList = rhsOM_TPList.getOffsetList();
+    rhsOffsetList = rhsTimingPointList.getOffsetList();
     rhsOffsetList.append(9999999); // Append to prevent out of index
 
     /* CONDITION 1 <LHS FIRST>
@@ -777,9 +777,9 @@ void cOM_TPList::subtractValue(const cOM_TPList rhsOM_TPList, bool limitFlag)
     return;
 }
 
-void cOM_TPList::multiplyValue  (const double rhsDouble, bool limitFlag)
+void TimingPointList::multiplyValue  (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newValueList,
                   oldValueList;
@@ -797,9 +797,9 @@ void cOM_TPList::multiplyValue  (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TPList::divideValue    (const double rhsDouble, bool limitFlag)
+void TimingPointList::divideValue    (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newValueList,
                   oldValueList;
@@ -817,9 +817,9 @@ void cOM_TPList::divideValue    (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TPList::addValue       (const double rhsDouble, bool limitFlag)
+void TimingPointList::addValue       (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newValueList,
                   oldValueList;
@@ -837,9 +837,9 @@ void cOM_TPList::addValue       (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TPList::subtractValue  (const double rhsDouble, bool limitFlag)
+void TimingPointList::subtractValue  (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newValueList,
                   oldValueList;
@@ -858,9 +858,9 @@ void cOM_TPList::subtractValue  (const double rhsDouble, bool limitFlag)
     }
 }
 
-void cOM_TPList::multiplyOffset (const double rhsDouble, bool limitFlag)
+void TimingPointList::multiplyOffset (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -878,9 +878,9 @@ void cOM_TPList::multiplyOffset (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TPList::divideOffset   (const double rhsDouble, bool limitFlag)
+void TimingPointList::divideOffset   (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -898,9 +898,9 @@ void cOM_TPList::divideOffset   (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TPList::addOffset      (const double rhsDouble, bool limitFlag)
+void TimingPointList::addOffset      (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -918,9 +918,9 @@ void cOM_TPList::addOffset      (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TPList::subtractOffset (const double rhsDouble, bool limitFlag)
+void TimingPointList::subtractOffset (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -939,9 +939,9 @@ void cOM_TPList::subtractOffset (const double rhsDouble, bool limitFlag)
     }
 }
 
-void cOM_TPList::zero()
+void TimingPointList::zero()
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> newOffsetList,
                   oldOffsetList;
@@ -961,55 +961,55 @@ void cOM_TPList::zero()
 }
 
 // MISC
-void cOM_TPList::sortOffset(bool isAscending)
+void TimingPointList::sortOffset(bool isAscending)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     if (isAscending)
     {
-        std::sort(OM_TPList.begin(), OM_TPList.end());
+        std::sort(curTimingPointList.begin(), curTimingPointList.end());
     } else
     {
-        std::sort(OM_TPList.rbegin(), OM_TPList.rend());
+        std::sort(curTimingPointList.rbegin(), curTimingPointList.rend());
     }
 }
 
-void cOM_TPList::append(cOM_TPList newOM_TPList)
+void TimingPointList::append(TimingPointList newTimingPointList)
 {
-    for (int temp = 0; temp < newOM_TPList.getSize(); temp++) {
-        OM_TPList.append(newOM_TPList[temp]);
+    for (int temp = 0; temp < newTimingPointList.getSize(); temp++) {
+        curTimingPointList.append(newTimingPointList[temp]);
     }
 }
 
-bool cOM_TPList::isEmpty() const
+bool TimingPointList::isEmpty() const
 {
     return getSize() == 0;
 }
-void cOM_TPList::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
+void TimingPointList::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
-    cOM_TP temp;
+    TimingPoint temp;
 
-    foreach (temp, OM_TPList) {
+    foreach (temp, curTimingPointList) {
         temp.limitValues(maxSV, minSV, maxBPM, minBPM);
     }
 }
 
-void cOM_TPList::limitOffset(double minOffset, double maxOffset)
+void TimingPointList::limitOffset(double minOffset, double maxOffset)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
-    cOM_TP temp;
+    TimingPoint temp;
 
-    foreach (temp, OM_TPList) {
+    foreach (temp, curTimingPointList) {
         temp.limitOffset(minOffset, maxOffset);
     }
 }
-QList<int> cOM_TPList::indexList(omInfo &info)
+QList<int> TimingPointList::indexList(omInfo &info)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(info);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(info);
 
     if (info.getIsSV() && info.getIsBPM())
     {
@@ -1018,18 +1018,18 @@ QList<int> cOM_TPList::indexList(omInfo &info)
 
     QList<int> indexList;
 
-    for (int counter = 0; counter < OM_TPList.length(); counter ++)
+    for (int counter = 0; counter < curTimingPointList.length(); counter ++)
     {
         if (info.getIsSV())
         {
-            if (!OM_TPList[counter].getIsBPM())
+            if (!curTimingPointList[counter].getIsBPM())
             {
                 indexList.append(counter);
             }
         }
         else if (info.getIsBPM())
         {
-            if (OM_TPList[counter].getIsBPM())
+            if (curTimingPointList[counter].getIsBPM())
             {
                 indexList.append(counter);
             }
@@ -1039,10 +1039,10 @@ QList<int> cOM_TPList::indexList(omInfo &info)
 
     return indexList;
 }
-void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
+void TimingPointList::adjustToAverage(double averageSV, int adjustIndex)
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
-    cOM_Common::assertLoadFail(getInfo());
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertLoadFail(getInfo());
 
     if (getInfo().getIsSV() && getInfo().getIsBPM())
     {
@@ -1055,7 +1055,7 @@ void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
 
     // If adjusting the TP cannot achieve the specified average SV then it'll fail
 
-    cOM_Common::assertIndex(adjustIndex, OM_TPList.length() - 2); // Cannot adjust last index
+    amberCommon::assertIndex(adjustIndex, curTimingPointList.length() - 2); // Cannot adjust last index
 
     double oldTotalDistance,
            newTotalDistance,
@@ -1075,7 +1075,7 @@ void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
     netDistance = newTotalDistance - oldTotalDistance;
     oldAdjustLength = getLength(adjustIndex);
 
-    newAdjustValue = OM_TPList[adjustIndex].getValue() + (netDistance / oldAdjustLength);
+    newAdjustValue = curTimingPointList[adjustIndex].getValue() + (netDistance / oldAdjustLength);
 
 
     if (getInfo().getIsSV())
@@ -1093,17 +1093,17 @@ void cOM_TPList::adjustToAverage(double averageSV, int adjustIndex)
         }
     }
 
-    OM_TPList[adjustIndex].setValue(newAdjustValue);
-    OM_TPList[adjustIndex].limitValues();
+    curTimingPointList[adjustIndex].setValue(newAdjustValue);
+    curTimingPointList[adjustIndex].limitValues();
 }
 
-void cOM_TPList::makeUnique()
+void TimingPointList::makeUnique()
 {
-    cOM_Common::assertEmpty(toString(), __FUNCTION__);
+    amberCommon::assertEmpty(toString(), __FUNCTION__);
 
     QList<double> offsetList,
                   newOffsetList;
-    QList<cOM_TP> newOM_TPList;
+    QList<TimingPoint> newTimingPointList;
     double temp;
 
     offsetList = getOffsetList();
@@ -1112,11 +1112,11 @@ void cOM_TPList::makeUnique()
         if (!newOffsetList.contains(temp))
         {
             newOffsetList.append(temp);
-            newOM_TPList.append(cOM_TP(temp, OM_TPList[temp].getValue()));
+            newTimingPointList.append(TimingPoint(temp, curTimingPointList[temp].getValue()));
         }
     }
 
-    loadTPList(newOM_TPList);
+    loadTPList(newTimingPointList);
 }
 
 

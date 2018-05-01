@@ -1,7 +1,7 @@
-#include "com_ho.h"
+#include "hitobject.h"
 
 // CONSTRUCTORS
-cOM_HO::cOM_HO()
+HitObject::HitObject()
 
 
 
@@ -22,36 +22,36 @@ cOM_HO::cOM_HO()
     keys            =   0;
     loadFail        =   false;
 }
-cOM_HO::cOM_HO(double newOffset, int newColumn, int newKeys) : cOM_HO()
+HitObject::HitObject(double newOffset, int newColumn, int newKeys) : HitObject()
 {
     loadHO(newOffset, newColumn, newKeys);
 }
-cOM_HO::cOM_HO(QLineEdit *line, int newKeys) : cOM_HO()
+HitObject::HitObject(QLineEdit *line, int newKeys) : HitObject()
 {
     loadHO(line, newKeys);
 }
-cOM_HO::cOM_HO(QString &HO, int newKeys) : cOM_HO()
+HitObject::HitObject(QString &HO, int newKeys) : HitObject()
 {
     loadHO(HO, newKeys);
 }
 
 // LOADERS
-void cOM_HO::loadHO(double &newOffset, int &newColumn, int &newKeys)
+void HitObject::loadHO(double &newOffset, int &newColumn, int &newKeys)
 {
     offset = newOffset;
     keys   = newKeys;
     setColumn(newColumn);
 }
-void cOM_HO::loadHO(QLineEdit *line, int newKeys)
+void HitObject::loadHO(QLineEdit *line, int newKeys)
 {
     QString newOM_HO;
     newOM_HO = line->text();
 
     loadHO(newOM_HO, newKeys);
 }
-void cOM_HO::loadHO(QString &HO, int newKeys)
+void HitObject::loadHO(QString &HO, int newKeys)
 {
-    if (!cOM_Common::isHO(HO)) // Case: Invalid
+    if (!amberCommon::isHO(HO)) // Case: Invalid
     {
         loadFail = true;
         throw HOLoadFail(QString("Input not HO: ") + HO);
@@ -122,14 +122,14 @@ void cOM_HO::loadHO(QString &HO, int newKeys)
 }
 
 // SETTERS
-void cOM_HO::setOffset(double newOffset)
+void HitObject::setOffset(double newOffset)
 {
-    cOM_Common::assertOffsetValid(newOffset);
+    amberCommon::assertOffsetValid(newOffset);
 
     offset = newOffset;
     return;
 }
-bool cOM_HO::setColumn(unsigned short newColumn)
+bool HitObject::setColumn(unsigned short newColumn)
 {
     assertColumnValid(newColumn);
     assertKeysValid();
@@ -140,7 +140,7 @@ bool cOM_HO::setColumn(unsigned short newColumn)
 }
 
 // GETTERS
-void cOM_HO::printInfo() const
+void HitObject::printInfo() const
 {
     qDebug() << ("[---- Hit Object Info ----]")            << "\n"
     << ("XAXIS        : " + QString::number(xAxis       )) << "\n"
@@ -157,7 +157,7 @@ void cOM_HO::printInfo() const
     << ("KEYS         : " + QString::number(keys        )) << "\n"
     << ("COLUMN       : " + QString::number(getColumn() )) << "\n";
 }
-unsigned short cOM_HO::getColumn() const
+unsigned short HitObject::getColumn() const
 {
     assertKeysValid();
 
@@ -167,7 +167,7 @@ unsigned short cOM_HO::getColumn() const
 
     return output;
 }
-QString cOM_HO::toString() const
+QString HitObject::toString() const
 {
     assertXAxisValid();
 
@@ -185,40 +185,40 @@ QString cOM_HO::toString() const
 }
 
 // OPERS
-void cOM_HO::addColumn      (const int &rhsInt)
+void HitObject::addColumn      (const int &rhsInt)
 {
     setColumn(getColumn() + rhsInt);
 }
-void cOM_HO::subtractColumn (const int &rhsInt)
+void HitObject::subtractColumn (const int &rhsInt)
 {
     setColumn(getColumn() - rhsInt);
 }
-void cOM_HO::multiplyOffset (const double &rhsDouble)
+void HitObject::multiplyOffset (const double &rhsDouble)
 {
     setOffset(getOffset() * rhsDouble);
 }
-void cOM_HO::divideOffset   (const double &rhsDouble)
+void HitObject::divideOffset   (const double &rhsDouble)
 {
-    cOM_Common::assertDivByZero(rhsDouble);
+    amberCommon::assertDivByZero(rhsDouble);
     setOffset(getOffset() / rhsDouble);
 }
-void cOM_HO::addOffset      (const double &rhsDouble)
+void HitObject::addOffset      (const double &rhsDouble)
 {
     setOffset(getOffset() + rhsDouble);
 }
-void cOM_HO::subtractOffset (const double &rhsDouble)
+void HitObject::subtractOffset (const double &rhsDouble)
 {
     setOffset(getOffset() - rhsDouble);
 }
 
-void cOM_HO::assertColumnValid() const
+void HitObject::assertColumnValid() const
 {
     if (getColumn() > MAXIMUM_COLUMN)
     {
         throw columnOutOfRange(getColumn(), MINIMUM_COLUMN, MAXIMUM_COLUMN);
     }
 }
-void cOM_HO::assertColumnValid(int newColumn)
+void HitObject::assertColumnValid(int newColumn)
 {
     if (newColumn < MINIMUM_COLUMN || newColumn > MAXIMUM_COLUMN)
     {
@@ -226,28 +226,28 @@ void cOM_HO::assertColumnValid(int newColumn)
     }
 }
 
-void cOM_HO::assertXAxisValid() const
+void HitObject::assertXAxisValid() const
 {
     if (xAxis > MAXIMUM_XAXIS)
     {
-        throw xAxisOutOfRange(xAxis, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
+        throw xAxisOutOfRange(xAxis, amberCommon::MINIMUM_OFFSET, amberCommon::MAXIMUM_OFFSET);
     }
 }
-void cOM_HO::assertXAxisValid(int newXAxis)
+void HitObject::assertXAxisValid(int newXAxis)
 {
     if (newXAxis < MINIMUM_XAXIS || newXAxis > MAXIMUM_XAXIS)
     {
-        throw xAxisOutOfRange(newXAxis, cOM_Common::MINIMUM_OFFSET, cOM_Common::MAXIMUM_OFFSET);
+        throw xAxisOutOfRange(newXAxis, amberCommon::MINIMUM_OFFSET, amberCommon::MAXIMUM_OFFSET);
     }
 }
-void cOM_HO::assertKeysValid() const
+void HitObject::assertKeysValid() const
 {
     if (keys < MINIMUM_KEYS || keys > MAXIMUM_KEYS)
     {
         throw offsetOutOfRange(keys, MINIMUM_KEYS, MAXIMUM_KEYS);
     }
 }
-void cOM_HO::assertKeysValid(int newKeys)
+void HitObject::assertKeysValid(int newKeys)
 {
     if (newKeys < MINIMUM_KEYS || newKeys > MAXIMUM_KEYS)
     {
@@ -255,7 +255,7 @@ void cOM_HO::assertKeysValid(int newKeys)
     }
 }
 
-void cOM_HO::limitColumn(int &maxColumn, int &minColumn)
+void HitObject::limitColumn(int &maxColumn, int &minColumn)
 {
 
     if (getColumn() > maxColumn)
@@ -267,7 +267,7 @@ void cOM_HO::limitColumn(int &maxColumn, int &minColumn)
         setColumn(minColumn);
     }
 }
-void cOM_HO::limitColumn()
+void HitObject::limitColumn()
 {
     int maxColumn, minColumn;
 
@@ -283,7 +283,7 @@ void cOM_HO::limitColumn()
         setColumn(minColumn);
     }
 }
-void cOM_HO::limitOffset(double minOffset, double maxOffset)
+void HitObject::limitOffset(double minOffset, double maxOffset)
 {
     if (offset > maxOffset)
     {

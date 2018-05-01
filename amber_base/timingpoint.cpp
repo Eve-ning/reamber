@@ -1,7 +1,7 @@
-#include "com_tp.h"
+#include "timingpoint.h"
 
 // CONSTRUCTORS
-cOM_TP::cOM_TP()
+TimingPoint::TimingPoint()
 {
     offset         = 0      ;
     code           = 100    ;
@@ -13,25 +13,25 @@ cOM_TP::cOM_TP()
     isKiai         = false  ;
     loadFail       = false  ;
 }
-cOM_TP::cOM_TP(QString TP) : cOM_TP()
+TimingPoint::TimingPoint(QString newString) : TimingPoint()
 {
-    loadTP(TP);
+    loadTP(newString);
 }
-cOM_TP::cOM_TP(QLineEdit *line) : cOM_TP()
+TimingPoint::TimingPoint(QLineEdit *line) : TimingPoint()
 {
     loadTP(line);
 }
-cOM_TP::cOM_TP(double newOffset, double newValue) : cOM_TP()
+TimingPoint::TimingPoint(double newOffset, double newValue) : TimingPoint()
 {
     loadTP(newOffset, newValue);
 }
 
 // LOADERS
-void cOM_TP::loadTP(QString TP)
+void TimingPoint::loadTP(QString TP)
 {
     omInfo info;
 
-    info = cOM_Common::whatOM_Type(TP);
+    info = amberCommon::whatOM_Type(TP);
 
     if (!info.getIsTP()) // Case: Invalid
     {
@@ -63,7 +63,7 @@ void cOM_TP::loadTP(QString TP)
         throw amberException("An unexpected error has occured.");
     }
 }
-void cOM_TP::loadTP(QLineEdit *line)
+void TimingPoint::loadTP(QLineEdit *line)
 {
     QString lineText;
 
@@ -72,22 +72,22 @@ void cOM_TP::loadTP(QLineEdit *line)
     loadTP(lineText);
 
 }
-void cOM_TP::loadTP(double newOffset, double newValue)
+void TimingPoint::loadTP(double newOffset, double newValue)
 {
     offset = newOffset;
     setValue(newValue);
 }
 
-void cOM_TP::setOffset(double newOffset)
+void TimingPoint::setOffset(double newOffset)
 {
-    cOM_Common::assertOffsetValid(newOffset);
+    amberCommon::assertOffsetValid(newOffset);
     offset = newOffset;
 }
 
 // SETTERS
-void cOM_TP::setValue(double newValue)
+void TimingPoint::setValue(double newValue)
 {
-    cOM_Common::assertDivByZero(newValue);
+    amberCommon::assertDivByZero(newValue);
 
     // This will indirectly set code instead
     if (isBPM)
@@ -102,7 +102,7 @@ void cOM_TP::setValue(double newValue)
 }
 
 // GETTERS
-void    cOM_TP::getInfo () const
+void    TimingPoint::getInfo () const
 {
     qDebug() << "\r\n"
              << "[---- Timing Point Info ----]"       << "\r\n"
@@ -115,7 +115,7 @@ void    cOM_TP::getInfo () const
              << "ISBPM          : " << isBPM          << "\r\n"
              << "ISKIAI         : " << isKiai         << "\r\n";
 }
-double  cOM_TP::getValue() const
+double  TimingPoint::getValue() const
 {
     double output;
     if (isBPM)
@@ -128,7 +128,7 @@ double  cOM_TP::getValue() const
     }
     return output;
 }
-QString cOM_TP::toString() const
+QString TimingPoint::toString() const
 {
     return      QString::number(offset        ) + ","
             +   QString::number(code          ) + ","
@@ -141,42 +141,42 @@ QString cOM_TP::toString() const
 }
 
 // OPERS
-void cOM_TP::multiplyValue(const cOM_TP rhsOM_TP, bool limitFlag)
+void TimingPoint::multiplyValue(const TimingPoint rhsTimingPoint, bool limitFlag)
 {
-    setValue(getValue() * rhsOM_TP.getValue());
+    setValue(getValue() * rhsTimingPoint.getValue());
     if (limitFlag)
     {
         limitValues();
     }
 }
-void cOM_TP::divideValue(const cOM_TP rhsOM_TP, bool limitFlag)
+void TimingPoint::divideValue(const TimingPoint rhsTimingPoint, bool limitFlag)
 {
-    cOM_Common::assertDivByZero(rhsOM_TP.getValue());
+    amberCommon::assertDivByZero(rhsTimingPoint.getValue());
 
-    setValue(getValue() / rhsOM_TP.getValue());
+    setValue(getValue() / rhsTimingPoint.getValue());
     if (limitFlag)
     {
         limitValues();
     }
 }
-void cOM_TP::addValue(const cOM_TP rhsOM_TP, bool limitFlag)
+void TimingPoint::addValue(const TimingPoint rhsTimingPoint, bool limitFlag)
 {
-    setValue(getValue() + rhsOM_TP.getValue());
+    setValue(getValue() + rhsTimingPoint.getValue());
     if (limitFlag)
     {
         limitValues();
     }
 }
-void cOM_TP::subtractValue(const cOM_TP rhsOM_TP, bool limitFlag)
+void TimingPoint::subtractValue(const TimingPoint rhsTimingPoint, bool limitFlag)
 {
-    setValue(getValue() - rhsOM_TP.getValue());
+    setValue(getValue() - rhsTimingPoint.getValue());
     if (limitFlag)
     {
         limitValues();
     }
 }
 
-void cOM_TP::multiplyValue  (const double rhsDouble, bool limitFlag)
+void TimingPoint::multiplyValue  (const double rhsDouble, bool limitFlag)
 {
     setValue(getValue() * rhsDouble);
     if (limitFlag)
@@ -184,9 +184,9 @@ void cOM_TP::multiplyValue  (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TP::divideValue    (const double rhsDouble, bool limitFlag)
+void TimingPoint::divideValue    (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertDivByZero(rhsDouble);
+    amberCommon::assertDivByZero(rhsDouble);
 
     setValue(getValue() / rhsDouble);
     if (limitFlag)
@@ -194,7 +194,7 @@ void cOM_TP::divideValue    (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TP::addValue       (const double rhsDouble, bool limitFlag)
+void TimingPoint::addValue       (const double rhsDouble, bool limitFlag)
 {
     setValue(getValue() + rhsDouble);
     if (limitFlag)
@@ -202,7 +202,7 @@ void cOM_TP::addValue       (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TP::subtractValue  (const double rhsDouble, bool limitFlag)
+void TimingPoint::subtractValue  (const double rhsDouble, bool limitFlag)
 {
     setValue(getValue() - rhsDouble);
     if (limitFlag)
@@ -211,7 +211,7 @@ void cOM_TP::subtractValue  (const double rhsDouble, bool limitFlag)
     }
 }
 
-void cOM_TP::multiplyOffset (const double rhsDouble, bool limitFlag)
+void TimingPoint::multiplyOffset (const double rhsDouble, bool limitFlag)
 {
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -219,9 +219,9 @@ void cOM_TP::multiplyOffset (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TP::divideOffset   (const double rhsDouble, bool limitFlag)
+void TimingPoint::divideOffset   (const double rhsDouble, bool limitFlag)
 {
-    cOM_Common::assertDivByZero(rhsDouble);
+    amberCommon::assertDivByZero(rhsDouble);
 
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -229,7 +229,7 @@ void cOM_TP::divideOffset   (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TP::addOffset      (const double rhsDouble, bool limitFlag)
+void TimingPoint::addOffset      (const double rhsDouble, bool limitFlag)
 {
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -237,7 +237,7 @@ void cOM_TP::addOffset      (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void cOM_TP::subtractOffset (const double rhsDouble, bool limitFlag)
+void TimingPoint::subtractOffset (const double rhsDouble, bool limitFlag)
 {
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -247,7 +247,7 @@ void cOM_TP::subtractOffset (const double rhsDouble, bool limitFlag)
 }
 
 // MISC
-void cOM_TP::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
+void TimingPoint::limitValues(double maxSV, double minSV, double maxBPM, double minBPM)
 {
     // Make sure min < max
     if ((maxSV != 0 && minSV != 0) && (minSV > maxSV))
@@ -286,7 +286,7 @@ void cOM_TP::limitValues(double maxSV, double minSV, double maxBPM, double minBP
     }
 }
 
-void cOM_TP::limitOffset(double minOffset, double maxOffset)
+void TimingPoint::limitOffset(double minOffset, double maxOffset)
 {
     if (offset > maxOffset)
     {

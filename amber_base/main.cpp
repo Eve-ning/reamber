@@ -1,8 +1,6 @@
 #include <QCoreApplication>
 #include <QDebug>
-#include "com_map.h"
-#include "com_math.h"
-
+#include "osumap.h"
 void calibrate();
 
 int main(int argc, char *argv[])
@@ -35,7 +33,7 @@ void calibrate(){
 
         mapFile.setFile("D:\\osu!\\Songs\\165991 Reol - +Danshi\\Reol - +Danshi (lZenxl) [7K NM].osu");
 
-        cOM_Map map;
+        osuMap map;
 
         map.loadMap(mapFile);
 
@@ -50,7 +48,7 @@ void calibrate(){
     if (TPDebugBool){
 
         // [--- OPERATORS ---]
-        cOM_TPList TPList_A_add,
+        TimingPointList TPList_A_add,
                    TPList_A_subtract,
                    TPList_A_multiply,
                    TPList_A_divide,
@@ -106,7 +104,7 @@ void calibrate(){
 
         // [--- ADJUST TO AVERAGE ---]
 
-        cOM_TPList TPList_A_adjust;
+        TimingPointList TPList_A_adjust;
 
         /* Visualization
          *
@@ -171,7 +169,7 @@ void calibrate(){
 
     }
     if (sortDebugBool){
-        cOM_HOList HOList ("00:00:257 (299|4,291|5,3432|6,38025|4,4128|5,557|4) - ", 7);
+        HitObjectList HOList ("00:00:257 (299|4,291|5,3432|6,38025|4,4128|5,557|4) - ", 7);
 
         qDebug() << "Original   : " << HOList.getOffsetList() << HOList.getColumnList();
         HOList.sortOffset(true);
@@ -181,7 +179,7 @@ void calibrate(){
     }
     if (unqDebugBool){
 
-        cOM_HOList temp("00:00:000 (0|2,0|0,0|1,165|4,341|2,341|1,518|4) - ", 7);
+        HitObjectList temp("00:00:000 (0|2,0|0,0|1,165|4,341|2,341|1,518|4) - ", 7);
 
         qDebug() << "<OFFSET> Original : " << temp.getOffsetList();
         qDebug() << "<COLUMN> Original : " << temp.getColumnList();
@@ -216,34 +214,34 @@ void calibrate(){
               "192,192,22259,1,0,0:0:0:0:";
 
         qDebug() << "[--- EHO ---]";
-        qDebug() << "EHO: " << cOM_Common::whatOM_Type(EHO).getIsEHO() << " | "
-                 << "HO : " << cOM_Common::whatOM_Type(EHO).getIsHO()  << " | "
-                 << "TP : " << cOM_Common::whatOM_Type(EHO).getIsTP()  << " | "
-                 << "IVL: " << cOM_Common::whatOM_Type(EHO).getLoadFail() << "\n";
+        qDebug() << "EHO: " << amberCommon::whatOM_Type(EHO).getIsEHO() << " | "
+                 << "HO : " << amberCommon::whatOM_Type(EHO).getIsHO()  << " | "
+                 << "TP : " << amberCommon::whatOM_Type(EHO).getIsTP()  << " | "
+                 << "IVL: " << amberCommon::whatOM_Type(EHO).getLoadFail() << "\n";
 
         qDebug() << "[--- HO ---]";
-        qDebug() << "EHO: " << cOM_Common::whatOM_Type(HO).getIsEHO() << " | "
-                 << "HO : " << cOM_Common::whatOM_Type(HO).getIsHO()  << " | "
-                 << "TP : " << cOM_Common::whatOM_Type(HO).getIsTP()  << " | "
-                 << "IVL: " << cOM_Common::whatOM_Type(HO).getLoadFail() << "\n";
+        qDebug() << "EHO: " << amberCommon::whatOM_Type(HO).getIsEHO() << " | "
+                 << "HO : " << amberCommon::whatOM_Type(HO).getIsHO()  << " | "
+                 << "TP : " << amberCommon::whatOM_Type(HO).getIsTP()  << " | "
+                 << "IVL: " << amberCommon::whatOM_Type(HO).getLoadFail() << "\n";
 
         qDebug() << "[--- TP ---]";
-        qDebug() << "EHO: " << cOM_Common::whatOM_Type(TP).getIsEHO() << " | "
-                 << "HO : " << cOM_Common::whatOM_Type(TP).getIsHO()  << " | "
-                 << "TP : " << cOM_Common::whatOM_Type(TP).getIsTP()  << " | "
-                 << "IVL: " << cOM_Common::whatOM_Type(TP).getLoadFail() << "\n";
+        qDebug() << "EHO: " << amberCommon::whatOM_Type(TP).getIsEHO() << " | "
+                 << "HO : " << amberCommon::whatOM_Type(TP).getIsHO()  << " | "
+                 << "TP : " << amberCommon::whatOM_Type(TP).getIsTP()  << " | "
+                 << "IVL: " << amberCommon::whatOM_Type(TP).getLoadFail() << "\n";
 
         qDebug() << "[--- MLT ---]";
-        qDebug() << "EHO: " << cOM_Common::whatOM_Type(MLT).getIsEHO() << " | "
-                 << "HO : " << cOM_Common::whatOM_Type(MLT).getIsHO()  << " | "
-                 << "TP : " << cOM_Common::whatOM_Type(MLT).getIsTP()  << " | "
-                 << "IVL: " << cOM_Common::whatOM_Type(MLT).getLoadFail() << "\n";
+        qDebug() << "EHO: " << amberCommon::whatOM_Type(MLT).getIsEHO() << " | "
+                 << "HO : " << amberCommon::whatOM_Type(MLT).getIsHO()  << " | "
+                 << "TP : " << amberCommon::whatOM_Type(MLT).getIsTP()  << " | "
+                 << "IVL: " << amberCommon::whatOM_Type(MLT).getLoadFail() << "\n";
 
         qDebug() << "[--- INV ---]";
-        qDebug() << "EHO: " << cOM_Common::whatOM_Type(INV).getIsEHO() << " | "
-                 << "HO : " << cOM_Common::whatOM_Type(INV).getIsHO()  << " | "
-                 << "TP : " << cOM_Common::whatOM_Type(INV).getIsTP()  << " | "
-                 << "IVL: " << cOM_Common::whatOM_Type(INV).getLoadFail() << "\n";
+        qDebug() << "EHO: " << amberCommon::whatOM_Type(INV).getIsEHO() << " | "
+                 << "HO : " << amberCommon::whatOM_Type(INV).getIsHO()  << " | "
+                 << "TP : " << amberCommon::whatOM_Type(INV).getIsTP()  << " | "
+                 << "IVL: " << amberCommon::whatOM_Type(INV).getLoadFail() << "\n";
     }
 
 

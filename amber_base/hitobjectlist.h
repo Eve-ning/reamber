@@ -1,28 +1,29 @@
 #ifndef cOM_HOLIST_H
 #define cOM_HOLIST_H
 
-#include "com_ho.h"
+#include "common.h"
+#include "hitobject.h"
 #include <QTextBrowser>
 #include <QLineEdit>
 #include <QPlainTextEdit>
 #include <cstdlib>
 
-class  cOM_HOList
+class  HitObjectList
 {
 public:
     // CONSTRUCTORS
-    cOM_HOList();
-    cOM_HOList(QList<cOM_HO> newOM_HOList);
-    cOM_HOList(QString        EHO    , int newKeys = 0);
-    cOM_HOList(QTextBrowser   *tb    , int newKeys = 0);
-    cOM_HOList(QLineEdit      *line  , int newKeys = 0);
-    cOM_HOList(QPlainTextEdit *pte   , int newKeys = 0);
-    cOM_HOList(QStringList    strList, int newKeys = 0);
+    HitObjectList();
+    HitObjectList(QList<HitObject> newHOList);
+    HitObjectList(QString        EHO    , int newKeys = 0);
+    HitObjectList(QTextBrowser   *tb    , int newKeys = 0);
+    HitObjectList(QLineEdit      *line  , int newKeys = 0);
+    HitObjectList(QPlainTextEdit *pte   , int newKeys = 0);
+    HitObjectList(QStringList    strList, int newKeys = 0);
 
     operator QStringList() const { return toString(); }
 
     // LOADERS
-    void loadHOList (QList<cOM_HO>  newOM_HOList); // Initialize via array of OM_HO
+    void loadHOList (QList<HitObject>  newHOList); // Initialize via array of OM_HO
     void loadHOList (QTextBrowser   *tb     , int newKeys = 0); // TextBrowser Handler
     void loadHOList (QLineEdit      *line   , int newKeys = 0); // LineEdit Handler
     void loadHOList (QPlainTextEdit *pte    , int newKeys = 0); // PlainTextEdit Handler
@@ -49,8 +50,8 @@ public:
     QStringList   toString        () const;
 
     // OPERS
-    cOM_HO   operator [](int i) const;
-    cOM_HO & operator [](int i);
+    HitObject   operator [](int i) const;
+    HitObject & operator [](int i);
 
     // MISC
     void addColumn      (const int rhsInt);
@@ -61,7 +62,7 @@ public:
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
     void makeUnique ();
-    void append     (cOM_HO newOM_HO) { OM_HOList.append(newOM_HO); }
+    void append     (HitObject newOM_HO) { OM_HOList.append(newOM_HO); }
     void deleteIndex(unsigned  index) { OM_HOList.removeAt(index); }
     bool isEmpty    () const;
     void sortOffset (bool isAscending = true);
@@ -74,7 +75,7 @@ private:
 
     void loadEHOList(QString &EHO, int newKeys = 0); // Accessed by loadHO
 
-    QList<cOM_HO>  OM_HOList;
+    QList<HitObject>  OM_HOList;
     bool           loadFail;
 
 };
