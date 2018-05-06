@@ -1,5 +1,5 @@
-#ifndef cOM_HOLIST_H
-#define cOM_HOLIST_H
+#ifndef HitObjectLIST_H
+#define HitObjectLIST_H
 
 #include "common.h"
 #include "hitobject.h"
@@ -62,8 +62,8 @@ public:
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
     void makeUnique ();
-    void append     (HitObject newOM_HO) { OM_HOList.append(newOM_HO); }
-    void deleteIndex(unsigned  index) { OM_HOList.removeAt(index); }
+    void append     (HitObject newOM_HO) { hitObjectList.append(newOM_HO); }
+    void deleteIndex(unsigned  index) { hitObjectList.removeAt(index); }
     bool isEmpty    () const;
     void sortOffset (bool isAscending = true);
     void limitColumn (int &maxColumn, int &minColumn);
@@ -75,9 +75,9 @@ private:
 
     void loadEHOList(QString &EHO, int newKeys = 0); // Accessed by loadHO
 
-    QList<HitObject>  OM_HOList;
+    QList<HitObject>  hitObjectList;
     bool           loadFail;
 
 };
 
-#endif // cOM_HOLIST_H
+#endif // HitObjectLIST_H

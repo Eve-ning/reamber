@@ -1,4 +1,4 @@
-#include "common.h"
+﻿#include "common.h"
 
 amberCommon::amberCommon()
 {
@@ -37,9 +37,9 @@ omInfo amberCommon::whatHO(const QStringList &HOList)
     omInfo info = omInfo();
 
     short colonIndex,
-          openBrIndex,
-          pipeIndex,
-          closeBrIndex;
+            openBrIndex,
+            pipeIndex,
+            closeBrIndex;
 
     // Check other indexes
     foreach (temp, HOList) {
@@ -51,15 +51,15 @@ omInfo amberCommon::whatHO(const QStringList &HOList)
 
         // EHO CASE
         if (
-            colonIndex   > 0 &&
-            openBrIndex  > 0 &&
-            pipeIndex    > 0 &&
-            closeBrIndex > 0 && // If index is -1, means that the character does not exist.
+                colonIndex   > 0 &&
+                openBrIndex  > 0 &&
+                pipeIndex    > 0 &&
+                closeBrIndex > 0 && // If index is -1, means that the character does not exist.
 
-            colonIndex   < openBrIndex  &&
-            openBrIndex  < pipeIndex    &&
-            pipeIndex    < closeBrIndex   // As the indexes should be increasing, all of these conditions should be true
-           )
+                colonIndex   < openBrIndex  &&
+                openBrIndex  < pipeIndex    &&
+                pipeIndex    < closeBrIndex   // As the indexes should be increasing, all of these conditions should be true
+                )
         {
             info.setIsEHO(true);
         }
@@ -378,14 +378,17 @@ void amberCommon::assertOffsetValid(const int &newOffset)
 {
     if (newOffset < amberCommon::MINIMUM_OFFSET || newOffset > amberCommon::MAXIMUM_OFFSET)
     {
-        throw offsetOutOfRange(newOffset, amberCommon::MINIMUM_OFFSET, amberCommon::MAXIMUM_OFFSET);
+        throw offsetOutOfRange(newOffset,
+                               amberCommon::MINIMUM_OFFSET,
+                               amberCommon::MAXIMUM_OFFSET);
     }
 }
 void amberCommon::assertLengthMatch(const int &given, const int &expected)
 {
     if (given != expected)
     {
-        throw lengthMismatch(given, expected);
+        throw lengthMismatch(given,
+                             expected);
     }
 }
 void amberCommon::assertLoadFail(const omInfo &info)
@@ -417,6 +420,10 @@ omInfo::omInfo(const bool &allCondition)
     isNN     = allCondition;
     isLN     = allCondition;
     loadFail = false;
+}
+omInfo::omInfo(const int newCondition)
+{
+    setCondition(newCondition);
 }
 
 QString omInfo::toString(const bool &type) const
@@ -479,6 +486,37 @@ bool omInfo::getIsLN() const
 bool omInfo::getLoadFail() const
 {
     return loadFail;
+}
+
+int omInfo::getCondition()
+{
+    int condition = 0x0;
+
+    if (getIsHO    ()) { condition = condition | IS_HO   ; }
+    if (getIsTP    ()) { condition = condition | IS_TP   ; }
+    if (getIsEHO   ()) { condition = condition | IS_EHO  ; }
+    if (getIsSV    ()) { condition = condition | IS_SV   ; }
+    if (getIsBPM   ()) { condition = condition | IS_BPM  ; }
+    if (getIsNN    ()) { condition = condition | IS_NN   ; }
+    if (getIsLN    ()) { condition = condition | IS_LN   ; }
+    if (getLoadFail()) { condition = condition | LOADFAIL; }
+
+    return condition;
+}
+void omInfo::appendCondition(int newCondition)
+{
+    setCondition(getCondition() | newCondition);
+}
+void omInfo::setCondition(int newCondition)
+{
+    if ((newCondition & IS_HO   ) == IS_HO   ) { setIsHO    (true); } else { setIsHO    (false); }
+    if ((newCondition & IS_TP   ) == IS_TP   ) { setIsTP    (true); } else { setIsTP    (false); }
+    if ((newCondition & IS_EHO  ) == IS_EHO  ) { setIsEHO   (true); } else { setIsEHO   (false); }
+    if ((newCondition & IS_SV   ) == IS_SV   ) { setIsSV    (true); } else { setIsSV    (false); }
+    if ((newCondition & IS_BPM  ) == IS_BPM  ) { setIsBPM   (true); } else { setIsBPM   (false); }
+    if ((newCondition & IS_NN   ) == IS_NN   ) { setIsNN    (true); } else { setIsNN    (false); }
+    if ((newCondition & IS_LN   ) == IS_LN   ) { setIsLN    (true); } else { setIsLN    (false); }
+    if ((newCondition & LOADFAIL) == LOADFAIL) { setLoadFail(true); } else { setLoadFail(false); }
 }
 
 void omInfo::setIsHO(bool value)
@@ -625,76 +663,4 @@ QString omInfo::getFailMsg() const
 void omInfo::setFailMsg(const QString value)
 {
     failMsg = value;
-}
-
-columnOutOfRange::columnOutOfRange(const double newValue, const double min, const double max)
-{
-    msg = QString("Attempt to use column out of range [%1 - %2]: %3")
-            .arg(min).arg(max).arg(newValue);
-    badValue = newValue;
-}
-offsetOutOfRange::offsetOutOfRange(const double newValue, const double min, const double max)
-{
-    msg = QString("Attempt to use offset out of range [%1 - %2]: %3")
-            .arg(min).arg(max).arg(newValue);
-    badValue = newValue;
-}
-keysOutOfRange::keysOutOfRange(const int newValue, const int min, const int max)
-{
-    msg = QString("Attempt to use key out of range [%1 - %2]: %3")
-            .arg(min).arg(max).arg(newValue)
-            + "(Did you forget to set the key?)";
-    badValue = newValue;
-}
-xAxisOutOfRange::xAxisOutOfRange(const int newValue, const int min, const int max)
-{
-    msg = QString("Attempt to use x-Axis out of range [%1 - %2]: %3")
-            .arg(min).arg(max).arg(newValue);
-    badValue = newValue;
-}
-emptyException::emptyException(QString objName)
-{
-    msg = QString("%1 is empty, therefore most functions are not available.")
-            .arg(objName);
-}
-TPLoadFail::TPLoadFail(const QString newValue)
-{
-    msg = QString("Failed to load input as TP: %1").arg(newValue);
-    badValue = newValue;
-}
-TPLoadFail::TPLoadFail(const QStringList newValue)
-{
-    msg = QString("Failed to load input as TP: %1").arg(newValue.join("\n"));
-    badValue = newValue.join("\n");
-}
-HOLoadFail::HOLoadFail(const QString newValue)
-{
-    msg = QString("Failed to load input as HO: %1").arg(newValue);
-    badValue = newValue;
-}
-HOLoadFail::HOLoadFail(const QStringList newValue)
-{
-    msg = QString("Failed to load input as TP: %1").arg(newValue.join("\n"));
-    badValue = newValue.join("\n");
-}
-indexOutOfRange::indexOutOfRange(const int newValue, const int max)
-{
-    msg = QString("Index is out of bounds (Given: %1), (Expected: %2)")
-            .arg(newValue).arg(max);
-    badValue = newValue;
-}
-lengthMismatch::lengthMismatch(const int givenLength, const int expectedLength)
-{
-    msg = QString("Length Mismatch (Given: %1), (Expected: %2)")
-            .arg(givenLength).arg(expectedLength);
-    givenValue = givenLength;
-    expectedValue = expectedLength;
-}
-divideByZeroException::divideByZeroException()
-{
-    msg = "Attempted to divide by Zero";
-}
-loadFailException::loadFailException(const omInfo info)
-{
-    msg = QString("loadFail is active. loadFailMsg: ").append(info.getFailMsg());
 }

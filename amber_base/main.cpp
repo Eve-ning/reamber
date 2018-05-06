@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include "osumap.h"
-void calibrate();
+void calibrate(bool details);
 
 int main(int argc, char *argv[])
 {
@@ -9,16 +9,16 @@ int main(int argc, char *argv[])
 
     try
     {
-        calibrate();
+        calibrate(true);
     }
     catch (amberException &e)
     {
-        qDebug() << e.msg;
+        qDebug() << e.what();
     }
     return a.exec();
 }
 
-void calibrate(){
+void calibrate(bool details){
 
     bool mapDebugBool     = true,
          TPDebugBool      = true,
@@ -40,8 +40,8 @@ void calibrate(){
         map.getInfo();
 
         for (int temp = 0; temp < 1; temp ++) {
-            map.getOM_HOList ()[temp].printInfo();
-            map.getOM_TPList ()[temp].getInfo();
+            map.getHitObjectList()[temp].printInfo();
+            map.getTimingPointList()[temp].getInfo();
             map.getBreakPList()[temp].getInfo(); // Maps may not have breaks
         }
     }
@@ -87,7 +87,7 @@ void calibrate(){
         TPList_A_divide  .divideValue  (TPList_B);
 
         qDebug() << "[--- ADD ---]";
-        qDebug() << "          " << TPList_A_add.getValueList();
+        qDebug() << "          " << (TPList_A_add.getValueList() == QList<double>({0.5, 3, 7, 2.1, 2.5}));
         qDebug() << "Expected : (0.5, 3, 7, 2.1, 2.5)" << "\n";
 
         qDebug() << "[--- SUBTRACT ---]";
@@ -148,7 +148,7 @@ void calibrate(){
         }
         catch (amberException &e)
         {
-            qDebug() << e.msg;
+            qDebug() << e.what();
         }
         qDebug() << "[--- ADJUST TO AVERAGE <MAX EXCEED> ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
@@ -160,7 +160,7 @@ void calibrate(){
         }
         catch (amberException &e)
         {
-            qDebug() << e.msg;
+            qDebug() << e.what();
         }
         qDebug() << "[--- ATTEMPT TO ADJUST LAST INDEX ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();

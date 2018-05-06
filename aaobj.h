@@ -63,7 +63,7 @@ public:
     void setFormDefault();
     void setObjType(AAType newObjType);
 
-    cOM_TPList applyEffect(cOM_TPList oldTPList);
+    TimingPointList applyEffect(TimingPointList oldTPList);
 
     AAType getEffect();
     QString getEffectName(bool getInfo = false);

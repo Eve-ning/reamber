@@ -3,15 +3,15 @@
 // CONSTRUCTORS
 TimingPoint::TimingPoint()
 {
-    offset         = 0      ;
-    code           = 100    ;
-    metronome      = 4      ;
-    sampleSet      = 0      ;
-    sampleSetIndex = 0      ;
-    volume         = 5      ;
-    isBPM          = false  ;
-    isKiai         = false  ;
-    loadFail       = false  ;
+    offset         = 0    ;
+    code           = -100 ;
+    metronome      = 4    ;
+    sampleSet      = 0    ;
+    sampleSetIndex = 0    ;
+    volume         = 5    ;
+    isBPM          = false;
+    isKiai         = false;
+    loadFail       = false;
 }
 TimingPoint::TimingPoint(QString newString) : TimingPoint()
 {
@@ -21,9 +21,9 @@ TimingPoint::TimingPoint(QLineEdit *line) : TimingPoint()
 {
     loadTP(line);
 }
-TimingPoint::TimingPoint(double newOffset, double newValue) : TimingPoint()
+TimingPoint::TimingPoint(double newOffset, double newValue, bool newIsBPM) : TimingPoint()
 {
-    loadTP(newOffset, newValue);
+    loadTP(newOffset, newValue, newIsBPM);
 }
 
 // LOADERS
@@ -72,9 +72,10 @@ void TimingPoint::loadTP(QLineEdit *line)
     loadTP(lineText);
 
 }
-void TimingPoint::loadTP(double newOffset, double newValue)
+void TimingPoint::loadTP(double newOffset, double newValue, bool newIsBPM)
 {
     offset = newOffset;
+    isBPM = newIsBPM;
     setValue(newValue);
 }
 

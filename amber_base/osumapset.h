@@ -45,7 +45,7 @@ public:
     QStringList               getVideoFileNameList    () const;
     QList<BreakPointList     >getBreakPListList       () const;
     QList<HitObjectList         >getOM_HOListList        () const;
-    QList<TimingPointList         >getOM_TPListList        () const;
+    QList<TimingPointList         >gettimingPointListList        () const;
 
     void setOsuFileNameList      (QStringList                newOsuFileNameList    );
     void setAudioFileNameList    (QStringList                newAudioFileNameList  );
@@ -82,7 +82,7 @@ public:
     void setVideoFileNameList    (QStringList                newVideoFileNameList  );
     void setBreakPListList       (QList<BreakPointList     > newBreakPListList     );
     void setOM_HOListList        (QList<HitObjectList         > newOM_HOListList      );
-    void setOM_TPListList        (QList<TimingPointList         > newOM_TPListList      );
+    void settimingPointListList        (QList<TimingPointList         > newtimingPointListList      );
 
     // MISC
     void append(osuMap);

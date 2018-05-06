@@ -8,10 +8,24 @@
 int main(int argc, char *argv[])
 {
 
-    QApplication a(argc, argv);
+    try
+    {
+        QApplication a(argc, argv);
 
-    amber w;
+        amber w;
 
-    w.show();
-    return a.exec();
+        w.show();
+        return a.exec();
+    }
+    catch (std::runtime_error &e)
+    {
+        qDebug () << e.what();
+        return 1;
+    }
+    catch (...)
+    {
+        return 2;
+    }
+
+
 }

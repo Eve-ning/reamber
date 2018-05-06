@@ -153,9 +153,9 @@ void AAObj::setForm()
 }
 
 
-cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
+TimingPointList AAObj::applyEffect(TimingPointList oldTPList)
 {
-    cOM_TPList newTPList,
+    TimingPointList newTPList,
                tempTPList;
 
     // Add Offset
@@ -213,12 +213,12 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
     }
     case 4: // Delete SV
     {
-        newTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
+        newTPList = oldTPList.splitByType(omInfo(omInfo::IS_BPM));
         break;
     }
     case 5: // Delete BPM
     {
-        newTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
+        newTPList = oldTPList.splitByType(omInfo(omInfo::IS_SV));
         break;
     }
     case 6: // Convert To SV
@@ -233,7 +233,7 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
     {
         if (!ui->getPTEText(0).isEmpty())
         {
-            oldTPList.addValue(cOM_TPList(ui->getPTEText(0)));
+            oldTPList.addValue(TimingPointList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
@@ -242,7 +242,7 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
     {
         if (!ui->getPTEText(0).isEmpty())
         {
-            oldTPList.subtractValue(cOM_TPList(ui->getPTEText(0)));
+            oldTPList.subtractValue(TimingPointList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
@@ -251,7 +251,7 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
     {
         if (!ui->getPTEText(0).isEmpty())
         {
-            oldTPList.multiplyValue(cOM_TPList(ui->getPTEText(0)));
+            oldTPList.multiplyValue(TimingPointList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
@@ -260,7 +260,7 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
     {
         if (!ui->getPTEText(0).isEmpty())
         {
-            oldTPList.divideValue(cOM_TPList(ui->getPTEText(0)));
+            oldTPList.divideValue(TimingPointList(ui->getPTEText(0)));
         }
         newTPList = oldTPList;
         break;
@@ -272,12 +272,12 @@ cOM_TPList AAObj::applyEffect(cOM_TPList oldTPList)
             newTPList = oldTPList;
         } else if (!ui->getChkbxState(0) && ui->getChkbxState(1)) // BPM ONLY
         {
-            newTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
-            tempTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
+            newTPList = oldTPList.splitByType(omInfo(omInfo::IS_BPM));
+            tempTPList = oldTPList.splitByType(omInfo(omInfo::IS_SV));
         } else // SV ONLY
         {
-            newTPList = oldTPList.splitByType(cOM_Common::TPFlag::SV_ONLY);
-            tempTPList = oldTPList.splitByType(cOM_Common::TPFlag::BPM_ONLY);
+            newTPList = oldTPList.splitByType(omInfo(omInfo::IS_SV));
+            tempTPList = oldTPList.splitByType(omInfo(omInfo::IS_BPM));
         }
         newTPList.subtractValue(ui->getLineText(0).toDouble());
         newTPList.multiplyValue(-1.0);

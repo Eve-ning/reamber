@@ -3,7 +3,7 @@
 // CONSTRUCTORS
 HitObjectList::HitObjectList()
 {
-    OM_HOList = {};
+    hitObjectList = {};
     loadFail  = false;
 }
 HitObjectList::HitObjectList(QList<HitObject> newHOList) : HitObjectList()
@@ -30,7 +30,7 @@ HitObjectList::HitObjectList(QPlainTextEdit *pte, int newKeys) : HitObjectList()
 // LOADERS
 void HitObjectList::loadHOList(QList<HitObject> newHOList)
 {
-    OM_HOList = newHOList;
+    hitObjectList = newHOList;
 }
 void HitObjectList::loadHOList(QTextBrowser *tb, int newKeys)
 {
@@ -94,7 +94,7 @@ void HitObjectList::loadHOList(QStringList &HOList, int newKeys)
 {
     QString HO;
     foreach (HO, HOList) {
-        OM_HOList.append(HitObject(HO, newKeys));
+        hitObjectList.append(HitObject(HO, newKeys));
     }
 
     return;
@@ -125,7 +125,7 @@ void HitObjectList::loadEHOList(QString &EHO, int newKeys)
 
     for (int temp = 0; temp < EHO_splitPipeColumn.size(); temp ++)
     {
-        OM_HOList.append(HitObject(EHO_splitPipeOffset[temp],
+        hitObjectList.append(HitObject(EHO_splitPipeOffset[temp],
                                 EHO_splitPipeColumn[temp],
                                 newKeys));
     }
@@ -135,11 +135,11 @@ void HitObjectList::loadEHOList(QString &EHO, int newKeys)
 void HitObjectList::setOffsetList(QList<double> &newOffsetList)
 {
     amberCommon::assertEmpty(toString(), __FUNCTION__);
-    amberCommon::assertLengthMatch(OM_HOList.length(), newOffsetList.length());
+    amberCommon::assertLengthMatch(hitObjectList.length(), newOffsetList.length());
 
     for (int i = 0; i < newOffsetList.length(); i ++)
     {
-        OM_HOList[i].setOffset(newOffsetList[i]);
+        hitObjectList[i].setOffset(newOffsetList[i]);
     }
 
     return;
@@ -147,11 +147,11 @@ void HitObjectList::setOffsetList(QList<double> &newOffsetList)
 void HitObjectList::setXAxisList(QList<double> &newXAxisList)
 {
     amberCommon::assertEmpty(toString(), __FUNCTION__);
-    amberCommon::assertLengthMatch(OM_HOList.length(), newXAxisList.length());
+    amberCommon::assertLengthMatch(hitObjectList.length(), newXAxisList.length());
 
     for (int i = 0; i < newXAxisList.length(); i ++)
     {
-        OM_HOList[i].setXAxis(newXAxisList[i]);
+        hitObjectList[i].setXAxis(newXAxisList[i]);
     }
 
     return;
@@ -159,11 +159,11 @@ void HitObjectList::setXAxisList(QList<double> &newXAxisList)
 void HitObjectList::setColumnList(QList<int> &newColumnList)
 {
     amberCommon::assertEmpty(toString(), __FUNCTION__);
-    amberCommon::assertLengthMatch(OM_HOList.length(), newColumnList.length());
+    amberCommon::assertLengthMatch(hitObjectList.length(), newColumnList.length());
 
     for (int i = 0; i < newColumnList.length(); i ++)
     {
-        OM_HOList[i].setColumn(newColumnList[i]);
+        hitObjectList[i].setColumn(newColumnList[i]);
     }
 
     return;
@@ -172,8 +172,8 @@ void HitObjectList::setKeys(unsigned short newKeys)
 {
     amberCommon::assertEmpty(toString(), __FUNCTION__);
 
-    for (int temp = 0; temp < OM_HOList.length(); temp ++) {
-        OM_HOList[temp].setKeys(newKeys);
+    for (int temp = 0; temp < hitObjectList.length(); temp ++) {
+        hitObjectList[temp].setKeys(newKeys);
     }
 }
 
@@ -184,7 +184,7 @@ QList<double> HitObjectList::getOffsetList() const
 
     HitObject OM_HO;
     QList<double> output;
-    foreach (OM_HO, OM_HOList)
+    foreach (OM_HO, hitObjectList)
     {
         output.append(OM_HO.getOffset());
     }
@@ -217,7 +217,7 @@ QList<double> HitObjectList::getXAxisList() const
 
     HitObject OM_HO;
     QList<double> output;
-    foreach (OM_HO, OM_HOList)
+    foreach (OM_HO, hitObjectList)
     {
         output.append(OM_HO.getXAxis());
     }
@@ -230,7 +230,7 @@ QList<int> HitObjectList::getColumnList() const
 
     HitObject OM_HO;
     QList<int> output;
-    foreach (OM_HO, OM_HOList)
+    foreach (OM_HO, hitObjectList)
     {
         output.append(OM_HO.getColumn());
     }
@@ -276,18 +276,18 @@ double HitObjectList::getLength(int index)
 
     amberCommon::assertIndex(index, getSize() - 1);
 
-    return OM_HOList[index + 1].getOffset() - OM_HOList[index].getOffset();
+    return hitObjectList[index + 1].getOffset() - hitObjectList[index].getOffset();
 }
 double HitObjectList::getSize() const
 {
-    return OM_HOList.count();
+    return hitObjectList.count();
 }
 QStringList HitObjectList::toString() const
 {
     HitObject temp;
     QStringList output;
 
-    foreach (temp, OM_HOList) {
+    foreach (temp, hitObjectList) {
         output.append(temp.toString());
     }
 
@@ -297,11 +297,11 @@ QStringList HitObjectList::toString() const
 // OPERS
 HitObject &HitObjectList::operator [](int i) {
     amberCommon::assertIndex(i, getSize() - 1);
-    return OM_HOList[i];
+    return hitObjectList[i];
 }
 HitObject HitObjectList ::operator [](int i) const {
     amberCommon::assertIndex(i, getSize() - 1);
-    return OM_HOList[i];
+    return hitObjectList[i];
 }
 
 // MISC
@@ -441,7 +441,7 @@ void HitObjectList::makeUnique()
         if (!newOffsetList.contains(offsetList[temp]))
         {
             newOffsetList.append(offsetList[temp]);
-            newHOList.append(HitObject(offsetList[temp], OM_HOList[temp].getColumn(), OM_HOList[temp].getKeys()));
+            newHOList.append(HitObject(offsetList[temp], hitObjectList[temp].getColumn(), hitObjectList[temp].getKeys()));
         }
     }
 
@@ -453,10 +453,10 @@ void HitObjectList::sortOffset(bool isAscending)
 
     if (isAscending)
     {
-        std::sort(OM_HOList.begin(), OM_HOList.end());
+        std::sort(hitObjectList.begin(), hitObjectList.end());
     } else
     {
-        std::sort(OM_HOList.rbegin(), OM_HOList.rend());
+        std::sort(hitObjectList.rbegin(), hitObjectList.rend());
     }
 }
 void HitObjectList::limitColumn(int &maxColumn, int &minColumn)
@@ -465,7 +465,7 @@ void HitObjectList::limitColumn(int &maxColumn, int &minColumn)
 
     HitObject temp;
 
-    foreach (temp, OM_HOList)
+    foreach (temp, hitObjectList)
     {
         temp.limitColumn(maxColumn, minColumn);
     }
@@ -476,7 +476,7 @@ void HitObjectList::limitColumn()
 
     HitObject temp;
 
-    foreach (temp, OM_HOList)
+    foreach (temp, hitObjectList)
     {
         temp.limitColumn();
     }
@@ -488,7 +488,7 @@ void HitObjectList::limitOffset(double minOffset, double maxOffset)
 
     HitObject temp;
 
-    foreach (temp, OM_HOList) {
+    foreach (temp, hitObjectList) {
         temp.limitOffset(minOffset, maxOffset);
     }
 }

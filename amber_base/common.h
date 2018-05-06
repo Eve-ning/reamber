@@ -9,6 +9,7 @@ public:
 
     omInfo();
     omInfo(const bool &allCondition);
+    omInfo(const int  newCondition); // We use Hexadecimal to set this
 
     QString toString(const bool &type) const;
 
@@ -20,6 +21,19 @@ public:
     bool getIsNN    () const;
     bool getIsLN    () const;
     bool getLoadFail() const;
+
+    static const int IS_HO    = 0x01;
+    static const int IS_TP    = 0x02;
+    static const int IS_EHO   = 0x04;
+    static const int IS_SV    = 0x08;
+    static const int IS_BPM   = 0x10;
+    static const int IS_NN    = 0x20;
+    static const int IS_LN    = 0x40;
+    static const int LOADFAIL = 0x80;
+
+    void setCondition(int newCondition);
+    int  getCondition();
+    void appendCondition(int newCondition);
 
     void setIsHO    (bool value);
     void setIsTP    (bool value);
@@ -37,6 +51,7 @@ public:
     QStringList getAllFalse() const;
 
 private:
+
     bool
     isHO, isTP, isEHO,
     isSV, isBPM,
@@ -120,117 +135,142 @@ public:
 
 };
 
-class amberException
+class amberException : public QException
 {
 public:
-    amberException()
-    {
-        msg = "";
-    }
-    amberException(const QString newMsg)
+    amberException() : msg(""), name("") {}
+    amberException(QString newMsg)
     {
         msg = newMsg;
+        name = "";
     }
-    QString msg;
+    amberException(QString newMsg, QString newName) : msg(newMsg), name(newName) {}
+    QString what()    { return msg; }
+    QString excName() { return name; }
+protected:
+    QString msg ;
+    QString name;
 };
 
 class columnOutOfRange : public amberException
 {
 public:
-    columnOutOfRange(const double newValue, const double min, const double max);
-
-    QString excName = "columnOutOfRange";
-    QString what = "Occurs when set column goes out of range w.r.t. the key or fixed range [0 - 17]";
-    double badValue;
+    columnOutOfRange(int    newValue,
+                     double min,
+                     double max) :
+    amberException(QString(QString("Attempt to use column out of range [%1 - %2]: %3")
+                           .arg(min)
+                           .arg(max)
+                           .arg(newValue)),
+                   QString("Column out of Range")){}
 };
 class offsetOutOfRange : public amberException
 {
 public:
-    offsetOutOfRange(const double newValue, const double min, const double max);
-
-    QString excName = "offsetOutOfRange";
-    QString what = "Occurs when set offset goes out of range [0 - 360000 <1 HOUR IN MS>]";
-    double badValue;
+    offsetOutOfRange(double newValue,
+                     double min,
+                     double max) :
+    amberException(QString(QString("Attempt to use offset out of range [%1 - %2]: %3")
+                           .arg(min)
+                           .arg(max)
+                           .arg(newValue)),
+                   QString("Offset Out Of Range")){}
 };
 class keysOutOfRange : public amberException
 {
 public:
-    keysOutOfRange(const int newValue, const int min, const int max);
-
-    QString excName = "keysOutOfRange";
-    QString what = "Occurs when set key goes out of range [1 - 18]";
-    int badValue;
+    keysOutOfRange(int newValue,
+                   int min,
+                   int max) :
+    amberException(QString(QString("Attempt to use offset out of range [%1 - %2]: %3")
+                           .arg(min)
+                           .arg(max)
+                           .arg(newValue)),
+                   QString("Keys out of Range")){}
 };
 class xAxisOutOfRange : public amberException
 {
 public:
-    xAxisOutOfRange(const int newValue, const int min, const int max);
-
-    QString excName = "xAxisOutOfRange";
-    QString what = "Occurs when set offset goes out of range [0 - 512]";
-    int badValue;
+    xAxisOutOfRange(int newValue,
+                    int min,
+                    int max) :
+    amberException(QString(QString("Attempt to use xAxis out of range [%1 - %2]: %3")
+                           .arg(min)
+                           .arg(max)
+                           .arg(newValue)),
+                   QString("xAxis out of Range")){}
 };
 class emptyException : public amberException
 {
 public:
-    emptyException(const QString objName);
-
-    QString excName = "emptyException";
-    QString what = "Occurs when function that requires a non empty class (TPList/HOList) is executed";
+    emptyException(QString objName) :
+    amberException(QString(QString("%1 is empty, therefore most functions are not available.")
+                           .arg(objName)),
+                   QString("Empty Exception")){}
 };
 class TPLoadFail : public amberException
 {
 public:
-    TPLoadFail(const QString     newValue);
-    TPLoadFail(const QStringList newValue);
-
-    QString excName = "TPLoadFail";
-    QString what = "Failed to load as TP";
-    QString badValue;
+    TPLoadFail(QString newValue) :
+    amberException(QString(QString("Failed to load input as TP: %1")
+                           .arg(newValue)),
+                   QString("TP Load Fail")){}
+    TPLoadFail(QStringList newValue) :
+    amberException(QString(QString("Failed to load input as TP: %1")
+                           .arg((newValue).join("\n"))),
+                   QString("TP Load Fail")){}
 };
 class HOLoadFail : public amberException
 {
 public:
-    HOLoadFail(const QString     newValue);
-    HOLoadFail(const QStringList newValue);
-
-    QString excName = "HOLoadFail";
-    QString what = "Failed to load as HO";
-    QString badValue;
+    HOLoadFail(QString newValue) :
+    amberException(QString(QString("Failed to load input as HO: %1")
+                           .arg(newValue)),
+                   QString("HO Load Fail")){}
+    HOLoadFail(QStringList newValue) :
+    amberException(QString(QString("Failed to load input as HO: %1")
+                           .arg((newValue).join("\n"))),
+                   QString("HO Load Fail")){}
 };
 class indexOutOfRange : public amberException
 {
 public:
-    indexOutOfRange(const int newValue, const int max);
-
-    QString excName = "indexOutOfRange";
-    QString what = "An index used was out of bounds";
-    int badValue;
+    indexOutOfRange(int newValue,
+                    int max) :
+    amberException(QString(QString("Index is out of bounds (Given: %1), (Expected: %2)")
+                           .arg(newValue)
+                           .arg(max)),
+                   QString("Index out of Range")){}
 };
 class lengthMismatch : public amberException
 {
 public:
-    lengthMismatch(const int givenLength, const int expectedLength);
-
-    QString excName = "lengthMismatch";
-    QString what = "Length given didn't match the expected (eg. setting an offset list on HOList requires the same length)";
-    int givenValue, expectedValue;
+    lengthMismatch(int givenLength,
+                   int expectedLength) :
+    amberException(QString(
+                   QString("Length Mismatch (Given: %1), (Expected: %2)")
+                           .arg(givenLength)
+                           .arg(expectedLength)),
+                   QString("Length Mismatch")){}
 };
 class divideByZeroException : public amberException
 {
 public:
-
-    QString excName = "divideByZeroException";
-    QString what = "Attempt to divide by zero";
-    divideByZeroException();
+    divideByZeroException() :
+    amberException(QString("Attempted to divide by Zero"),
+                   QString("Divide by zero Exception")){}
 };
 class loadFailException: public amberException
 {
 public:
-    loadFailException(const omInfo info);
-
-    QString excName = "loadFailException";
-    QString what = "Attempt to use functions while loadFail is active";
+    loadFailException(omInfo info) :
+    amberException(QString(
+                   QString("loadFail is active. loadFailMsg: ")
+                           .append((info).getFailMsg())),
+                   QString("Load Fail Exception")){}
 };
+
+
+
 
 #endif // cOM_Common_H

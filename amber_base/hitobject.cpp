@@ -2,10 +2,6 @@
 
 // CONSTRUCTORS
 HitObject::HitObject()
-
-
-
-
 {
     xAxis           =   256;
     yAxis           =   192;
@@ -215,14 +211,18 @@ void HitObject::assertColumnValid() const
 {
     if (getColumn() > MAXIMUM_COLUMN)
     {
-        throw columnOutOfRange(getColumn(), MINIMUM_COLUMN, MAXIMUM_COLUMN);
+        throw columnOutOfRange(getColumn(),
+                               MINIMUM_COLUMN,
+                               MAXIMUM_COLUMN);
     }
 }
 void HitObject::assertColumnValid(int newColumn)
 {
     if (newColumn < MINIMUM_COLUMN || newColumn > MAXIMUM_COLUMN)
     {
-        throw columnOutOfRange(newColumn, MINIMUM_COLUMN, MAXIMUM_COLUMN);
+        throw columnOutOfRange(newColumn,
+                               MINIMUM_COLUMN,
+                               MAXIMUM_COLUMN);
     }
 }
 
@@ -230,34 +230,41 @@ void HitObject::assertXAxisValid() const
 {
     if (xAxis > MAXIMUM_XAXIS)
     {
-        throw xAxisOutOfRange(xAxis, amberCommon::MINIMUM_OFFSET, amberCommon::MAXIMUM_OFFSET);
+        throw xAxisOutOfRange(xAxis,
+                              amberCommon::MINIMUM_OFFSET,
+                              amberCommon::MAXIMUM_OFFSET);
     }
 }
 void HitObject::assertXAxisValid(int newXAxis)
 {
     if (newXAxis < MINIMUM_XAXIS || newXAxis > MAXIMUM_XAXIS)
     {
-        throw xAxisOutOfRange(newXAxis, amberCommon::MINIMUM_OFFSET, amberCommon::MAXIMUM_OFFSET);
+        throw xAxisOutOfRange(newXAxis,
+                              amberCommon::MINIMUM_OFFSET,
+                              amberCommon::MAXIMUM_OFFSET);
     }
 }
 void HitObject::assertKeysValid() const
 {
     if (keys < MINIMUM_KEYS || keys > MAXIMUM_KEYS)
     {
-        throw offsetOutOfRange(keys, MINIMUM_KEYS, MAXIMUM_KEYS);
+        throw keysOutOfRange(keys,
+                             MINIMUM_KEYS,
+                             MAXIMUM_KEYS);
     }
 }
 void HitObject::assertKeysValid(int newKeys)
 {
     if (newKeys < MINIMUM_KEYS || newKeys > MAXIMUM_KEYS)
     {
-        throw offsetOutOfRange(newKeys, MINIMUM_KEYS, MAXIMUM_KEYS);
+        throw keysOutOfRange(newKeys,
+                             MINIMUM_KEYS,
+                             MAXIMUM_KEYS);
     }
 }
 
 void HitObject::limitColumn(int &maxColumn, int &minColumn)
 {
-
     if (getColumn() > maxColumn)
     {
         setColumn(maxColumn);

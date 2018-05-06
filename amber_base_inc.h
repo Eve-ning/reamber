@@ -1,7 +1,7 @@
 #ifndef AMBER_BASE_INC_H
 #define AMBER_BASE_INC_H
 
-#include "amber_base/com_map.h"
+#include "amber_base/osumap.h"
 
 
 

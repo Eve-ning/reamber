@@ -12,14 +12,14 @@ public:
     TimingPoint();
     TimingPoint(QString newString);
     TimingPoint(QLineEdit *line);
-    TimingPoint(double newOffset, double newValue);
+    TimingPoint(double newOffset, double newValue, bool newIsBPM);
 
     operator QString() const { return toString(); }
 
     // LOADERS
     void loadTP(QString TP);
     void loadTP(QLineEdit *line);
-    void loadTP(double newOffset, double newValue);
+    void loadTP(double newOffset, double newValue, bool newIsBPM);
 
     // SETTERS
     void setOffset        (double          newOffset        );

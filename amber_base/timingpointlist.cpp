@@ -1085,7 +1085,7 @@ void TimingPointList::adjustToAverage(double averageSV, int adjustIndex)
             throw amberException(QString(__FUNCTION__) + ": New Value exceeds limit");
         }
     }
-    else if (getInfo().getIsSV())
+    else if (getInfo().getIsBPM())
     {
         if (newAdjustValue < 0)
         {
@@ -1112,7 +1112,9 @@ void TimingPointList::makeUnique()
         if (!newOffsetList.contains(temp))
         {
             newOffsetList.append(temp);
-            newTimingPointList.append(TimingPoint(temp, curTimingPointList[temp].getValue()));
+            newTimingPointList.append(TimingPoint(temp,
+                                                  curTimingPointList[temp].getValue(),
+                                                  curTimingPointList[temp].getIsBPM()));
         }
     }
 

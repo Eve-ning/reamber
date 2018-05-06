@@ -1,5 +1,5 @@
-#ifndef cOM_TPLIST_H
-#define cOM_TPLIST_H
+#ifndef TimingPointLIST_H
+#define TimingPointLIST_H
 
 #include <cstdlib>
 #include "timingpoint.h"
@@ -108,4 +108,4 @@ protected:
     bool          loadFail;
 };
 
-#endif // cOM_TPLIST_H
+#endif // TimingPointLIST_H

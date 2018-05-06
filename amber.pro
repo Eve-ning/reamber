@@ -32,16 +32,15 @@ SOURCES += \
         archive/defargs.cpp \
         hyperlink.cpp \
         statusbox.cpp \
-        amber_base/com_ho.cpp \
-        amber_base/com_tp.cpp \
-        amber_base/com_holist.cpp \
-        amber_base/com_tplist.cpp \
-        amber_base/com_mapset.cpp \
-        amber_base/com_map.cpp \
-        amber_base/com_breakp.cpp \
-        amber_base/com_breakplist.cpp \
-        amber_base/com_math.cpp \
-        amber_base/com_common.cpp \
+        amber_base/hitobject.cpp \
+        amber_base/timingpoint.cpp \
+        amber_base/hitobjectlist.cpp \
+        amber_base/timingpointlist.cpp \
+        amber_base/osumapset.cpp \
+        amber_base/osumap.cpp \
+        amber_base/breakpoint.cpp \
+        amber_base/breakpointlist.cpp \
+        amber_base/common.cpp \
         aaobj.cpp \
         aaform.cpp \
     qabutton.cpp
@@ -57,16 +56,15 @@ HEADERS += \
         hyperlink.h \
         statusbox.h \
         amber_base_inc.h \
-        amber_base/com_ho.h \
-        amber_base/com_tp.h \
-        amber_base/com_holist.h \
-        amber_base/com_tplist.h \
-        amber_base/com_mapset.h \
-        amber_base/com_map.h \
-        amber_base/com_breakp.h \
-        amber_base/com_breakplist.h \
-        amber_base/com_math.h \
-        amber_base/com_common.h \
+        amber_base/hitobject.h \
+        amber_base/timingpoint.h \
+        amber_base/hitobjectlist.h \
+        amber_base/timingpointlist.h \
+        amber_base/osumapset.h \
+        amber_base/osumap.h \
+        amber_base/breakpoint.h \
+        amber_base/breakpointlist.h \
+        amber_base/common.h \
         aaobj.h \
         aaform.h \
     qabutton.h

@@ -14,16 +14,16 @@
 
 //    //OMPILERS
 //    QString     OM_NN   (QTextBrowser *tb,
-//                         cOM_HO &OM_HO);
+//                         HitObject &OM_HO);
 
 //    QString     OM_LN   (QTextBrowser *tb,
-//                         cOM_HO &OM_HO);
+//                         HitObject &OM_HO);
 
 //    QString     OM_BPM  (QTextBrowser *tb,
-//                         cOM_TP &OM_TP);
+//                         TimingPoint &OM_TP);
 
 //    QString     OM_SV   (QTextBrowser *tb,
-//                         cOM_TP &OM_TP);
+//                         TimingPoint &OM_TP);
 
 ////    QString     BASIC_HO(QTextBrowser *tb,
 ////                         QString noOfKeys = DEFARGS::noOfKeys,

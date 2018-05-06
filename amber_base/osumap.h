@@ -72,46 +72,46 @@ public:
     void setBGFileName       (QString        newBGFileName     ){ bgFileName      = newBGFileName     ; }
     void setVideoFileName    (QString        newVideoFileName  ){ videoFileName   = newVideoFileName  ; }
     void setBreakPList       (BreakPointList newBreakPList     ){ breakPList      = newBreakPList     ; }
-    void setOM_HOList        (HitObjectList     newHOList      ){ OM_HOList       = newHOList      ; }
-    void setOM_TPList        (TimingPointList     newTimingPointList      ){ curTimingPointList       = newTimingPointList      ; }
+    void setHitObjectList    (HitObjectList     newHOList      ){ hitObjectList       = newHOList      ; }
+    void setTimingPointList  (TimingPointList     newTimingPointList      ){ curTimingPointList       = newTimingPointList      ; }
 
     // GETTERS
-    QString        getOsuFileName      () const { return osuFileName     ; }
-    QString        getAudioFileName    () const { return audioFileName   ; }
-    int            getAudioLeadIn      () const { return audioLeadIn     ; }
-    int            getPreviewTime      () const { return previewTime     ; }
-    bool           getCountdown        () const { return countdown       ; }
-    cSampleSet     getSampleSet        () const { return sampleSet       ; }
-    double         getStackLeniency    () const { return stackLeniency   ; }
-    cGameMode      getGameMode         () const { return gameMode        ; }
-    bool           getLetterbox        () const { return letterbox       ; }
-    bool           getSpecialStyle     () const { return specialStyle    ; }
-    bool           getWidescreen       () const { return widescreen      ; }
-    double         getDistanceSpacing  () const { return distanceSpacing ; }
-    int            getBeatDivisor      () const { return beatDivisor     ; }
-    int            getGridSize         () const { return gridSize        ; }
-    double         getTimelineZoom     () const { return timelineZoom    ; }
-    QString        getTitle            () const { return title           ; }
-    QString        getUnicodeTitle     () const { return unicodeTitle    ; }
-    QString        getArtist           () const { return artist          ; }
-    QString        getUnicodeArtist    () const { return unicodeArtist   ; }
-    QString        getCreator          () const { return creator         ; }
-    QString        getDifficultyName   () const { return difficultyName  ; }
-    QString        getSource           () const { return source          ; }
-    QStringList    getTags             () const { return tags            ; }
-    int            getBeatmapID        () const { return beatmapID       ; }
-    int            getBeatmapSetID     () const { return beatmapSetID    ; }
-    double         getHP               () const { return HP              ; }
-    double         getCS               () const { return CS              ; }
-    double         getOD               () const { return OD              ; }
-    double         getAR               () const { return AR              ; }
-    double         getSliderMult       () const { return sliderMult      ; }
-    double         getSliderTick       () const { return sliderTick      ; }
-    QString        getBGFileName       () const { return bgFileName      ; }
-    QString        getVideoFileName    () const { return videoFileName   ; }
-    BreakPointList getBreakPList       () const { return breakPList      ; }
-    HitObjectList     getOM_HOList        () const { return OM_HOList       ; }
-    TimingPointList     getOM_TPList        () const { return curTimingPointList       ; }
+    QString         getOsuFileName      () const { return osuFileName     ; }
+    QString         getAudioFileName    () const { return audioFileName   ; }
+    int             getAudioLeadIn      () const { return audioLeadIn     ; }
+    int             getPreviewTime      () const { return previewTime     ; }
+    bool            getCountdown        () const { return countdown       ; }
+    cSampleSet      getSampleSet        () const { return sampleSet       ; }
+    double          getStackLeniency    () const { return stackLeniency   ; }
+    cGameMode       getGameMode         () const { return gameMode        ; }
+    bool            getLetterbox        () const { return letterbox       ; }
+    bool            getSpecialStyle     () const { return specialStyle    ; }
+    bool            getWidescreen       () const { return widescreen      ; }
+    double          getDistanceSpacing  () const { return distanceSpacing ; }
+    int             getBeatDivisor      () const { return beatDivisor     ; }
+    int             getGridSize         () const { return gridSize        ; }
+    double          getTimelineZoom     () const { return timelineZoom    ; }
+    QString         getTitle            () const { return title           ; }
+    QString         getUnicodeTitle     () const { return unicodeTitle    ; }
+    QString         getArtist           () const { return artist          ; }
+    QString         getUnicodeArtist    () const { return unicodeArtist   ; }
+    QString         getCreator          () const { return creator         ; }
+    QString         getDifficultyName   () const { return difficultyName  ; }
+    QString         getSource           () const { return source          ; }
+    QStringList     getTags             () const { return tags            ; }
+    int             getBeatmapID        () const { return beatmapID       ; }
+    int             getBeatmapSetID     () const { return beatmapSetID    ; }
+    double          getHP               () const { return HP              ; }
+    double          getCS               () const { return CS              ; }
+    double          getOD               () const { return OD              ; }
+    double          getAR               () const { return AR              ; }
+    double          getSliderMult       () const { return sliderMult      ; }
+    double          getSliderTick       () const { return sliderTick      ; }
+    QString         getBGFileName       () const { return bgFileName      ; }
+    QString         getVideoFileName    () const { return videoFileName   ; }
+    BreakPointList  getBreakPList       () const { return breakPList      ; }
+    HitObjectList   getHitObjectList    () const { return hitObjectList    ; }
+    TimingPointList getTimingPointList  () const { return curTimingPointList  ; }
 
     // OPERS
 
@@ -170,7 +170,7 @@ protected:
     BreakPointList breakPList;
 
     // HitObject and TimingPoint
-    HitObjectList OM_HOList;
+    HitObjectList hitObjectList;
     TimingPointList curTimingPointList;
 
 private:

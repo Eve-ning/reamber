@@ -4,7 +4,7 @@
 
 ////ompilers
 //QString OM_NN(QTextBrowser *tb,
-//              cOM_HO &OM_HO)
+//              HitObject &OM_HO)
 //{
 //    QString output;
 //    /* Normal Note: xAxis,yAxis,offset,extension */
@@ -14,7 +14,7 @@
 //}
 
 //QString OM_LN(QTextBrowser *tb,
-//              cOM_HO &OM_HO)
+//              HitObject &OM_HO)
 //{
 //    QString output;
 //    /* Long Note: xAxis,yAxis,offset,parameter,lnOffset&extension */
@@ -24,7 +24,7 @@
 //}
 
 //QString OM_BPM(QTextBrowser *tb,
-//               cOM_TP &OM_TP)
+//               TimingPoint &OM_TP)
 //{
 //    QString output;
 //    /* BPM Line: offset,code,extension */
@@ -35,7 +35,7 @@
 //}
 
 //QString OM_SV(QTextBrowser *tb,
-//              cOM_TP &OM_TP)
+//              TimingPoint &OM_TP)
 //{
 //    QString output;
 //    /* SV Line: offset,code,extension */

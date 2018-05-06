@@ -391,18 +391,18 @@ void osuMapSet::setOM_HOListList        (QList<HitObjectList         > newOM_HOL
     }
     for (int temp = 0; temp < newOM_HOListList      .length(); temp ++)
     {
-        OM_MapList[temp].setOM_HOList              (newOM_HOListList      [temp]);
+        OM_MapList[temp].setHitObjectList              (newOM_HOListList      [temp]);
     }
 }
-void osuMapSet::setOM_TPListList        (QList<TimingPointList         > newOM_TPListList      )
+void osuMapSet::settimingPointListList        (QList<TimingPointList         > newtimingPointListList      )
 {
-    if (newOM_TPListList      .length() != OM_MapList.length())
+    if (newtimingPointListList      .length() != OM_MapList.length())
     {
         qDebug() << __FUNCTION__ << "Length Mismatch" ;
     }
-    for (int temp = 0; temp < newOM_TPListList      .length(); temp ++)
+    for (int temp = 0; temp < newtimingPointListList      .length(); temp ++)
     {
-        OM_MapList[temp].setOM_TPList              (newOM_TPListList      [temp]);
+        OM_MapList[temp].setTimingPointList              (newtimingPointListList      [temp]);
     }
 }
 
@@ -787,18 +787,18 @@ QList<HitObjectList         >osuMapSet::getOM_HOListList        () const
     QList<HitObjectList> output;
     foreach (temp, OM_MapList)
     {
-        output.append(temp.getOM_HOList());
+        output.append(temp.getHitObjectList());
     }
 
     return output;
 }
-QList<TimingPointList         >osuMapSet::getOM_TPListList        () const
+QList<TimingPointList         >osuMapSet::gettimingPointListList        () const
 {
     osuMap temp;
     QList<TimingPointList> output;
     foreach (temp, OM_MapList)
     {
-        output.append(temp.getOM_TPList());
+        output.append(temp.getTimingPointList());
     }
 
     return output;

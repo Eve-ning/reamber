@@ -29,7 +29,7 @@ osuMap::osuMap()
     sliderMult       = 1.0                 ;
     sliderTick       = 1                   ;
     bgFileName       = "bg.jpg"            ;
-    OM_HOList        = HitObjectList()        ;
+    hitObjectList        = HitObjectList()        ;
     curTimingPointList        = TimingPointList()        ;
 }
 
@@ -55,7 +55,7 @@ void osuMap::loadMap(QFileInfo newMapPath)
     }
     else
     {
-        throw amberException("Map cannot be opened. \n"          );
+        throw amberException("Map cannot be opened.\n");
         throw amberException(QString("Map Path: ") + newMapFile.fileName());
     }
 
@@ -96,7 +96,7 @@ void osuMap::loadMap(QStringList newMapStringList)
     sliderMult       = 1.0                 ;
     sliderTick       = 1                   ;
     bgFileName       = "bg.jpg"            ;
-    OM_HOList        = HitObjectList()        ;
+    hitObjectList        = HitObjectList()        ;
     curTimingPointList        = TimingPointList()        ;
 
 
@@ -305,7 +305,7 @@ void osuMap::loadMap(QStringList newMapStringList)
         }
 
     }
-    if (indexMapStringList[34] != -1) { // OM_HOList
+    if (indexMapStringList[34] != -1) { // hitObjectList
         int startOM_HOIndex,
             endOM_HOIndex;
 
@@ -318,7 +318,7 @@ void osuMap::loadMap(QStringList newMapStringList)
         for (int temp = startOM_HOIndex; temp < endOM_HOIndex; temp ++)
         {
             if (newMapStringList[temp].simplified() != ""){
-                OM_HOList.append(HitObject(newMapStringList[temp], CS));
+                hitObjectList.append(HitObject(newMapStringList[temp], CS));
             }
         }
     }
@@ -405,7 +405,7 @@ void osuMap::getInfo() const
     qDebug() << "VIDEOFILENAME    : " << videoFileName                   ;
     qDebug() << "BreakPList <SIZE>: " << breakPList.getSize()            ;
     qDebug() << "OM_TPLIST  <SIZE>: " << curTimingPointList.getSize()             ;
-    qDebug() << "OM_HOLIST  <SIZE>: " << OM_HOList.getSize()             ;
+    qDebug() << "OM_HOLIST  <SIZE>: " << hitObjectList.getSize()             ;
 }
 
 void osuMap::copyAudioFileTo(QFileInfo copyLocation)
@@ -489,7 +489,7 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
             REG_bgFileName     ("//Background and Video events"),
             REG_videoFileName  ("Video,.*"),
             REG_breakPList     ("//Break Periods"),
-            REG_OM_TPList      (".*TimingPoints.*"),
+            REG_timingPointList      (".*TimingPoints.*"),
             REG_OM_HOList      (".*HitObjects.*");
 
     settingsRegList = {REG_audioFileName  ,
@@ -525,7 +525,7 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
                        REG_bgFileName     ,
                        REG_videoFileName  ,
                        REG_breakPList     ,
-                       REG_OM_TPList      ,
+                       REG_timingPointList      ,
                        REG_OM_HOList      };
 
     bool    FLAG_audioFileName   = false,
@@ -561,7 +561,7 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
             FLAG_bgFileName      = false,
             FLAG_videoFileName   = false,
             FLAG_breakPList      = false,
-            FLAG_OM_TPList       = false,
+            FLAG_timingPointList       = false,
             FLAG_OM_HOList       = false;
 
     flagRegList = {FLAG_audioFileName  ,
@@ -597,7 +597,7 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
                    FLAG_bgFileName     ,
                    FLAG_videoFileName  ,
                    FLAG_breakPList     ,
-                   FLAG_OM_TPList      ,
+                   FLAG_timingPointList      ,
                    FLAG_OM_HOList      };
 
     qDebug() << "[---- RegEx Matching ----]";
