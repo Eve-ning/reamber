@@ -1,21 +1,19 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include "osumap.h"
+
+
 void calibrate(bool details);
+
+
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
 
-    try
-    {
-        calibrate(true);
-    }
-    catch (amberException &e)
-    {
-        qDebug() << e.what();
-    }
+    QCoreApplication a(argc, argv);
+    calibrate(true);
     return a.exec();
+
 }
 
 void calibrate(bool details){
@@ -87,7 +85,7 @@ void calibrate(bool details){
         TPList_A_divide  .divideValue  (TPList_B);
 
         qDebug() << "[--- ADD ---]";
-        qDebug() << "          " << (TPList_A_add.getValueList() == QList<double>({0.5, 3, 7, 2.1, 2.5}));
+        qDebug() << "          " << TPList_A_add.getValueList();
         qDebug() << "Expected : (0.5, 3, 7, 2.1, 2.5)" << "\n";
 
         qDebug() << "[--- SUBTRACT ---]";
@@ -142,31 +140,17 @@ void calibrate(bool details){
         qDebug() << "         " << TPList_A_adjust.getValueList();
         qDebug() << "Expected: (0.5, 1, 1.63333, 2.2, 0.5)" << "\n";
 
-        try
-        {
-            TPList_A_adjust.adjustToAverage(10.0,2);
-        }
-        catch (amberException &e)
-        {
-            qDebug() << e.what();
-        }
+        TPList_A_adjust.adjustToAverage(10.0,2);
+
         qDebug() << "[--- ADJUST TO AVERAGE <MAX EXCEED> ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
         qDebug() << "Expected: Error Thrown" << "\n";
 
-        try
-        {
-            TPList_A_adjust.adjustToAverage(10.0,4);
-        }
-        catch (amberException &e)
-        {
-            qDebug() << e.what();
-        }
-        qDebug() << "[--- ATTEMPT TO ADJUST LAST INDEX ---]";
-        qDebug() << "         " << TPList_A_adjust.getValueList();
-        qDebug() << "Expected: Error Thrown" << "\n";
+        // TPList_A_adjust.adjustToAverage(10.0,4);
 
-
+        // qDebug() << "[--- ATTEMPT TO ADJUST LAST INDEX ---]";
+        // qDebug() << "         " << TPList_A_adjust.getValueList();
+        // qDebug() << "Expected: Error Thrown" << "\n";
     }
     if (sortDebugBool){
         HitObjectList HOList ("00:00:257 (299|4,291|5,3432|6,38025|4,4128|5,557|4) - ", 7);
@@ -214,34 +198,34 @@ void calibrate(bool details){
               "192,192,22259,1,0,0:0:0:0:";
 
         qDebug() << "[--- EHO ---]";
-        qDebug() << "EHO: " << amberCommon::whatOM_Type(EHO).getIsEHO() << " | "
-                 << "HO : " << amberCommon::whatOM_Type(EHO).getIsHO()  << " | "
-                 << "TP : " << amberCommon::whatOM_Type(EHO).getIsTP()  << " | "
-                 << "IVL: " << amberCommon::whatOM_Type(EHO).getLoadFail() << "\n";
+        qDebug() << "EHO: " << Common::whatOM_Type(EHO).getIsEHO() << " | "
+                 << "HO : " << Common::whatOM_Type(EHO).getIsHO()  << " | "
+                 << "TP : " << Common::whatOM_Type(EHO).getIsTP()  << " | "
+                 << "IVL: " << Common::whatOM_Type(EHO).getLoadFail() << "\n";
 
         qDebug() << "[--- HO ---]";
-        qDebug() << "EHO: " << amberCommon::whatOM_Type(HO).getIsEHO() << " | "
-                 << "HO : " << amberCommon::whatOM_Type(HO).getIsHO()  << " | "
-                 << "TP : " << amberCommon::whatOM_Type(HO).getIsTP()  << " | "
-                 << "IVL: " << amberCommon::whatOM_Type(HO).getLoadFail() << "\n";
+        qDebug() << "EHO: " << Common::whatOM_Type(HO).getIsEHO() << " | "
+                 << "HO : " << Common::whatOM_Type(HO).getIsHO()  << " | "
+                 << "TP : " << Common::whatOM_Type(HO).getIsTP()  << " | "
+                 << "IVL: " << Common::whatOM_Type(HO).getLoadFail() << "\n";
 
         qDebug() << "[--- TP ---]";
-        qDebug() << "EHO: " << amberCommon::whatOM_Type(TP).getIsEHO() << " | "
-                 << "HO : " << amberCommon::whatOM_Type(TP).getIsHO()  << " | "
-                 << "TP : " << amberCommon::whatOM_Type(TP).getIsTP()  << " | "
-                 << "IVL: " << amberCommon::whatOM_Type(TP).getLoadFail() << "\n";
+        qDebug() << "EHO: " << Common::whatOM_Type(TP).getIsEHO() << " | "
+                 << "HO : " << Common::whatOM_Type(TP).getIsHO()  << " | "
+                 << "TP : " << Common::whatOM_Type(TP).getIsTP()  << " | "
+                 << "IVL: " << Common::whatOM_Type(TP).getLoadFail() << "\n";
 
         qDebug() << "[--- MLT ---]";
-        qDebug() << "EHO: " << amberCommon::whatOM_Type(MLT).getIsEHO() << " | "
-                 << "HO : " << amberCommon::whatOM_Type(MLT).getIsHO()  << " | "
-                 << "TP : " << amberCommon::whatOM_Type(MLT).getIsTP()  << " | "
-                 << "IVL: " << amberCommon::whatOM_Type(MLT).getLoadFail() << "\n";
+        qDebug() << "EHO: " << Common::whatOM_Type(MLT).getIsEHO() << " | "
+                 << "HO : " << Common::whatOM_Type(MLT).getIsHO()  << " | "
+                 << "TP : " << Common::whatOM_Type(MLT).getIsTP()  << " | "
+                 << "IVL: " << Common::whatOM_Type(MLT).getLoadFail() << "\n";
 
         qDebug() << "[--- INV ---]";
-        qDebug() << "EHO: " << amberCommon::whatOM_Type(INV).getIsEHO() << " | "
-                 << "HO : " << amberCommon::whatOM_Type(INV).getIsHO()  << " | "
-                 << "TP : " << amberCommon::whatOM_Type(INV).getIsTP()  << " | "
-                 << "IVL: " << amberCommon::whatOM_Type(INV).getLoadFail() << "\n";
+        qDebug() << "EHO: " << Common::whatOM_Type(INV).getIsEHO() << " | "
+                 << "HO : " << Common::whatOM_Type(INV).getIsHO()  << " | "
+                 << "TP : " << Common::whatOM_Type(INV).getIsTP()  << " | "
+                 << "IVL: " << Common::whatOM_Type(INV).getLoadFail() << "\n";
     }
 
 

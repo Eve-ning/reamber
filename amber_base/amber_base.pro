@@ -23,7 +23,10 @@ SOURCES += main.cpp \
     osumap.cpp \
     breakpoint.cpp \
     breakpointlist.cpp \
-    common.cpp
+    common.cpp \
+    osuobject.cpp \
+    info.cpp \
+    AExc.cpp
 
 HEADERS += \
     hitobject.h \
@@ -34,7 +37,10 @@ HEADERS += \
     osumap.h \
     breakpoint.h \
     breakpointlist.h \
-    common.h
+    common.h \
+    osuobject.h \
+    info.h \
+    AExc.h
 
 DISTFILES += \
     documentation.txt

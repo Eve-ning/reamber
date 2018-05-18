@@ -268,11 +268,11 @@ void amber::on_toolBox_currentChanged(int index)
 // Connect Stutter Widgets
 void amber::on_stutter_initSVSlider_valueChanged(int value)
 {
-    ui->stutter_initSVLabel->setText(QString::number(value / 100.0, 'f', 2));
+    ui->stutter_initSVLabel->setText(QString::number(value, 'f', 2));
 }
 void amber::on_stutter_thresholdSlider_valueChanged(int value)
 {
-    ui->stutter_thresholdLabel->setText(QString::number(value / 100.0, 'f', 2));
+    ui->stutter_thresholdLabel->setText(QString::number(value));
 
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
@@ -299,7 +299,7 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
         timingPointList.adjustToAverage(averageSV, 0);
         maxInitSV = timingPointList[0].getValue();
     }
-    catch (QException &e)
+    catch (AExc &e)
     {
         maxInitSV = 10.0;
 
@@ -310,16 +310,10 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
     // Where secondSV = 10.0
     timingPointList[1].setValue(10.0    );
 
-    try
-    {
+
         timingPointList.adjustToAverage(averageSV, 0);
         minInitSV = timingPointList[0].getValue();
-    }
-    catch (std::runtime_error& error)
-    {
-        qDebug () << error.what();
-        return;
-    }
+
     // Set Maximum and Minimum
     ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV * 100));
     ui->stutter_initSVSlider-> setMinimum((int) (minInitSV * 100));
@@ -430,11 +424,11 @@ void amber::on_copier_generateButton_clicked()
         TimingPointList   timingPointList;
         HitObjectList   hitObjectList;
 
-        omInfo  boxInfo_1,
-                boxInfo_2;
+        Info  boxInfo_1,
+              boxInfo_2;
 
-        boxInfo_1 = amberCommon::whatOM_Type(ui->copier_inputBox);
-        boxInfo_2 = amberCommon::whatOM_Type(ui->copier_inputBox_2);
+        boxInfo_1 = Common::whatOM_Type(ui->copier_inputBox);
+        boxInfo_2 = Common::whatOM_Type(ui->copier_inputBox_2);
 
         // Invalid Cases
         if (boxInfo_1.getLoadFail())
@@ -791,7 +785,7 @@ void amber::on_normalizer_generateButton_clicked()
     }
 
     // We reassign timingPointList to have only BPM Inputs
-    omInfo info;
+    Info info;
     info.setIsBPM(true);
     timingPointList = timingPointList.splitByType(info);
 
@@ -944,7 +938,7 @@ void amber::on_adjuster_generateButton_clicked()
     bool isSV           = SVRadio->isChecked(),
          isGraphLine    = graphLineRadio->isChecked();
 
-    omInfo info;
+    Info info;
 
     if (isSV)
     {

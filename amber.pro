@@ -41,6 +41,7 @@ SOURCES += \
         amber_base/breakpoint.cpp \
         amber_base/breakpointlist.cpp \
         amber_base/common.cpp \
+        amber_base/osuobject.cpp \
         aaobj.cpp \
         aaform.cpp \
     qabutton.cpp
@@ -65,6 +66,7 @@ HEADERS += \
         amber_base/breakpoint.h \
         amber_base/breakpointlist.h \
         amber_base/common.h \
+        amber_base/osuobject.h \
         aaobj.h \
         aaform.h \
     qabutton.h

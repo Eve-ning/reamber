@@ -3,40 +3,44 @@
 // CONSTRUCTORS
 TimingPoint::TimingPoint()
 {
-    offset         = 0    ;
-    code           = -100 ;
-    metronome      = 4    ;
-    sampleSet      = 0    ;
-    sampleSetIndex = 0    ;
-    volume         = 5    ;
-    isBPM          = false;
-    isKiai         = false;
-    loadFail       = false;
+    offset = 0;
+    code = -100;
+    metronome = 4;
+    sampleSet = 0;
+    sampleSetIndex = 0;
+    volume = 5;
+    isBPM = false;
+    isKiai = false;
+    loadFail = false;
 }
-TimingPoint::TimingPoint(QString newString) : TimingPoint()
+TimingPoint::TimingPoint(QString string_)
+    : TimingPoint()
 {
-    loadTP(newString);
+    loadTP(string_);
 }
-TimingPoint::TimingPoint(QLineEdit *line) : TimingPoint()
+TimingPoint::TimingPoint(QLineEdit* line)
+    : TimingPoint()
 {
     loadTP(line);
 }
-TimingPoint::TimingPoint(double newOffset, double newValue, bool newIsBPM) : TimingPoint()
+TimingPoint::TimingPoint(double offset_, double value_, bool isBPM_)
+    : TimingPoint()
 {
-    loadTP(newOffset, newValue, newIsBPM);
+    loadTP(offset_, value_, isBPM_);
 }
 
 // LOADERS
 void TimingPoint::loadTP(QString TP)
 {
-    omInfo info;
+    Info info;
 
-    info = amberCommon::whatOM_Type(TP);
+    info = Common::whatOM_Type(TP);
 
     if (!info.getIsTP()) // Case: Invalid
     {
         loadFail = true;
-        throw TPLoadFail(QString("Input not TP: ") + TP);
+        AExc(AExc::TP_LOADFAIL, QString("Input: ") + TP);
+        return;
     }
 
     //            [0] [1]              [2][3][4][5][6][7]
@@ -44,79 +48,84 @@ void TimingPoint::loadTP(QString TP)
 
     QStringList TP_splitComma;
 
-    TP_splitComma = TP.split("," , QString::KeepEmptyParts);
+    TP_splitComma = TP.split(",", QString::KeepEmptyParts);
 
     if (TP_splitComma.size() == 8)
     {
-        offset         = TP_splitComma[0].toDouble();
-        code           = TP_splitComma[1].toDouble();
-        metronome      = TP_splitComma[2].toInt();
-        sampleSet      = TP_splitComma[3].toInt();
+        offset = TP_splitComma[0].toDouble();
+        code = TP_splitComma[1].toDouble();
+        metronome = TP_splitComma[2].toInt();
+        sampleSet = TP_splitComma[3].toInt();
         sampleSetIndex = TP_splitComma[4].toInt();
-        volume         = TP_splitComma[5].toInt();
-        isBPM          = (TP_splitComma[6] == "1");
-        isKiai         = (TP_splitComma[7] == "1");
+        volume = TP_splitComma[5].toInt();
+        isBPM = (TP_splitComma[6] == "1");
+        isKiai = (TP_splitComma[7] == "1");
     }
     else
     {
         loadFail = true;
-        throw amberException("An unexpected error has occured.");
+        AExc(AExc::UNEXPECTED_ERROR, QString("Within this context ") + __FUNCTION__);
+        return;
     }
 }
-void TimingPoint::loadTP(QLineEdit *line)
+void TimingPoint::loadTP(QLineEdit* line)
 {
     QString lineText;
 
     lineText = line->text();
 
     loadTP(lineText);
-
 }
-void TimingPoint::loadTP(double newOffset, double newValue, bool newIsBPM)
+void TimingPoint::loadTP(double offset_, double value_, bool isBPM_)
 {
-    offset = newOffset;
-    isBPM = newIsBPM;
-    setValue(newValue);
+    offset = offset_;
+    isBPM = isBPM_;
+    setValue(value_);
 }
 
-void TimingPoint::setOffset(double newOffset)
+void TimingPoint::setOffset(double offset_)
 {
-    amberCommon::assertOffsetValid(newOffset);
-    offset = newOffset;
+    Common::assertOffsetValid(offset_);
+    offset = offset_;
 }
 
 // SETTERS
-void TimingPoint::setValue(double newValue)
+void TimingPoint::setValue(double value_)
 {
-    amberCommon::assertDivByZero(newValue);
+    if (value_ == 0)
+    {
+        AExc(AExc::DIVIDE_BY_ZERO);
+        return;
+    }
 
     // This will indirectly set code instead
     if (isBPM)
     {
-        code = 60000 / newValue;
+        code = 60000 / value_;
     }
     else
     {
-        code = -100 / newValue;
+        code = -100 / value_;
     }
     return;
 }
 
 // GETTERS
-void    TimingPoint::getInfo () const
+void TimingPoint::getInfo() const
 {
     qDebug() << "\r\n"
-             << "[---- Timing Point Info ----]"       << "\r\n"
-             << "OFFSET         : " << offset         << "\r\n"
-             << "CODE           : " << code           << "\r\n"
-             << "METRONOME      : " << metronome      << "\r\n"
-             << "SAMPLESET      : " << sampleSet      << "\r\n"
+             << "[---- Timing Point Info ----]"
+             << "\r\n"
+             << "OFFSET         : " << offset << "\r\n"
+             << "CODE           : " << code << "\r\n"
+             << "METRONOME      : " << metronome << "\r\n"
+             << "SAMPLESET      : " << sampleSet << "\r\n"
              << "SAMPLESETINDEX : " << sampleSetIndex << "\r\n"
-             << "VOLUME         : " << volume         << "\r\n"
-             << "ISBPM          : " << isBPM          << "\r\n"
-             << "ISKIAI         : " << isKiai         << "\r\n";
+             << "VOLUME         : " << volume << "\r\n"
+             << "ISBPM          : " << isBPM << "\r\n"
+             << "ISKIAI         : " << isKiai << "\r\n";
 }
-double  TimingPoint::getValue() const
+double TimingPoint::getValue() const
 {
     double output;
     if (isBPM)
@@ -131,14 +140,9 @@ double  TimingPoint::getValue() const
 }
 QString TimingPoint::toString() const
 {
-    return      QString::number(offset        ) + ","
-            +   QString::number(code          ) + ","
-            +   QString::number(metronome     ) + ","
-            +   QString::number(sampleSet     ) + ","
-            +   QString::number(sampleSetIndex) + ","
-            +   QString::number(volume        ) + ","
-            +   (isBPM  ? "1" : "0")            + ","
-            +   (isKiai ? "1" : "0") ;
+    return QString::number(offset) + "," + QString::number(code) + "," + QString::number(metronome)
+        + "," + QString::number(sampleSet) + "," + QString::number(sampleSetIndex) + ","
+        + QString::number(volume) + "," + (isBPM ? "1" : "0") + "," + (isKiai ? "1" : "0");
 }
 
 // OPERS
@@ -152,7 +156,11 @@ void TimingPoint::multiplyValue(const TimingPoint rhsTimingPoint, bool limitFlag
 }
 void TimingPoint::divideValue(const TimingPoint rhsTimingPoint, bool limitFlag)
 {
-    amberCommon::assertDivByZero(rhsTimingPoint.getValue());
+    if (rhsTimingPoint.getValue() == 0)
+    {
+        AExc(AExc::DIVIDE_BY_ZERO);
+        return;
+    }
 
     setValue(getValue() / rhsTimingPoint.getValue());
     if (limitFlag)
@@ -177,7 +185,7 @@ void TimingPoint::subtractValue(const TimingPoint rhsTimingPoint, bool limitFlag
     }
 }
 
-void TimingPoint::multiplyValue  (const double rhsDouble, bool limitFlag)
+void TimingPoint::multiplyValue(const double rhsDouble, bool limitFlag)
 {
     setValue(getValue() * rhsDouble);
     if (limitFlag)
@@ -185,9 +193,12 @@ void TimingPoint::multiplyValue  (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void TimingPoint::divideValue    (const double rhsDouble, bool limitFlag)
+void TimingPoint::divideValue(const double rhsDouble, bool limitFlag)
 {
-    amberCommon::assertDivByZero(rhsDouble);
+    if (rhsDouble == 0)
+    {
+        AExc(AExc::DIVIDE_BY_ZERO);
+    }
 
     setValue(getValue() / rhsDouble);
     if (limitFlag)
@@ -195,7 +206,7 @@ void TimingPoint::divideValue    (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void TimingPoint::addValue       (const double rhsDouble, bool limitFlag)
+void TimingPoint::addValue(const double rhsDouble, bool limitFlag)
 {
     setValue(getValue() + rhsDouble);
     if (limitFlag)
@@ -203,7 +214,7 @@ void TimingPoint::addValue       (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void TimingPoint::subtractValue  (const double rhsDouble, bool limitFlag)
+void TimingPoint::subtractValue(const double rhsDouble, bool limitFlag)
 {
     setValue(getValue() - rhsDouble);
     if (limitFlag)
@@ -212,7 +223,7 @@ void TimingPoint::subtractValue  (const double rhsDouble, bool limitFlag)
     }
 }
 
-void TimingPoint::multiplyOffset (const double rhsDouble, bool limitFlag)
+void TimingPoint::multiplyOffset(const double rhsDouble, bool limitFlag)
 {
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -220,9 +231,12 @@ void TimingPoint::multiplyOffset (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void TimingPoint::divideOffset   (const double rhsDouble, bool limitFlag)
+void TimingPoint::divideOffset(const double rhsDouble, bool limitFlag)
 {
-    amberCommon::assertDivByZero(rhsDouble);
+    if (rhsDouble == 0)
+    {
+        AExc(AExc::DIVIDE_BY_ZERO);
+    }
 
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -230,7 +244,7 @@ void TimingPoint::divideOffset   (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void TimingPoint::addOffset      (const double rhsDouble, bool limitFlag)
+void TimingPoint::addOffset(const double rhsDouble, bool limitFlag)
 {
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -238,7 +252,7 @@ void TimingPoint::addOffset      (const double rhsDouble, bool limitFlag)
         limitValues();
     }
 }
-void TimingPoint::subtractOffset (const double rhsDouble, bool limitFlag)
+void TimingPoint::subtractOffset(const double rhsDouble, bool limitFlag)
 {
     setOffset(getOffset() * rhsDouble);
     if (limitFlag)
@@ -253,12 +267,14 @@ void TimingPoint::limitValues(double maxSV, double minSV, double maxBPM, double 
     // Make sure min < max
     if ((maxSV != 0 && minSV != 0) && (minSV > maxSV))
     {
-        throw amberException(QString(__FUNCTION__) + "minSV > maxSV: " + minSV + " > " + maxSV);
+        AExc(
+            AExc::GENERAL_ERROR, QString(__FUNCTION__) + "minSV > maxSV: " + minSV + " > " + maxSV);
     }
 
     if ((maxBPM != 0 && minBPM != 0) && (minBPM > maxBPM))
     {
-        throw amberException(QString(__FUNCTION__) + "minBPM > maxBPM: " + minBPM + " > " + maxBPM);
+        AExc(AExc::GENERAL_ERROR,
+            QString(__FUNCTION__) + "minBPM > maxBPM: " + minBPM + " > " + maxBPM);
     }
 
     // If any value is exactly 0, we take it that the user doesn't want to limit it.
@@ -273,8 +289,9 @@ void TimingPoint::limitValues(double maxSV, double minSV, double maxBPM, double 
         {
             setValue(maxBPM);
         }
-    } else
-    { //isSV
+    }
+    else
+    { // isSV
         // BOUND 0.1 ~ 10.0
         if ((minSV != 0) && getValue() < minSV)
         {
@@ -298,6 +315,3 @@ void TimingPoint::limitOffset(double minOffset, double maxOffset)
         setOffset(minOffset);
     }
 }
-
-
-

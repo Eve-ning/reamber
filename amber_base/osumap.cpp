@@ -30,7 +30,7 @@ osuMap::osuMap()
     sliderTick       = 1                   ;
     bgFileName       = "bg.jpg"            ;
     hitObjectList        = HitObjectList()        ;
-    curTimingPointList        = TimingPointList()        ;
+    timingPointList        = TimingPointList()        ;
 }
 
 // LOADERS
@@ -55,8 +55,11 @@ void osuMap::loadMap(QFileInfo newMapPath)
     }
     else
     {
-        throw amberException("Map cannot be opened.\n");
-        throw amberException(QString("Map Path: ") + newMapFile.fileName());
+         AExc(AExc::MAP_LOADFAIL,
+              QString("Map cannot be opened.\n"
+                      "Map Path: " + newMapFile.fileName()));
+         newMapFile.close();
+         return;
     }
 
     newMapFile.close();
@@ -72,32 +75,32 @@ void osuMap::loadMap(QStringList newMapStringList)
 
     // We use the default value if there is nothing in the QString from QStringList
 
-    audioFileName    = "audio.mp3"         ;
-    specialStyle     = false               ;
-    widescreen       = false               ;
-    distanceSpacing  = 1.0                 ;
-    beatDivisor      = 4                   ;
-    gridSize         = 4                   ;
-    timelineZoom     = 1.0                 ;
-    title            = "unknownTitle"      ;
-    unicodeTitle     = "unknownUTitle"     ;
-    artist           = "unknownArtist"     ;
-    unicodeArtist    = "unknownUArtist"    ;
-    creator          = "unknownCreator"    ;
-    difficultyName   = "unknownDifficulty" ;
-    source           = ""                  ;
-    tags             = QStringList("")     ;
-    beatmapID        = 0                   ;
-    beatmapSetID     = -1                  ;
-    HP               = 5                   ;
-    CS               = 5                   ;
-    OD               = 5                   ;
-    AR               = 5                   ;
-    sliderMult       = 1.0                 ;
-    sliderTick       = 1                   ;
-    bgFileName       = "bg.jpg"            ;
-    hitObjectList        = HitObjectList()        ;
-    curTimingPointList        = TimingPointList()        ;
+    audioFileName      = "audio.mp3"         ;
+    specialStyle       = false               ;
+    widescreen         = false               ;
+    distanceSpacing    = 1.0                 ;
+    beatDivisor        = 4                   ;
+    gridSize           = 4                   ;
+    timelineZoom       = 1.0                 ;
+    title              = "unknownTitle"      ;
+    unicodeTitle       = "unknownUTitle"     ;
+    artist             = "unknownArtist"     ;
+    unicodeArtist      = "unknownUArtist"    ;
+    creator            = "unknownCreator"    ;
+    difficultyName     = "unknownDifficulty" ;
+    source             = ""                  ;
+    tags               = QStringList("")     ;
+    beatmapID          = 0                   ;
+    beatmapSetID       = -1                  ;
+    HP                 = 5                   ;
+    CS                 = 5                   ;
+    OD                 = 5                   ;
+    AR                 = 5                   ;
+    sliderMult         = 1.0                 ;
+    sliderTick         = 1                   ;
+    bgFileName         = "bg.jpg"            ;
+    hitObjectList      = HitObjectList()     ;
+    timingPointList = TimingPointList()   ;
 
 
     if (indexMapStringList[0]  != -1) { audioFileName
@@ -300,7 +303,7 @@ void osuMap::loadMap(QStringList newMapStringList)
         for (int temp = startOM_TPIndex; temp <= endOM_TPIndex; temp ++)
         {
             if (newMapStringList[temp].simplified() != ""){
-                curTimingPointList.append(TimingPoint(newMapStringList[temp]));
+                timingPointList.append(TimingPoint(newMapStringList[temp]));
             }
         }
 
@@ -404,7 +407,7 @@ void osuMap::getInfo() const
     qDebug() << "BGFILENAME       : " << bgFileName                      ;
     qDebug() << "VIDEOFILENAME    : " << videoFileName                   ;
     qDebug() << "BreakPList <SIZE>: " << breakPList.getSize()            ;
-    qDebug() << "OM_TPLIST  <SIZE>: " << curTimingPointList.getSize()             ;
+    qDebug() << "OM_TPLIST  <SIZE>: " << timingPointList.getSize()             ;
     qDebug() << "OM_HOLIST  <SIZE>: " << hitObjectList.getSize()             ;
 }
 
@@ -414,7 +417,8 @@ void osuMap::copyAudioFileTo(QFileInfo copyLocation)
 
     if (!oldLocation.copy(copyLocation.filePath()))
     {
-        throw amberException("Copy Failed.");
+         AExc(AExc::FILE_COPY_FAIL, "Fail to copy audio file");
+         return;
     }
 }
 void osuMap::copyOsuFileTo(QFileInfo copyLocation)
@@ -423,7 +427,8 @@ void osuMap::copyOsuFileTo(QFileInfo copyLocation)
 
     if (oldLocation.copy(copyLocation.filePath()))
     {
-        throw amberException("Copy Failed.");
+         AExc(AExc::FILE_COPY_FAIL, "Fail to copy .osu file");
+         return;
     }
 }
 void osuMap::copyBGFileTo(QFileInfo copyLocation)
@@ -432,7 +437,8 @@ void osuMap::copyBGFileTo(QFileInfo copyLocation)
 
     if (oldLocation.copy(copyLocation.filePath()))
     {
-        throw amberException("Copy Failed.");
+         AExc(AExc::FILE_COPY_FAIL, "Fail to copy background file");
+         return;
     }
 }
 void osuMap::copyAllTo(QFileInfo copyLocation)

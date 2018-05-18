@@ -30,31 +30,32 @@ public:
     void loadTPList(QStringList    &str);
 
     // SETTERS
-    void setOffsetList(QList<double> newOffsetList);
-    void setCodeList  (QList<double> newCodeList);
-    void setValueList (QList<double> newValueList);
+    void setOffsetList(QList<double> offsetList_);
+    void setCodeList  (QList<double> codeList_);
+    void setValueList (QList<double> valueList_);
 
-    omInfo getInfo();
+    // Gets Info of set
+    Info getInfo();
 
     // GETTERS
-    QList<double> getOffsetList    (const omInfo &info = omInfo(true)) const;
-    QList<double> getCodeList      (const omInfo &info = omInfo(true)) const;
-    QList<double> getValueList     (const omInfo &info = omInfo(true)) const;
-    QList<double> getLengthList    (const omInfo &info = omInfo(true)) const;
-    QList<double> getDistanceList  (const omInfo &info = omInfo(true)) const;
-    QList<double> getUnqOffsetList (const omInfo &info = omInfo(true)) const;
+    QList<double> getOffsetList    (const Info &info = Info(true)) const;
+    QList<double> getCodeList      (const Info &info = Info(true)) const;
+    QList<double> getValueList     (const Info &info = Info(true)) const;
+    QList<double> getLengthList    (const Info &info = Info(true)) const;
+    QList<double> getDistanceList  (const Info &info = Info(true)) const;
+    QList<double> getUnqOffsetList (const Info &info = Info(true)) const;
 
-    TimingPointList splitByType (const omInfo &info) const;
+    TimingPointList splitByType (const Info &info) const; // Splits the whole set by ISBPM Value
 
     double getMinOffset  () const;
     double getMaxOffset  () const;
-    double getMinValue   (const omInfo &info) const;
-    double getMaxValue   (const omInfo &info) const;
+    double getMinValue   (const Info &info) const;
+    double getMaxValue   (const Info &info) const;
     double getLength     () const;
     double getLength     (int index);
-    int    getSize       (const omInfo &info = omInfo(true)) const;
-    double getAverage    (const omInfo &info) const;
-    double getDistance   (const omInfo &info) const;
+    int    getSize       (const Info &info = Info(true)) const;
+    double getAverage    (const Info &info) const;
+    double getDistance   (const Info &info) const;
     double getDistance   (int index);
     bool   getLoadFail   () const { return loadFail; }
     QStringList toString () const;
@@ -78,34 +79,36 @@ public:
     void addOffset      (const double rhsDouble, bool limitFlag = false);
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
-    void zero    ();
+    void zero(); // Shifts the whole set such that the first TimingPoint is 0.0ms
 
     // SORTING
     void sortOffset (const bool isAscending = true);
 
     // MISC
-    void append     (TimingPoint newTimingPoint) { curTimingPointList.append(newTimingPoint); }
-    void append     (TimingPointList newTimingPointList);
-    void deleteIndex(unsigned  index) { curTimingPointList.removeAt(index); }
+    void append     (TimingPoint timingPoint_) { timingPointList.append(timingPoint_); }
+    void append     (TimingPointList timingPointList_);
+    void deleteIndex(unsigned index) { timingPointList.removeAt(index); }
     bool isEmpty    () const;
 
     // LIMITS VALUES DEPENDING ON THEIR ISBPM VALUE
-    void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001); // ADD CUSTOM LIMITS
-    void limitOffset(double minOffset = 0, double maxOffset = 360000);
+    void limitValues(double maxSV = TimingPoint::MAXIMUM_SV,
+                     double minSV = TimingPoint::MINIMUM_SV,
+                     double maxBPM = TimingPoint::MAXIMUM_BPM,
+                     double minBPM = TimingPoint::MINIMUM_BPM);
+    void limitOffset(double minOffset = Common::MINIMUM_OFFSET,
+                     double maxOffset = Common::MAXIMUM_OFFSET);
 
     // ADJUSTS A TP SO THAT THE AVERAGE IS MET
-    void adjustToAverage (double averageSV, int adjustIndex);
+    void adjustToAverage(double averageSV, int adjustIndex);
 
     // REMOVES TP THAT HAVE SIMILAR OFFSET
-    void makeUnique ();
+    void makeUnique();
 
-    void isUniform(omInfo &info);
-
-    QList<int> indexList(omInfo &info);
+    QList<int> indexList(Info &info); // Gets indexes of TimingPoint that match Info
 
 protected:
-    QList<TimingPoint> curTimingPointList;
-    bool          loadFail;
+    QList<TimingPoint> timingPointList;
+    bool               loadFail;
 };
 
 #endif // TimingPointLIST_H

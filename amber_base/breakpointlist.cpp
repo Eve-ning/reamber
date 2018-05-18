@@ -16,11 +16,27 @@ void BreakPointList::loadBreakPList(QList<BreakPoint> newBreakPointList)
 }
 
 BreakPoint &BreakPointList::operator [](int i) {
-    amberCommon::assertIndex(i, getSize() - 1);
+    if (i >= getSize())
+    {
+        AExc(AExc::INDEX_OUT_OF_RANGE,
+             QString("Within BreakPointList\n"
+                     "Access: %1\n"
+                     "Last i: %2"           )
+             .arg(i).arg(getSize() - 1));
+        return *(new BreakPoint());
+    }
     return curBreakPointList[i];
 }
 BreakPoint BreakPointList::operator [](int i) const {
-    amberCommon::assertIndex(i, getSize() - 1);
+    if (i >= getSize())
+    {
+        AExc(AExc::INDEX_OUT_OF_RANGE,
+             QString("Within BreakPointList\n"
+                     "Access: %1\n"
+                     "Last i: %2"           )
+             .arg(i).arg(getSize() - 1));
+        return BreakPoint();
+    }
     return curBreakPointList[i];
 }
 

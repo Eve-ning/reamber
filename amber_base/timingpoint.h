@@ -10,43 +10,43 @@ public:
 
     // CONSTRUCTORS
     TimingPoint();
-    TimingPoint(QString newString);
+    TimingPoint(QString string_);
     TimingPoint(QLineEdit *line);
-    TimingPoint(double newOffset, double newValue, bool newIsBPM);
+    TimingPoint(double offset_, double value_, bool isBPM_);
 
     operator QString() const { return toString(); }
 
     // LOADERS
     void loadTP(QString TP);
     void loadTP(QLineEdit *line);
-    void loadTP(double newOffset, double newValue, bool newIsBPM);
+    void loadTP(double offset_, double value_, bool isBPM_);
 
     // SETTERS
-    void setOffset        (double          newOffset        );
-    void setCode          (double          newCode          ){ code           = newCode          ; return; }
-    void setMetronome     (unsigned short  newMetronome     ){ metronome      = newMetronome     ; return; }
-    void setSampleSet     (unsigned short  newSampleSet     ){ sampleSet      = newSampleSet     ; return; }
-    void setSampleSetIndex(unsigned short  newSampleSetIndex){ sampleSetIndex = newSampleSetIndex; return; }
-    void setVolume        (unsigned short  newVolume        ){ volume         = newVolume        ; return; }
-    void setIsBPM         (bool            newIsBPM         ){ isBPM          = newIsBPM         ; return; }
-    void setIsSV          (bool            newIsSV          ){ isBPM          = !newIsSV         ; return; }
-    void setIsKiai        (bool            newIsKiai        ){ isKiai         = newIsKiai        ; return; }
-    void setValue         (double newValue) ;
+    void setOffset        (double offset_        );
+    void setCode          (double code_          ){ code           = code_          ; return; }
+    void setMetronome     (int    metronome_     ){ metronome      = metronome_     ; return; }
+    void setSampleSet     (int    sampleSet_     ){ sampleSet      = sampleSet_     ; return; }
+    void setSampleSetIndex(int    sampleSetIndex_){ sampleSetIndex = sampleSetIndex_; return; }
+    void setVolume        (int    volume_        ){ volume         = volume_        ; return; }
+    void setIsBPM         (bool   isBPM_         ){ isBPM          = isBPM_         ; return; }
+    void setIsSV          (bool   isSV_          ){ isBPM          = !isSV_         ; return; }
+    void setIsKiai        (bool   isKiai_        ){ isKiai         = isKiai_        ; return; }
+    void setValue         (double value_) ;
 
     // GETTERS
-    void            getInfo          () const;
-    double          getOffset        () const { return offset        ; }
-    double          getCode          () const { return code          ; }
-    unsigned short  getMetronome     () const { return metronome     ; }
-    unsigned short  getSampleSet     () const { return sampleSet     ; }
-    unsigned short  getSampleSetIndex() const { return sampleSetIndex; }
-    unsigned short  getVolume        () const { return volume        ; }
-    bool            getIsBPM         () const { return isBPM         ; }
-    bool            getIsSV          () const { return !isBPM        ; }
-    bool            getIsKiai        () const { return isKiai        ; }
-    bool            getLoadFail      () const { return loadFail; }
-    double          getValue         () const;
-    QString         toString         () const;
+    void    getInfo          () const;
+    double  getOffset        () const { return offset        ; }
+    double  getCode          () const { return code          ; }
+    int     getMetronome     () const { return metronome     ; }
+    int     getSampleSet     () const { return sampleSet     ; }
+    int     getSampleSetIndex() const { return sampleSetIndex; }
+    int     getVolume        () const { return volume        ; }
+    bool    getIsBPM         () const { return isBPM         ; }
+    bool    getIsSV          () const { return !isBPM        ; }
+    bool    getIsKiai        () const { return isKiai        ; }
+    bool    getLoadFail      () const { return loadFail; }
+    double  getValue         () const;
+    QString toString         () const;
 
     // OPERS
     bool operator <(TimingPoint *curTP) { return offset < curTP->getOffset(); }
@@ -70,19 +70,28 @@ public:
     void subtractOffset (const double rhsDouble, bool limitFlag = false);
 
     // MISC
-    void limitValues(double maxSV = 10.0, double minSV = 0.1, double maxBPM = 0, double minBPM = 0.000001);
-    void limitOffset(double minOffset = 0, double maxOffset = 360000);
+    void limitValues(double maxSV = MAXIMUM_SV,
+                     double minSV = MINIMUM_SV,
+                     double maxBPM = MAXIMUM_BPM,
+                     double minBPM = MINIMUM_BPM);
+    void limitOffset(double minOffset = Common::MINIMUM_OFFSET,
+                     double maxOffset = Common::MAXIMUM_OFFSET);
+
+    static const int MINIMUM_SV = 1;
+    static const int MAXIMUM_SV = 18;
+    static const int MINIMUM_BPM = 0;
+    static const int MAXIMUM_BPM = INT_MAX;
 
 protected:
-    double          offset        ;
-    double          code          ;
-    unsigned short  metronome     ;
-    unsigned short  sampleSet     ;
-    unsigned short  sampleSetIndex;
-    unsigned short  volume        ;
-    bool            isBPM         ;
-    bool            isKiai        ;
-    bool            loadFail      ;
+    double offset        ;
+    double code          ;
+    int    metronome     ;
+    int    sampleSet     ;
+    int    sampleSetIndex;
+    int    volume        ;
+    bool   isBPM         ;
+    bool   isKiai        ;
+    bool   loadFail      ;
 
 };
 

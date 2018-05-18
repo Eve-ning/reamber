@@ -3,8 +3,8 @@
 // CONSTRUCTORS
 BreakPoint::BreakPoint()
 {
-    startBreak = 0;
-    endBreak   = 1;
+    offset = 0;
+    length = 1;
 }
 BreakPoint::BreakPoint(QString newBreakPoint) : BreakPoint()
 {
@@ -24,8 +24,8 @@ void BreakPoint::loadBreakP(QString newBreakPoint)
         BreakPoint();
     }
 
-    startBreak = BreakPList[1].toDouble();
-    endBreak   = BreakPList[2].toDouble();
+    offset = BreakPList[1].toDouble();
+    length = BreakPList[2].toDouble() - offset;
 }
 
 // SETTERS
@@ -34,8 +34,18 @@ void BreakPoint::loadBreakP(QString newBreakPoint)
 void BreakPoint::getInfo() const
 {
     qDebug() << ("[---- Break Info ----]");
-    qDebug() << ("STARTBREAK : " + QString::number(startBreak));
-    qDebug() << ("ENDBREAK   : " + QString::number(endBreak  ));
+    qDebug() << ("STARTBREAK : " + QString::number(offset));
+    qDebug() << ("ENDBREAK   : " + QString::number(length + offset));
+}
+
+QString BreakPoint::toString() const
+{
+    QString output;
+
+    output = QString("2,") +
+             QString::number(offset) +
+             QString::number(offset + length);
+    return output;
 }
 
 // OPERS

@@ -4,8 +4,9 @@
 #include <QStringList>
 #include <QDebug>
 #include "common.h"
+#include "osuobject.h"
 
-class BreakPoint
+class BreakPoint : public osuObject
 {
 public:
     // CONSTRUCTORS
@@ -15,26 +16,22 @@ public:
     // LOADERS
     void loadBreakP(QString newBreakPoint);
 
-    // SETTERS
-    void setStartBreak(double newStartBreak){ startBreak = newStartBreak; return; }
-    void setEndBreak  (double newEndBreak  ){ endBreak   = newEndBreak  ; return; }
+    // SETTERS}
+    void setStartBreak(double startBreak){ offset = startBreak; } // Alias for setOffset
+    void setEndBreak(double endBreak){ length = endBreak - offset; }
+    void setLength  (double length_){ length = length_; }
 
     // GETTERS
     void   getInfo() const;
-    double getStartBreak() const { return startBreak; }
-    double getEndBreak  () const { return endBreak;   }
-    double getLength    () const { return endBreak - startBreak; }
+    double getStartBreak() const { return offset; } // Alias for getOffset
+    double getEndBreak  () const { return offset + length;}
+    double getLength    () const { return length; }
 
-    // OPERS
-
-    // SORTING
-
-    // MISC
+    QString toString() const;
 
 
 protected:
-    double startBreak,
-           endBreak;
+    double length;
 
 };
 

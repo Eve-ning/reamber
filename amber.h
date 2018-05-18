@@ -22,13 +22,10 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 
-//ust be defined first
-#include "statusbox.h"
-
-#include "hyperlink.h"
-
+// Must be defined first
 #include "amber_base_inc.h"
-
+#include "statusbox.h"
+#include "hyperlink.h"
 #include "aaobj.h"
 
 namespace Ui {

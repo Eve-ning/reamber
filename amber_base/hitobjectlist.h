@@ -31,10 +31,10 @@ public:
     void loadHOList (QStringList    &HOList , int newKeys = 0); // QStringList Handler
 
     // SETTERS
-    void setOffsetList(QList<double>  &newOffsetList);
-    void setXAxisList (QList<double>  &newXAxisList );
-    void setColumnList(QList<int>     &newColumnList);
-    void setKeys      (unsigned short newKeys       );
+    void setOffsetList(const QList<double>  &newOffsetList);
+    void setXAxisList (const QList<double>  &newXAxisList );
+    void setColumnList(const QList<int>     &newColumnList);
+    void setKeys      (const int &newKeys       );
 
     // GETTERS
     QList<double> getOffsetList   () const;
@@ -44,7 +44,7 @@ public:
     double        getMinOffset    () const;
     double        getMaxOffset    () const;
     double        getLength       () const;
-    double        getLength       (int index);
+    double        getLength       (const int &index);
     double        getSize         () const;
     bool          getLoadFail     () const { return loadFail; }
     QStringList   toString        () const;
@@ -54,29 +54,29 @@ public:
     HitObject & operator [](int i);
 
     // MISC
-    void addColumn      (const int rhsInt);
-    void subtractColumn (const int rhsInt);
-    void multiplyOffset (const double rhsDouble, bool limitFlag = false);
-    void divideOffset   (const double rhsDouble, bool limitFlag = false);
-    void addOffset      (const double rhsDouble, bool limitFlag = false);
-    void subtractOffset (const double rhsDouble, bool limitFlag = false);
+    void addColumn      (const int &rhsInt);
+    void subtractColumn (const int &rhsInt);
+    void multiplyOffset (const double &rhsDouble, const bool &limitFlag = false);
+    void divideOffset   (const double &rhsDouble, const bool &limitFlag = false);
+    void addOffset      (const double &rhsDouble, const bool &limitFlag = false);
+    void subtractOffset (const double &rhsDouble, const bool &limitFlag = false);
 
     void makeUnique ();
-    void append     (HitObject newOM_HO) { hitObjectList.append(newOM_HO); }
-    void deleteIndex(unsigned  index) { hitObjectList.removeAt(index); }
+    void append     (const HitObject &newOM_HO) { hitObjectList.append(newOM_HO); }
+    void deleteIndex(int &index) { hitObjectList.removeAt(index); }
     bool isEmpty    () const;
-    void sortOffset (bool isAscending = true);
-    void limitColumn (int &maxColumn, int &minColumn);
+    void sortOffset (const bool &isAscending = true);
+    void limitColumn (const int &maxColumn, const int &minColumn);
     void limitColumn ();
-    void limitOffset(double minOffset = 0, double maxOffset = 360000);
+    void limitOffset(const double &minOffset = 0, const double &maxOffset = 360000);
 
 
 private:
 
     void loadEHOList(QString &EHO, int newKeys = 0); // Accessed by loadHO
 
-    QList<HitObject>  hitObjectList;
-    bool           loadFail;
+    QList<HitObject> hitObjectList;
+    bool             loadFail;
 
 };
 

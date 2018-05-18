@@ -3,411 +3,410 @@
 // CONSTRUCTORS
 osuMapSet::osuMapSet()
 {
-
 }
 
 // LOADERS
 
 // SETTERS
-void osuMapSet::setOsuFileNameList      (QStringList                newOsuFileNameList    )
+void osuMapSet::setOsuFileNameList(QStringList newOsuFileNameList)
 {
     if (newOsuFileNameList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newOsuFileNameList    .length(); temp ++)
+    for (int temp = 0; temp < newOsuFileNameList.length(); temp++)
     {
-        OM_MapList[temp].setOsuFileName        (newOsuFileNameList    [temp]);
+        OM_MapList[temp].setOsuFileName(newOsuFileNameList[temp]);
     }
 }
-void osuMapSet::setAudioFileNameList    (QStringList                newAudioFileNameList  )
+void osuMapSet::setAudioFileNameList(QStringList newAudioFileNameList)
 {
-    if (newAudioFileNameList  .length() != OM_MapList.length())
+    if (newAudioFileNameList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newAudioFileNameList  .length(); temp ++)
+    for (int temp = 0; temp < newAudioFileNameList.length(); temp++)
     {
-        OM_MapList[temp].setAudioFileName      (newAudioFileNameList  [temp]);
+        OM_MapList[temp].setAudioFileName(newAudioFileNameList[temp]);
     }
 }
-void osuMapSet::setAudioLeadInList      (QList<int                > newAudioLeadInList    )
+void osuMapSet::setAudioLeadInList(QList<int> newAudioLeadInList)
 {
-    if (newAudioLeadInList    .length() != OM_MapList.length())
+    if (newAudioLeadInList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newAudioLeadInList    .length(); temp ++)
+    for (int temp = 0; temp < newAudioLeadInList.length(); temp++)
     {
-        OM_MapList[temp].setAudioLeadIn        (newAudioLeadInList    [temp]);
+        OM_MapList[temp].setAudioLeadIn(newAudioLeadInList[temp]);
     }
 }
-void osuMapSet::setPreviewTimeList      (QList<int                > newPreviewTimeList    )
+void osuMapSet::setPreviewTimeList(QList<int> newPreviewTimeList)
 {
-    if (newPreviewTimeList    .length() != OM_MapList.length())
+    if (newPreviewTimeList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newPreviewTimeList    .length(); temp ++)
+    for (int temp = 0; temp < newPreviewTimeList.length(); temp++)
     {
-        OM_MapList[temp].setPreviewTime        (newPreviewTimeList    [temp]);
+        OM_MapList[temp].setPreviewTime(newPreviewTimeList[temp]);
     }
 }
-void osuMapSet::setCountdownList        (QList<bool               > newCountdownList      )
+void osuMapSet::setCountdownList(QList<bool> newCountdownList)
 {
-    if (newCountdownList      .length() != OM_MapList.length())
+    if (newCountdownList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newCountdownList      .length(); temp ++)
+    for (int temp = 0; temp < newCountdownList.length(); temp++)
     {
-        OM_MapList[temp].setCountdown          (newCountdownList      [temp]);
+        OM_MapList[temp].setCountdown(newCountdownList[temp]);
     }
 }
-void osuMapSet::setSampleSetList        (QList<osuMap::cSampleSet> newSampleSetList      )
+void osuMapSet::setSampleSetList(QList<osuMap::cSampleSet> newSampleSetList)
 {
-    if (newSampleSetList      .length() != OM_MapList.length())
+    if (newSampleSetList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newSampleSetList      .length(); temp ++)
+    for (int temp = 0; temp < newSampleSetList.length(); temp++)
     {
-        OM_MapList[temp].setSampleSet          (newSampleSetList      [temp]);
+        OM_MapList[temp].setSampleSet(newSampleSetList[temp]);
     }
 }
-void osuMapSet::setStackLeniencyList    (QList<double             > newStackLeniencyList  )
+void osuMapSet::setStackLeniencyList(QList<double> newStackLeniencyList)
 {
-    if (newStackLeniencyList  .length() != OM_MapList.length())
+    if (newStackLeniencyList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newStackLeniencyList  .length(); temp ++)
+    for (int temp = 0; temp < newStackLeniencyList.length(); temp++)
     {
-        OM_MapList[temp].setStackLeniency      (newStackLeniencyList  [temp]);
+        OM_MapList[temp].setStackLeniency(newStackLeniencyList[temp]);
     }
 }
-void osuMapSet::setGameModeList         (QList<osuMap::cGameMode > newGameModeList       )
+void osuMapSet::setGameModeList(QList<osuMap::cGameMode> newGameModeList)
 {
-    if (newGameModeList       .length() != OM_MapList.length())
+    if (newGameModeList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newGameModeList       .length(); temp ++)
+    for (int temp = 0; temp < newGameModeList.length(); temp++)
     {
-        OM_MapList[temp].setGameMode           (newGameModeList       [temp]);
+        OM_MapList[temp].setGameMode(newGameModeList[temp]);
     }
 }
-void osuMapSet::setLetterboxList        (QList<bool               > newLetterboxList      )
+void osuMapSet::setLetterboxList(QList<bool> newLetterboxList)
 {
-    if (newLetterboxList      .length() != OM_MapList.length())
+    if (newLetterboxList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newLetterboxList      .length(); temp ++)
+    for (int temp = 0; temp < newLetterboxList.length(); temp++)
     {
-        OM_MapList[temp].setLetterbox          (newLetterboxList      [temp]);
+        OM_MapList[temp].setLetterbox(newLetterboxList[temp]);
     }
 }
-void osuMapSet::setSpecialStyleList     (QList<bool               > newSpecialStyleList   )
+void osuMapSet::setSpecialStyleList(QList<bool> newSpecialStyleList)
 {
-    if (newSpecialStyleList   .length() != OM_MapList.length())
+    if (newSpecialStyleList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newSpecialStyleList   .length(); temp ++)
+    for (int temp = 0; temp < newSpecialStyleList.length(); temp++)
     {
-        OM_MapList[temp].setSpecialStyle       (newSpecialStyleList   [temp]);
+        OM_MapList[temp].setSpecialStyle(newSpecialStyleList[temp]);
     }
 }
-void osuMapSet::setWidescreenList       (QList<bool               > newWidescreenList     )
+void osuMapSet::setWidescreenList(QList<bool> newWidescreenList)
 {
-    if (newWidescreenList     .length() != OM_MapList.length())
+    if (newWidescreenList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newWidescreenList     .length(); temp ++)
+    for (int temp = 0; temp < newWidescreenList.length(); temp++)
     {
-        OM_MapList[temp].setWidescreen         (newWidescreenList     [temp]);
+        OM_MapList[temp].setWidescreen(newWidescreenList[temp]);
     }
 }
-void osuMapSet::setDistanceSpacingList  (QList<double             > newDistanceSpacingList)
+void osuMapSet::setDistanceSpacingList(QList<double> newDistanceSpacingList)
 {
     if (newDistanceSpacingList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newDistanceSpacingList.length(); temp ++)
+    for (int temp = 0; temp < newDistanceSpacingList.length(); temp++)
     {
-        OM_MapList[temp].setDistanceSpacing    (newDistanceSpacingList[temp]);
-    }
-}
-void osuMapSet::setBeatDivisorList      (QList<int                > newBeatDivisorList    )
-{
-    if (newBeatDivisorList    .length() != OM_MapList.length())
-    {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
-    }
-    for (int temp = 0; temp < newBeatDivisorList    .length(); temp ++)
-    {
-        OM_MapList[temp].setBeatDivisor        (newBeatDivisorList    [temp]);
+        OM_MapList[temp].setDistanceSpacing(newDistanceSpacingList[temp]);
     }
 }
-void osuMapSet::setGridSizeList         (QList<int                > newGridSizeList       )
+void osuMapSet::setBeatDivisorList(QList<int> newBeatDivisorList)
 {
-    if (newGridSizeList       .length() != OM_MapList.length())
+    if (newBeatDivisorList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newGridSizeList       .length(); temp ++)
+    for (int temp = 0; temp < newBeatDivisorList.length(); temp++)
     {
-        OM_MapList[temp].setGridSize           (newGridSizeList       [temp]);
+        OM_MapList[temp].setBeatDivisor(newBeatDivisorList[temp]);
     }
 }
-void osuMapSet::setTimelineZoomList     (QList<double             > newTimelineZoomList   )
+void osuMapSet::setGridSizeList(QList<int> newGridSizeList)
 {
-    if (newTimelineZoomList   .length() != OM_MapList.length())
+    if (newGridSizeList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newTimelineZoomList   .length(); temp ++)
+    for (int temp = 0; temp < newGridSizeList.length(); temp++)
     {
-        OM_MapList[temp].setTimelineZoom       (newTimelineZoomList   [temp]);
+        OM_MapList[temp].setGridSize(newGridSizeList[temp]);
     }
 }
-void osuMapSet::setTitleList            (QStringList                newTitleList          )
+void osuMapSet::setTimelineZoomList(QList<double> newTimelineZoomList)
 {
-    if (newTitleList          .length() != OM_MapList.length())
+    if (newTimelineZoomList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newTitleList          .length(); temp ++)
+    for (int temp = 0; temp < newTimelineZoomList.length(); temp++)
     {
-        OM_MapList[temp].setTitle              (newTitleList          [temp]);
+        OM_MapList[temp].setTimelineZoom(newTimelineZoomList[temp]);
     }
 }
-void osuMapSet::setUnicodeTitleList     (QStringList                newUnicodeTitleList   )
+void osuMapSet::setTitleList(QStringList newTitleList)
 {
-    if (newUnicodeTitleList   .length() != OM_MapList.length())
+    if (newTitleList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newUnicodeTitleList   .length(); temp ++)
+    for (int temp = 0; temp < newTitleList.length(); temp++)
     {
-        OM_MapList[temp].setUnicodeTitle       (newUnicodeTitleList   [temp]);
+        OM_MapList[temp].setTitle(newTitleList[temp]);
     }
 }
-void osuMapSet::setArtistList           (QStringList                newArtistList         )
+void osuMapSet::setUnicodeTitleList(QStringList newUnicodeTitleList)
 {
-    if (newArtistList         .length() != OM_MapList.length())
+    if (newUnicodeTitleList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newArtistList         .length(); temp ++)
+    for (int temp = 0; temp < newUnicodeTitleList.length(); temp++)
     {
-        OM_MapList[temp].setArtist             (newArtistList         [temp]);
+        OM_MapList[temp].setUnicodeTitle(newUnicodeTitleList[temp]);
     }
 }
-void osuMapSet::setUnicodeArtistList    (QStringList                newUnicodeArtistList  )
+void osuMapSet::setArtistList(QStringList newArtistList)
 {
-    if (newUnicodeArtistList  .length() != OM_MapList.length())
+    if (newArtistList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newUnicodeArtistList  .length(); temp ++)
+    for (int temp = 0; temp < newArtistList.length(); temp++)
     {
-        OM_MapList[temp].setUnicodeArtist      (newUnicodeArtistList  [temp]);
+        OM_MapList[temp].setArtist(newArtistList[temp]);
     }
 }
-void osuMapSet::setCreatorList          (QStringList                newCreatorList        )
+void osuMapSet::setUnicodeArtistList(QStringList newUnicodeArtistList)
 {
-    if (newCreatorList        .length() != OM_MapList.length())
+    if (newUnicodeArtistList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newCreatorList        .length(); temp ++)
+    for (int temp = 0; temp < newUnicodeArtistList.length(); temp++)
     {
-        OM_MapList[temp].setCreator            (newCreatorList        [temp]);
+        OM_MapList[temp].setUnicodeArtist(newUnicodeArtistList[temp]);
     }
 }
-void osuMapSet::setDifficultyNameList   (QStringList                newDifficultyNameList )
+void osuMapSet::setCreatorList(QStringList newCreatorList)
 {
-    if (newDifficultyNameList .length() != OM_MapList.length())
+    if (newCreatorList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newDifficultyNameList .length(); temp ++)
+    for (int temp = 0; temp < newCreatorList.length(); temp++)
     {
-        OM_MapList[temp].setDifficultyName     (newDifficultyNameList [temp]);
+        OM_MapList[temp].setCreator(newCreatorList[temp]);
     }
 }
-void osuMapSet::setSourceList           (QStringList                newSourceList         )
+void osuMapSet::setDifficultyNameList(QStringList newDifficultyNameList)
 {
-    if (newSourceList         .length() != OM_MapList.length())
+    if (newDifficultyNameList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newSourceList         .length(); temp ++)
+    for (int temp = 0; temp < newDifficultyNameList.length(); temp++)
     {
-        OM_MapList[temp].setSource             (newSourceList         [temp]);
+        OM_MapList[temp].setDifficultyName(newDifficultyNameList[temp]);
     }
 }
-void osuMapSet::setTagsList             (QList<QStringList        > newTagsList           )
+void osuMapSet::setSourceList(QStringList newSourceList)
 {
-    if (newTagsList           .length() != OM_MapList.length())
+    if (newSourceList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newTagsList           .length(); temp ++)
+    for (int temp = 0; temp < newSourceList.length(); temp++)
     {
-        OM_MapList[temp].setTags               (newTagsList           [temp]);
+        OM_MapList[temp].setSource(newSourceList[temp]);
     }
 }
-void osuMapSet::setBeatmapIDList        (QList<int                > newBeatmapIDList      )
+void osuMapSet::setTagsList(QList<QStringList> newTagsList)
 {
-    if (newBeatmapIDList      .length() != OM_MapList.length())
+    if (newTagsList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newBeatmapIDList      .length(); temp ++)
+    for (int temp = 0; temp < newTagsList.length(); temp++)
     {
-        OM_MapList[temp].setBeatmapID          (newBeatmapIDList      [temp]);
+        OM_MapList[temp].setTags(newTagsList[temp]);
     }
 }
-void osuMapSet::setBeatmapSetIDList     (QList<int                > newBeatmapSetIDList   )
+void osuMapSet::setBeatmapIDList(QList<int> newBeatmapIDList)
 {
-    if (newBeatmapSetIDList   .length() != OM_MapList.length())
+    if (newBeatmapIDList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newBeatmapSetIDList   .length(); temp ++)
+    for (int temp = 0; temp < newBeatmapIDList.length(); temp++)
     {
-        OM_MapList[temp].setBeatmapSetID       (newBeatmapSetIDList   [temp]);
+        OM_MapList[temp].setBeatmapID(newBeatmapIDList[temp]);
     }
 }
-void osuMapSet::setHPList               (QList<double             > newHPList             )
+void osuMapSet::setBeatmapSetIDList(QList<int> newBeatmapSetIDList)
 {
-    if (newHPList             .length() != OM_MapList.length())
+    if (newBeatmapSetIDList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newHPList             .length(); temp ++)
+    for (int temp = 0; temp < newBeatmapSetIDList.length(); temp++)
     {
-        OM_MapList[temp].setHP                 (newHPList             [temp]);
+        OM_MapList[temp].setBeatmapSetID(newBeatmapSetIDList[temp]);
     }
 }
-void osuMapSet::setCSList               (QList<double             > newCSList             )
+void osuMapSet::setHPList(QList<double> newHPList)
 {
-    if (newCSList             .length() != OM_MapList.length())
+    if (newHPList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newCSList             .length(); temp ++)
+    for (int temp = 0; temp < newHPList.length(); temp++)
     {
-        OM_MapList[temp].setCS                 (newCSList             [temp]);
+        OM_MapList[temp].setHP(newHPList[temp]);
     }
 }
-void osuMapSet::setODList               (QList<double             > newODList             )
+void osuMapSet::setCSList(QList<double> newCSList)
 {
-    if (newODList             .length() != OM_MapList.length())
+    if (newCSList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newODList             .length(); temp ++)
+    for (int temp = 0; temp < newCSList.length(); temp++)
     {
-        OM_MapList[temp].setOD                 (newODList             [temp]);
+        OM_MapList[temp].setCS(newCSList[temp]);
     }
 }
-void osuMapSet::setARList               (QList<double             > newARList             )
+void osuMapSet::setODList(QList<double> newODList)
 {
-    if (newARList             .length() != OM_MapList.length())
+    if (newODList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newARList             .length(); temp ++)
+    for (int temp = 0; temp < newODList.length(); temp++)
     {
-        OM_MapList[temp].setAR                 (newARList             [temp]);
+        OM_MapList[temp].setOD(newODList[temp]);
     }
 }
-void osuMapSet::setSliderMultList       (QList<double             > newSliderMultList     )
+void osuMapSet::setARList(QList<double> newARList)
 {
-    if (newSliderMultList     .length() != OM_MapList.length())
+    if (newARList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newSliderMultList     .length(); temp ++)
+    for (int temp = 0; temp < newARList.length(); temp++)
     {
-        OM_MapList[temp].setSliderMult         (newSliderMultList     [temp]);
+        OM_MapList[temp].setAR(newARList[temp]);
     }
 }
-void osuMapSet::setSliderTickList       (QList<double             > newSliderTickList     )
+void osuMapSet::setSliderMultList(QList<double> newSliderMultList)
 {
-    if (newSliderTickList     .length() != OM_MapList.length())
+    if (newSliderMultList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newSliderTickList     .length(); temp ++)
+    for (int temp = 0; temp < newSliderMultList.length(); temp++)
     {
-        OM_MapList[temp].setSliderTick         (newSliderTickList     [temp]);
+        OM_MapList[temp].setSliderMult(newSliderMultList[temp]);
     }
 }
-void osuMapSet::setBGFileNameList       (QStringList                newBGFileNameList     )
+void osuMapSet::setSliderTickList(QList<double> newSliderTickList)
 {
-    if (newBGFileNameList     .length() != OM_MapList.length())
+    if (newSliderTickList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newBGFileNameList     .length(); temp ++)
+    for (int temp = 0; temp < newSliderTickList.length(); temp++)
     {
-        OM_MapList[temp].setBGFileName         (newBGFileNameList     [temp]);
+        OM_MapList[temp].setSliderTick(newSliderTickList[temp]);
     }
 }
-void osuMapSet::setVideoFileNameList    (QStringList                newVideoFileNameList  )
+void osuMapSet::setBGFileNameList(QStringList newBGFileNameList)
 {
-    if (newVideoFileNameList  .length() != OM_MapList.length())
+    if (newBGFileNameList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newVideoFileNameList  .length(); temp ++)
+    for (int temp = 0; temp < newBGFileNameList.length(); temp++)
     {
-        OM_MapList[temp].setVideoFileName      (newVideoFileNameList  [temp]);
+        OM_MapList[temp].setBGFileName(newBGFileNameList[temp]);
     }
 }
-void osuMapSet::setBreakPListList       (QList<BreakPointList     > newBreakPListList     )
+void osuMapSet::setVideoFileNameList(QStringList newVideoFileNameList)
 {
-    if (newBreakPListList     .length() != OM_MapList.length())
+    if (newVideoFileNameList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newBreakPListList     .length(); temp ++)
+    for (int temp = 0; temp < newVideoFileNameList.length(); temp++)
     {
-        OM_MapList[temp].setBreakPList             (newBreakPListList     [temp]);
+        OM_MapList[temp].setVideoFileName(newVideoFileNameList[temp]);
     }
 }
-void osuMapSet::setOM_HOListList        (QList<HitObjectList         > newOM_HOListList      )
+void osuMapSet::setBreakPListList(QList<BreakPointList> newBreakPListList)
 {
-    if (newOM_HOListList      .length() != OM_MapList.length())
+    if (newBreakPListList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newOM_HOListList      .length(); temp ++)
+    for (int temp = 0; temp < newBreakPListList.length(); temp++)
     {
-        OM_MapList[temp].setHitObjectList              (newOM_HOListList      [temp]);
+        OM_MapList[temp].setBreakPList(newBreakPListList[temp]);
     }
 }
-void osuMapSet::settimingPointListList        (QList<TimingPointList         > newtimingPointListList      )
+void osuMapSet::setOM_HOListList(QList<HitObjectList> newOM_HOListList)
 {
-    if (newtimingPointListList      .length() != OM_MapList.length())
+    if (newOM_HOListList.length() != OM_MapList.length())
     {
-        qDebug() << __FUNCTION__ << "Length Mismatch" ;
+        qDebug() << __FUNCTION__ << "Length Mismatch";
     }
-    for (int temp = 0; temp < newtimingPointListList      .length(); temp ++)
+    for (int temp = 0; temp < newOM_HOListList.length(); temp++)
     {
-        OM_MapList[temp].setTimingPointList              (newtimingPointListList      [temp]);
+        OM_MapList[temp].setHitObjectList(newOM_HOListList[temp]);
+    }
+}
+void osuMapSet::settimingPointListList(QList<TimingPointList> newtimingPointListList)
+{
+    if (newtimingPointListList.length() != OM_MapList.length())
+    {
+        qDebug() << __FUNCTION__ << "Length Mismatch";
+    }
+    for (int temp = 0; temp < newtimingPointListList.length(); temp++)
+    {
+        OM_MapList[temp].setTimingPointList(newtimingPointListList[temp]);
     }
 }
 
 // GETTERS
-QStringList               osuMapSet::getOsuFileNameList      () const
+QStringList osuMapSet::getOsuFileNameList() const
 {
     osuMap temp;
     QStringList output;
@@ -418,7 +417,7 @@ QStringList               osuMapSet::getOsuFileNameList      () const
 
     return output;
 }
-QStringList               osuMapSet::getAudioFileNameList    () const
+QStringList osuMapSet::getAudioFileNameList() const
 {
     osuMap temp;
     QStringList output;
@@ -429,7 +428,7 @@ QStringList               osuMapSet::getAudioFileNameList    () const
 
     return output;
 }
-QList<int                >osuMapSet::getAudioLeadInList      () const
+QList<int> osuMapSet::getAudioLeadInList() const
 {
     osuMap temp;
     QList<int> output;
@@ -440,7 +439,7 @@ QList<int                >osuMapSet::getAudioLeadInList      () const
 
     return output;
 }
-QList<int                >osuMapSet::getPreviewTimeList      () const
+QList<int> osuMapSet::getPreviewTimeList() const
 {
     osuMap temp;
     QList<int> output;
@@ -451,7 +450,7 @@ QList<int                >osuMapSet::getPreviewTimeList      () const
 
     return output;
 }
-QList<bool               >osuMapSet::getCountdownList        () const
+QList<bool> osuMapSet::getCountdownList() const
 {
     osuMap temp;
     QList<bool> output;
@@ -462,7 +461,7 @@ QList<bool               >osuMapSet::getCountdownList        () const
 
     return output;
 }
-QList<osuMap::cSampleSet>osuMapSet::getSampleSetList        () const
+QList<osuMap::cSampleSet> osuMapSet::getSampleSetList() const
 {
     osuMap temp;
     QList<osuMap::cSampleSet> output;
@@ -473,7 +472,7 @@ QList<osuMap::cSampleSet>osuMapSet::getSampleSetList        () const
 
     return output;
 }
-QList<double             >osuMapSet::getStackLeniencyList    () const
+QList<double> osuMapSet::getStackLeniencyList() const
 {
     osuMap temp;
     QList<double> output;
@@ -484,7 +483,7 @@ QList<double             >osuMapSet::getStackLeniencyList    () const
 
     return output;
 }
-QList<osuMap::cGameMode >osuMapSet::getGameModeList         () const
+QList<osuMap::cGameMode> osuMapSet::getGameModeList() const
 {
     osuMap temp;
     QList<osuMap::cGameMode> output;
@@ -495,7 +494,7 @@ QList<osuMap::cGameMode >osuMapSet::getGameModeList         () const
 
     return output;
 }
-QList<bool               >osuMapSet::getLetterboxList        () const
+QList<bool> osuMapSet::getLetterboxList() const
 {
     osuMap temp;
     QList<bool> output;
@@ -506,7 +505,7 @@ QList<bool               >osuMapSet::getLetterboxList        () const
 
     return output;
 }
-QList<bool               >osuMapSet::getSpecialStyleList     () const
+QList<bool> osuMapSet::getSpecialStyleList() const
 {
     osuMap temp;
     QList<bool> output;
@@ -517,7 +516,7 @@ QList<bool               >osuMapSet::getSpecialStyleList     () const
 
     return output;
 }
-QList<bool               >osuMapSet::getWidescreenList       () const
+QList<bool> osuMapSet::getWidescreenList() const
 {
     osuMap temp;
     QList<bool> output;
@@ -528,7 +527,7 @@ QList<bool               >osuMapSet::getWidescreenList       () const
 
     return output;
 }
-QList<double             >osuMapSet::getDistanceSpacingList  () const
+QList<double> osuMapSet::getDistanceSpacingList() const
 {
     osuMap temp;
     QList<double> output;
@@ -539,7 +538,7 @@ QList<double             >osuMapSet::getDistanceSpacingList  () const
 
     return output;
 }
-QList<int                >osuMapSet::getBeatDivisorList      () const
+QList<int> osuMapSet::getBeatDivisorList() const
 {
     osuMap temp;
     QList<int> output;
@@ -550,7 +549,7 @@ QList<int                >osuMapSet::getBeatDivisorList      () const
 
     return output;
 }
-QList<int                >osuMapSet::getGridSizeList         () const
+QList<int> osuMapSet::getGridSizeList() const
 {
     osuMap temp;
     QList<int> output;
@@ -561,7 +560,7 @@ QList<int                >osuMapSet::getGridSizeList         () const
 
     return output;
 }
-QList<double             >osuMapSet::getTimelineZoomList     () const
+QList<double> osuMapSet::getTimelineZoomList() const
 {
     osuMap temp;
     QList<double> output;
@@ -572,7 +571,7 @@ QList<double             >osuMapSet::getTimelineZoomList     () const
 
     return output;
 }
-QStringList               osuMapSet::getTitleList            () const
+QStringList osuMapSet::getTitleList() const
 {
     osuMap temp;
     QStringList output;
@@ -583,7 +582,7 @@ QStringList               osuMapSet::getTitleList            () const
 
     return output;
 }
-QStringList               osuMapSet::getUnicodeTitleList     () const
+QStringList osuMapSet::getUnicodeTitleList() const
 {
     osuMap temp;
     QStringList output;
@@ -594,7 +593,7 @@ QStringList               osuMapSet::getUnicodeTitleList     () const
 
     return output;
 }
-QStringList               osuMapSet::getArtistList           () const
+QStringList osuMapSet::getArtistList() const
 {
     osuMap temp;
     QStringList output;
@@ -605,7 +604,7 @@ QStringList               osuMapSet::getArtistList           () const
 
     return output;
 }
-QStringList               osuMapSet::getUnicodeArtistList    () const
+QStringList osuMapSet::getUnicodeArtistList() const
 {
     osuMap temp;
     QStringList output;
@@ -616,7 +615,7 @@ QStringList               osuMapSet::getUnicodeArtistList    () const
 
     return output;
 }
-QStringList               osuMapSet::getCreatorList          () const
+QStringList osuMapSet::getCreatorList() const
 {
     osuMap temp;
     QStringList output;
@@ -627,7 +626,7 @@ QStringList               osuMapSet::getCreatorList          () const
 
     return output;
 }
-QStringList               osuMapSet::getDifficultyNameList   () const
+QStringList osuMapSet::getDifficultyNameList() const
 {
     osuMap temp;
     QStringList output;
@@ -638,7 +637,7 @@ QStringList               osuMapSet::getDifficultyNameList   () const
 
     return output;
 }
-QStringList               osuMapSet::getSourceList           () const
+QStringList osuMapSet::getSourceList() const
 {
     osuMap temp;
     QStringList output;
@@ -649,7 +648,7 @@ QStringList               osuMapSet::getSourceList           () const
 
     return output;
 }
-QList<QStringList        >osuMapSet::getTagsList             () const
+QList<QStringList> osuMapSet::getTagsList() const
 {
     osuMap temp;
     QList<QStringList> output;
@@ -660,7 +659,7 @@ QList<QStringList        >osuMapSet::getTagsList             () const
 
     return output;
 }
-QList<int                >osuMapSet::getBeatmapIDList        () const
+QList<int> osuMapSet::getBeatmapIDList() const
 {
     osuMap temp;
     QList<int> output;
@@ -671,7 +670,7 @@ QList<int                >osuMapSet::getBeatmapIDList        () const
 
     return output;
 }
-QList<int                >osuMapSet::getBeatmapSetIDList     () const
+QList<int> osuMapSet::getBeatmapSetIDList() const
 {
     osuMap temp;
     QList<int> output;
@@ -682,7 +681,7 @@ QList<int                >osuMapSet::getBeatmapSetIDList     () const
 
     return output;
 }
-QList<double             >osuMapSet::getHPList               () const
+QList<double> osuMapSet::getHPList() const
 {
     osuMap temp;
     QList<double> output;
@@ -693,7 +692,7 @@ QList<double             >osuMapSet::getHPList               () const
 
     return output;
 }
-QList<double             >osuMapSet::getCSList               () const
+QList<double> osuMapSet::getCSList() const
 {
     osuMap temp;
     QList<double> output;
@@ -704,7 +703,7 @@ QList<double             >osuMapSet::getCSList               () const
 
     return output;
 }
-QList<double             >osuMapSet::getODList               () const
+QList<double> osuMapSet::getODList() const
 {
     osuMap temp;
     QList<double> output;
@@ -715,7 +714,7 @@ QList<double             >osuMapSet::getODList               () const
 
     return output;
 }
-QList<double             >osuMapSet::getARList               () const
+QList<double> osuMapSet::getARList() const
 {
     osuMap temp;
     QList<double> output;
@@ -726,7 +725,7 @@ QList<double             >osuMapSet::getARList               () const
 
     return output;
 }
-QList<double             >osuMapSet::getSliderMultList       () const
+QList<double> osuMapSet::getSliderMultList() const
 {
     osuMap temp;
     QList<double> output;
@@ -737,7 +736,7 @@ QList<double             >osuMapSet::getSliderMultList       () const
 
     return output;
 }
-QList<double             >osuMapSet::getSliderTickList       () const
+QList<double> osuMapSet::getSliderTickList() const
 {
     osuMap temp;
     QList<double> output;
@@ -748,7 +747,7 @@ QList<double             >osuMapSet::getSliderTickList       () const
 
     return output;
 }
-QStringList               osuMapSet::getBGFileNameList       () const
+QStringList osuMapSet::getBGFileNameList() const
 {
     osuMap temp;
     QStringList output;
@@ -759,7 +758,7 @@ QStringList               osuMapSet::getBGFileNameList       () const
 
     return output;
 }
-QStringList               osuMapSet::getVideoFileNameList    () const
+QStringList osuMapSet::getVideoFileNameList() const
 {
     osuMap temp;
     QStringList output;
@@ -770,7 +769,7 @@ QStringList               osuMapSet::getVideoFileNameList    () const
 
     return output;
 }
-QList<BreakPointList     >osuMapSet::getBreakPListList       () const
+QList<BreakPointList> osuMapSet::getBreakPListList() const
 {
     osuMap temp;
     QList<BreakPointList> output;
@@ -781,7 +780,7 @@ QList<BreakPointList     >osuMapSet::getBreakPListList       () const
 
     return output;
 }
-QList<HitObjectList         >osuMapSet::getOM_HOListList        () const
+QList<HitObjectList> osuMapSet::getOM_HOListList() const
 {
     osuMap temp;
     QList<HitObjectList> output;
@@ -792,7 +791,7 @@ QList<HitObjectList         >osuMapSet::getOM_HOListList        () const
 
     return output;
 }
-QList<TimingPointList         >osuMapSet::gettimingPointListList        () const
+QList<TimingPointList> osuMapSet::gettimingPointListList() const
 {
     osuMap temp;
     QList<TimingPointList> output;
@@ -803,5 +802,3 @@ QList<TimingPointList         >osuMapSet::gettimingPointListList        () const
 
     return output;
 }
-
-

@@ -213,12 +213,12 @@ TimingPointList AAObj::applyEffect(TimingPointList oldTPList)
     }
     case 4: // Delete SV
     {
-        newTPList = oldTPList.splitByType(omInfo(omInfo::IS_BPM));
+        newTPList = oldTPList.splitByType(Info(Info::IS_BPM));
         break;
     }
     case 5: // Delete BPM
     {
-        newTPList = oldTPList.splitByType(omInfo(omInfo::IS_SV));
+        newTPList = oldTPList.splitByType(Info(Info::IS_SV));
         break;
     }
     case 6: // Convert To SV
@@ -272,12 +272,12 @@ TimingPointList AAObj::applyEffect(TimingPointList oldTPList)
             newTPList = oldTPList;
         } else if (!ui->getChkbxState(0) && ui->getChkbxState(1)) // BPM ONLY
         {
-            newTPList = oldTPList.splitByType(omInfo(omInfo::IS_BPM));
-            tempTPList = oldTPList.splitByType(omInfo(omInfo::IS_SV));
+            newTPList = oldTPList.splitByType(Info(Info::IS_BPM));
+            tempTPList = oldTPList.splitByType(Info(Info::IS_SV));
         } else // SV ONLY
         {
-            newTPList = oldTPList.splitByType(omInfo(omInfo::IS_SV));
-            tempTPList = oldTPList.splitByType(omInfo(omInfo::IS_BPM));
+            newTPList = oldTPList.splitByType(Info(Info::IS_SV));
+            tempTPList = oldTPList.splitByType(Info(Info::IS_BPM));
         }
         newTPList.subtractValue(ui->getLineText(0).toDouble());
         newTPList.multiplyValue(-1.0);
