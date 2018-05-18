@@ -1108,8 +1108,9 @@ void TimingPointList::adjustToAverage(double averageSV, int adjustIndex)
         }
     }
 
-    timingPointList[adjustIndex].setValue(newAdjustValue);
     timingPointList[adjustIndex].limitValues();
+    timingPointList[adjustIndex].setValue(newAdjustValue);
+
 }
 
 void TimingPointList::makeUnique()

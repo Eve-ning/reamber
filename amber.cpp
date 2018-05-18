@@ -278,7 +278,7 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
 
     double maxInitSV, minInitSV,
-           averageSV, threshold;
+            averageSV, threshold;
 
     averageSV = ui->stutter_averageSVSpinBox->value();
     threshold = value;
@@ -308,11 +308,11 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
 
 
     // Where secondSV = 10.0
-    timingPointList[1].setValue(10.0    );
+    timingPointList[1].setValue(10.0);
 
 
-        timingPointList.adjustToAverage(averageSV, 0);
-        minInitSV = timingPointList[0].getValue();
+    timingPointList.adjustToAverage(averageSV, 0);
+    minInitSV = timingPointList[0].getValue();
 
     // Set Maximum and Minimum
     ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV * 100));
@@ -323,7 +323,7 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
 void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 {
     double maxInitSV, minInitSV,
-           averageSV, threshold;
+            averageSV, threshold;
 
     averageSV = arg1;
     threshold = ui->stutter_thresholdSlider->value() / 100;
@@ -361,8 +361,8 @@ void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 void amber::on_stutter_generateButton_clicked()
 {
     double threshold,
-           initSV, secondSV, averageSV,
-           endOffset;
+            initSV, secondSV, averageSV,
+            endOffset;
 
     QPlainTextEdit *inputBox;
     inputBox  = ui->stutter_inputBox;
@@ -397,7 +397,7 @@ void amber::on_stutter_generateButton_clicked()
 
         // Second SV
         timingPointList.append(TimingPoint(hitObjectList[i].getOffset()
-                                + (hitObjectList.getLength(i) * threshold), secondSV, false));
+                                           + (hitObjectList.getLength(i) * threshold), secondSV, false));
 
         //initSV append
         ui->stutter_outputBox->append(timingPointList[0].toString());
@@ -425,7 +425,7 @@ void amber::on_copier_generateButton_clicked()
         HitObjectList   hitObjectList;
 
         Info  boxInfo_1,
-              boxInfo_2;
+                boxInfo_2;
 
         boxInfo_1 = Common::whatOM_Type(ui->copier_inputBox);
         boxInfo_2 = Common::whatOM_Type(ui->copier_inputBox_2);
@@ -444,7 +444,7 @@ void amber::on_copier_generateButton_clicked()
 
         // Invalid Case: Inputs same in type
         if ((boxInfo_1.getIsHO() && boxInfo_2.getIsTP()) ||
-            (boxInfo_1.getIsTP() && boxInfo_2.getIsHO()))
+                (boxInfo_1.getIsTP() && boxInfo_2.getIsHO()))
 
         {
             STATMSG("Inputs should be different in type.");
@@ -608,13 +608,13 @@ void amber::on_TPF_generateButton_clicked()
 
     QTextBrowser *outputBox;
     QRadioButton *SVRadioButton,
-                 *BPMRadioButton;
+            *BPMRadioButton;
     QCustomPlot  *customPlot;
 
     double initialOffset, endOffset,
-           initialTP, endTP, averageTP = 0,
-           xValue,
-           offset, amplitude, frequency;
+            initialTP, endTP, averageTP = 0,
+            xValue,
+            offset, amplitude, frequency;
     int    intermediatePoints;
 
     SVRadioButton  = ui->TPF_SVRadio;
@@ -700,22 +700,22 @@ void amber::on_TPF_generateButton_clicked()
         averageTP += (yData[i] * (xData[i + 1] - xData[i])) / (endOffset - initialOffset);
     }
     STATMSG(  ("RANGE: ")
-                          + (QString::number(initialOffset))
-                          + (" ~ ")
-                          + (QString::number(endOffset)));
+              + (QString::number(initialOffset))
+              + (" ~ ")
+              + (QString::number(endOffset)));
 
     STATMSG(  "LINEAR FUNCTION: f(x) = "
-                          + QString::number((endTP - initialTP) / intermediatePoints)
-                          + "x + "
-                          + QString::number(initialTP));
+              + QString::number((endTP - initialTP) / intermediatePoints)
+              + "x + "
+              + QString::number(initialTP));
 
     STATMSG(  "SINE FUNCTION: f(x) = "
-                          + QString::number(amplitude)
-                          + " * sin[("
-                          + QString::number(frequency)
-                          + " * x + "
-                          + QString::number(offset)
-                          + ") * π]");
+              + QString::number(amplitude)
+              + " * sin[("
+              + QString::number(frequency)
+              + " * x + "
+              + QString::number(offset)
+              + ") * π]");
 
     customPlot->graph(0)->setData(xData,yData);
     customPlot->graph(0)->setPen(QPen(Qt::black));
@@ -731,12 +731,12 @@ void amber::on_TPF_generateButton_clicked()
     averageLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     averageLabel->position->setCoords(0.5, 0);
     averageLabel->setText(  "Average "
-                          + isSV ? "SV: " : "BPM: "
-                          + QString::number(averageTP));
+                            + isSV ? "SV: " : "BPM: "
+                                     + QString::number(averageTP));
     averageLabel->setFont(QFont(font().family(), 12));
 
     if (isSV)
-    {      
+    {
         customPlot->yAxis->setLabel("SV");
         customPlot->yAxis->setRange(0.0, 10.0);
     }
@@ -823,8 +823,8 @@ void amber::on_normalizer_generateButton_clicked()
     }
 
     STATMSG(  ("Normalizing to ")
-                          + (QString::number(normalizeBPM))
-                          + (" BPM"));
+              + (QString::number(normalizeBPM))
+              + (" BPM"));
 
     // Append to output
     for(int temp = 0; temp < timingPointList.getSize(); temp ++)
@@ -845,7 +845,7 @@ void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
 
 void amber::on_default_savePreferencesButton_clicked()
 {
-//
+    //
 }
 
 // --------------------------------------------------------------------------------------------------------< ADJUSTER >
@@ -906,14 +906,14 @@ void amber::on_adjuster_generateButton_clicked()
     QPlainTextEdit *inputBox;
     QTextBrowser   *outputBox;
     QDoubleSpinBox *multiplySpinBox,
-                   *zeroSpinBox,
-                   *addSpinBox;
+            *zeroSpinBox,
+            *addSpinBox;
     QSpinBox       *offsetSpinBox;
     QCheckBox      *autoZeroCheck,
-                   *invertCheck;
+            *invertCheck;
     QCustomPlot    *customPlot;
     QRadioButton   *SVRadio,
-                   *graphLineRadio;
+            *graphLineRadio;
 
     inputBox          = ui->adjuster_inputBox;
     outputBox         = ui->adjuster_outputBox;
@@ -930,13 +930,13 @@ void amber::on_adjuster_generateButton_clicked()
     TimingPointList timingPointList(inputBox->toPlainText());
 
     double initialOffset,
-           endOffset,
-           minTP,
-           maxTP,
-           averageTP = 0;
+            endOffset,
+            minTP,
+            maxTP,
+            averageTP = 0;
 
     bool isSV           = SVRadio->isChecked(),
-         isGraphLine    = graphLineRadio->isChecked();
+            isGraphLine    = graphLineRadio->isChecked();
 
     Info info;
 
@@ -1014,8 +1014,8 @@ void amber::on_adjuster_generateButton_clicked()
     averageLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     averageLabel->position->setCoords(0.5, 0);
     averageLabel->setText(  "Average "
-                          + isSV ? "SV: " : "BPM: "
-                          + QString::number(averageTP));
+                            + isSV ? "SV: " : "BPM: "
+                                     + QString::number(averageTP));
     averageLabel->setFont(QFont(font().family(), 12));
 
     customPlot->xAxis->setRange(initialOffset, endOffset);
@@ -1108,10 +1108,10 @@ void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
     QDir mapDir(mapPath);
 
     QListWidget *audioListWidget,
-                *difficultyListWidget;
+            *difficultyListWidget;
 
     QStringList audioFilter,
-                difficultyFilter;
+            difficultyFilter;
 
     audioListWidget      = ui->PS_audioFileListListWidget;
     difficultyListWidget = ui->PS_difficultyListListWidget;
@@ -1130,15 +1130,15 @@ void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
 void amber::on_PS_controlSplitButton_clicked()
 {
     QListWidget *mapListWidget,
-                *audioListWidget,
-                *difficultyListWidget;
+            *audioListWidget,
+            *difficultyListWidget;
     QLineEdit   *browseLine;
     QString     songsFolderPath,
-                mapName,
-                convName,
-                audioFolderName,
-                audioName,
-                difficultyName;
+            mapName,
+            convName,
+            audioFolderName,
+            audioName,
+            difficultyName;
 
     mapListWidget        = ui->PS_mapListListWidget;
     audioListWidget      = ui->PS_audioFileListListWidget;
@@ -1175,10 +1175,10 @@ void amber::on_PS_controlSplitButton_clicked()
 
     // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
     QDir convDir(  songsFolderPath
-                 + "/"
-                 + mapName
-                 + "/"
-                 + convName);
+                   + "/"
+                   + mapName
+                   + "/"
+                   + convName);
 
     // CREATE: CONVERTED FILES FOLDER
     if (convDir.mkpath(".") == false) // Cannot create Convert Files Dir
@@ -1188,9 +1188,9 @@ void amber::on_PS_controlSplitButton_clicked()
             STATMSG("Convert folder exists already.");
             // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
             QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
-                                                          + mapName
-                                                          + "/"
-                                                          + convName));
+                                                            + mapName
+                                                            + "/"
+                                                            + convName));
         }
         else
         {
@@ -1204,10 +1204,10 @@ void amber::on_PS_controlSplitButton_clicked()
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
         QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
-                                                      + "/"
-                                                      + mapName
-                                                      + "/"
-                                                      + convName));
+                                                        + "/"
+                                                        + mapName
+                                                        + "/"
+                                                        + convName));
     }
 
     // CREATE: AUDIO FILES FOLDER
@@ -1222,19 +1222,19 @@ void amber::on_PS_controlSplitButton_clicked()
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
         QDir audioFolderDir(  songsFolderPath
-                            + "/"
-                            + mapName
-                            + "/"
-                            + convName
-                            + "/"
-                            + audioFolderName);
+                              + "/"
+                              + mapName
+                              + "/"
+                              + convName
+                              + "/"
+                              + audioFolderName);
 
         // D:\osu!\Songs\100000 ARTIST - SONG\audio.mp3
         QFile audioCopyFile(  songsFolderPath
-                            + "/"
-                            + mapName
-                            + "/"
-                            + audioName);
+                              + "/"
+                              + mapName
+                              + "/"
+                              + audioName);
 
         // Make audio folder for each audio file
         if (audioFolderDir.mkpath(".") == false)
@@ -1250,15 +1250,15 @@ void amber::on_PS_controlSplitButton_clicked()
         // COPY: AUDIO FILES
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
         if (audioCopyFile.copy(  songsFolderPath
-                               + "/"
-                               + mapName
-                               + "/"
-                               + convName
-                               + "/"
-                               + audioFolderName
-                               + "/"
-                               + audioName)
-                               == false )
+                                 + "/"
+                                 + mapName
+                                 + "/"
+                                 + convName
+                                 + "/"
+                                 + audioFolderName
+                                 + "/"
+                                 + audioName)
+                == false )
         {
             STATMSG("Copying Failed or File already exists");
         }
@@ -1290,10 +1290,10 @@ void amber::on_PS_controlSplitButton_clicked()
         difficultyName = difficultyListWidget->item(i)->text();
 
         QFile difficultyFile(  songsFolderPath
-                             + "/"
-                             + mapName
-                             + "/"
-                             + difficultyName);
+                               + "/"
+                               + mapName
+                               + "/"
+                               + difficultyName);
 
         // READ: DIFFICULTY
         difficultyFile.open(QIODevice::ReadOnly);
@@ -1318,33 +1318,14 @@ void amber::on_PS_controlSplitButton_clicked()
 
         // D:\osu!\Songs\100000 ARTIST - SONG\difficulty.osu
         QFile difficultyCopyFile(  songsFolderPath
-                                 + "/"
-                                 + mapName
-                                 + "/"
-                                 + difficultyName);
+                                   + "/"
+                                   + mapName
+                                   + "/"
+                                   + difficultyName);
 
         // COPY: DIFFICULTY
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\difficulty.osu
         difficultyCopyFile.copy(  songsFolderPath
-                                + "/"
-                                + mapName
-                                + "/"
-                                + convName
-                                + "/"
-                                + difficultyAudioFolderName
-                                + "/"
-                                + difficultyName);
-
-        // D:\osu!\Songs\100000 ARTIST - SONG\bg.jpg
-        QFile difficultyBGCopyFile(  songsFolderPath
-                                   + "/"
-                                   + mapName
-                                   + "/"
-                                   + difficultyBGFileName);
-
-        // COPY: AUDIO
-        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
-        difficultyBGCopyFile.copy(  songsFolderPath
                                   + "/"
                                   + mapName
                                   + "/"
@@ -1352,7 +1333,26 @@ void amber::on_PS_controlSplitButton_clicked()
                                   + "/"
                                   + difficultyAudioFolderName
                                   + "/"
-                                  + difficultyBGFileName);
+                                  + difficultyName);
+
+        // D:\osu!\Songs\100000 ARTIST - SONG\bg.jpg
+        QFile difficultyBGCopyFile(  songsFolderPath
+                                     + "/"
+                                     + mapName
+                                     + "/"
+                                     + difficultyBGFileName);
+
+        // COPY: AUDIO
+        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
+        difficultyBGCopyFile.copy(  songsFolderPath
+                                    + "/"
+                                    + mapName
+                                    + "/"
+                                    + convName
+                                    + "/"
+                                    + difficultyAudioFolderName
+                                    + "/"
+                                    + difficultyBGFileName);
 
 
     }

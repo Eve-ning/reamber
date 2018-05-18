@@ -32,6 +32,7 @@ SOURCES += \
         archive/defargs.cpp \
         hyperlink.cpp \
         statusbox.cpp \
+        amber_base/info.cpp \
         amber_base/hitobject.cpp \
         amber_base/timingpoint.cpp \
         amber_base/hitobjectlist.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
         hyperlink.h \
         statusbox.h \
         amber_base_inc.h \
+        amber_base/info.h \
         amber_base/hitobject.h \
         amber_base/timingpoint.h \
         amber_base/hitobjectlist.h \
