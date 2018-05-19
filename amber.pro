@@ -44,8 +44,7 @@ SOURCES += \
         amber_base/common.cpp \
         amber_base/osuobject.cpp \
         aaobj.cpp \
-        aaform.cpp \
-    qabutton.cpp
+        aaform.cpp
 
 
 HEADERS += \

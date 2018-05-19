@@ -43,12 +43,14 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->TPF_customPlot->yAxis->setLabel("SV");
 
     //
-
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->QA_Adv, "color");
-    animation->setDuration(2000);
-    animation->setStartValue(QColor(0, 0, 0));
-    animation->setEndValue(QColor(240, 240, 240));
-    animation->start();
+    connect(ui->QA_Basic    , SIGNAL(hovered())  , ui->QA_Basic   , SLOT(animateChecked()));
+    connect(ui->QA_Basic    , SIGNAL(unhovered()), ui->QA_Basic   , SLOT(animateUnchecked()));
+    connect(ui->QA_Adv      , SIGNAL(hovered())  , ui->QA_Adv     , SLOT(animateChecked()));
+    connect(ui->QA_Adv      , SIGNAL(unhovered()), ui->QA_Adv     , SLOT(animateUnchecked()));
+    connect(ui->QA_Home     , SIGNAL(hovered())  , ui->QA_Home    , SLOT(animateChecked()));
+    connect(ui->QA_Home     , SIGNAL(unhovered()), ui->QA_Home    , SLOT(animateUnchecked()));
+    connect(ui->QA_Settings , SIGNAL(hovered())  , ui->QA_Settings, SLOT(animateChecked()));
+    connect(ui->QA_Settings , SIGNAL(unhovered()), ui->QA_Settings, SLOT(animateUnchecked()));
 
     // AA ComboBox
     AAObjList = {};

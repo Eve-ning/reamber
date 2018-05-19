@@ -7,27 +7,10 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
 
+    amber w;
 
-
-    try
-    {
-        QApplication a(argc, argv);
-
-        amber w;
-
-        w.show();
-        return a.exec();
-    }
-    catch (std::exception &e)
-    {
-        qDebug () << e.what();
-        return 1;
-    }
-    catch (...)
-    {
-        return 2;
-    }
-
-
+    w.show();
+    return a.exec();
 }
