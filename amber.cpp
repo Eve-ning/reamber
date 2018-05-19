@@ -268,7 +268,7 @@ void amber::on_toolBox_currentChanged(int index)
 // Connect Stutter Widgets
 void amber::on_stutter_initSVSlider_valueChanged(int value)
 {
-    ui->stutter_initSVLabel->setText(QString::number(value, 'f', 2));
+    ui->stutter_initSVLabel->setText(QString::number(value / 100.0, 'f', 2));
 }
 void amber::on_stutter_thresholdSlider_valueChanged(int value)
 {
@@ -294,22 +294,11 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
     // Where secondSV = 0.1
     timingPointList[1].setValue(0.1);
 
-    try
-    {
-        timingPointList.adjustToAverage(averageSV, 0);
-        maxInitSV = timingPointList[0].getValue();
-    }
-    catch (AExc &e)
-    {
-        maxInitSV = 10.0;
-
-        qDebug () << e.what();
-    }
-
+    timingPointList.adjustToAverage(averageSV, 0);
+    maxInitSV = timingPointList[0].getValue();
 
     // Where secondSV = 10.0
     timingPointList[1].setValue(10.0);
-
 
     timingPointList.adjustToAverage(averageSV, 0);
     minInitSV = timingPointList[0].getValue();
@@ -366,8 +355,8 @@ void amber::on_stutter_generateButton_clicked()
 
     QPlainTextEdit *inputBox;
     inputBox  = ui->stutter_inputBox;
-    threshold = ui->stutter_thresholdSlider->value() / 100;
-    initSV    = ui->stutter_initSVSlider->value() / 100;
+    threshold = ui->stutter_thresholdLabel->text().toDouble() / 100;
+    initSV    = ui->stutter_initSVLabel->text().toDouble();
     averageSV = ui->stutter_averageSVSpinBox->value();
     secondSV  = (averageSV - (initSV * threshold)) / (1 - threshold);
 
@@ -420,12 +409,11 @@ void amber::on_stutter_generateButton_clicked()
 // Copier Generate Button
 void amber::on_copier_generateButton_clicked()
 {
-    try {
         TimingPointList   timingPointList;
         HitObjectList   hitObjectList;
 
         Info  boxInfo_1,
-                boxInfo_2;
+              boxInfo_2;
 
         boxInfo_1 = Common::whatOM_Type(ui->copier_inputBox);
         boxInfo_2 = Common::whatOM_Type(ui->copier_inputBox_2);
@@ -443,9 +431,8 @@ void amber::on_copier_generateButton_clicked()
         }
 
         // Invalid Case: Inputs same in type
-        if ((boxInfo_1.getIsHO() && boxInfo_2.getIsTP()) ||
-                (boxInfo_1.getIsTP() && boxInfo_2.getIsHO()))
-
+        if ((boxInfo_1.getIsHO() && boxInfo_2.getIsHO()) ||
+            (boxInfo_1.getIsTP() && boxInfo_2.getIsTP()))
         {
             STATMSG("Inputs should be different in type.");
             return;
@@ -495,44 +482,41 @@ void amber::on_copier_generateButton_clicked()
         
         STATMSG("Convert Successful.");
 
-    } catch (...){
-        //Generate Error Report
-    }
 }
 
 // --------------------------------------------------------------------------------------------------------< TWO POINT FUNCTION >
 
 void amber::on_TPF_initialTPSlider_valueChanged(int value)
 {
-    ui->TPF_initialTPLabel->setText(QString::number(value, 'f', 2));
+    ui->TPF_initialTPLabel->setText(QString::number(value / 100.0, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_endTPSlider_valueChanged(int value)
 {
-    ui->TPF_endTPLabel->setText(QString::number(value, 'f', 2));
+    ui->TPF_endTPLabel->setText(QString::number(value/ 100.0, 'f', 2));
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_offsetSlider_valueChanged(int value)
 {
-    ui->TPF_offsetLabel->setText(QString::number(value, 'f', 2));
+    ui->TPF_offsetLabel->setText(QString::number(value) + "ms");
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_frequencySlider_valueChanged(int value)
 {
-    ui->TPF_frequencyLabel->setText(QString::number(value, 'f', 2));
+    ui->TPF_frequencyLabel->setText(QString::number(value) + "%");
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
 }
 void amber::on_TPF_amplitudeSlider_valueChanged(int value)
 {
-    ui->TPF_amplitudeLabel->setText(QString::number(value, 'f', 2));
+    ui->TPF_amplitudeLabel->setText(QString::number(value) + "%");
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
@@ -565,6 +549,11 @@ void amber::on_TPF_defaultButton_clicked()
         ui->TPF_endTPSlider        ->setMinimum(10);
         ui->TPF_endTPSlider        ->setValue(100);
 
+        ui->TPF_amplitudeSlider->setValue(0);
+        ui->TPF_offsetSlider->setValue(0);
+        ui->TPF_frequencySlider->setValue(0);
+        ui->TPF_intermediateSpinBox->setValue(100);
+
         ui->TPF_initialTPGroup     ->setTitle("Initial SV:");
         ui->TPF_endTPGroup         ->setTitle("End SV:");
     }
@@ -576,6 +565,11 @@ void amber::on_TPF_defaultButton_clicked()
         ui->TPF_endTPSlider        ->setMaximum(500000);
         ui->TPF_endTPSlider        ->setMinimum(100);
         ui->TPF_endTPSlider        ->setValue(100);
+
+        ui->TPF_amplitudeSlider->setValue(0);
+        ui->TPF_offsetSlider->setValue(0);
+        ui->TPF_frequencySlider->setValue(0);
+        ui->TPF_intermediateSpinBox->setValue(100);
 
         ui->TPF_initialTPGroup     ->setTitle("Initial BPM:");
         ui->TPF_endTPGroup         ->setTitle("End BPM:");
@@ -680,12 +674,12 @@ void amber::on_TPF_generateButton_clicked()
 
         if (isSV)
         {
-            OM_TP.setIsBPM(false);
+            OM_TP.setIsBPM(false, false);
             outputBox->append(OM_TP.toString());
         }
         else if (isBPM)
         {
-            OM_TP.setIsBPM(true);
+            OM_TP.setIsBPM(true, false);
             outputBox->append(OM_TP.toString());
         }
         else
@@ -785,8 +779,7 @@ void amber::on_normalizer_generateButton_clicked()
     }
 
     // We reassign timingPointList to have only BPM Inputs
-    Info info;
-    info.setIsBPM(true);
+    Info info(Info::IS_BPM);
     timingPointList = timingPointList.splitByType(info);
 
     if (timingPointList.isEmpty()){
@@ -822,14 +815,25 @@ void amber::on_normalizer_generateButton_clicked()
         return;
     }
 
-    STATMSG(  ("Normalizing to ")
-              + (QString::number(normalizeBPM))
-              + (" BPM"));
+    STATMSG(("Normalizing to ")
+            + (QString::number(normalizeBPM))
+            + (" BPM"));
 
     // Append to output
-    for(int temp = 0; temp < timingPointList.getSize(); temp ++)
+    for (int temp = 0; temp < timingPointList.getSize(); temp ++)
     {
-        timingPointList[temp].setValue( -100 / (normalizeBPM / timingPointList[temp].getValue()));
+
+        timingPointList[temp].setValue((normalizeBPM / timingPointList[temp].getValue()));
+        timingPointList[temp].setIsSV(true, false);
+//        520.612,1175.85,4,1,1,5,1,0
+//        912.562,1242.27,4,1,1,5,1,0
+//        1223.13,1182.53,4,1,1,5,1,0
+//        1715.85,797.006,4,1,1,5,1,0
+//        1981.52,815.306,4,1,1,5,1,0
+//        2525.06,1562.41,4,1,1,5,1,0
+//        3924.71,1069.93,4,1,1,5,1,0
+//        3991.58,2065.3,4,1,1,5,1,0
+
         outputBox->append(timingPointList[temp].toString());
     }
 
@@ -935,40 +939,39 @@ void amber::on_adjuster_generateButton_clicked()
             maxTP,
             averageTP = 0;
 
-    bool isSV           = SVRadio->isChecked(),
-            isGraphLine    = graphLineRadio->isChecked();
+    bool isSV        = SVRadio->isChecked(),
+         isGraphLine = graphLineRadio->isChecked();
 
-    Info info;
-
-    if (isSV)
-    {
-        info.setIsSV(true);
-        info.setIsBPM(false);
-    }
-    else
-    {
-        info.setIsSV(false);
-        info.setIsBPM(true);
-    }
+    Info info(isSV ? Info::IS_SV : Info::IS_BPM);
 
     // We trim the timingPointList according to selection
     timingPointList = timingPointList.splitByType(info);
 
-    // Adjust Value
-    timingPointList.subtractValue(zeroSpinBox->value()); //Zero +
+    // Return if type is empty
+    if (timingPointList.isEmpty()){
+        STATMSG(QString(isSV ? "<SV>" : "<BPM>") + "Selected Type is empty");
+        return;
+    }
 
+    // ZERO -
+    timingPointList.subtractValue(zeroSpinBox->value());
+
+    // INVERT
     if (invertCheck->isChecked())
     {
         timingPointList.multiplyValue(-1);
     }
 
-    // CALCULATIONS
+    // MULTIPLY
     timingPointList.multiplyValue(multiplySpinBox->value());
+
+    // ADD
     timingPointList.addValue(addSpinBox->value());
 
-    timingPointList.addValue(zeroSpinBox->value()); //Zero -
+    // ZERO +
+    timingPointList.addValue(zeroSpinBox->value());
 
-    // Adjust Offset
+    // OFFSET
     timingPointList.addOffset(offsetSpinBox->value());
 
     // Limit Values << NOT WORKING FOR SOME REASON !! see debug log >>
@@ -997,7 +1000,6 @@ void amber::on_adjuster_generateButton_clicked()
         zeroSpinBox->setValue(averageTP);
     }
 
-
     // Generates Graph
     customPlot->clearItems();
     QCPItemText *averageLabel = new QCPItemText(customPlot);
@@ -1013,9 +1015,9 @@ void amber::on_adjuster_generateButton_clicked()
     averageLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
     averageLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     averageLabel->position->setCoords(0.5, 0);
-    averageLabel->setText(  "Average "
-                            + isSV ? "SV: " : "BPM: "
-                                     + QString::number(averageTP));
+    averageLabel->setText(QString("Average ")
+                          + (isSV ? "SV: " : "BPM: ")
+                          + QString::number(averageTP, 'f', 2));
     averageLabel->setFont(QFont(font().family(), 12));
 
     customPlot->xAxis->setRange(initialOffset, endOffset);
@@ -1101,7 +1103,6 @@ void amber::on_PS_browseButton_clicked()
     mapListWidget->clear();
     mapListWidget->addItems(fileDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs));
 }
-
 void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
 {
     QString mapPath = ui->PS_browseLine->text() + "/" + item->text();
@@ -1126,7 +1127,6 @@ void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
     difficultyListWidget->clear();
     difficultyListWidget->addItems(mapDir.entryList(difficultyFilter, QDir::NoDotAndDotDot | QDir::Files));
 }
-
 void amber::on_PS_controlSplitButton_clicked()
 {
     QListWidget *mapListWidget,
@@ -1357,7 +1357,6 @@ void amber::on_PS_controlSplitButton_clicked()
 
     }
 }
-
 void amber::on_PS_controlOpenFolderButton_clicked()
 {
     QString songsFolderPath,

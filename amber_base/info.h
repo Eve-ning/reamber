@@ -52,11 +52,15 @@ public:
 private:
 
     bool
-    isHO, isTP, isEHO,
-    isSV, isBPM,
-    isNN, isLN,
-    loadFail; // Failed to load completely
-    QString failMsg;
+    isHO = false,
+    isTP = false,
+    isEHO = false,
+    isSV = false,
+    isBPM = false,
+    isNN = false,
+    isLN = false,
+    loadFail = false; // Failed to load completely
+    QString failMsg = "";
 };
 
 

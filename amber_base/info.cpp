@@ -77,14 +77,46 @@ void Info::appendCondition(int newCondition)
 }
 void Info::setCondition(int newCondition)
 {
-    if ((newCondition & IS_HO   ) == IS_HO   ) { setIsHO    (true); } else { setIsHO    (false); }
-    if ((newCondition & IS_TP   ) == IS_TP   ) { setIsTP    (true); } else { setIsTP    (false); }
-    if ((newCondition & IS_EHO  ) == IS_EHO  ) { setIsEHO   (true); } else { setIsEHO   (false); }
-    if ((newCondition & IS_SV   ) == IS_SV   ) { setIsSV    (true); } else { setIsSV    (false); }
-    if ((newCondition & IS_BPM  ) == IS_BPM  ) { setIsBPM   (true); } else { setIsBPM   (false); }
-    if ((newCondition & IS_NN   ) == IS_NN   ) { setIsNN    (true); } else { setIsNN    (false); }
-    if ((newCondition & IS_LN   ) == IS_LN   ) { setIsLN    (true); } else { setIsLN    (false); }
-    if ((newCondition & LOADFAIL) == LOADFAIL) { setLoadFail(true); } else { setLoadFail(false); }
+    if ((newCondition & IS_HO) == IS_HO) {
+      setIsHO(true);
+    } else {
+      setIsHO(false);
+    }
+    if ((newCondition & IS_TP) == IS_TP) {
+      setIsTP(true);
+    } else {
+      setIsTP(false);
+    }
+    if ((newCondition & IS_EHO) == IS_EHO) {
+      setIsEHO(true);
+    } else {
+      setIsEHO(false);
+    }
+    if ((newCondition & IS_SV) == IS_SV) {
+      setIsSV(true);
+    } else {
+      setIsSV(false);
+    }
+    if ((newCondition & IS_BPM) == IS_BPM) {
+      setIsBPM(true);
+    } else {
+      setIsBPM(false);
+    }
+    if ((newCondition & IS_NN) == IS_NN) {
+      setIsNN(true);
+    } else {
+      setIsNN(false);
+    }
+    if ((newCondition & IS_LN) == IS_LN) {
+      setIsLN(true);
+    } else {
+      setIsLN(false);
+    }
+    if ((newCondition & LOADFAIL) == LOADFAIL) {
+      setLoadFail(true);
+    } else {
+      setLoadFail(false);
+    }
 }
 
 void Info::setIsHO(bool value)

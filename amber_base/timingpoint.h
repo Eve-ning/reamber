@@ -28,8 +28,8 @@ public:
     void setSampleSet     (int    sampleSet_     ){ sampleSet      = sampleSet_     ; return; }
     void setSampleSetIndex(int    sampleSetIndex_){ sampleSetIndex = sampleSetIndex_; return; }
     void setVolume        (int    volume_        ){ volume         = volume_        ; return; }
-    void setIsBPM         (bool   isBPM_         ){ isBPM          = isBPM_         ; return; }
-    void setIsSV          (bool   isSV_          ){ isBPM          = !isSV_         ; return; }
+    void setIsBPM         (bool isBPM_, bool force);
+    void setIsSV          (bool isSV_,  bool force);
     void setIsKiai        (bool   isKiai_        ){ isKiai         = isKiai_        ; return; }
     void setValue         (double value_) ;
 
@@ -77,10 +77,12 @@ public:
     void limitOffset(double minOffset = Common::MINIMUM_OFFSET,
                      double maxOffset = Common::MAXIMUM_OFFSET);
 
-    static const int MINIMUM_SV = 1;
-    static const int MAXIMUM_SV = 18;
-    static const int MINIMUM_BPM = 0;
-    static const int MAXIMUM_BPM = INT_MAX;
+    static constexpr double MINIMUM_SV = 0.1;
+    static constexpr double MAXIMUM_SV = 10.0;
+    static constexpr double MINIMUM_BPM = 0;
+    static constexpr double MAXIMUM_BPM = 100000000;
+    static constexpr double SV_CONV = -100.0;
+    static constexpr double BPM_CONV = 60000.0;
 
 protected:
     double offset        ;

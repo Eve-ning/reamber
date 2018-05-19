@@ -89,6 +89,52 @@ void TimingPoint::setOffset(double offset_)
     offset = offset_;
 }
 
+void TimingPoint::setIsBPM(bool isBPM_, bool force)
+{
+    double value_;
+    if (!force)
+    {
+        // Case: SV -> BPM
+        if (!isBPM && isBPM_) {
+            value_ = getValue();
+            code = BPM_CONV / value_;
+        }
+        // Case: BPM -> SV
+        else if (isBPM && !isBPM_) {
+            value_ = getValue();
+            code = SV_CONV / value_;
+        }
+        // Case: Same Type
+        else {
+        }
+    }
+
+    isBPM = isBPM_;
+}
+
+void TimingPoint::setIsSV(bool isSV_, bool force)
+{
+    double value_;
+    if (!force)
+    {
+        // Case: SV -> BPM
+        if (!isBPM && !isSV_) {
+            value_ = getValue();
+            code = BPM_CONV / value_;
+        }
+        // Case: BPM -> SV
+        else if (isBPM && isSV_) {
+            value_ = getValue();
+            code = SV_CONV / value_;
+        }
+        // Case: Same Type
+        else {
+        }
+    }
+
+    isBPM = !isSV_;
+}
+
 // SETTERS
 void TimingPoint::setValue(double value_)
 {
@@ -101,11 +147,11 @@ void TimingPoint::setValue(double value_)
     // This will indirectly set code instead
     if (isBPM)
     {
-        code = 60000 / value_;
+        code = BPM_CONV / value_;
     }
     else
     {
-        code = -100 / value_;
+        code = SV_CONV / value_;
     }
     return;
 }
@@ -130,11 +176,11 @@ double TimingPoint::getValue() const
     double output;
     if (isBPM)
     {
-        output = 60000 / code;
+        output = BPM_CONV / code;
     }
     else
     {
-        output = -100 / code;
+        output = SV_CONV / code;
     }
     return output;
 }

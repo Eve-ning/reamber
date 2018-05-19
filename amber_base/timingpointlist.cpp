@@ -137,16 +137,16 @@ QList<double> TimingPointList::getOffsetList(const Info& info) const
     Common::assertEmpty(toString(), __FUNCTION__);
     Common::assertLoadFail(info);
 
-    TimingPoint TimingPoint;
+    TimingPoint timingPoint;
     QList<double> output;
-    foreach (TimingPoint, timingPointList)
+    foreach (timingPoint, timingPointList)
     {
         if (((info.getIsBPM())
-                && TimingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
+                && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
             || ((info.getIsSV())
-                   && TimingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
+                   && timingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
-            output.append(TimingPoint.getOffset());
+            output.append(timingPoint.getOffset());
         }
     }
 
@@ -157,16 +157,16 @@ QList<double> TimingPointList::getCodeList(const Info& info) const
     Common::assertEmpty(toString(), __FUNCTION__);
     Common::assertLoadFail(info);
 
-    TimingPoint TimingPoint;
+    TimingPoint timingPoint;
     QList<double> output;
-    foreach (TimingPoint, timingPointList)
+    foreach (timingPoint, timingPointList)
     {
         if (((info.getIsBPM())
-                && TimingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
+                && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
             || ((info.getIsSV())
-                   && TimingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
+                   && timingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
-            output.append(TimingPoint.getCode());
+            output.append(timingPoint.getCode());
         }
     }
 
@@ -177,16 +177,16 @@ QList<double> TimingPointList::getValueList(const Info& info) const
     Common::assertEmpty(toString(), __FUNCTION__);
     Common::assertLoadFail(info);
 
-    TimingPoint TimingPoint;
+    TimingPoint timingPoint;
     QList<double> output;
-    foreach (TimingPoint, timingPointList)
+    foreach (timingPoint, timingPointList)
     {
         if (((info.getIsBPM())
-                && TimingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
+                && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
             || ((info.getIsSV())
-                   && TimingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
+                   && timingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
-            output.append(TimingPoint.getValue());
+            output.append(timingPoint.getValue());
         }
     }
 
@@ -266,7 +266,7 @@ TimingPointList TimingPointList::splitByType(const Info& info) const
     {
         for (int temp = 0; temp < timingPointList.length(); temp++)
         {
-            if (!timingPointList[temp].getIsSV())
+            if (timingPointList[temp].getIsSV())
             {
                 output.append(timingPointList[temp]);
             }
@@ -1093,23 +1093,22 @@ void TimingPointList::adjustToAverage(double averageSV, int adjustIndex)
                                                .arg(newAdjustValue)
                                                .arg(TimingPoint::MINIMUM_SV)
                                                .arg(TimingPoint::MAXIMUM_SV));
-            return;
         }
     }
     else if (getInfo().getIsBPM())
     {
         if (newAdjustValue < TimingPoint::MINIMUM_BPM)
         {
-            AExc(AExc::VALUE_OUT_OF_RANGE, QString("SV %1 is out of range: [%2 - %3]")
+            AExc(AExc::VALUE_OUT_OF_RANGE, QString("BPM %1 is out of range: [%2 - %3]")
                                                .arg(newAdjustValue)
                                                .arg(TimingPoint::MINIMUM_SV)
                                                .arg(TimingPoint::MAXIMUM_SV));
-            return;
         }
     }
 
-    timingPointList[adjustIndex].limitValues();
+
     timingPointList[adjustIndex].setValue(newAdjustValue);
+    timingPointList[adjustIndex].limitValues();
 
 }
 
