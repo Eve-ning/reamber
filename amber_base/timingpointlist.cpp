@@ -410,14 +410,14 @@ double TimingPointList::getAverage(const Info& info) const
     QList<double> TPList;
     double TPeach;
 
-    TPList = getValueList(info);
+    TPList = getDistanceList(info);
 
     foreach (TPeach, TPList)
     {
         output += TPeach;
     }
 
-    output /= TPList.count();
+    output /= getLength();
     return output;
 }
 double TimingPointList::getDistance(const Info& info) const
@@ -432,7 +432,7 @@ double TimingPointList::getDistance(const Info& info) const
     }
 
     QList<double> lengthList, valueList;
-    double distance;
+    double distance = 0;
 
     lengthList = getLengthList(info);
     valueList = getValueList(info);

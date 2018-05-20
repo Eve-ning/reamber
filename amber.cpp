@@ -42,16 +42,6 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->TPF_customPlot->xAxis->setLabel("Offset");
     ui->TPF_customPlot->yAxis->setLabel("SV");
 
-    //
-    connect(ui->QA_Basic    , SIGNAL(hovered())  , ui->QA_Basic   , SLOT(animateChecked()));
-    connect(ui->QA_Basic    , SIGNAL(unhovered()), ui->QA_Basic   , SLOT(animateUnchecked()));
-    connect(ui->QA_Adv      , SIGNAL(hovered())  , ui->QA_Adv     , SLOT(animateChecked()));
-    connect(ui->QA_Adv      , SIGNAL(unhovered()), ui->QA_Adv     , SLOT(animateUnchecked()));
-    connect(ui->QA_Home     , SIGNAL(hovered())  , ui->QA_Home    , SLOT(animateChecked()));
-    connect(ui->QA_Home     , SIGNAL(unhovered()), ui->QA_Home    , SLOT(animateUnchecked()));
-    connect(ui->QA_Settings , SIGNAL(hovered())  , ui->QA_Settings, SLOT(animateChecked()));
-    connect(ui->QA_Settings , SIGNAL(unhovered()), ui->QA_Settings, SLOT(animateUnchecked()));
-
     // AA ComboBox
     AAObjList = {};
 
@@ -196,13 +186,6 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
     QString itemString;
     itemString = item->text();
 
-    /* BASIC WIDGET LIST
-     * Stutter
-     * Copier
-     * 2PF
-     * Normalizer
-     */
-
     ui->stackedWidget->setCurrentIndex(1);
 
     if      (itemString == "Stutter")
@@ -237,6 +220,10 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
     if      (itemString == "Pack Splitter")
     {
         ui->advancedStackedWidget->setCurrentIndex(0);
+    }
+    if      (itemString == "Advanced Adjuster")
+    {
+        ui->advancedStackedWidget->setCurrentIndex(1);
     }
 }
 void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
@@ -525,6 +512,7 @@ void amber::on_TPF_amplitudeSlider_valueChanged(int value)
 }
 void amber::on_TPF_intermediateSpinBox_valueChanged(int arg1)
 {
+    Q_UNUSED(arg1)
     if (ui->TPF_liveUpdateCheck->checkState() == Qt::Checked){
         amber::on_TPF_generateButton_clicked();
     }
@@ -544,38 +532,37 @@ void amber::on_TPF_defaultButton_clicked()
 {
     if (ui->TPF_SVRadio->isChecked())
     {
-        ui->TPF_initialTPSlider    ->setMaximum(1000);
-        ui->TPF_initialTPSlider    ->setMinimum(10);
-        ui->TPF_initialTPSlider    ->setValue(100);
-        ui->TPF_endTPSlider        ->setMaximum(1000);
-        ui->TPF_endTPSlider        ->setMinimum(10);
-        ui->TPF_endTPSlider        ->setValue(100);
+        ui->TPF_initialTPSlider->setMaximum(1000);
+        ui->TPF_initialTPSlider->setMinimum(10);
+        ui->TPF_initialTPSlider->setValue(100);
+        ui->TPF_endTPSlider->setMaximum(1000);
+        ui->TPF_endTPSlider->setMinimum(10);
+        ui->TPF_endTPSlider->setValue(100);
 
         ui->TPF_amplitudeSlider->setValue(0);
         ui->TPF_offsetSlider->setValue(0);
         ui->TPF_frequencySlider->setValue(0);
         ui->TPF_intermediateSpinBox->setValue(100);
 
-        ui->TPF_initialTPGroup     ->setTitle("Initial SV:");
-        ui->TPF_endTPGroup         ->setTitle("End SV:");
+        ui->TPF_initialTPGroup->setTitle("Initial SV:");
+        ui->TPF_endTPGroup->setTitle("End SV:");
     }
     else if (ui->TPF_BPMRadio->isChecked())
     {
-        ui->TPF_initialTPSlider    ->setMaximum(500000);
-        ui->TPF_initialTPSlider    ->setMinimum(100);
-        ui->TPF_initialTPSlider    ->setValue(100);
-        ui->TPF_endTPSlider        ->setMaximum(500000);
-        ui->TPF_endTPSlider        ->setMinimum(100);
-        ui->TPF_endTPSlider        ->setValue(100);
+        ui->TPF_initialTPSlider->setMaximum(500000);
+        ui->TPF_initialTPSlider->setMinimum(100);
+        ui->TPF_initialTPSlider->setValue(100);
+        ui->TPF_endTPSlider->setMaximum(500000);
+        ui->TPF_endTPSlider->setMinimum(100);
+        ui->TPF_endTPSlider->setValue(100);
 
         ui->TPF_amplitudeSlider->setValue(0);
         ui->TPF_offsetSlider->setValue(0);
         ui->TPF_frequencySlider->setValue(0);
         ui->TPF_intermediateSpinBox->setValue(100);
 
-        ui->TPF_initialTPGroup     ->setTitle("Initial BPM:");
-        ui->TPF_endTPGroup         ->setTitle("End BPM:");
-
+        ui->TPF_initialTPGroup->setTitle("Initial BPM:");
+        ui->TPF_endTPGroup->setTitle("End BPM:");
     }
     else
     {
@@ -587,10 +574,13 @@ void amber::on_TPF_defaultButton_clicked()
 void amber::on_TPF_generateButton_clicked()
 {  
     /* DESCRIPTION
-     * For this function, we are going to have 2 separate graphs, linear and a sine graph (Default Range: PI)
+     * For this function, we are going to have 2 separate graphs, linear and a sine graph (Default
+     * Range: PI)
      *
-     * SINE GRAPH: This will control the "curve" modification of the graph, dependant on the <layman> Curve Factor (a.k.a. Amplitude).
-     *             Its offset is defaulted to 0 as its start and end point (0 - PI) is 0, hence not affecting the start and end points
+     * SINE GRAPH: This will control the "curve" modification of the graph, dependant on the <layman>
+     * Curve Factor (a.k.a. Amplitude).
+     *             Its offset is defaulted to 0 as its start and end point (0 - PI) is 0, hence not
+     * affecting the start and end points
      *             of the original LINEAR GRAPH.
      *
      * LINEAR GRAPH: This controls the linear direction of the graph.
@@ -602,23 +592,20 @@ void amber::on_TPF_generateButton_clicked()
          * OFFSET (of SINE GRAPH)
      */
 
-    QTextBrowser *outputBox;
-    QRadioButton *SVRadioButton,
-            *BPMRadioButton;
-    QCustomPlot  *customPlot;
+    QTextBrowser* outputBox;
+    QRadioButton *SVRadioButton, *BPMRadioButton;
+    QCustomPlot* customPlot;
 
-    double initialOffset, endOffset,
-            initialTP, endTP, averageTP = 0,
-            xValue,
-            offset, amplitude, frequency;
-    int    intermediatePoints;
+    double initialOffset, endOffset, initialTP, endTP, averageTP = 0, xValue, offset, amplitude,
+                                                       frequency;
+    int intermediatePoints;
 
-    SVRadioButton  = ui->TPF_SVRadio;
+    SVRadioButton = ui->TPF_SVRadio;
     BPMRadioButton = ui->TPF_BPMRadio;
-    outputBox      = ui->TPF_outputBox;
-    customPlot     = ui->TPF_customPlot;
+    outputBox = ui->TPF_outputBox;
+    customPlot = ui->TPF_customPlot;
 
-    bool isSV  = SVRadioButton ->isChecked();
+    bool isSV = SVRadioButton->isChecked();
     bool isBPM = BPMRadioButton->isChecked();
 
     outputBox->clear();
@@ -627,7 +614,7 @@ void amber::on_TPF_generateButton_clicked()
 
     TPInput = ui->TPF_editorInputLine->text();
 
-    //Set startOffset and endOffset
+    // Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
     {
         STATMSG("No Input detected");
@@ -636,9 +623,7 @@ void amber::on_TPF_generateButton_clicked()
     else if (TPInput.getSize() == 2)
     {
         initialOffset = TPInput[0].getOffset();
-        endOffset     = TPInput[1].getOffset();
-
-        STATMSG("Detected Editor Hit Object Input");
+        endOffset = TPInput[1].getOffset();
     }
     else
     {
@@ -646,28 +631,28 @@ void amber::on_TPF_generateButton_clicked()
         return;
     }
 
-    //Set other parameters
-    initialTP          = (double)  ui->TPF_initialTPSlider   ->value() / 100;
-    endTP              = (double)  ui->TPF_endTPSlider       ->value() / 100;
-    offset             = (double) ui->TPF_offsetSlider       ->value() / 100;
-    amplitude          = (double) ui->TPF_amplitudeSlider    ->value() / 100;
-    frequency          = (double) ui->TPF_frequencySlider    ->value() / 100;
-    intermediatePoints =          ui->TPF_intermediateSpinBox->value();
+    // Set other parameters
+    initialTP = (double)ui->TPF_initialTPSlider->value() / 100;
+    endTP = (double)ui->TPF_endTPSlider->value() / 100;
+    offset = (double)ui->TPF_offsetSlider->value() / 100;
+    amplitude = (double)ui->TPF_amplitudeSlider->value() / 100;
+    frequency = (double)ui->TPF_frequencySlider->value() / 100;
+    intermediatePoints = ui->TPF_intermediateSpinBox->value();
 
-    //Generate vectors for graph
+    // Generate vectors for graph
     QVector<double> xData(intermediatePoints + 1), yData(intermediatePoints + 1);
     QVector<double> yLinear(intermediatePoints + 1);
     QVector<double> ySine(intermediatePoints + 1);
 
-    for(int i = 0; i < intermediatePoints + 1; ++ i)
+    for (int i = 0; i < intermediatePoints + 1; ++i)
     {
         TimingPoint OM_TP;
 
-        xValue     = i / ((double) intermediatePoints);
-        xData[i]   = (xValue * (endOffset - initialOffset)) + initialOffset;
+        xValue = i / ((double)intermediatePoints);
+        xData[i] = (xValue * (endOffset - initialOffset)) + initialOffset;
         yLinear[i] = xValue * (endTP - initialTP) + initialTP;
-        ySine[i]   = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
-        yData[i]   = yLinear[i] + ySine[i];
+        ySine[i] = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
+        yData[i] = yLinear[i] + ySine[i];
 
         OM_TP.setOffset(xData[i]);
         OM_TP.setValue(yData[i]);
@@ -695,42 +680,47 @@ void amber::on_TPF_generateButton_clicked()
     {
         averageTP += (yData[i] * (xData[i + 1] - xData[i])) / (endOffset - initialOffset);
     }
-    STATMSG(  ("RANGE: ")
-              + (QString::number(initialOffset))
-              + (" ~ ")
-              + (QString::number(endOffset)));
 
-    STATMSG(  "LINEAR FUNCTION: f(x) = "
-              + QString::number((endTP - initialTP) / intermediatePoints)
-              + "x + "
-              + QString::number(initialTP));
+    if (!ui->TPF_liveUpdateCheck) // Do not push messages on live updates
+    {
+        STATMSG(  ("RANGE: ")
+                  + (QString::number(initialOffset))
+                  + (" ~ ")
+                  + (QString::number(endOffset)));
 
-    STATMSG(  "SINE FUNCTION: f(x) = "
-              + QString::number(amplitude)
-              + " * sin[("
-              + QString::number(frequency)
-              + " * x + "
-              + QString::number(offset)
-              + ") * π]");
+        STATMSG(  "LINEAR FUNCTION: f(x) = "
+                  + QString::number((endTP - initialTP) / intermediatePoints)
+                  + "x + "
+                  + QString::number(initialTP));
 
-    customPlot->graph(0)->setData(xData,yData);
+        STATMSG(  "SINE FUNCTION: f(x) = "
+                  + QString::number(amplitude)
+                  + " * sin[("
+                  + QString::number(frequency)
+                  + " * x + "
+                  + QString::number(offset)
+                  + ") * π]");
+    }
+
+    customPlot->graph(0)->setData(xData, yData);
     customPlot->graph(0)->setPen(QPen(Qt::black));
-    customPlot->graph(0)->setBrush(QBrush(QColor(100,100,100,20)));
+    customPlot->graph(0)->setBrush(QBrush(QColor(100, 100, 100, 20)));
     customPlot->xAxis->setRange(initialOffset, endOffset);
 
-    double minTP = *std::min_element(yData.constBegin(),yData.constEnd());
-    double maxTP = *std::max_element(yData.constBegin(),yData.constEnd());
+    double minTP = *std::min_element(yData.constBegin(), yData.constEnd());
+    double maxTP = *std::max_element(yData.constBegin(), yData.constEnd());
 
     customPlot->clearItems();
-    QCPItemText *averageLabel = new QCPItemText(customPlot);
-    averageLabel->setPositionAlignment(Qt::AlignTop|Qt::AlignHCenter);
+    QCPItemText* averageLabel = new QCPItemText(customPlot);
+    averageLabel->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
     averageLabel->position->setType(QCPItemPosition::ptAxisRectRatio);
     averageLabel->position->setCoords(0.5, 0);
-    averageLabel->setText(  "Average "
-                            + isSV ? "SV: " : "BPM: "
-                                     + QString::number(averageTP));
+    averageLabel->setText(QString("Average ") +
+                          (isSV ? "SV: " : "BPM: ") +
+                          QString::number(averageTP));
     averageLabel->setFont(QFont(font().family(), 12));
 
+    // Set Axis
     if (isSV)
     {
         customPlot->yAxis->setLabel("SV");

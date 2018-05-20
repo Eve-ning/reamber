@@ -159,13 +159,19 @@ int HitObject::getColumn() const
 }
 QString HitObject::toString() const
 {
-    isXAxisValid();
+    if(!isXAxisValid()){
+        AExc(AExc::VALUE_OUT_OF_RANGE, QString("xAxis is invalid: ") + xAxis);
+    }
 
-    return QString::number(xAxis) + "," + QString::number(yAxis) + "," + QString::number(offset)
-        + "," + QString::number(noteType) + "," + QString::number(hitsoundType) + ","
-        + (lnEnd == -1 ? "" : (QString::number(lnEnd) + ":")) + QString::number(sampleSet) + ":"
-        + QString::number(addition) + ":" + QString::number(customSet) + ":"
-        + QString::number(volume) + ":" + hitsoundFile;
+    return QString::number(xAxis) + "," +
+           QString::number(yAxis) + "," +
+           QString::number(offset) + "," +
+           QString::number(noteType) + "," +
+           QString::number(hitsoundType) + "," +
+           (lnEnd == -1 ? "" : (QString::number(lnEnd) + ":")) +
+           QString::number(sampleSet) + ":" + QString::number(addition) + ":" +
+           QString::number(customSet) + ":" +
+           QString::number(volume) + ":" + hitsoundFile;
 }
 
 // OPERS
