@@ -26,7 +26,17 @@ SOURCES += main.cpp \
     common.cpp \
     osuobject.cpp \
     info.cpp \
-    AExc.cpp
+    AExc.cpp \
+    Par_/offset.cpp \
+    hoPar_/notetype.cpp \
+    Par_/sampleset.cpp \
+    hoPar_/column.cpp \
+    Par_/volume.cpp \
+    hoPar_/keys.cpp \
+    tpPar_/slidervelocity.cpp \
+    tpPar_/bpm.cpp \
+    tpPar_/kiai.cpp \
+    tpPar_/metronome.cpp
 
 HEADERS += \
     hitobject.h \
@@ -40,7 +50,17 @@ HEADERS += \
     common.h \
     osuobject.h \
     info.h \
-    AExc.h
+    AExc.h \
+    Par_/offset.h \
+    hoPar_/notetype.h \
+    Par_/sampleset.h \
+    hoPar_/column.h \
+    Par_/volume.h \
+    hoPar_/keys.h \
+    tpPar_/slidervelocity.h \
+    tpPar_/bpm.h \
+    tpPar_/kiai.h \
+    tpPar_/metronome.h
 
 DISTFILES += \
     documentation.txt

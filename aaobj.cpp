@@ -1,8 +1,8 @@
 #include "aaobj.h"
 
-AAObj::AAObj(AAType newObjType)
+AAObj::AAObj(AAName newObjType)
 {
-    objType = newObjType;
+    objName = newObjType;
     ui = new AAForm;
 }
 
@@ -16,6 +16,12 @@ void AAObj::showForm()
 {
     ui->show();
 }
+
+void AAObj::grabData()
+{
+    // Grabs data from the form generated, if possible
+    data = getData();
+}
 void AAObj::closeForm()
 {
     ui->close();
@@ -25,9 +31,9 @@ void AAObj::setFormDefault()
     ui->disableAll();
 }
 
-void AAObj::setObjType(AAType newObjType)
+void AAObj::setObjType(AAName newObjType)
 {
-    objType = newObjType;
+    objName = newObjType;
 }
 void AAObj::setForm()
 {
@@ -35,7 +41,7 @@ void AAObj::setForm()
     setFormDefault();
 
     // Sets UI Form according to Object Type
-    switch (objType.getIndex())
+    switch (objName.getIndex())
     {
     case 0: // Add Offset
     {
@@ -150,13 +156,14 @@ void AAObj::setForm()
         break;
     }
     };
-}
 
+
+}
 
 TimingPointList AAObj::applyEffect(TimingPointList oldTPList)
 {
     TimingPointList newTPList,
-               tempTPList;
+                    tempTPList;
 
     // Add Offset
     // Add Value
@@ -173,7 +180,7 @@ TimingPointList AAObj::applyEffect(TimingPointList oldTPList)
     // Invert
     // Limit Values
 
-    switch (objType.getIndex())
+    switch (objName.getIndex())
     {
     case 0: // Add Offset
     {
@@ -299,14 +306,14 @@ TimingPointList AAObj::applyEffect(TimingPointList oldTPList)
     return newTPList;
 }
 
-AAType AAObj::getEffect()
+AAName AAObj::getEffect()
 {
-    return objType;
+    return objName;
 }
 QString AAObj::getEffectName(bool getInfo)
 {
     QString name;
-    name = objType.getName();
+    name = objName.getName();
 
  // Add Offset
  // Add Value
@@ -324,7 +331,7 @@ QString AAObj::getEffectName(bool getInfo)
  // Limit Values
 
     if (getInfo){ // Get Info
-        switch (objType.getIndex())
+        switch (objName.getIndex())
         {
         case 0: // Add Offset
         {
@@ -424,8 +431,18 @@ QString AAObj::getEffectName(bool getInfo)
     return name;
 }
 
+AAData AAObj::getData() const
+{
+    return data;
+}
+
+void AAObj::setData(const AAData &value)
+{
+    data = value;
+}
+
 // FOR AATYPE
-const QStringList AAType::nameList
+const QStringList AAName::nameList
 {
     "Add Offset",      /* ADD_OFFSET      */
     "Add Value",       /* ADD_VALUE       */
@@ -443,7 +460,7 @@ const QStringList AAType::nameList
     "Limit Values"     /* LIMITVAL        */
 };
 
-void AAType::load(QString newName)
+void AAName::load(QString newName)
 {
     if (!nameList.contains(newName))
     {
@@ -452,7 +469,7 @@ void AAType::load(QString newName)
     }
     name = newName;
 }
-void AAType::load(int newIndex)
+void AAName::load(int newIndex)
 {
     if (newIndex >= nameList.length())
     {

@@ -556,6 +556,27 @@ bool AAForm::getRadioState(int index)
     }
 }
 
+AAData AAForm::getData()
+{
+    return AAData(getPTEText(0),
+                  getLineText(0),
+                  getLineText(1),
+                  getLineText(2),
+                  getLineText(3),
+                  getLineText(4),
+                  getLineText(5),
+                  getChkbxState(0),
+                  getChkbxState(1),
+                  getChkbxState(2),
+                  getRadioState(0),
+                  getRadioState(1),
+                  getRadioState(2));
+}
+
+void AAForm::setData(AAData &data)
+{
+}
+
 bool AAForm::checkChkbx(int index, bool check)
 {
     if (index >= 0)
@@ -613,16 +634,7 @@ bool AAForm::checkRadio(int index, bool check)
     return true;
 }
 
+void AAForm::on_buttonBox_accepted()
+{
 
-
-
-
-
-
-
-
-
-
-
-
-
+}

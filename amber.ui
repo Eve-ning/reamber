@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>amber</class>
  <widget class="QMainWindow" name="amber">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1876</width>
-    <height>769</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>amber</string>
   </property>
@@ -2564,7 +2556,7 @@
             <x>0</x>
             <y>0</y>
             <width>176</width>
-            <height>543</height>
+            <height>561</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -2598,7 +2590,7 @@
             <x>0</x>
             <y>0</y>
             <width>176</width>
-            <height>543</height>
+            <height>561</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -2651,7 +2643,7 @@
             <x>0</x>
             <y>0</y>
             <width>176</width>
-            <height>543</height>
+            <height>561</height>
            </rect>
           </property>
           <attribute name="label">
@@ -2683,7 +2675,7 @@
             <x>0</x>
             <y>0</y>
             <width>176</width>
-            <height>543</height>
+            <height>561</height>
            </rect>
           </property>
           <attribute name="label">
@@ -2733,7 +2725,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1876</width>
+     <width>1680</width>
      <height>20</height>
     </rect>
    </property>

@@ -45,7 +45,7 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     // AA ComboBox
     AAObjList = {};
 
-    ui->AA_comboBox->addItems(AAType::getNameList());
+    ui->AA_comboBox->addItems(AAName::getNameList());
 
 }
 
@@ -1374,7 +1374,6 @@ void amber::on_AA_generate_clicked()
 {
 
 }
-
 void amber::on_AA_addEffect_clicked()
 {
     QListWidget *effectList = ui->AA_effectList;
@@ -1385,17 +1384,15 @@ void amber::on_AA_addEffect_clicked()
     // Add to ListWidget and our AAObjList
     effectList->addItem(comboBox->currentText());
 
-    newObject = new AAObj(AAType(comboBox->currentText()));
+    newObject = new AAObj(AAName(comboBox->currentText()));
     AAObjList.append(newObject);
 
 }
-
 
 void amber::on_AA_effectList_itemDoubleClicked(QListWidgetItem *item)
 {
     int currentIndex;
     AAObj *currentAAObj;
-
 
     currentIndex = ui->AA_effectList->row(item);
     currentAAObj = AAObjList[currentIndex];

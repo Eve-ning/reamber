@@ -48,6 +48,18 @@ public:
     void ERROR_MESSAGE(int ERROR_CODE);
     void PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST);
 
+public slots:
+
+    void appendAA(AAObj *AAObj_){
+        AAObjList.append(AAObj_);
+    }
+    void deleteAA(int i){
+        AAObjList.removeAt(i);
+    }
+    QList<*AAObj> &getAAList(){
+        return AAObjList;
+    }
+
 private slots:
 
     // STUTTER
@@ -112,11 +124,13 @@ private slots:
 
     void on_AA_effectList_itemDoubleClicked(QListWidgetItem *item);
 
+    QList<AAObj*> AAObjList = {};
+
 private:
     QTextBrowser *tb;
     Ui::amber *ui;
 
-    QList<AAObj*> AAObjList = {};
+
 
 
 };
