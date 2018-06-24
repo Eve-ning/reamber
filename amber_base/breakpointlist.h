@@ -1,7 +1,7 @@
 #ifndef cOM_BreakPLIST_H
 #define cOM_BreakPLIST_H
 
-#include "breakpoint.h"
+#include "amber_base/breakpoint.h"
 #include <QList>
 #include <QDebug>
 

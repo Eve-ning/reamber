@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>amber</class>
  <widget class="QMainWindow" name="amber">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1680</width>
+    <height>787</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>amber</string>
   </property>
@@ -171,6 +179,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
           </property>
           <widget class="QWidget" name="basicStackedWidgetPage1">
            <layout class="QGridLayout" name="gridLayout_31">
@@ -398,7 +409,7 @@
             <item>
              <widget class="QGroupBox" name="copier_inputGroup">
               <property name="title">
-               <string>Input</string>
+               <string>Input HitObjects</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_25">
                <item row="0" column="0">
@@ -410,7 +421,7 @@
             <item>
              <widget class="QGroupBox" name="copier_inputGroup_2">
               <property name="title">
-               <string>Input 2</string>
+               <string>Input TimingPoints</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_4">
                <item row="0" column="0">
@@ -2548,7 +2559,7 @@
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="homePage">
           <property name="geometry">

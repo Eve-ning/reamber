@@ -26,25 +26,44 @@ SOURCES += \
         main.cpp \
         amber.cpp \
         qcustomplot.cpp \
-        archive/check.cpp \
-        archive/convert.cpp \
-        archive/compile.cpp \
-        archive/defargs.cpp \
         hyperlink.cpp \
         statusbox.cpp \
-        amber_base/info.cpp \
-        amber_base/hitobject.cpp \
-        amber_base/timingpoint.cpp \
-        amber_base/hitobjectlist.cpp \
-        amber_base/timingpointlist.cpp \
-        amber_base/osumapset.cpp \
-        amber_base/osumap.cpp \
+        amber_base/info_impl/info.cpp \
+        amber_base/obj_impl/hitobject_impl.cpp \
+        amber_base/obj_impl/hitobjectlist_impl.cpp \
+        amber_base/obj_impl/osumap_impl.cpp \
+        amber_base/obj_impl/timingpoint_impl.cpp \
+        amber_base/obj_impl/timingpointlist_impl.cpp \
+        amber_base/parameters/glbPar_/distance.cpp \
+        amber_base/parameters/glbPar_/offset.cpp \
+        amber_base/parameters/glbPar_/sampleset.cpp \
+        amber_base/parameters/glbPar_/volume.cpp \
+        amber_base/parameters/hoPar_/column.cpp \
+        amber_base/parameters/hoPar_/keys.cpp \
+        amber_base/parameters/hoPar_/notetype.cpp \
+        amber_base/parameters/hoPar_/xaxis.cpp \
+        amber_base/parameters/hoPar_/yaxis.cpp \
+        amber_base/parameters/mapPar_/commonfile.cpp \
+        amber_base/parameters/mapPar_/gamemode.cpp \
+        amber_base/parameters/tpPar_/bpm.cpp \
+        amber_base/parameters/tpPar_/hitsoundfile.cpp \
+        amber_base/parameters/tpPar_/metronome.cpp \
+        amber_base/parameters/tpPar_/samplesetindex.cpp \
+        amber_base/parameters/tpPar_/slidervelocity.cpp \
+        amber_base/parameters/tpPar_/timecode.cpp \
+        amber_base/validity/amberexception.cpp \
+        amber_base/validity/validobj.cpp \
         amber_base/breakpoint.cpp \
         amber_base/breakpointlist.cpp \
         amber_base/common.cpp \
-        amber_base/osuobject.cpp \
-        aaobj.cpp \
-        aaform.cpp
+        amber_base/hitobject.cpp \
+        amber_base/hitobjectlist.cpp \
+        amber_base/osumap.cpp \
+        amber_base/osumapset.cpp \
+        amber_base/timingpoint.cpp \
+        amber_base/timingpointlist.cpp \
+        amber_base/parameters/base_/ambernumber.cpp \
+        amber_base/parameters/base_/amberstring.cpp
 
 
 HEADERS += \
@@ -57,26 +76,49 @@ HEADERS += \
         hyperlink.h \
         statusbox.h \
         amber_base_inc.h \
-        amber_base/info.h \
-        amber_base/hitobject.h \
-        amber_base/timingpoint.h \
-        amber_base/hitobjectlist.h \
-        amber_base/timingpointlist.h \
-        amber_base/osumapset.h \
-        amber_base/osumap.h \
+        amber_base/info_impl/info.h \
+        amber_base/obj_impl/hitobject_impl.h \
+        amber_base/obj_impl/hitobjectlist_impl.h \
+        amber_base/obj_impl/osumap_impl.h \
+        amber_base/obj_impl/timingpoint_impl.h \
+        amber_base/obj_impl/timingpointlist_impl.h \
+        amber_base/parameters/glbPar_/distance.h \
+        amber_base/parameters/glbPar_/offset.h \
+        amber_base/parameters/glbPar_/sampleset.h \
+        amber_base/parameters/glbPar_/volume.h \
+        amber_base/parameters/hoPar_/column.h \
+        amber_base/parameters/hoPar_/keys.h \
+        amber_base/parameters/hoPar_/notetype.h \
+        amber_base/parameters/hoPar_/xaxis.h \
+        amber_base/parameters/hoPar_/yaxis.h \
+        amber_base/parameters/mapPar_/commonfile.h \
+        amber_base/parameters/mapPar_/gamemode.h \
+        amber_base/parameters/tpPar_/bpm.h \
+        amber_base/parameters/tpPar_/hitsoundfile.h \
+        amber_base/parameters/tpPar_/metronome.h \
+        amber_base/parameters/tpPar_/samplesetindex.h \
+        amber_base/parameters/tpPar_/slidervelocity.h \
+        amber_base/parameters/tpPar_/timecode.h \
+        amber_base/validity/amberexception.h \
+        amber_base/validity/validobj.h \
+        amber_base/baseclass_inc.h \
         amber_base/breakpoint.h \
         amber_base/breakpointlist.h \
         amber_base/common.h \
-        amber_base/osuobject.h \
-        aaobj.h \
-        aaform.h \
-    qabutton.h
+        amber_base/hitobject.h \
+        amber_base/hitobjectlist.h \
+        amber_base/osumap.h \
+        amber_base/osumapset.h \
+        amber_base/timingpoint.h \
+        amber_base/timingpointlist.h \
+        amber_base/parameters/base_/ambernumber.h \
+        amber_base/parameters/base_/amberstring.h
+
 
 LIBS += \
 
 FORMS += \
-        amber.ui \
-        aaform.ui
+        amber.ui
 
 DISTFILES += \
     documentation \

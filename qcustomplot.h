@@ -390,12 +390,12 @@ public:
   // getters:
   double x() const { return mX; }
   double y() const { return mY; }
-  double &rx() { return mX; }
-  double &ry() { return mY; }
+  double &rx(){ return mX; }
+  double &ry(){ return mY; }
   
   // setters:
-  void setX(double x) { mX = x; }
-  void setY(double y) { mY = y; }
+  void setX(double x){ mX = x; }
+  void setY(double y){ mY = y; }
   
   // non-virtual methods:
   double length() const { return qSqrt(mX*mX+mY*mY); }
@@ -430,12 +430,12 @@ private:
 };
 Q_DECLARE_TYPEINFO(QCPVector2D, Q_MOVABLE_TYPE);
 
-inline const QCPVector2D operator*(double factor, const QCPVector2D &vec) { return QCPVector2D(vec.mX*factor, vec.mY*factor); }
-inline const QCPVector2D operator*(const QCPVector2D &vec, double factor) { return QCPVector2D(vec.mX*factor, vec.mY*factor); }
-inline const QCPVector2D operator/(const QCPVector2D &vec, double divisor) { return QCPVector2D(vec.mX/divisor, vec.mY/divisor); }
-inline const QCPVector2D operator+(const QCPVector2D &vec1, const QCPVector2D &vec2) { return QCPVector2D(vec1.mX+vec2.mX, vec1.mY+vec2.mY); }
-inline const QCPVector2D operator-(const QCPVector2D &vec1, const QCPVector2D &vec2) { return QCPVector2D(vec1.mX-vec2.mX, vec1.mY-vec2.mY); }
-inline const QCPVector2D operator-(const QCPVector2D &vec) { return QCPVector2D(-vec.mX, -vec.mY); }
+inline const QCPVector2D operator*(double factor, const QCPVector2D &vec){ return QCPVector2D(vec.mX*factor, vec.mY*factor); }
+inline const QCPVector2D operator*(const QCPVector2D &vec, double factor){ return QCPVector2D(vec.mX*factor, vec.mY*factor); }
+inline const QCPVector2D operator/(const QCPVector2D &vec, double divisor){ return QCPVector2D(vec.mX/divisor, vec.mY/divisor); }
+inline const QCPVector2D operator+(const QCPVector2D &vec1, const QCPVector2D &vec2){ return QCPVector2D(vec1.mX+vec2.mX, vec1.mY+vec2.mY); }
+inline const QCPVector2D operator-(const QCPVector2D &vec1, const QCPVector2D &vec2){ return QCPVector2D(vec1.mX-vec2.mX, vec1.mY-vec2.mY); }
+inline const QCPVector2D operator-(const QCPVector2D &vec){ return QCPVector2D(-vec.mX, -vec.mY); }
 
 /*! \relates QCPVector2D
 
@@ -488,7 +488,7 @@ public:
   void setPen(const QColor &color);
   void setPen(Qt::PenStyle penStyle);
   void drawLine(const QLineF &line);
-  void drawLine(const QPointF &p1, const QPointF &p2) {drawLine(QLineF(p1, p2));}
+  void drawLine(const QPointF &p1, const QPointF &p2){drawLine(QLineF(p1, p2));}
   void save();
   void restore();
   
@@ -530,7 +530,7 @@ public:
   
   // introduced virtual methods:
   virtual QCPPainter *startPainting() = 0;
-  virtual void donePainting() {}
+  virtual void donePainting(){}
   virtual void draw(QCPPainter *painter) const = 0;
   virtual void clear(const QColor &color) = 0;
   
@@ -780,10 +780,10 @@ public:
   bool operator==(const QCPRange& other) const { return lower == other.lower && upper == other.upper; }
   bool operator!=(const QCPRange& other) const { return !(*this == other); }
   
-  QCPRange &operator+=(const double& value) { lower+=value; upper+=value; return *this; }
-  QCPRange &operator-=(const double& value) { lower-=value; upper-=value; return *this; }
-  QCPRange &operator*=(const double& value) { lower*=value; upper*=value; return *this; }
-  QCPRange &operator/=(const double& value) { lower/=value; upper/=value; return *this; }
+  QCPRange &operator+=(const double& value){ lower+=value; upper+=value; return *this; }
+  QCPRange &operator-=(const double& value){ lower-=value; upper-=value; return *this; }
+  QCPRange &operator*=(const double& value){ lower*=value; upper*=value; return *this; }
+  QCPRange &operator/=(const double& value){ lower/=value; upper/=value; return *this; }
   friend inline const QCPRange operator+(const QCPRange&, double);
   friend inline const QCPRange operator+(double, const QCPRange&);
   friend inline const QCPRange operator-(const QCPRange& range, double value);
@@ -793,7 +793,7 @@ public:
   
   double size() const { return upper-lower; }
   double center() const { return (upper+lower)*0.5; }
-  void normalize() { if (lower > upper) qSwap(lower, upper); }
+  void normalize(){ if (lower > upper) qSwap(lower, upper); }
   void expand(const QCPRange &otherRange);
   void expand(double includeCoord);
   QCPRange expanded(const QCPRange &otherRange) const;
@@ -903,7 +903,7 @@ public:
   int length() const { return size(); }
   
   // setters:
-  void setBegin(int begin) { mBegin = begin; }
+  void setBegin(int begin){ mBegin = begin; }
   void setEnd(int end)  { mEnd = end; }
   
   // non-property methods:
@@ -967,7 +967,7 @@ private:
   // property members:
   QList<QCPDataRange> mDataRanges;
   
-  inline static bool lessThanDataRangeBegin(const QCPDataRange &a, const QCPDataRange &b) { return a.begin() < b.begin(); }
+  inline static bool lessThanDataRangeBegin(const QCPDataRange &a, const QCPDataRange &b){ return a.begin() < b.begin(); }
 };
 Q_DECLARE_METATYPE(QCPDataSelection)
 
@@ -1732,7 +1732,7 @@ public:
   QCPAxisTickerText();
   
   // getters:
-  QMap<double, QString> &ticks() { return mTicks; }
+  QMap<double, QString> &ticks(){ return mTicks; }
   int subTickCount() const { return mSubTickCount; }
   
   // setters:
@@ -2112,7 +2112,7 @@ public:
   QList<QCPAbstractItem*> items() const;
   
   static AxisType marginSideToAxisType(QCP::MarginSide side);
-  static Qt::Orientation orientation(AxisType type) { return type==atBottom||type==atTop ? Qt::Horizontal : Qt::Vertical; }
+  static Qt::Orientation orientation(AxisType type){ return type==atBottom||type==atTop ? Qt::Horizontal : Qt::Vertical; }
   static AxisType opposite(AxisType type);
   
 signals:
@@ -2398,7 +2398,7 @@ Q_DECLARE_METATYPE(QCPScatterStyle::ScatterShape)
   \see QCPDataContainer::sort
 */
 template <class DataType>
-inline bool qcpLessThanSortKey(const DataType &a, const DataType &b) { return a.sortKey() < b.sortKey(); }
+inline bool qcpLessThanSortKey(const DataType &a, const DataType &b){ return a.sortKey() < b.sortKey(); }
 
 template <class DataType>
 class QCPDataContainer // no QCP_LIB_DECL, template class ends up in header (cpp included below)
@@ -2433,8 +2433,8 @@ public:
   
   const_iterator constBegin() const { return mData.constBegin()+mPreallocSize; }
   const_iterator constEnd() const { return mData.constEnd(); }
-  iterator begin() { return mData.begin()+mPreallocSize; }
-  iterator end() { return mData.end(); }
+  iterator begin(){ return mData.begin()+mPreallocSize; }
+  iterator end(){ return mData.end(); }
   const_iterator findBegin(double sortKey, bool expandedRange=true) const;
   const_iterator findEnd(double sortKey, bool expandedRange=true) const;
   const_iterator at(int index) const { return constBegin()+qBound(0, index, size()); }
@@ -3330,7 +3330,7 @@ public:
 
   // introduced virtual methods:
   virtual double selectTest(const QPointF &pos, bool onlySelectable, QVariant *details=0) const = 0;
-  virtual QCPPlottableInterface1D *interface1D() { return 0; }
+  virtual QCPPlottableInterface1D *interface1D(){ return 0; }
   virtual QCPRange getKeyRange(bool &foundRange, QCP::SignDomain inSignDomain=QCP::sdBoth) const = 0;
   virtual QCPRange getValueRange(bool &foundRange, QCP::SignDomain inSignDomain=QCP::sdBoth, const QCPRange &inKeyRange=QCPRange()) const = 0;
   
@@ -3416,7 +3416,7 @@ protected:
   QSet<QCPItemPosition*> mChildrenX, mChildrenY;
   
   // introduced virtual methods:
-  virtual QCPItemPosition *toQCPItemPosition() { return 0; }
+  virtual QCPItemPosition *toQCPItemPosition(){ return 0; }
   
   // non-virtual methods:
   void addChildX(QCPItemPosition* pos); // called from pos when this anchor is set as parent
@@ -3850,7 +3850,7 @@ Q_DECLARE_METATYPE(QCustomPlot::RefreshPriority)
 class QCPPlottableInterface1D
 {
 public:
-  virtual ~QCPPlottableInterface1D() {}
+  virtual ~QCPPlottableInterface1D(){}
   // introduced pure virtual methods:
   virtual int dataCount() const = 0;
   virtual double dataMainKey(int index) const = 0;
@@ -4776,7 +4776,7 @@ public:
   QCPPlottableLegendItem(QCPLegend *parent, QCPAbstractPlottable *plottable);
   
   // getters:
-  QCPAbstractPlottable *plottable() { return mPlottable; }
+  QCPAbstractPlottable *plottable(){ return mPlottable; }
   
 protected:
   // property members:
@@ -5125,8 +5125,8 @@ public:
   QCPGraphData(double key, double value);
   
   inline double sortKey() const { return key; }
-  inline static QCPGraphData fromSortKey(double sortKey) { return QCPGraphData(sortKey, 0); }
-  inline static bool sortKeyIsMainKey() { return true; }
+  inline static QCPGraphData fromSortKey(double sortKey){ return QCPGraphData(sortKey, 0); }
+  inline static bool sortKeyIsMainKey(){ return true; }
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return value; }
@@ -5264,8 +5264,8 @@ public:
   QCPCurveData(double t, double key, double value);
   
   inline double sortKey() const { return t; }
-  inline static QCPCurveData fromSortKey(double sortKey) { return QCPCurveData(sortKey, 0, 0); }
-  inline static bool sortKeyIsMainKey() { return false; }
+  inline static QCPCurveData fromSortKey(double sortKey){ return QCPCurveData(sortKey, 0, 0); }
+  inline static bool sortKeyIsMainKey(){ return false; }
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return value; }
@@ -5444,8 +5444,8 @@ public:
   QCPBarsData(double key, double value);
   
   inline double sortKey() const { return key; }
-  inline static QCPBarsData fromSortKey(double sortKey) { return QCPBarsData(sortKey, 0); }
-  inline static bool sortKeyIsMainKey() { return true; } 
+  inline static QCPBarsData fromSortKey(double sortKey){ return QCPBarsData(sortKey, 0); }
+  inline static bool sortKeyIsMainKey(){ return true; } 
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return value; }
@@ -5567,8 +5567,8 @@ public:
   QCPStatisticalBoxData(double key, double minimum, double lowerQuartile, double median, double upperQuartile, double maximum, const QVector<double>& outliers=QVector<double>());
   
   inline double sortKey() const { return key; }
-  inline static QCPStatisticalBoxData fromSortKey(double sortKey) { return QCPStatisticalBoxData(sortKey, 0, 0, 0, 0, 0); }
-  inline static bool sortKeyIsMainKey() { return true; }
+  inline static QCPStatisticalBoxData fromSortKey(double sortKey){ return QCPStatisticalBoxData(sortKey, 0, 0, 0, 0, 0); }
+  inline static bool sortKeyIsMainKey(){ return true; }
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return median; }
@@ -5820,8 +5820,8 @@ public:
   QCPFinancialData(double key, double open, double high, double low, double close);
   
   inline double sortKey() const { return key; }
-  inline static QCPFinancialData fromSortKey(double sortKey) { return QCPFinancialData(sortKey, 0, 0, 0, 0); }
-  inline static bool sortKeyIsMainKey() { return true; } 
+  inline static QCPFinancialData fromSortKey(double sortKey){ return QCPFinancialData(sortKey, 0, 0, 0, 0); }
+  inline static bool sortKeyIsMainKey(){ return true; } 
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return open; }

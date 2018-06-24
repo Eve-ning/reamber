@@ -7251,7 +7251,7 @@ void QCPGrid::applyDefaultAntialiasingHint(QCPPainter *painter) const
 */
 void QCPGrid::draw(QCPPainter *painter)
 {
-  if (!mParentAxis) { qDebug() << Q_FUNC_INFO << "invalid parent axis"; return; }
+  if (!mParentAxis){ qDebug() << Q_FUNC_INFO << "invalid parent axis"; return; }
   
   if (mParentAxis->subTicks() && mSubGridVisible)
     drawSubGridLines(painter);
@@ -7266,7 +7266,7 @@ void QCPGrid::draw(QCPPainter *painter)
 */
 void QCPGrid::drawGridLines(QCPPainter *painter) const
 {
-  if (!mParentAxis) { qDebug() << Q_FUNC_INFO << "invalid parent axis"; return; }
+  if (!mParentAxis){ qDebug() << Q_FUNC_INFO << "invalid parent axis"; return; }
   
   const int tickCount = mParentAxis->mTickVector.size();
   double t; // helper variable, result of coordinate-to-pixel transforms
@@ -7339,7 +7339,7 @@ void QCPGrid::drawGridLines(QCPPainter *painter) const
 */
 void QCPGrid::drawSubGridLines(QCPPainter *painter) const
 {
-  if (!mParentAxis) { qDebug() << Q_FUNC_INFO << "invalid parent axis"; return; }
+  if (!mParentAxis){ qDebug() << Q_FUNC_INFO << "invalid parent axis"; return; }
   
   applyAntialiasingHint(painter, mAntialiasedSubGrid, QCP::aeSubGrid);
   double t; // helper variable, result of coordinate-to-pixel transforms
@@ -10903,7 +10903,7 @@ void QCPAbstractPlottable::coordsToPixels(double key, double value, double &x, d
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   if (keyAxis->orientation() == Qt::Horizontal)
   {
@@ -10924,7 +10924,7 @@ const QPointF QCPAbstractPlottable::coordsToPixels(double key, double value) con
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(); }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(); }
   
   if (keyAxis->orientation() == Qt::Horizontal)
     return QPointF(keyAxis->coordToPixel(key), valueAxis->coordToPixel(value));
@@ -10945,7 +10945,7 @@ void QCPAbstractPlottable::pixelsToCoords(double x, double y, double &key, doubl
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   if (keyAxis->orientation() == Qt::Horizontal)
   {
@@ -10994,7 +10994,7 @@ void QCPAbstractPlottable::rescaleAxes(bool onlyEnlarge) const
 void QCPAbstractPlottable::rescaleKeyAxis(bool onlyEnlarge) const
 {
   QCPAxis *keyAxis = mKeyAxis.data();
-  if (!keyAxis) { qDebug() << Q_FUNC_INFO << "invalid key axis"; return; }
+  if (!keyAxis){ qDebug() << Q_FUNC_INFO << "invalid key axis"; return; }
   
   QCP::SignDomain signDomain = QCP::sdBoth;
   if (keyAxis->scaleType() == QCPAxis::stLogarithmic)
@@ -11037,7 +11037,7 @@ void QCPAbstractPlottable::rescaleValueAxis(bool onlyEnlarge, bool inKeyRange) c
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   QCP::SignDomain signDomain = QCP::sdBoth;
   if (valueAxis->scaleType() == QCPAxis::stLogarithmic)
@@ -16634,7 +16634,7 @@ QPointF QCPSelectionDecoratorBracket::getPixelCoordinates(const QCPPlottableInte
 {
   QCPAxis *keyAxis = mPlottable->keyAxis();
   QCPAxis *valueAxis = mPlottable->valueAxis();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(0, 0); }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(0, 0); }
   
   if (keyAxis->orientation() == Qt::Horizontal)
     return QPointF(keyAxis->coordToPixel(interface1d->dataMainKey(dataIndex)), valueAxis->coordToPixel(interface1d->dataMainValue(dataIndex)));
@@ -20296,7 +20296,7 @@ QCPRange QCPGraph::getValueRange(bool &foundRange, QCP::SignDomain inSignDomain,
 /* inherits documentation from base class */
 void QCPGraph::draw(QCPPainter *painter)
 {
-  if (!mKeyAxis || !mValueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!mKeyAxis || !mValueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   if (mKeyAxis.data()->range().size() <= 0 || mDataContainer->isEmpty()) return;
   if (mLineStyle == lsNone && mScatterStyle.isNone()) return;
   
@@ -20462,7 +20462,7 @@ void QCPGraph::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataR
   if (!scatters) return;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; scatters->clear(); return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; scatters->clear(); return; }
   
   QCPGraphDataContainer::const_iterator begin, end;
   getVisibleDataBounds(begin, end, dataRange);
@@ -20517,7 +20517,7 @@ QVector<QPointF> QCPGraph::dataToLines(const QVector<QCPGraphData> &data) const
   QVector<QPointF> result;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
 
   result.resize(data.size());
   
@@ -20555,7 +20555,7 @@ QVector<QPointF> QCPGraph::dataToStepLeftLines(const QVector<QCPGraphData> &data
   QVector<QPointF> result;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
   
   result.resize(data.size()*2);
   
@@ -20603,7 +20603,7 @@ QVector<QPointF> QCPGraph::dataToStepRightLines(const QVector<QCPGraphData> &dat
   QVector<QPointF> result;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
   
   result.resize(data.size()*2);
   
@@ -20651,7 +20651,7 @@ QVector<QPointF> QCPGraph::dataToStepCenterLines(const QVector<QCPGraphData> &da
   QVector<QPointF> result;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
   
   result.resize(data.size()*2);
   
@@ -20711,7 +20711,7 @@ QVector<QPointF> QCPGraph::dataToImpulseLines(const QVector<QCPGraphData> &data)
   QVector<QPointF> result;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return result; }
   
   result.resize(data.size()*2);
   
@@ -20853,7 +20853,7 @@ void QCPGraph::getOptimizedLineData(QVector<QCPGraphData> *lineData, const QCPGr
   if (!lineData) return;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   if (begin == end) return;
   
   int dataCount = end-begin;
@@ -20945,7 +20945,7 @@ void QCPGraph::getOptimizedScatterData(QVector<QCPGraphData> *scatterData, QCPGr
   if (!scatterData) return;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   const int scatterModulo = mScatterSkip+1;
   const bool doScatterSkip = mScatterSkip > 0;
@@ -21131,7 +21131,7 @@ void QCPGraph::getVisibleDataBounds(QCPGraphDataContainer::const_iterator &begin
   {
     QCPAxis *keyAxis = mKeyAxis.data();
     QCPAxis *valueAxis = mValueAxis.data();
-    if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+    if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
     // get visible data range:
     begin = mDataContainer->findBegin(keyAxis->range().lower);
     end = mDataContainer->findEnd(keyAxis->range().upper);
@@ -21309,7 +21309,7 @@ QPointF QCPGraph::getFillBasePoint(QPointF matchingDataPoint) const
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(); }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(); }
   
   QPointF result;
   if (valueAxis->scaleType() == QCPAxis::stLinear)
@@ -21402,8 +21402,8 @@ const QPolygonF QCPGraph::getChannelFillPolygon(const QVector<QPointF> *thisData
   
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPolygonF(); }
-  if (!mChannelFillGraph.data()->mKeyAxis) { qDebug() << Q_FUNC_INFO << "channel fill target key axis invalid"; return QPolygonF(); }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPolygonF(); }
+  if (!mChannelFillGraph.data()->mKeyAxis){ qDebug() << Q_FUNC_INFO << "channel fill target key axis invalid"; return QPolygonF(); }
   
   if (mChannelFillGraph.data()->mKeyAxis.data()->orientation() != keyAxis->orientation())
     return QPolygonF(); // don't have same axis orientation, can't fill that (Note: if keyAxis fits, valueAxis will fit too, because it's always orthogonal to keyAxis)
@@ -22217,7 +22217,7 @@ void QCPCurve::getCurveLines(QVector<QPointF> *lines, const QCPDataRange &dataRa
   lines->clear();
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   // add margins to rect to compensate for stroke width
   const double strokeMargin = qMax(qreal(1.0), qreal(penWidth*0.75)); // stroke radius + 50% safety
@@ -22320,7 +22320,7 @@ void QCPCurve::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataR
   scatters->clear();
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   QCPCurveDataContainer::const_iterator begin = mDataContainer->constBegin();
   QCPCurveDataContainer::const_iterator end = mDataContainer->constEnd();
@@ -23960,7 +23960,7 @@ QPointF QCPBars::dataPixelPosition(int index) const
   {
     QCPAxis *keyAxis = mKeyAxis.data();
     QCPAxis *valueAxis = mValueAxis.data();
-    if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(); }
+    if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QPointF(); }
     
     const QCPDataContainer<QCPBarsData>::const_iterator it = mDataContainer->constBegin()+index;
     const double valuePixel = valueAxis->coordToPixel(getStackedBaseValue(it->key, it->value >= 0) + it->value);
@@ -23979,7 +23979,7 @@ QPointF QCPBars::dataPixelPosition(int index) const
 /* inherits documentation from base class */
 void QCPBars::draw(QCPPainter *painter)
 {
-  if (!mKeyAxis || !mValueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!mKeyAxis || !mValueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   if (mDataContainer->isEmpty()) return;
   
   QCPBarsDataContainer::const_iterator visibleBegin, visibleEnd;
@@ -24115,7 +24115,7 @@ QRectF QCPBars::getBarRect(double key, double value) const
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QRectF(); }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QRectF(); }
   
   double lowerPixelWidth, upperPixelWidth;
   getPixelWidth(key, lowerPixelWidth, upperPixelWidth);
@@ -24746,7 +24746,7 @@ void QCPStatisticalBox::draw(QCPPainter *painter)
   if (mDataContainer->isEmpty()) return;
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   QCPStatisticalBoxDataContainer::const_iterator visibleBegin, visibleEnd;
   getVisibleDataBounds(visibleBegin, visibleEnd);
@@ -25103,7 +25103,7 @@ void QCPColorMapData::setSize(int keySize, int valueSize)
 #endif
       mData = new double[mKeySize*mValueSize];
 #ifdef __EXCEPTIONS
-      } catch (...) { mData = 0; }
+      } catch (...){ mData = 0; }
 #endif
       if (mData)
         fill(0);
@@ -25434,7 +25434,7 @@ bool QCPColorMapData::createAlpha(bool initializeOpaque)
 #endif
     mAlpha = new unsigned char[mKeySize*mValueSize];
 #ifdef __EXCEPTIONS
-  } catch (...) { mAlpha = 0; }
+  } catch (...){ mAlpha = 0; }
 #endif
   if (mAlpha)
   {
@@ -26672,7 +26672,7 @@ void QCPFinancial::drawOhlcPlot(QCPPainter *painter, const QCPFinancialDataConta
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   if (keyAxis->orientation() == Qt::Horizontal)
   {
@@ -26729,7 +26729,7 @@ void QCPFinancial::drawCandlestickPlot(QCPPainter *painter, const QCPFinancialDa
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   
   if (keyAxis->orientation() == Qt::Horizontal)
   {
@@ -26850,7 +26850,7 @@ double QCPFinancial::ohlcSelectTest(const QPointF &pos, const QCPFinancialDataCo
   closestDataPoint = mDataContainer->constEnd();
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return -1; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return -1; }
 
   double minDistSqr = std::numeric_limits<double>::max();
   if (keyAxis->orientation() == Qt::Horizontal)
@@ -26897,7 +26897,7 @@ double QCPFinancial::candlestickSelectTest(const QPointF &pos, const QCPFinancia
   closestDataPoint = mDataContainer->constEnd();
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return -1; }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return -1; }
 
   double minDistSqr = std::numeric_limits<double>::max();
   if (keyAxis->orientation() == Qt::Horizontal)
@@ -26994,7 +26994,7 @@ QRectF QCPFinancial::selectionHitBox(QCPFinancialDataContainer::const_iterator i
 {
   QCPAxis *keyAxis = mKeyAxis.data();
   QCPAxis *valueAxis = mValueAxis.data();
-  if (!keyAxis || !valueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QRectF(); }
+  if (!keyAxis || !valueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return QRectF(); }
   
   double keyPixel = keyAxis->coordToPixel(it->key);
   double highPixel = valueAxis->coordToPixel(it->high);
@@ -27479,7 +27479,7 @@ double QCPErrorBars::selectTest(const QPointF &pos, bool onlySelectable, QVarian
 void QCPErrorBars::draw(QCPPainter *painter)
 {
   if (!mDataPlottable) return;
-  if (!mKeyAxis || !mValueAxis) { qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
+  if (!mKeyAxis || !mValueAxis){ qDebug() << Q_FUNC_INFO << "invalid key or value axis"; return; }
   if (mKeyAxis.data()->range().size() <= 0 || mDataContainer->isEmpty()) return;
   
   // if the sort key isn't the main key, we must check the visibility for each data point/error bar individually

@@ -1,8 +1,12 @@
 #include <QCoreApplication>
 #include <QDebug>
-#include "osumap.h"
+#include "amber_base/osumap.h"
 
-
+#include "amber_base/parameters/hoPar_/xaxis.h"
+#include "amber_base/parameters/hoPar_/column.h"
+#include "amber_base/parameters/hoPar_/notetype.h"
+#include "amber_base/parameters/glbPar_/offset.h"
+#include "amber_base/parameters/glbPar_/sampleset.h"
 void calibrate(bool details);
 
 
@@ -11,12 +15,33 @@ int main(int argc, char *argv[])
 {
 
     QCoreApplication a(argc, argv);
-    calibrate(true);
+
+//    NoteType noteType = NoteType(1);
+
+//    qDebug() <<noteType.isNormalNote();
+//    qDebug() <<noteType.isLongNote();
+
+//    SampleSet sampleSet = SampleSet(SOFT);
+//    qDebug() << sampleSet.isAUTO()  ;
+//    qDebug() << sampleSet.isNORMAL();
+//    qDebug() << sampleSet.isSOFT()  ;
+//    qDebug() << sampleSet.isDRUM()  ;
+
+//    Column ab = Column(3, 3, 4);
+//    ab.setLOWERBOUND(4);
+//    ab.setUPPERBOUND(5);
+
+//    qDebug() << ab.getValue();
+//    ab.assertBoundValid();
+
+    calibrate(false);
     return a.exec();
 
 }
 
 void calibrate(bool details){
+
+    Q_UNUSED(details)
 
     bool mapDebugBool     = true,
          TPDebugBool      = true,
@@ -86,19 +111,19 @@ void calibrate(bool details){
 
         qDebug() << "[--- ADD ---]";
         qDebug() << "          " << TPList_A_add.getValueList();
-        qDebug() << "Expected : (0.5, 3, 7, 2.1, 2.5)" << "\n";
+        qDebug() << "Expected : (0.5, 3, 7, 2.1, 2.5)" << '\n';
 
         qDebug() << "[--- SUBTRACT ---]";
         qDebug() << "          " << TPList_A_subtract.getValueList();
-        qDebug() << "Expected : (0.5, -1, -3, -1.9, -1.5)" << "\n";
+        qDebug() << "Expected : (0.5, -1, -3, -1.9, -1.5)" << '\n';
 
         qDebug() << "[--- MULTIPLY ---]";
         qDebug() << "          " << TPList_A_multiply.getValueList();
-        qDebug() << "Expected : (0.5, 2, 10, 0.2, 1)" << "\n";
+        qDebug() << "Expected : (0.5, 2, 10, 0.2, 1)" << '\n';
 
         qDebug() << "[--- DIVIDE ---]";
         qDebug() << "          " << TPList_A_divide.getValueList();
-        qDebug() << "Expected : (0.5, 0.5, 0.4, 0.05, 0.25)" << "\n";
+        qDebug() << "Expected : (0.5, 0.5, 0.4, 0.05, 0.25)" << '\n';
 
         // [--- ADJUST TO AVERAGE ---]
 
@@ -128,50 +153,48 @@ void calibrate(bool details){
             "80000,-200,4,2,1,80,0,0"   // [8]
                    });
 
-        TPList_A_adjust.adjustToAverage(1.0,2);
+        TPList_A_adjust.adjustToAverage(SliderVelocity(1.0),2);
 
         qDebug() << "[--- ADJUST TO AVERAGE ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
-        qDebug() << "Expected: (0.5, 1, 1.63333, 0.1, 0.5)" << "\n";
+        qDebug() << "Expected: (0.5, 1, 1.63333, 0.1, 0.5)" << '\n';
 
-        TPList_A_adjust.adjustToAverage(1.3,3);
+        TPList_A_adjust.adjustToAverage(SliderVelocity(1.3),3);
 
         qDebug() << "[--- ADJUST TO AVERAGE <DIFFERENT INDEX> ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
-        qDebug() << "Expected: (0.5, 1, 1.63333, 2.2, 0.5)" << "\n";
+        qDebug() << "Expected: (0.5, 1, 1.63333, 2.2, 0.5)" << '\n';
 
-        TPList_A_adjust.adjustToAverage(10.0,2);
+        TPList_A_adjust.adjustToAverage(SliderVelocity(10.0),2);
 
         qDebug() << "[--- ADJUST TO AVERAGE <MAX EXCEED> ---]";
         qDebug() << "         " << TPList_A_adjust.getValueList();
-        qDebug() << "Expected: Error Thrown" << "\n";
+        qDebug() << "Expected: Error Thrown" << '\n';
 
         // TPList_A_adjust.adjustToAverage(10.0,4);
 
         // qDebug() << "[--- ATTEMPT TO ADJUST LAST INDEX ---]";
         // qDebug() << "         " << TPList_A_adjust.getValueList();
-        // qDebug() << "Expected: Error Thrown" << "\n";
+        // qDebug() << "Expected: Error Thrown" << '\n';
     }
     if (sortDebugBool){
         HitObjectList HOList ("00:00:257 (299|4,291|5,3432|6,38025|4,4128|5,557|4) - ", 7);
 
-        qDebug() << "Original   : " << HOList.getOffsetList() << HOList.getColumnList();
+        qDebug() << "Original   : " << HOList.toString();
         HOList.sortOffset(true);
-        qDebug() << "Ascending  : " << HOList.getOffsetList() << HOList.getColumnList();
+        qDebug() << "Ascending  : " << HOList.toString();
         HOList.sortOffset(false);
-        qDebug() << "Descending : " << HOList.getOffsetList() << HOList.getColumnList();
+        qDebug() << "Descending : " << HOList.toString();
     }
     if (unqDebugBool){
 
         HitObjectList temp("00:00:000 (0|2,0|0,0|1,165|4,341|2,341|1,518|4) - ", 7);
 
-        qDebug() << "<OFFSET> Original : " << temp.getOffsetList();
-        qDebug() << "<COLUMN> Original : " << temp.getColumnList();
+        qDebug() << "Original : " << temp.toString();
 
         temp.makeUnique();
 
-        qDebug() << "<OFFSET> Unique   : " << temp.getOffsetList();
-        qDebug() << "<COLUMN> Unique   : " << temp.getColumnList();
+        qDebug() << "Original : " << temp.toString();
     }
     if (omTypeDebugBool)
     {
@@ -198,34 +221,24 @@ void calibrate(bool details){
               "192,192,22259,1,0,0:0:0:0:";
 
         qDebug() << "[--- EHO ---]";
-        qDebug() << "EHO: " << Common::whatOM_Type(EHO).getIsEHO() << " | "
-                 << "HO : " << Common::whatOM_Type(EHO).getIsHO()  << " | "
-                 << "TP : " << Common::whatOM_Type(EHO).getIsTP()  << " | "
-                 << "IVL: " << Common::whatOM_Type(EHO).getLoadFail() << "\n";
+        qDebug() << "HO : " << ValidObj::hitObject(EHO)  << " | "
+                 << "TP : " << ValidObj::timingPoint(EHO)  << " \n ";
 
         qDebug() << "[--- HO ---]";
-        qDebug() << "EHO: " << Common::whatOM_Type(HO).getIsEHO() << " | "
-                 << "HO : " << Common::whatOM_Type(HO).getIsHO()  << " | "
-                 << "TP : " << Common::whatOM_Type(HO).getIsTP()  << " | "
-                 << "IVL: " << Common::whatOM_Type(HO).getLoadFail() << "\n";
+        qDebug() << "HO : " << ValidObj::hitObject(HO) << " | "
+                 << "TP : " << ValidObj::timingPoint(HO) << " \n ";
 
         qDebug() << "[--- TP ---]";
-        qDebug() << "EHO: " << Common::whatOM_Type(TP).getIsEHO() << " | "
-                 << "HO : " << Common::whatOM_Type(TP).getIsHO()  << " | "
-                 << "TP : " << Common::whatOM_Type(TP).getIsTP()  << " | "
-                 << "IVL: " << Common::whatOM_Type(TP).getLoadFail() << "\n";
+        qDebug() << "HO : " << ValidObj::hitObject(TP) << " | "
+                 << "TP : " << ValidObj::timingPoint(TP) << " \n ";
 
         qDebug() << "[--- MLT ---]";
-        qDebug() << "EHO: " << Common::whatOM_Type(MLT).getIsEHO() << " | "
-                 << "HO : " << Common::whatOM_Type(MLT).getIsHO()  << " | "
-                 << "TP : " << Common::whatOM_Type(MLT).getIsTP()  << " | "
-                 << "IVL: " << Common::whatOM_Type(MLT).getLoadFail() << "\n";
+        qDebug() << "HO : " << ValidObj::hitObject(MLT)  << " | "
+                 << "TP : " << ValidObj::timingPoint(MLT)  << " \n ";
 
         qDebug() << "[--- INV ---]";
-        qDebug() << "EHO: " << Common::whatOM_Type(INV).getIsEHO() << " | "
-                 << "HO : " << Common::whatOM_Type(INV).getIsHO()  << " | "
-                 << "TP : " << Common::whatOM_Type(INV).getIsTP()  << " | "
-                 << "IVL: " << Common::whatOM_Type(INV).getLoadFail() << "\n";
+        qDebug() << "HO : " << ValidObj::hitObject(INV)  << " | "
+                 << "TP : " << ValidObj::timingPoint(INV)  << " \n ";
     }
 
 

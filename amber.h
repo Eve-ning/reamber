@@ -26,7 +26,6 @@
 #include "amber_base_inc.h"
 #include "statusbox.h"
 #include "hyperlink.h"
-#include "aaobj.h"
 
 namespace Ui {
 class amber;
@@ -49,16 +48,6 @@ public:
     void PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST);
 
 public slots:
-
-    void appendAA(AAObj *AAObj_){
-        AAObjList.append(AAObj_);
-    }
-    void deleteAA(int i){
-        AAObjList.removeAt(i);
-    }
-    QList<*AAObj> &getAAList(){
-        return AAObjList;
-    }
 
 private slots:
 
@@ -117,20 +106,9 @@ private slots:
     void on_PS_controlSplitButton_clicked();
     void on_PS_controlOpenFolderButton_clicked();
 
-
-    // ADVANCED ADJUSTER
-    void on_AA_generate_clicked();
-    void on_AA_addEffect_clicked();
-
-    void on_AA_effectList_itemDoubleClicked(QListWidgetItem *item);
-
-    QList<AAObj*> AAObjList = {};
-
 private:
     QTextBrowser *tb;
     Ui::amber *ui;
-
-
 
 
 };

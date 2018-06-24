@@ -1,4 +1,4 @@
-#include "osumapset.h"
+#include "amber_base/osumapset.h"
 
 // CONSTRUCTORS
 osuMapSet::osuMapSet()
@@ -63,7 +63,7 @@ void osuMapSet::setCountdownList(QList<bool> newCountdownList)
         OM_MapList[temp].setCountdown(newCountdownList[temp]);
     }
 }
-void osuMapSet::setSampleSetList(QList<osuMap::cSampleSet> newSampleSetList)
+void osuMapSet::setSampleSetList(QList<SampleSet> newSampleSetList)
 {
     if (newSampleSetList.length() != OM_MapList.length())
     {
@@ -85,7 +85,7 @@ void osuMapSet::setStackLeniencyList(QList<double> newStackLeniencyList)
         OM_MapList[temp].setStackLeniency(newStackLeniencyList[temp]);
     }
 }
-void osuMapSet::setGameModeList(QList<osuMap::cGameMode> newGameModeList)
+void osuMapSet::setGameModeList(QList<GameMode> newGameModeList)
 {
     if (newGameModeList.length() != OM_MapList.length())
     {
@@ -461,10 +461,10 @@ QList<bool> osuMapSet::getCountdownList() const
 
     return output;
 }
-QList<osuMap::cSampleSet> osuMapSet::getSampleSetList() const
+QList<SampleSet> osuMapSet::getSampleSetList() const
 {
     osuMap temp;
-    QList<osuMap::cSampleSet> output;
+    QList<SampleSet> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getSampleSet());
@@ -483,10 +483,10 @@ QList<double> osuMapSet::getStackLeniencyList() const
 
     return output;
 }
-QList<osuMap::cGameMode> osuMapSet::getGameModeList() const
+QList<GameMode> osuMapSet::getGameModeList() const
 {
     osuMap temp;
-    QList<osuMap::cGameMode> output;
+    QList<GameMode> output;
     foreach (temp, OM_MapList)
     {
         output.append(temp.getGameMode());

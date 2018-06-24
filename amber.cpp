@@ -43,9 +43,9 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->TPF_customPlot->yAxis->setLabel("SV");
 
     // AA ComboBox
-    AAObjList = {};
+// AAObjList = {};
 
-    ui->AA_comboBox->addItems(AAName::getNameList());
+// ui->AA_comboBox->addItems(AAName::getNameList());
 
 }
 
@@ -58,47 +58,47 @@ amber::~amber()
 /* Error Handling Idea 4/2/2018
 void amber::ERROR_MESSAGE(int ERROR_CODE)
 {
-//REFERENCE
+// REFERENCE
 
-//-FORMAT-
+// -FORMAT-
 
-//-
-//#A0000 - MESSAGE NAME
-//DETAILS
-//-
-//-
+// -
+// #A0000 - MESSAGE NAME
+// DETAILS
+// -
+// -
 
-//[SUPPORTING FUNCTIONS]
-//0___ : ALL
+// [SUPPORTING FUNCTIONS]
+// 0___ : ALL
 
-//[BASIC]
-//11__ : STUTTER
-//12__ : COPIER
-//13__ : TPF
-//14__ : NORMALIZER
-//15__ : ADJUSTER
-//16__ :
-//17__ :
-//18__ :
-//19__ :
-//20__ :
+// [BASIC]
+// 11__ : STUTTER
+// 12__ : COPIER
+// 13__ : TPF
+// 14__ : NORMALIZER
+// 15__ : ADJUSTER
+// 16__ :
+// 17__ :
+// 18__ :
+// 19__ :
+// 20__ :
 
-//[ADVANCED]
-//50__ : PACK SPLITTER
-//51__ :
-//52__ :
-//53__ :
-//54__ :
-//55__ :
-//56__ :
+// [ADVANCED]
+// 50__ : PACK SPLITTER
+// 51__ :
+// 52__ :
+// 53__ :
+// 54__ :
+// 55__ :
+// 56__ :
 
-//[LIST OF ALL ERROR MESSAGES]
-//-
+// [LIST OF ALL ERROR MESSAGES]
+// -
 
-//-
+// -
 
 
-//[LIST OF ALL WARNING MESSAGES]
+// [LIST OF ALL WARNING MESSAGES]
 
 
 
@@ -266,130 +266,131 @@ void amber::on_stutter_thresholdSlider_valueChanged(int value)
     // averageSV = initSV * threshold + secondSV * (1 - threshold);
     // initSV is an abstract value, we can just set averageSV and threshold which are concrete values then use initSV calculate
 
-    double maxInitSV, minInitSV,
-            averageSV, threshold;
+    SliderVelocity maxInitSV, minInitSV, averageSV;
+    double threshold;
 
     averageSV = ui->stutter_averageSVSpinBox->value();
     threshold = value;
 
     // Set Offset according to threshold
-    TimingPointList timingPointList(QList<TimingPoint>({TimingPoint(0, 1, false),
-                                                        TimingPoint(threshold, 1, false),
-                                                        TimingPoint(100, 1, false)}));
+    TimingPointList stutter(QList<TimingPoint>({TimingPoint(0, 1, false),
+                            TimingPoint(threshold, 1, false),
+                            TimingPoint(100, 1, false)}));
 
     // We analyse what is the value needed to adjust to the maximum and minimum
     // So if the second SV is bound between 0.1 and 10.0, what value would it take to break the boundaries
 
     // Where secondSV = 0.1
-    timingPointList[1].setValue(0.1);
+    stutter[1].setValue(0.1);
 
-    timingPointList.adjustToAverage(averageSV, 0);
-    maxInitSV = timingPointList[0].getValue();
+    stutter.adjustToAverage(averageSV, 0);
+    maxInitSV = stutter[0].getValue();
 
     // Where secondSV = 10.0
-    timingPointList[1].setValue(10.0);
+    stutter[1].setValue(10.0);
 
-    timingPointList.adjustToAverage(averageSV, 0);
-    minInitSV = timingPointList[0].getValue();
+    stutter.adjustToAverage(averageSV, 0);
+    minInitSV = stutter[0].getValue();
 
     // Set Maximum and Minimum
-    ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV * 100));
-    ui->stutter_initSVSlider-> setMinimum((int) (minInitSV * 100));
-    ui->stutter_maxSVLabel->setText(QString::number(maxInitSV, 'f', 2));
-    ui->stutter_minSVLabel->setText(QString::number(minInitSV, 'f', 2));
+    ui->stutter_initSVSlider-> setMaximum((int) (maxInitSV.value() * 100));
+    ui->stutter_initSVSlider-> setMinimum((int) (minInitSV.value() * 100));
+    ui->stutter_maxSVLabel->setText(QString::number(maxInitSV.value(), 'f', 2));
+    ui->stutter_minSVLabel->setText(QString::number(minInitSV.value(), 'f', 2));
 }
 void amber::on_stutter_averageSVSpinBox_valueChanged(double arg1)
 {
-    double maxInitSV, minInitSV,
-            averageSV, threshold;
+    SliderVelocity maxInitSV, minInitSV, averageSV;
+    double threshold;
 
     averageSV = arg1;
     threshold = ui->stutter_thresholdSlider->value() / 100;
 
-    TimingPointList timingPointList(QList<TimingPoint>({TimingPoint(), TimingPoint(), TimingPoint()}));
+    TimingPointList stutter(QList<TimingPoint>({TimingPoint(), TimingPoint(), TimingPoint()}));
 
     // Set Offset according to threshold
-    timingPointList[0].setOffset(0);
-    timingPointList[1].setOffset(threshold);
-    timingPointList[2].setOffset(100);
+    stutter[0].setOffset(0);
+    stutter[1].setOffset(threshold);
+    stutter[2].setOffset(100);
 
     // We analyse what is the value needed to adjust to the maximum and minimum
     // So if the second SV is bound between 0.1 and 10.0, what value would it take to break the boundaries
 
     // Where secondSV = 0.1
-    timingPointList[1].setValue(0.1);
+    stutter[1].setValue(0.1);
 
-    ui->stutter_initSVSlider->maximum();
-
-    timingPointList.adjustToAverage(averageSV, 0);
-    maxInitSV = timingPointList[0].getValue();
+    stutter.adjustToAverage(averageSV, 0);
+    maxInitSV = stutter[0].getValue();
 
     // Where secondSV = 10.0
-    timingPointList[1].setValue(10.0);
+    stutter[1].setValue(10.0);
 
-    timingPointList.adjustToAverage(averageSV, 0);
-    minInitSV = timingPointList[0].getValue();
+    stutter.adjustToAverage(averageSV, 0);
+    minInitSV = stutter[0].getValue();
 
     // Set Maximum and Minimum
-    ui->stutter_initSVSlider-> setMaximum(maxInitSV * 10);
-    ui->stutter_initSVSlider-> setMinimum(minInitSV * 10);
+    ui->stutter_initSVSlider-> setMaximum(maxInitSV.value() * 10);
+    ui->stutter_initSVSlider-> setMinimum(minInitSV.value() * 10);
+    ui->stutter_maxSVLabel->setText(QString::number(maxInitSV.value(), 'f', 2));
+    ui->stutter_minSVLabel->setText(QString::number(minInitSV.value(), 'f', 2));
 }
 
 // Stutter Generate Button
 void amber::on_stutter_generateButton_clicked()
 {
-    double threshold,
-            initSV, secondSV, averageSV,
-            endOffset;
+    double threshold;
+    SliderVelocity initSV, secondSV, averageSV;
+    Offset endOffset;
 
     QPlainTextEdit *inputBox;
+
     inputBox  = ui->stutter_inputBox;
     threshold = ui->stutter_thresholdLabel->text().toDouble() / 100;
-    initSV    = ui->stutter_initSVLabel->text().toDouble();
-    averageSV = ui->stutter_averageSVSpinBox->value();
-    secondSV  = (averageSV - (initSV * threshold)) / (1 - threshold);
+    initSV    = SliderVelocity(ui->stutter_initSVLabel->text().toDouble());
+    averageSV = SliderVelocity(ui->stutter_averageSVSpinBox->value());
+    secondSV  = SliderVelocity((averageSV - (initSV * threshold)) / (1 - threshold));
 
     ui->stutter_outputBox->clear();
 
     // Set input vector
-    HitObjectList hitObjectList(inputBox, 1);
+    HitObjectList noteList(inputBox, 1);
 
-    if (hitObjectList.getSize() == 0) {
+    if (noteList.getSize() == 0){
         STATMSG("Got size 0.");
         return;
-    } else if (hitObjectList.getLoadFail())
+    } else if (noteList.getLoadFail())
     {
         STATMSG("Load Unsuccessful.");
         return;
     }
 
-    hitObjectList.makeUnique();
+    noteList.makeUnique();
 
     // Generate all SVs in basic format
-    for (int i = 0; i < (hitObjectList.getSize() - 1); ++ i)
+    for (int i = 0; i < (noteList.getSize() - 1); ++ i)
     {
-        TimingPointList timingPointList;
+        TimingPointList stutter;
 
         // First SV
-        timingPointList.append(TimingPoint(hitObjectList[i].getOffset(), initSV, false));
+        stutter.append(TimingPoint(noteList[i].getOffset(), initSV, false));
 
         // Second SV
-        timingPointList.append(TimingPoint(hitObjectList[i].getOffset()
-                                           + (hitObjectList.getLength(i) * threshold), secondSV, false));
+        stutter.append(TimingPoint(noteList[i].getOffset()
+                                           + (noteList.getLength(i) * threshold), secondSV, false));
 
-        //initSV append
-        ui->stutter_outputBox->append(timingPointList[0].toString());
+        // initSV append
+        ui->stutter_outputBox->append(stutter[0].toString());
 
-        //secondSV append
-        ui->stutter_outputBox->append(timingPointList[1].toString());
+        // secondSV append
+        ui->stutter_outputBox->append(stutter[1].toString());
     }
 
-    //End SV for normalization
-    endOffset = hitObjectList[hitObjectList.getSize() - 1].getOffset();
+    // End SV for normalization
+    endOffset = noteList[noteList.getSize() - 1].getOffset();
 
     TimingPoint endTP(endOffset, averageSV, false);
 
-    //normalizeSV append
+    // normalizeSV append
     ui->stutter_outputBox->append(endTP.toString());
 }
 
@@ -398,78 +399,60 @@ void amber::on_stutter_generateButton_clicked()
 // Copier Generate Button
 void amber::on_copier_generateButton_clicked()
 {
-        TimingPointList   timingPointList;
-        HitObjectList   hitObjectList;
+    QString hitObjStr,
+            timingPointStr;
 
-        Info  boxInfo_1,
-              boxInfo_2;
+    hitObjStr = ui->copier_inputBox->toPlainText();
+    timingPointStr = ui->copier_inputBox_2->toPlainText();
 
-        boxInfo_1 = Common::whatOM_Type(ui->copier_inputBox);
-        boxInfo_2 = Common::whatOM_Type(ui->copier_inputBox_2);
+    // Invalid Cases
+    if (ValidObj::assertHitObject(hitObjStr))
+    {
+        STATMSG("Input Box 1 is not a HitObject.");
+        return;
+    }
+    if (ValidObj::assertTimingPoint(timingPointStr))
+    {
+        STATMSG("Input Box 2 is not a TimingPoint.");
+        return;
+    }
 
-        // Invalid Cases
-        if (boxInfo_1.getLoadFail())
+    TimingPointList timingPointList(timingPointStr);
+    HitObjectList   hitObjectList(hitObjStr);
+
+// // Invalid Case: Inputs same in type
+// if ((boxInfo_1.getIsHO() && boxInfo_2.getIsHO()) ||
+// (boxInfo_1.getIsTP() && boxInfo_2.getIsTP()))
+// {
+// STATMSG("Inputs should be different in type.");
+// return;
+// }
+
+    // We clear only after the input is invalid to prevent accidental clearing
+    ui->copier_outputBox->clear();
+
+    // Generate Unique Offset List
+    hitObjectList.makeUnique();
+
+    // Zero the list to make use of OM_HO's initial offset
+    timingPointList.zero();
+
+    for (int tempHO = 0; tempHO < hitObjectList.getSize(); tempHO++)
+    {
+        for (int tempTP = 0; tempTP < timingPointList.getSize(); tempTP++)
         {
-            STATMSG("Input Box 1 is Invalid.");
-            return;
+            // We take the zero-ed list and add the offset from hitObjectList
+            timingPointList.addOffset(hitObjectList[tempHO].getOffset());
+
+            // Append to output
+            ui->copier_outputBox->append(timingPointList[tempTP].toString());
+
+            // Zero it again
+            timingPointList.zero();
         }
-        if (boxInfo_2.getLoadFail())
-        {
-            STATMSG("Input Box 2 is Invalid.");
-            return;
-        }
+    }
 
-        // Invalid Case: Inputs same in type
-        if ((boxInfo_1.getIsHO() && boxInfo_2.getIsHO()) ||
-            (boxInfo_1.getIsTP() && boxInfo_2.getIsTP()))
-        {
-            STATMSG("Inputs should be different in type.");
-            return;
-        }
-
-        // We clear only after the input is invalid to prevent accidental clearing
-        ui->copier_outputBox->clear();
-
-        if (boxInfo_1.getIsHO())
-        {
-            hitObjectList = ui->copier_inputBox;
-            timingPointList = ui->copier_inputBox_2;
-            STATMSG("Assigned: HO <1> | TP <2>");
-        }
-        else if (boxInfo_1.getIsTP())
-        {
-            hitObjectList = ui->copier_inputBox_2;
-            timingPointList = ui->copier_inputBox;
-            STATMSG("Assigned: HO <2> | TP <1>");
-        }
-        else
-        {
-            STATMSG("An unexpected error has occured");
-            return;
-        }
-
-        //Generate Unique Offset List
-        hitObjectList.makeUnique();
-
-        // Zero the list to make use of OM_HO's initial offset
-        timingPointList.zero();
-
-        for (int tempHO = 0; tempHO < hitObjectList.getSize(); tempHO++)
-        {
-            for (int tempTP = 0; tempTP < timingPointList.getSize(); tempTP++)
-            {
-                // We take the zero-ed list and add the offset from hitObjectList
-                timingPointList.addOffset(hitObjectList[tempHO].getOffset());
-
-                // Append to output
-                ui->copier_outputBox->append(timingPointList[tempTP].toString());
-
-                // Zero it again
-                timingPointList.zero();
-            }
-        }
-        
-        STATMSG("Convert Successful.");
+    STATMSG("Convert Successful.");
 
 }
 
@@ -527,7 +510,7 @@ void amber::on_TPF_BPMRadio_clicked()
     amber::on_TPF_defaultButton_clicked();
 }
 
-//Reset Values to Default
+// Reset Values to Default
 void amber::on_TPF_defaultButton_clicked()
 {
     if (ui->TPF_SVRadio->isChecked())
@@ -596,23 +579,25 @@ void amber::on_TPF_generateButton_clicked()
     QRadioButton *SVRadioButton, *BPMRadioButton;
     QCustomPlot* customPlot;
 
-    double initialOffset, endOffset, initialTP, endTP, averageTP = 0, xValue, offset, amplitude,
-                                                       frequency;
-    int intermediatePoints;
-
     SVRadioButton = ui->TPF_SVRadio;
     BPMRadioButton = ui->TPF_BPMRadio;
     outputBox = ui->TPF_outputBox;
     customPlot = ui->TPF_customPlot;
 
-    bool isSV = SVRadioButton->isChecked();
-    bool isBPM = BPMRadioButton->isChecked();
+    HitObjectList noteInput;
+    TimingPointList output;
+
+    noteInput = ui->TPF_editorInputLine->text();
+
+    Offset initialOffset, endOffset;
+    double initialValue, endValue, averageValue = 0;
+    double offset, amplitude, frequency;
+    int intermediatePoints;
+
+    bool isSV = SVRadioButton->isChecked(),
+         isBPM = BPMRadioButton->isChecked();
 
     outputBox->clear();
-
-    HitObjectList TPInput;
-
-    TPInput = ui->TPF_editorInputLine->text();
 
     // Set startOffset and endOffset
     if (ui->TPF_editorInputLine->text().isEmpty())
@@ -620,10 +605,10 @@ void amber::on_TPF_generateButton_clicked()
         STATMSG("No Input detected");
         return;
     }
-    else if (TPInput.getSize() == 2)
+    else if (noteInput.getSize() == 2)
     {
-        initialOffset = TPInput[0].getOffset();
-        endOffset = TPInput[1].getOffset();
+        initialOffset = noteInput[0].getOffset();
+        endOffset = noteInput[1].getOffset();
     }
     else
     {
@@ -632,11 +617,11 @@ void amber::on_TPF_generateButton_clicked()
     }
 
     // Set other parameters
-    initialTP = (double)ui->TPF_initialTPSlider->value() / 100;
-    endTP = (double)ui->TPF_endTPSlider->value() / 100;
-    offset = (double)ui->TPF_offsetSlider->value() / 100;
-    amplitude = (double)ui->TPF_amplitudeSlider->value() / 100;
-    frequency = (double)ui->TPF_frequencySlider->value() / 100;
+    initialValue = (double) ui->TPF_initialTPSlider->value() / 100;
+    endValue =     (double) ui->TPF_endTPSlider->value() / 100;
+    offset =    (double) ui->TPF_offsetSlider->value() / 100;
+    amplitude = (double) ui->TPF_amplitudeSlider->value() / 100;
+    frequency = (double) ui->TPF_frequencySlider->value() / 100;
     intermediatePoints = ui->TPF_intermediateSpinBox->value();
 
     // Generate vectors for graph
@@ -646,52 +631,31 @@ void amber::on_TPF_generateButton_clicked()
 
     for (int i = 0; i < intermediatePoints + 1; ++i)
     {
-        TimingPoint OM_TP;
+        double xValue;
 
         xValue = i / ((double)intermediatePoints);
-        xData[i] = (xValue * (endOffset - initialOffset)) + initialOffset;
-        yLinear[i] = xValue * (endTP - initialTP) + initialTP;
-        ySine[i] = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endTP + initialTP) / 2);
+        xData[i] = (xValue * (endOffset - initialOffset).value()) + initialOffset.value();
+        yLinear[i] = xValue * (endValue - initialValue) + initialValue;
+        ySine[i] = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endValue + initialValue) / 2);
         yData[i] = yLinear[i] + ySine[i];
 
-        OM_TP.setOffset(xData[i]);
-        OM_TP.setValue(yData[i]);
-
-        OM_TP.limitValues();
-
-        if (isSV)
-        {
-            OM_TP.setIsBPM(false, false);
-            outputBox->append(OM_TP.toString());
-        }
-        else if (isBPM)
-        {
-            OM_TP.setIsBPM(true, false);
-            outputBox->append(OM_TP.toString());
-        }
-        else
-        {
-            STATMSG("An unexpected error has occurred.");
-            return;
-        }
+        TimingPoint timingPoint(xData[i], yData[i], isBPM);
+        output.append(timingPoint.toString());
     }
 
-    for (int i = 0; i < intermediatePoints; i++)
-    {
-        averageTP += (yData[i] * (xData[i + 1] - xData[i])) / (endOffset - initialOffset);
-    }
+    averageValue = output.getAverage(isBPM ? Info::IS_BPM : Info::IS_SV);
 
     if (!ui->TPF_liveUpdateCheck) // Do not push messages on live updates
     {
         STATMSG(  ("RANGE: ")
-                  + (QString::number(initialOffset))
+                  + (QString(initialOffset))
                   + (" ~ ")
-                  + (QString::number(endOffset)));
+                  + (QString(endOffset)));
 
         STATMSG(  "LINEAR FUNCTION: f(x) = "
-                  + QString::number((endTP - initialTP) / intermediatePoints)
+                  + QString::number((endValue - initialValue) / intermediatePoints)
                   + "x + "
-                  + QString::number(initialTP));
+                  + QString::number(initialValue));
 
         STATMSG(  "SINE FUNCTION: f(x) = "
                   + QString::number(amplitude)
@@ -717,7 +681,7 @@ void amber::on_TPF_generateButton_clicked()
     averageLabel->position->setCoords(0.5, 0);
     averageLabel->setText(QString("Average ") +
                           (isSV ? "SV: " : "BPM: ") +
-                          QString::number(averageTP));
+                          QString::number(averageValue));
     averageLabel->setFont(QFont(font().family(), 12));
 
     // Set Axis
@@ -749,14 +713,14 @@ void amber::on_normalizer_generateButton_clicked()
     QListWidget    *listWidget;
     QCheckBox      *overrideCheck;
     QDoubleSpinBox *overrideDoubleSpinBox;
-    QLineEdit      *selectedBPMLine;
+    QLineEdit      *customBPMLine;
 
     double normalizeBPM;
 
     inputBox              = ui->normalizer_inputBox;
     outputBox             = ui->normalizer_outputBox;
     listWidget            = ui->normalizer_BPMListWidget;
-    selectedBPMLine       = ui->normalizer_selectedBPMLine;
+    customBPMLine         = ui->normalizer_selectedBPMLine;
     overrideCheck         = ui->normalizer_overrideCheck;
     overrideDoubleSpinBox = ui->normalizer_overrideDoubleSpinBox;
 
@@ -771,8 +735,7 @@ void amber::on_normalizer_generateButton_clicked()
     }
 
     // We reassign timingPointList to have only BPM Inputs
-    Info info(Info::IS_BPM);
-    timingPointList = timingPointList.splitByType(info);
+    timingPointList = TimingPointList(timingPointList.splitByType(Info::IS_BPM));
 
     if (timingPointList.isEmpty()){
         STATMSG("Input at least 1 BPM Point.");
@@ -781,15 +744,10 @@ void amber::on_normalizer_generateButton_clicked()
 
     // Add items into List widget for user to select
     for (int temp = 0; temp < timingPointList.getSize(); temp++){
-
-        double offset, BPM;
-        offset = timingPointList[temp].getOffset();
-        BPM = timingPointList[temp].getValue();
-
         listWidget->addItem(QString("BPM: ")
-                            .append(QString::number(BPM))
+                            .append(QString::number(timingPointList[temp].getValue()))
                             .append(" | Offset: ")
-                            .append(QString::number(offset)));
+                            .append(QString(timingPointList[temp].getOffset())));
     }
 
     // Case of overriding
@@ -797,9 +755,9 @@ void amber::on_normalizer_generateButton_clicked()
     {
         normalizeBPM = overrideDoubleSpinBox->value();
     }
-    else if (selectedBPMLine->text() != "Awaiting Selection...")
+    else if (customBPMLine->text() != "Awaiting Selection...")
     {
-        normalizeBPM = selectedBPMLine->text().toDouble();
+        normalizeBPM = customBPMLine->text().toDouble();
     }
     else
     {
@@ -814,18 +772,7 @@ void amber::on_normalizer_generateButton_clicked()
     // Append to output
     for (int temp = 0; temp < timingPointList.getSize(); temp ++)
     {
-
-        timingPointList[temp].setValue((normalizeBPM / timingPointList[temp].getValue()));
-        timingPointList[temp].setIsSV(true, false);
-//        520.612,1175.85,4,1,1,5,1,0
-//        912.562,1242.27,4,1,1,5,1,0
-//        1223.13,1182.53,4,1,1,5,1,0
-//        1715.85,797.006,4,1,1,5,1,0
-//        1981.52,815.306,4,1,1,5,1,0
-//        2525.06,1562.41,4,1,1,5,1,0
-//        3924.71,1069.93,4,1,1,5,1,0
-//        3991.58,2065.3,4,1,1,5,1,0
-
+        timingPointList.convertToSV(normalizeBPM);
         outputBox->append(timingPointList[temp].toString());
     }
 
@@ -902,8 +849,8 @@ void amber::on_adjuster_generateButton_clicked()
     QPlainTextEdit *inputBox;
     QTextBrowser   *outputBox;
     QDoubleSpinBox *multiplySpinBox,
-            *zeroSpinBox,
-            *addSpinBox;
+                   *zeroSpinBox,
+                   *addSpinBox;
     QSpinBox       *offsetSpinBox;
     QCheckBox      *autoZeroCheck,
             *invertCheck;
@@ -923,13 +870,13 @@ void amber::on_adjuster_generateButton_clicked()
     SVRadio           = ui->adjuster_adjustSVRadio;
     graphLineRadio    = ui->adjuster_graphLineRadio;
 
-    TimingPointList timingPointList(inputBox->toPlainText());
+    TimingPointList inputTPList(inputBox->toPlainText());
 
-    double initialOffset,
-            endOffset,
-            minTP,
-            maxTP,
-            averageTP = 0;
+    Offset initialOffset,
+           endOffset;
+    double minTP,
+           maxTP,
+           averageTP = 0;
 
     bool isSV        = SVRadio->isChecked(),
          isGraphLine = graphLineRadio->isChecked();
@@ -937,56 +884,53 @@ void amber::on_adjuster_generateButton_clicked()
     Info info(isSV ? Info::IS_SV : Info::IS_BPM);
 
     // We trim the timingPointList according to selection
-    timingPointList = timingPointList.splitByType(info);
+    inputTPList = TimingPointList(inputTPList.splitByType(info));
 
     // Return if type is empty
-    if (timingPointList.isEmpty()){
+    if (inputTPList.isEmpty()){
         STATMSG(QString(isSV ? "<SV>" : "<BPM>") + "Selected Type is empty");
         return;
     }
 
     // ZERO -
-    timingPointList.subtractValue(zeroSpinBox->value());
+    inputTPList.subtractValue(zeroSpinBox->value());
 
     // INVERT
     if (invertCheck->isChecked())
     {
-        timingPointList.multiplyValue(-1);
+        inputTPList.multiplyValue(-1);
     }
 
     // MULTIPLY
-    timingPointList.multiplyValue(multiplySpinBox->value());
+    inputTPList.multiplyValue(multiplySpinBox->value());
 
     // ADD
-    timingPointList.addValue(addSpinBox->value());
+    inputTPList.addValue(addSpinBox->value());
 
     // ZERO +
-    timingPointList.addValue(zeroSpinBox->value());
+    inputTPList.addValue(zeroSpinBox->value());
 
     // OFFSET
-    timingPointList.addOffset(offsetSpinBox->value());
+    inputTPList.addOffset(offsetSpinBox->value());
 
-    // Limit Values << NOT WORKING FOR SOME REASON !! see debug log >>
-    timingPointList.limitValues();
+    initialOffset  = inputTPList.getMinOffset();
+    endOffset      = inputTPList.getMaxOffset();
 
-    initialOffset  = timingPointList.getMinOffset();
-    endOffset      = timingPointList.getMaxOffset();
-
-    minTP = timingPointList.getMinValue(info);
-    maxTP = timingPointList.getMaxValue(info);
+    minTP = inputTPList.getMinValue(info);
+    maxTP = inputTPList.getMaxValue(info);
 
     // If the values are too close together (threshold : 10), separate to at least 10
     // Update: I'm not sure why i do this
-    if (qFabs(maxTP - minTP) < 10 && !isSV)
-    {
-        minTP -= 5;
-        maxTP += 5;
-    }
+//    if (qFabs(maxTP - minTP) < 10 && !isSV)
+//    {
+//        minTP -= 5;
+//        maxTP += 5;
+//    }
 
-    //Calculate averageSV and averageBPM
-    averageTP = timingPointList.getAverage(info);
+    // Calculate averageSV and averageBPM
+    averageTP = inputTPList.getAverage(info);
 
-    //Auto Zero
+    // Auto Zero
     if (autoZeroCheck->isChecked())
     {
         zeroSpinBox->setValue(averageTP);
@@ -996,9 +940,15 @@ void amber::on_adjuster_generateButton_clicked()
     customPlot->clearItems();
     QCPItemText *averageLabel = new QCPItemText(customPlot);
 
+    QList<Offset> offsetList = inputTPList.getOffsetList(info);
+    QList<double> offsetList_d;
+    for (int i = 0; i < offsetList.length(); i ++){
+        offsetList_d.append(offsetList[i]);
+    }
+
     // Declare Data
-    customPlot->graph(0)->setData(timingPointList.getOffsetList(info).toVector(),
-                                  timingPointList.getValueList(info).toVector());
+    customPlot->graph(0)->setData(offsetList_d.toVector(),
+                                  inputTPList.getValueList(info).toVector());
     customPlot->graph(0)->setPen(QPen(isSV ? QColor(50,200,50,255) : QColor(200,50,50,255)));
     customPlot->graph(0)->setBrush(QBrush(isSV ? QColor(50,200,50,20) : QColor(200,50,50,20)));
 
@@ -1020,10 +970,10 @@ void amber::on_adjuster_generateButton_clicked()
 
     outputBox->clear();
 
-    //Generate Output
-    for (int temp = 0; temp < timingPointList.getSize(); temp++)
+    // Generate Output
+    for (int temp = 0; temp < inputTPList.getSize(); temp++)
     {
-        outputBox->append(timingPointList[temp].toString());
+        outputBox->append(inputTPList[temp].toString());
     }
 
 
@@ -1271,7 +1221,7 @@ void amber::on_PS_controlSplitButton_clicked()
          * AudioLeadIn: 0
          *
          * [Events]
-         * //Background and Video events
+         * // Background and Video events
          * 0,0,"BG.jpg",0,0
          */
 
@@ -1295,11 +1245,11 @@ void amber::on_PS_controlSplitButton_clicked()
         {
             strStream = difficultyStream.readLine();
 
-            if (strStream.contains("AudioFilename:")) //CHECK FOR AUDIO FILE NAME
+            if (strStream.contains("AudioFilename:")) // CHECK FOR AUDIO FILE NAME
             {
                 difficultyAudioFolderName = strStream.right(strStream.length() - 15).replace(".","_");
             }
-            else if (strStream.contains(",\"") && strStream.contains("\",")) //CHECK FOR BG FILE NAME
+            else if (strStream.contains(",\"") && strStream.contains("\",")) // CHECK FOR BG FILE NAME
             {
                 difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
                 break;
@@ -1370,34 +1320,34 @@ void amber::on_PS_controlOpenFolderButton_clicked()
 
 // --------------------------------------------------------------------------------------------------------< ADV ADJUSTER >
 
-void amber::on_AA_generate_clicked()
-{
+// void amber::on_AA_generate_clicked()
+// {
 
-}
-void amber::on_AA_addEffect_clicked()
-{
-    QListWidget *effectList = ui->AA_effectList;
-    QComboBox   *comboBox   = ui->AA_comboBox;
+// }
+// void amber::on_AA_addEffect_clicked()
+// {
+// QListWidget *effectList = ui->AA_effectList;
+// QComboBox   *comboBox   = ui->AA_comboBox;
 
-    AAObj *newObject;
+// AAObj *newObject;
 
-    // Add to ListWidget and our AAObjList
-    effectList->addItem(comboBox->currentText());
+// // Add to ListWidget and our AAObjList
+// effectList->addItem(comboBox->currentText());
 
-    newObject = new AAObj(AAName(comboBox->currentText()));
-    AAObjList.append(newObject);
+// newObject = new AAObj(AAName(comboBox->currentText()));
+// AAObjList.append(newObject);
 
-}
+// }
 
-void amber::on_AA_effectList_itemDoubleClicked(QListWidgetItem *item)
-{
-    int currentIndex;
-    AAObj *currentAAObj;
+// void amber::on_AA_effectList_itemDoubleClicked(QListWidgetItem *item)
+// {
+// int currentIndex;
+// AAObj *currentAAObj;
 
-    currentIndex = ui->AA_effectList->row(item);
-    currentAAObj = AAObjList[currentIndex];
+// currentIndex = ui->AA_effectList->row(item);
+// currentAAObj = AAObjList[currentIndex];
 
-    currentAAObj->setForm();
-    currentAAObj->showForm();
+// currentAAObj->setForm();
+// currentAAObj->showForm();
 
-}
+// }
