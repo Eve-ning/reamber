@@ -6,18 +6,18 @@
 class SliderVelocity : public AmberNumber
 {
 public:
-    SliderVelocity() : AmberNumber(1.0, false, INT_MIN, -0.0000000001){
+    SliderVelocity() : AmberNumber(1.0, false, 0.1, 10.0){
     }
 
-    SliderVelocity(AmberNumber value) : AmberNumber(1.0, false, INT_MIN, -0.0000000001){
+    SliderVelocity(AmberNumber value) : AmberNumber(1.0, false, 0.1, 10.0){
         m_value = value;
     }
 
-    SliderVelocity(const double &value) : AmberNumber(1.0, false, INT_MIN, -0.0000000001){
+    SliderVelocity(const double &value) : AmberNumber(1.0, false, 0.1, 10.0){
         m_value = value;
     }
 
-    SliderVelocity(const TimeCode &value) : AmberNumber(1.0, false, INT_MIN, -0.0000000001){
+    SliderVelocity(const TimeCode &value) : AmberNumber(1.0, false, 0.1, 10.0){
         if (m_value != 0)
         {
             m_value = SV_CONV / value.value();

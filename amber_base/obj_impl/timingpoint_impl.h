@@ -103,6 +103,8 @@ protected:
     Volume volume;
     bool isBPM;
     bool isKiai;
+
+    bool loadFail = false;
 };
 
 #endif // TIMINGPOINT_IMPL_H

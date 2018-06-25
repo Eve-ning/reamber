@@ -829,11 +829,17 @@ void TimingPointList_impl::sortOffset(bool isAscending)
 {
     if (isAscending)
     {
-        std::sort(timingPointList.begin(), timingPointList.end());
+        std::sort(timingPointList.begin(), timingPointList.end(), [](const TimingPoint &left, const TimingPoint &right)
+        {
+            return left.getOffset() < right.getOffset();
+        });
     }
     else
     {
-        std::sort(timingPointList.rbegin(), timingPointList.rend());
+        std::sort(timingPointList.begin(), timingPointList.end(), [](const TimingPoint &left, const TimingPoint &right)
+        {
+            return left.getOffset() < right.getOffset();
+        });
     }
 }
 
@@ -897,7 +903,7 @@ void TimingPointList_impl::adjustToAverage(SliderVelocity average, int adjustInd
     Offset  oldAdjustLength;
     SliderVelocity newAdjustSV;
 
-    oldTotalDistance = getDistance(Info::IS_SV);
+    oldTotalDistance = getDistance(Info(Info::IS_SV));
     newTotalDistance = Distance(getLength(), average);
 
     // We calculate the distance that needs to be added/subtracted
@@ -923,7 +929,7 @@ void TimingPointList_impl::adjustToAverage(BPM average, int adjustIndex)
     Offset  oldAdjustLength;
     BPM newAdjustBPM;
 
-    oldTotalDistance = getDistance(Info::IS_BPM);
+    oldTotalDistance = getDistance(Info(Info::IS_BPM));
     newTotalDistance = Distance(getLength(), average);
 
     // We calculate the distance that needs to be added/subtracted

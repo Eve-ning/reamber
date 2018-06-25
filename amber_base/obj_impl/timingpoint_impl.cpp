@@ -18,12 +18,15 @@ void TimingPoint_impl::loadTP(const QString &TP)
 {
     if (!ValidObj::timingPoint(TP)) // Case: Invalid
     {
+        loadFail = true;
         AmberException(AmberException::TP_LOADFAIL, QString("Input: ") + TP);
         return;
     }
 
     //            [0] [1]              [2][3][4][5][6][7]
     // REFERENCE: 638,231.660231660231,4, 1, 0, 5, 1, 0
+
+    // convert to stream parsing
 
     QStringList TP_splitComma;
 
@@ -42,6 +45,7 @@ void TimingPoint_impl::loadTP(const QString &TP)
     }
     else
     {
+        loadFail = true;
         AmberException(AmberException::UNEXPECTED_ERROR, QString("Within this context ") + __FUNCTION__);
         return;
     }

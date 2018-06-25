@@ -21,20 +21,20 @@ public:
     HitObject_impl();
 
     operator QString() const { return toString(); }
-    bool operator <(HitObject_impl value_){
-        return (this->offset.value() < value_.offset.value());
+    bool operator <(const HitObject_impl &value_) const {
+        return (offset < value_.offset);
     }
-    bool operator >(HitObject_impl value_){
-        return (this->offset.value() > value_.offset.value());
+    bool operator >(const HitObject_impl &value_) const {
+        return (offset > value_.offset);
     }
-    bool operator <=(HitObject_impl value_){
-        return (this->offset.value() <= value_.offset.value());
+    bool operator <=(const HitObject_impl &value_) const {
+        return (offset <= value_.offset);
     }
-    bool operator >=(HitObject_impl value_){
-        return (this->offset.value() >= value_.offset.value());
+    bool operator >=(const HitObject_impl &value_) const {
+        return (offset >= value_.offset);
     }
-    bool operator ==(HitObject_impl value_){
-        return (this->offset.value() == value_.offset.value());
+    bool operator ==(const HitObject_impl &value_) const {
+        return (offset == value_.offset);
     }
 
     // LOADERS
@@ -133,6 +133,8 @@ protected:
     HitsoundFile hitsoundFile;
     Keys keys;
     Offset offset;
+
+    bool loadFail = false;
 };
 
 #endif // HitObject_IMPL_H

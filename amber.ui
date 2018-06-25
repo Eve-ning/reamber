@@ -181,7 +181,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="basicStackedWidgetPage1">
            <layout class="QGridLayout" name="gridLayout_31">
@@ -206,8 +206,11 @@
               <layout class="QGridLayout" name="gridLayout_28">
                <item row="0" column="0">
                 <widget class="QSlider" name="stutter_thresholdSlider">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
                  <property name="maximum">
-                  <number>100</number>
+                  <number>99</number>
                  </property>
                  <property name="value">
                   <number>50</number>

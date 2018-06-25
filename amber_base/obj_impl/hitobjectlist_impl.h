@@ -57,13 +57,18 @@ public:
     bool isEmpty    () const;
     void sortOffset (const bool &isAscending = true);
 
+    static bool comparison(const HitObject &left, const HitObject &right){
+        return left.getOffset().value() < right.getOffset().value();
+    }
 
 private:
+
+
 
     void loadEHOList(QString &EHO, Keys newKeys = 0); // Accessed by loadHO
 
     QList<HitObject> hitObjectList;
-    bool             loadFail;
+    bool             loadFail = false;
 
 };
 

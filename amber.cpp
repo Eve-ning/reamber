@@ -406,12 +406,12 @@ void amber::on_copier_generateButton_clicked()
     timingPointStr = ui->copier_inputBox_2->toPlainText();
 
     // Invalid Cases
-    if (ValidObj::assertHitObject(hitObjStr))
+    if (!ValidObj::assertHitObject(hitObjStr))
     {
         STATMSG("Input Box 1 is not a HitObject.");
         return;
     }
-    if (ValidObj::assertTimingPoint(timingPointStr))
+    if (!ValidObj::assertTimingPoint(timingPointStr))
     {
         STATMSG("Input Box 2 is not a TimingPoint.");
         return;

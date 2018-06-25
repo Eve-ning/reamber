@@ -41,6 +41,7 @@ void HitObject_impl::loadHO(const QString& HO,
 {
     if (!ValidObj::hitObject(HO)) // Case: Invalid
     {
+        loadFail = true;
         AmberException(AmberException::HO_LOADFAIL, QString("Input: ") + HO);
         return;
     }
@@ -108,7 +109,7 @@ void HitObject_impl::loadHO(const QString& HO,
             cm_4 != ',' || cl_4 != ':' ||
             cm_5 != ',')
         {
-            throw AmberException(AmberException::HO_LOADFAIL, HO);
+             AmberException(AmberException::HO_LOADFAIL, HO);
         }
 
         break;
@@ -133,7 +134,7 @@ void HitObject_impl::loadHO(const QString& HO,
             cm_4 != ',' || cl_4 != ':' ||
             cm_5 != ',' || cl_5 != ':')
         {
-            throw AmberException(AmberException::HO_LOADFAIL, HO);
+            AmberException(AmberException::HO_LOADFAIL, HO);
         }
 
         break;

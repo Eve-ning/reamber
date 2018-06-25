@@ -93,7 +93,7 @@ public:
 
 protected:
     QList<TimingPoint> timingPointList;
-    bool               loadFail;
+    bool               loadFail = false;
 };
 
 #endif // TimingPointList_impl_H

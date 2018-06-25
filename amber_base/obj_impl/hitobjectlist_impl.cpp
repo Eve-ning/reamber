@@ -413,11 +413,17 @@ void HitObjectList_impl::sortOffset(const bool& isAscending)
 {
     if (isAscending)
     {
-        std::sort(hitObjectList.rbegin(), hitObjectList.rend());
+        std::sort(hitObjectList.begin(), hitObjectList.end(), [](const HitObject &left, const HitObject &right)
+        {
+            return left.getOffset() < right.getOffset();
+        });
     }
     else
     {
-        std::sort(hitObjectList.rbegin(), hitObjectList.rend());
+        std::sort(hitObjectList.begin(), hitObjectList.end(), [](const HitObject &left, const HitObject &right)
+        {
+            return left.getOffset() < right.getOffset();
+        });
     }
 }
 
