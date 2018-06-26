@@ -524,7 +524,7 @@ void amber::on_TPF_defaultButton_clicked()
 
         ui->TPF_amplitudeSlider->setValue(0);
         ui->TPF_offsetSlider->setValue(0);
-        ui->TPF_frequencySlider->setValue(0);
+        ui->TPF_frequencySlider->setValue(100);
         ui->TPF_intermediateSpinBox->setValue(100);
 
         ui->TPF_initialTPGroup->setTitle("Initial SV:");
@@ -541,7 +541,7 @@ void amber::on_TPF_defaultButton_clicked()
 
         ui->TPF_amplitudeSlider->setValue(0);
         ui->TPF_offsetSlider->setValue(0);
-        ui->TPF_frequencySlider->setValue(0);
+        ui->TPF_frequencySlider->setValue(100);
         ui->TPF_intermediateSpinBox->setValue(100);
 
         ui->TPF_initialTPGroup->setTitle("Initial BPM:");

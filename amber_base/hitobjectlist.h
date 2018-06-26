@@ -11,11 +11,11 @@ public:
     // CONSTRUCTORS
     HitObjectList();
     HitObjectList(QList<HitObject> newHOList);
-    HitObjectList(QString        EHO    , int newKeys = 0);
-    HitObjectList(QTextBrowser   *tb    , int newKeys = 0);
-    HitObjectList(QLineEdit      *line  , int newKeys = 0);
-    HitObjectList(QPlainTextEdit *pte   , int newKeys = 0);
-    HitObjectList(QStringList    strList, int newKeys = 0);
+    HitObjectList(QString        EHO    , int newKeys = 1);
+    HitObjectList(QTextBrowser   *tb    , int newKeys = 1);
+    HitObjectList(QLineEdit      *line  , int newKeys = 1);
+    HitObjectList(QPlainTextEdit *pte   , int newKeys = 1);
+    HitObjectList(QStringList    strList, int newKeys = 1);
 
 };
 

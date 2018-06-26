@@ -2,7 +2,12 @@
 
 bool ValidObj::hitObject(const QString &value_)
 {
-    if (value_.indexOf(',') > -1)
+
+    if (value_.indexOf('-') > -1)
+        // editor case
+    {
+        return editorHitObject(value_);
+    } else if (value_.indexOf(',') > -1)
         //.osu case
     {
         int comma = std::count(value_.begin(),value_.end(),',');
@@ -11,11 +16,7 @@ bool ValidObj::hitObject(const QString &value_)
         return ((comma == ValidObj::HITOBJECT_COMMA) &&
                 (colon == ValidObj::HITOBJECTNN_COLON || colon == ValidObj::HITOBJECTLN_COLON));
     }
-    else if (value_.indexOf('-') > -1)
-        // editor case
-    {
-        return editorHitObject(value_);
-    }
+
     return false;
 }
 bool ValidObj::timingPoint(const QString &value_)
