@@ -224,13 +224,13 @@ void HitObject_impl::printInfo() const
 }
 QString HitObject_impl::toString() const
 {
-//    return QString(column.toXAxis(keys)) + "," +
-//           QString(yAxis) + "," +
-//           QString(offset) + "," +
-//           QString(noteType) + "," +
-//           QString(hitsoundType) + "," +
-//           (double(lnEnd) == -1 ? "" : (QString(lnEnd) + ":")) +
-//           QString(sampleSet) + ":" + QString(addition) + ":" +
-//           QString(customSet) + ":" +
-//           QString(volume) + ":" + hitsoundFile;
+    return QString(column.toXAxis(keys)) + "," +
+           QString(yAxis) + "," +
+           QString(offset) + "," +
+           QString(noteType) + "," +
+           QString(hitsoundType) + "," +
+           (double(lnEnd) == -1 ? "" : (QString(lnEnd) + ":")) +
+           QString(sampleSet) + ":" + QString(addition) + ":" +
+           QString(customSet) + ":" +
+           QString(volume) + ":" + hitsoundFile;
 }

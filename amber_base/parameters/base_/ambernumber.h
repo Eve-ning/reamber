@@ -50,13 +50,13 @@ public:
     void setValue(const double &value){
         m_value = value;
         clamp();
-        force_floor();
+        floorVal();
     }
     void setValue(const AmberNumber &value){
         m_value = value.value();
         // We reclamp and refloor according to THIS object's settings
         clamp();
-        force_floor();
+        floorVal();
     }
 
     void setClampMin(const double &value){
@@ -124,7 +124,7 @@ protected:
 private:
 
     void clamp();
-    void force_floor();
+    void floorVal();
 };
 
 #endif // BASE_N_H

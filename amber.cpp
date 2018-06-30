@@ -370,7 +370,6 @@ void amber::on_stutter_generateButton_clicked()
     for (int i = 0; i < (noteList.getSize() - 1); ++ i)
     {
         TimingPointList stutter;
-
         // First SV
         stutter.append(TimingPoint(noteList[i].getOffset(), initSV, false));
 
@@ -629,19 +628,21 @@ void amber::on_TPF_generateButton_clicked()
     QVector<double> yLinear(intermediatePoints + 1);
     QVector<double> ySine(intermediatePoints + 1);
 
+    double xValue;
+
     for (int i = 0; i < intermediatePoints + 1; ++i)
     {
-        double xValue;
-
         xValue = i / ((double)intermediatePoints);
         xData[i] = (xValue * (endOffset - initialOffset).value()) + initialOffset.value();
         yLinear[i] = xValue * (endValue - initialValue) + initialValue;
         ySine[i] = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endValue + initialValue) / 2);
         yData[i] = yLinear[i] + ySine[i];
 
-        TimingPoint timingPoint(xData[i], yData[i], isBPM);
+        TimingPoint timingPoint(xData[i], yData[i], isBPM); // this is not actually a specific type so it won't clamp
         output.append(timingPoint.toString());
     }
+
+    ui->TPF_outputBox->append(output.toString().join('\n'));
 
     averageValue = output.getAverage(isBPM ? Info::IS_BPM : Info::IS_SV);
 

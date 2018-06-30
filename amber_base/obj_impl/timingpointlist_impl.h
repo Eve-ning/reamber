@@ -15,23 +15,23 @@ public:
     operator QStringList() const { return toString(); }
 
     // LOADERS
-    void loadTPList(QList<TimingPoint>  newTimingPointList_impl);
+    void loadTPList(QList<TimingPoint> newTimingPointList_impl);
     void loadTPList(QTextBrowser   *tb);
     void loadTPList(QLineEdit      *line);
     void loadTPList(QPlainTextEdit *pte);
     void loadTPList(QString        &str);
-    void loadTPList(QStringList    &str);
+    void loadTPList(QStringList    &strList);
 
     // SETTERS
     void setOffsetList(const QList<Offset> &offsetList_);
-    void setCodeList  (const QList<TimeCode> &codeList_);
+    void setCodeList  (const QList<std::shared_ptr<TimeCode> > &codeList_);
     void setValueList (const QList<double> &valueList_);
     void convertToBPM(const BPM &referenceValue);
     void convertToSV(const BPM &referenceValue);
 
     // GETTERS
     QList<Offset> getOffsetList    (const Info &info = Info(true)) const;
-    QList<TimeCode> getCodeList    (const Info &info = Info(true)) const;
+    QList<std::shared_ptr<TimeCode>> getCodeList(const Info &info = Info(true)) const;
     QList<double> getValueList     (const Info &info = Info(true)) const;
     QList<Offset> getLengthList    (const Info &info = Info(true)) const;
     QList<Distance> getDistanceList(const Info &info = Info(true)) const;
@@ -81,6 +81,7 @@ public:
     void append     (TimingPointList_impl timingPointList_);
     void deleteIndex(unsigned index){ timingPointList.removeAt(index); }
     bool isEmpty    () const;
+    void deleteList (){ timingPointList.clear(); }
 
     // ADJUSTS A TP SO THAT THE AVERAGE IS MET
     void adjustToAverage(SliderVelocity average, int adjustIndex);

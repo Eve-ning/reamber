@@ -3,21 +3,21 @@
 #include "amber_base/parameters/tpPar_/timecode.h"
 #include "amber_base/parameters/base_/ambernumber.h"
 
-class SliderVelocity : public AmberNumber
+class SliderVelocity : public TimeCode
 {
 public:
-    SliderVelocity() : AmberNumber(1.0, false, 0.1, 10.0){
+    SliderVelocity() : TimeCode(1.0, false, 0.1, 10.0){
     }
 
-    SliderVelocity(AmberNumber value) : AmberNumber(1.0, false, 0.1, 10.0){
+    SliderVelocity(AmberNumber value) : TimeCode(1.0, false, 0.1, 10.0){
         m_value = value;
     }
 
-    SliderVelocity(const double &value) : AmberNumber(1.0, false, 0.1, 10.0){
+    SliderVelocity(const double &value) : TimeCode(1.0, false, 0.1, 10.0){
         m_value = value;
     }
 
-    SliderVelocity(const TimeCode &value) : AmberNumber(1.0, false, 0.1, 10.0){
+    SliderVelocity(const TimeCode &value) : TimeCode(1.0, false, 0.1, 10.0){
         if (m_value != 0)
         {
             m_value = SV_CONV / value.value();
@@ -26,18 +26,11 @@ public:
         }
     }
 
-    TimeCode toTimeCode(){
-        if (m_value != 0)
-        {
-            return TimeCode(SV_CONV / m_value);
-        } else {
-            qDebug() << "SV triggered DivByZero";
-            return TimeCode(-100.0);
-        }
+    bool isBPM(){
+        return false;
     }
-
-    operator TimeCode(){
-        return toTimeCode();
+    bool isSV(){
+        return true;
     }
 
     static constexpr double SV_CONV = -100.0;

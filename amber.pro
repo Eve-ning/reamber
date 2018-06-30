@@ -45,11 +45,9 @@ SOURCES += \
         amber_base/parameters/hoPar_/yaxis.cpp \
         amber_base/parameters/mapPar_/commonfile.cpp \
         amber_base/parameters/mapPar_/gamemode.cpp \
-        amber_base/parameters/tpPar_/bpm.cpp \
         amber_base/parameters/tpPar_/hitsoundfile.cpp \
         amber_base/parameters/tpPar_/metronome.cpp \
         amber_base/parameters/tpPar_/samplesetindex.cpp \
-        amber_base/parameters/tpPar_/slidervelocity.cpp \
         amber_base/parameters/tpPar_/timecode.cpp \
         amber_base/validity/amberexception.cpp \
         amber_base/validity/validobj.cpp \
@@ -63,7 +61,9 @@ SOURCES += \
         amber_base/timingpoint.cpp \
         amber_base/timingpointlist.cpp \
         amber_base/parameters/base_/ambernumber.cpp \
-        amber_base/parameters/base_/amberstring.cpp
+        amber_base/parameters/base_/amberstring.cpp \
+    amber_base/parameters/tpPar_/bpm.cpp \
+    amber_base/parameters/tpPar_/slidervelocity.cpp
 
 
 HEADERS += \
@@ -93,11 +93,9 @@ HEADERS += \
         amber_base/parameters/hoPar_/yaxis.h \
         amber_base/parameters/mapPar_/commonfile.h \
         amber_base/parameters/mapPar_/gamemode.h \
-        amber_base/parameters/tpPar_/bpm.h \
         amber_base/parameters/tpPar_/hitsoundfile.h \
         amber_base/parameters/tpPar_/metronome.h \
         amber_base/parameters/tpPar_/samplesetindex.h \
-        amber_base/parameters/tpPar_/slidervelocity.h \
         amber_base/parameters/tpPar_/timecode.h \
         amber_base/validity/amberexception.h \
         amber_base/validity/validobj.h \
@@ -112,7 +110,11 @@ HEADERS += \
         amber_base/timingpoint.h \
         amber_base/timingpointlist.h \
         amber_base/parameters/base_/ambernumber.h \
-        amber_base/parameters/base_/amberstring.h
+        amber_base/parameters/base_/amberstring.h \
+    amber_base/parameters/tpPar_/bpm.h \
+    amber_base/parameters/tpPar_/slidervelocity.h \
+    amber_base/parameters/tpPar_/bpm.h \
+    amber_base/parameters/tpPar_/slidervelocity.h
 
 
 LIBS += \
@@ -124,7 +126,8 @@ DISTFILES += \
     documentation \
     iconResources/Untitled.png \
     amberResources/amberLogoBlackAA.png \
-    amberResources/icons/githubLogo.png
+    amberResources/icons/githubLogo.png \
+    debug_copypaste
 
 SUBDIRS += \
     amber.pro

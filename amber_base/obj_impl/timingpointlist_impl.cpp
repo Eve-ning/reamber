@@ -64,7 +64,7 @@ void TimingPointList_impl::setOffsetList(const QList<Offset> &offsetList_)
         timingPointList[i].setOffset(offsetList_[i]);
     }
 }
-void TimingPointList_impl::setCodeList(const QList<TimeCode> &codeList_)
+void TimingPointList_impl::setCodeList(const QList<std::shared_ptr<TimeCode>> &codeList_)
 {
     AmberException::assertLengthMatch(timingPointList.length(),
                                       codeList_.length());
@@ -122,10 +122,10 @@ QList<Offset> TimingPointList_impl::getOffsetList(const Info& info) const
 
     return output;
 }
-QList<TimeCode> TimingPointList_impl::getCodeList(const Info& info) const
+QList<std::shared_ptr<TimeCode>> TimingPointList_impl::getCodeList(const Info& info) const
 {
     TimingPoint timingPoint;
-    QList<TimeCode> output;
+    QList<std::shared_ptr<TimeCode>> output;
     foreach (timingPoint, timingPointList)
     {
         if (((info.getIsBPM()) && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV

@@ -17,6 +17,10 @@ class TimingPoint_impl
 {
 public:
     TimingPoint_impl();
+    ~TimingPoint_impl() {
+    }
+
+
     operator QString() const { return toString(); }
 
     // LOADERS
@@ -35,10 +39,11 @@ public:
     {
         offset = Offset(offset_);
     }
-    void setCode(TimeCode code_)
+    void setCode(std::shared_ptr<TimeCode> code_)
     {
         timeCode = code_;
     }
+
     void setMetronome(Metronome metronome_)
     {
         metronome = metronome_;
@@ -55,35 +60,29 @@ public:
     {
         volume = volume_;
     }
-    void setIsBPM(bool isBPM_)
-    {
-        isBPM = isBPM_;
-    }
-    void setIsSV(bool isSV_)
-    {
-        isBPM = !isSV_;
-    }
     void setIsKiai(bool isKiai_)
     {
         isKiai = isKiai_;
     }
     void convertToSV(const BPM &referenceValue);
     void convertToBPM(const BPM &referenceValue);
-    void setValue(double value_);
+    void setType(bool isBPM);
+    void setValue(double value);
 
     // GETTERS
     void getInfo() const;
     Offset getOffset() const { return offset; }
-    TimeCode getCode() const { return timeCode; }
+    std::shared_ptr<TimeCode> getCode() const { return timeCode; }
     Metronome getMetronome() const { return metronome; }
     SampleSet getSampleSet() const { return sampleSet; }
     SampleSetIndex getSampleSetIndex() const { return sampleSetIndex; }
     Volume getVolume() const { return volume; }
-    bool getIsBPM() const { return isBPM; }
-    bool getIsSV() const { return !isBPM; }
+    bool getIsBPM() const { return timeCode->isBPM(); }
+    bool getIsSV() const { return timeCode->isSV(); }
     bool getIsKiai() const { return isKiai; }
     double getValue() const;
     QString toString() const;
+
 
     // OPERS
     bool operator<(TimingPoint_impl* curTP){ return offset.value() < curTP->getOffset().value(); }
@@ -93,15 +92,13 @@ public:
 
     // MISC
 
-
 protected:
     Offset offset;
-    TimeCode timeCode;
+    std::shared_ptr<TimeCode> timeCode; // polym
     Metronome metronome;
     SampleSet sampleSet;
     SampleSetIndex sampleSetIndex;
     Volume volume;
-    bool isBPM;
     bool isKiai;
 
     bool loadFail = false;

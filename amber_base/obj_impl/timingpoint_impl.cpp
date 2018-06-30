@@ -2,12 +2,11 @@
 
 TimingPoint_impl::TimingPoint_impl():
     offset (0),
-    timeCode (-100),
+    timeCode (std::make_shared<SliderVelocity>(SliderVelocity())),
     metronome (4),
     sampleSet (SampleSet::SAMPLE_SET::AUTO),
     sampleSetIndex (0),
     volume (5),
-    isBPM (false),
     isKiai (false)
 {
 
@@ -35,13 +34,18 @@ void TimingPoint_impl::loadTP(const QString &TP)
     if (TP_splitComma.size() == 8)
     {
         offset = TP_splitComma[0].toDouble();
-        timeCode = TP_splitComma[1].toDouble();
         metronome = TP_splitComma[2].toInt();
         sampleSet = TP_splitComma[3].toInt();
         sampleSetIndex = TP_splitComma[4].toInt();
         volume = TP_splitComma[5].toInt();
-        isBPM = (TP_splitComma[6] == "1");
         isKiai = (TP_splitComma[7] == "1");
+
+        // Check if it's BPM
+        if (TP_splitComma[6] == "1") {
+            timeCode = std::make_shared<BPM>(BPM(TP_splitComma[1].toDouble()));
+        } else {
+            timeCode = std::make_shared<SliderVelocity>(SliderVelocity(TP_splitComma[1].toDouble()));
+        }
     }
     else
     {
@@ -59,42 +63,49 @@ void TimingPoint_impl::loadTP(QLineEdit* line)
 void TimingPoint_impl::loadTP(Offset offset_, double value_, bool isBPM_)
 {
     offset = offset_;
-    isBPM = isBPM_;
+    setType(isBPM_);
     setValue(value_);
 }
 
 void TimingPoint_impl::convertToSV(const BPM &referenceValue){
     // We convert this Timing Point into SV, it shouldn't affect visual gameplay
 
-    if (!isBPM)
+    if (!getIsBPM())
     {
         qDebug() << "Timing Point is already an SV";
     }
     else {
-        timeCode = SliderVelocity(BPM(timeCode).value() / referenceValue.value()).toTimeCode();
-        isBPM = false;
+        setType(false);
+        setValue(timeCode->value() / referenceValue.value());
     }
 }
 void TimingPoint_impl::convertToBPM(const BPM &referenceValue){
     // We convert this Timing Point into BPM, it shouldn't affect visual gameplay
 
-    if (isBPM)
+    if (getIsBPM())
     {
         qDebug() << "Timing Point is already a BPM";
     }
     else {
-        timeCode = BPM(SliderVelocity(timeCode).value() * referenceValue.value()).toTimeCode();
-        isBPM = true;
+        setType(true);
+        setValue(timeCode->value() * referenceValue.value());
     }
 }
 
-void TimingPoint_impl::setValue(double value_){
-    if (isBPM){
-        timeCode = BPM(value_).toTimeCode();
+void TimingPoint_impl::setType(bool isBPM)
+{
+    // case: current = BPM, set = SV
+    if (getIsBPM() && !isBPM) {
+        timeCode = std::make_shared<SliderVelocity>(SliderVelocity());
     }
-    else {
-        timeCode = SliderVelocity(value_).toTimeCode();
+    // case: current = SV, set = BPM
+    else if (getIsSV() && isBPM) {
+        timeCode = std::make_shared<BPM>(BPM());
     }
+}
+
+void TimingPoint_impl::setValue(double value){
+    timeCode->setValue(value);
 }
 
 // GETTERS
@@ -104,36 +115,33 @@ void TimingPoint_impl::getInfo() const
              << "[---- Timing Point Info ----]"
              << "\r\n"
              << "OFFSET         : " << QString(offset        ) << "\r\n"
-             << "CODE           : " << QString(timeCode      ) << "\r\n"
+             << "CODE           : " << QString(*timeCode     ) << "\r\n"
              << "METRONOME      : " << QString(metronome     ) << "\r\n"
              << "SAMPLESET      : " << QString(sampleSet     ) << "\r\n"
              << "SAMPLESETINDEX : " << QString(sampleSetIndex) << "\r\n"
              << "VOLUME         : " << QString(volume        ) << "\r\n"
-             << "ISBPM          : " << QString(isBPM         ) << "\r\n"
+             << "ISBPM          : " << getIsBPM() << "\r\n"
              << "ISKIAI         : " << QString(isKiai        ) << "\r\n";
 }
 double TimingPoint_impl::getValue() const
 {
-    if (isBPM)
-    {
-        return BPM(timeCode).value();
-    }
-    else
-    {
-        return SliderVelocity(timeCode).value();
-    }
+    return timeCode->value();
 }
 QString TimingPoint_impl::toString() const
 {
+
     return QString(offset) + "," +
-           QString(timeCode) + "," +
+           QString(*timeCode) + "," +
            QString(metronome) + "," +
            QString(sampleSet) + "," +
            QString(sampleSetIndex) + "," +
            QString(volume) + "," +
-           (isBPM ? "1" : "0") + "," +
+           (getIsBPM() ? "1" : "0") + "," +
            (isKiai ? "1" : "0");
 }
+
+
+
 
 // OPERS
 

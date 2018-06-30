@@ -10,16 +10,37 @@
 class TimeCode : public AmberNumber
 {
 public:
-    TimeCode() : AmberNumber(-100.0, false){
+
+    TimeCode(double value,
+             bool forceInt = false,
+             double clampMin = INT_MIN,
+             double clampMax = INT_MAX) : AmberNumber(value, forceInt, clampMin, clampMax){
+        qDebug() << "constructed";
     }
 
-    TimeCode(AmberNumber value) : AmberNumber(-100.0, false){
-        m_value = value;
+    virtual ~TimeCode(){
+        qDebug() << "destroyed";
     }
 
-    TimeCode(const double &value) : AmberNumber(-100.0, false){
-        m_value = value;
-    }
+    virtual bool isBPM() = 0;
+    virtual bool isSV() = 0;
+
+// We make this virtual
+
+//    TimeCode() : AmberNumber(-100.0, false){
+
+//    }
+
+//    TimeCode(AmberNumber value) : AmberNumber(-100.0, false){
+//        m_value = value;
+//    }
+
+//    TimeCode(const double &value) : AmberNumber(-100.0, false){
+//        m_value = value;
+//    }
+
+private:
+    bool m_isBPM;
 
 };
 #endif // TIMECODE_H

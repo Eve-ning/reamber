@@ -12,9 +12,10 @@ void AmberNumber::clamp(){
     }
 }
 
-void AmberNumber::force_floor(){
+void AmberNumber::floorVal(){
     if (m_forceInt)
     {
         m_value = floor(m_value);
     }
 }
+
