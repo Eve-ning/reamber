@@ -28,6 +28,10 @@ public:
         return false;
     }
 
+    operator QString() const{
+        return QString::number(BPM_CONV / m_value);
+    }
+
     static constexpr double BPM_CONV = 60000.0;
 };
 #endif // BPM_H

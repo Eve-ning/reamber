@@ -38,10 +38,8 @@ bool ValidObj::editorHitObject(const QString &value_)
 
 bool ValidObj::hitObject(const QStringList &value_)
 {
-    for (int i = 0; i < value_.length(); i ++)
-    {
-        if (!hitObject(value_[i]))
-        {
+    for (const auto &i : value_){
+        if (!hitObject(i)){
             return false;
         }
     }
@@ -49,10 +47,8 @@ bool ValidObj::hitObject(const QStringList &value_)
 }
 bool ValidObj::timingPoint(const QStringList &value_)
 {
-    for (int i = 0; i < value_.length(); i ++)
-    {
-        if (!timingPoint(value_[i]))
-        {
+    for (const auto &i : value_){
+        if (!timingPoint(i)){
             return false;
         }
     }

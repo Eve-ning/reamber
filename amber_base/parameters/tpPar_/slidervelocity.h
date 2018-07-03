@@ -33,6 +33,10 @@ public:
         return true;
     }
 
+    operator QString() const{
+        return QString::number(SV_CONV / m_value);
+    }
+
     static constexpr double SV_CONV = -100.0;
 };
 

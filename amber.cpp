@@ -410,7 +410,7 @@ void amber::on_copier_generateButton_clicked()
         STATMSG("Input Box 1 is not a HitObject.");
         return;
     }
-    if (!ValidObj::assertTimingPoint(timingPointStr))
+    if (!ValidObj::assertTimingPoint(timingPointStr.split('\n')))
     {
         STATMSG("Input Box 2 is not a TimingPoint.");
         return;
@@ -632,40 +632,26 @@ void amber::on_TPF_generateButton_clicked()
 
     for (int i = 0; i < intermediatePoints + 1; ++i)
     {
+        // We find the distance between each point via xValue
         xValue = i / ((double)intermediatePoints);
         xData[i] = (xValue * (endOffset - initialOffset).value()) + initialOffset.value();
+
+        // Graph for Respective functions
         yLinear[i] = xValue * (endValue - initialValue) + initialValue;
         ySine[i] = amplitude * qSin(frequency * (xValue + offset) * M_PI) * ((endValue + initialValue) / 2);
+
+        // Merge together to form Y
         yData[i] = yLinear[i] + ySine[i];
 
-        TimingPoint timingPoint(xData[i], yData[i], isBPM); // this is not actually a specific type so it won't clamp
-        output.append(timingPoint.toString());
+        // Append to our output
+        output.append(TimingPoint (xData[i], yData[i], isBPM));
     }
 
+    // Push to output box
     ui->TPF_outputBox->append(output.toString().join('\n'));
 
+    // Get average
     averageValue = output.getAverage(isBPM ? Info::IS_BPM : Info::IS_SV);
-
-    if (!ui->TPF_liveUpdateCheck) // Do not push messages on live updates
-    {
-        STATMSG(  ("RANGE: ")
-                  + (QString(initialOffset))
-                  + (" ~ ")
-                  + (QString(endOffset)));
-
-        STATMSG(  "LINEAR FUNCTION: f(x) = "
-                  + QString::number((endValue - initialValue) / intermediatePoints)
-                  + "x + "
-                  + QString::number(initialValue));
-
-        STATMSG(  "SINE FUNCTION: f(x) = "
-                  + QString::number(amplitude)
-                  + " * sin[("
-                  + QString::number(frequency)
-                  + " * x + "
-                  + QString::number(offset)
-                  + ") * π]");
-    }
 
     customPlot->graph(0)->setData(xData, yData);
     customPlot->graph(0)->setPen(QPen(Qt::black));
@@ -689,12 +675,13 @@ void amber::on_TPF_generateButton_clicked()
     if (isSV)
     {
         customPlot->yAxis->setLabel("SV");
-        customPlot->yAxis->setRange(0.0, 10.0);
+        customPlot->yAxis->setRange(0.1, 10.0); // Default osu!mania SV clamps
     }
     else if (isBPM)
     {
         customPlot->yAxis->setLabel("BPM");
-        customPlot->yAxis->setRange(minTP, maxTP);
+        customPlot->yAxis->setRange(minTP < 0 ? 0 : minTP, // We clamp on 0 BPM
+                                    maxTP * 1.1); // We have some space at the top to make it look better
     }
     else
     {
@@ -702,6 +689,29 @@ void amber::on_TPF_generateButton_clicked()
     }
 
     customPlot->replot(QCustomPlot::rpQueuedReplot);
+
+    /* Redacted message pushing
+     *
+     * if (!ui->TPF_liveUpdateCheck) // Do not push messages on live updates
+    {
+        STATMSG(  ("RANGE: ")
+                  + (QString(initialOffset))
+                  + (" ~ ")
+                  + (QString(endOffset)));
+
+        STATMSG(  "LINEAR FUNCTION: f(x) = "
+                  + QString::number((endValue - initialValue) / intermediatePoints)
+                  + "x + "
+                  + QString::number(initialValue));
+
+        STATMSG(  "SINE FUNCTION: f(x) = "
+                  + QString::number(amplitude)
+                  + " * sin[("
+                  + QString::number(frequency)
+                  + " * x + "
+                  + QString::number(offset)
+                  + ") * π]");
+    }*/
 
 }
 

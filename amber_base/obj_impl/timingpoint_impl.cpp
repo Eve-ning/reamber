@@ -75,8 +75,9 @@ void TimingPoint_impl::convertToSV(const BPM &referenceValue){
         qDebug() << "Timing Point is already an SV";
     }
     else {
+        double value = timeCode->value() / referenceValue.value();
         setType(false);
-        setValue(timeCode->value() / referenceValue.value());
+        setValue(value);
     }
 }
 void TimingPoint_impl::convertToBPM(const BPM &referenceValue){
@@ -87,8 +88,9 @@ void TimingPoint_impl::convertToBPM(const BPM &referenceValue){
         qDebug() << "Timing Point is already a BPM";
     }
     else {
+        double value = timeCode->value() / referenceValue.value();
         setType(true);
-        setValue(timeCode->value() * referenceValue.value());
+        setValue(value);
     }
 }
 

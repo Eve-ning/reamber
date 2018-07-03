@@ -15,11 +15,9 @@ public:
              bool forceInt = false,
              double clampMin = INT_MIN,
              double clampMax = INT_MAX) : AmberNumber(value, forceInt, clampMin, clampMax){
-        qDebug() << "constructed";
     }
 
     virtual ~TimeCode(){
-        qDebug() << "destroyed";
     }
 
     virtual bool isBPM() = 0;

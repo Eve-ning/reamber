@@ -87,20 +87,19 @@ void TimingPointList_impl::setValueList(const QList<double> &valueList_)
 
 void TimingPointList_impl::convertToBPM(const BPM &referenceValue)
 {
-    for (int i = 0; i < getSize(); i ++){
-        if (!timingPointList[i].getIsBPM())
+    for (auto &i : timingPointList){
+        if (!i.getIsBPM())
         {
-            timingPointList[i].convertToBPM(referenceValue);
+            i.convertToBPM(referenceValue);
         }
     }
 }
 
 void TimingPointList_impl::convertToSV(const BPM &referenceValue)
 {
-    for (int i = 0; i < getSize(); i ++){
-        if (timingPointList[i].getIsBPM())
-        {
-            timingPointList[i].convertToBPM(referenceValue);
+    for (auto &i : timingPointList){
+        if (i.getIsBPM()){
+            i.convertToSV(referenceValue);
         }
     }
 }
@@ -111,8 +110,7 @@ QList<Offset> TimingPointList_impl::getOffsetList(const Info& info) const
     TimingPoint timingPoint;
     QList<Offset> output;
 
-    foreach (timingPoint, timingPointList)
-    {
+    foreach (timingPoint, timingPointList){
         if (((info.getIsBPM()) && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
             || ((info.getIsSV()) && timingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
@@ -126,8 +124,7 @@ QList<std::shared_ptr<TimeCode>> TimingPointList_impl::getCodeList(const Info& i
 {
     TimingPoint timingPoint;
     QList<std::shared_ptr<TimeCode>> output;
-    foreach (timingPoint, timingPointList)
-    {
+    foreach (timingPoint, timingPointList){
         if (((info.getIsBPM()) && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
             || ((info.getIsSV()) && timingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
@@ -141,8 +138,7 @@ QList<double> TimingPointList_impl::getValueList(const Info& info) const
 {
     TimingPoint timingPoint;
     QList<double> output;
-    foreach (timingPoint, timingPointList)
-    {
+    foreach (timingPoint, timingPointList){
         if (((info.getIsBPM()) && timingPoint.getIsBPM()) // continue if foreach is BPM and we only accept SV
             || ((info.getIsSV()) && timingPoint.getIsSV())) // continue if foreach is SV  and we only accept BPM
         {
@@ -191,11 +187,9 @@ QList<Offset> TimingPointList_impl::getUnqOffsetList(const Info& info) const
 
     offsetList = getOffsetList(info);
 
-    foreach (offset, offsetList)
-    {
-        if (!unqOffsetList.contains(offset))
-        {
-            unqOffsetList.append(offset);
+    for (auto &i : offsetList){
+        if (!unqOffsetList.contains(i)){
+            unqOffsetList.append(i);
         }
     }
 
@@ -204,31 +198,24 @@ QList<Offset> TimingPointList_impl::getUnqOffsetList(const Info& info) const
 
 TimingPointList_impl TimingPointList_impl::splitByType(const Info& info) const
 {
-    if (info.getIsSV() && info.getIsBPM())
-    {
+    if (info.getIsSV() && info.getIsBPM()){
         AmberException(AmberException::INFO_RESTRICT,
             QString(__FUNCTION__) + "does not accept both SV & BPM input, pick only one");
     }
 
     TimingPointList_impl output;
 
-    if (info.getIsSV())
-    {
-        for (int temp = 0; temp < timingPointList.length(); temp++)
-        {
-            if (timingPointList[temp].getIsSV())
-            {
-                output.append(timingPointList[temp]);
+    if (info.getIsSV()){
+        for (const auto &i : timingPointList){
+            if (i.getIsSV()){
+                output.append(i);
             }
         }
     }
-    if (info.getIsBPM())
-    {
-        for (int temp = 0; temp < timingPointList.length(); temp++)
-        {
-            if (timingPointList[temp].getIsBPM())
-            {
-                output.append(timingPointList[temp]);
+    if (info.getIsBPM()){
+        for (const auto &i : timingPointList){
+            if (i.getIsBPM()){
+                output.append(i);
             }
         }
     }
@@ -316,9 +303,9 @@ int TimingPointList_impl::getSize(const Info& info) const
     }
     else if (info.getIsSV()) // SV Request
     {
-        foreach (temp, timingPointList)
+        for (const auto& i : timingPointList)
         {
-            if (temp.getIsSV())
+            if (i.getIsSV())
             {
                 counter++;
             }
@@ -326,9 +313,9 @@ int TimingPointList_impl::getSize(const Info& info) const
     }
     else if (info.getIsBPM()) // BPM Request
     {
-        foreach (temp, timingPointList)
+        for (const auto& i : timingPointList)
         {
-            if (temp.getIsBPM())
+            if (i.getIsBPM())
             {
                 counter++;
             }
@@ -350,9 +337,9 @@ double TimingPointList_impl::getAverage(const Info& info) const
 
     TPList = getDistanceList(info);
 
-    for (int i = 0; i < TPList.length(); i++)
+    for (const auto& i : TPList)
     {
-        output += TPList[i].value();
+        output += i.value();
     }
 
     output /= getLength().value();
@@ -757,38 +744,30 @@ void TimingPointList_impl::subtractValue(const double rhsDouble)
 
 void TimingPointList_impl::multiplyOffset(const double rhsDouble)
 {
-    QList<Offset> newOffsetList,
-                  oldOffsetList;
-    oldOffsetList = getOffsetList();
+    QList<Offset> newOffsetList;
 
-    for (int temp = 0; temp < oldOffsetList.length(); temp ++)
-    {
-        newOffsetList.append(Offset(timingPointList[temp].getOffset() * rhsDouble));
+    for (const auto &i : timingPointList){
+        newOffsetList.append(Offset(i.getOffset() * rhsDouble));
     }
 
     setOffsetList(newOffsetList);
 }
 void TimingPointList_impl::divideOffset(const double rhsDouble)
 {
-    QList<Offset> newOffsetList,
-                  oldOffsetList;
-    oldOffsetList = getOffsetList();
+    QList<Offset> newOffsetList;
 
-    for (int temp = 0; temp < oldOffsetList.length(); temp ++)
-    {
-        newOffsetList.append(Offset(timingPointList[temp].getOffset() / rhsDouble));
+    for (const auto &i : timingPointList){
+        newOffsetList.append(Offset(i.getOffset() / rhsDouble));
     }
 
     setOffsetList(newOffsetList);
 }
 void TimingPointList_impl::addOffset(const double rhsDouble)
 {
-    QList<Offset> newOffsetList, oldOffsetList;
-    oldOffsetList = getOffsetList();
+    QList<Offset> newOffsetList;
 
-    for (int temp = 0; temp < oldOffsetList.length(); temp ++)
-    {
-        newOffsetList.append(Offset(timingPointList[temp].getOffset() + rhsDouble));
+    for (const auto &i : timingPointList){
+        newOffsetList.append(Offset(i.getOffset() + rhsDouble));
     }
 
     setOffsetList(newOffsetList);
@@ -798,9 +777,8 @@ void TimingPointList_impl::subtractOffset(const double rhsDouble)
     QList<Offset> newOffsetList, oldOffsetList;
     oldOffsetList = getOffsetList();
 
-    for (int temp = 0; temp < oldOffsetList.length(); temp ++)
-    {
-        newOffsetList.append(Offset(timingPointList[temp].getOffset() - rhsDouble));
+    for (const auto &i : timingPointList){
+        newOffsetList.append(Offset(i.getOffset() - rhsDouble));
     }
 
     setOffsetList(newOffsetList);
@@ -808,17 +786,12 @@ void TimingPointList_impl::subtractOffset(const double rhsDouble)
 
 void TimingPointList_impl::zero()
 {
-    QList<Offset> newOffsetList, oldOffsetList;
+    QList<Offset> newOffsetList;
 
-    Offset temp, min;
+    Offset min;
 
-    min = getMinOffset();
-
-    oldOffsetList = getOffsetList();
-
-    foreach (temp, oldOffsetList)
-    {
-        newOffsetList.append(Offset(temp - min));
+    for (const auto &i : timingPointList){
+        newOffsetList.append(Offset(i.getOffset() - min));
     }
 
     setOffsetList(newOffsetList);

@@ -27,13 +27,15 @@ public:
         m_clampMax = clampMax;
     }
 
+    virtual ~AmberNumber(){}
+
     operator double() const {
         return value();
     }
     operator int() const {
         return floor(value());
     }
-    operator QString() const {
+    virtual operator QString() const {
         return QString::number(m_value);
     }
     void operator =(const AmberNumber &value){
