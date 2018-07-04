@@ -148,7 +148,7 @@ void amber::PARAMETER_MESSAGE(QMap<QString, QVariant> PARAMETER_VALUE_LIST)
             QStringList VALUE_LIST;
             VALUE_LIST = iter.value().toStringList();
 
-            for (int i = 0; i < VALUE_LIST.length(); i ++)
+            for (int i = 0; i < VALUE_LIST.length(); ++ i)
             {
                 parameterBrowser->append(QString("%1 : %2").arg(iter.key()).arg(VALUE_LIST[i]));
             }
@@ -188,24 +188,19 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
 
     ui->stackedWidget->setCurrentIndex(1);
 
-    if      (itemString == "Stutter")
-    {
+    if      (itemString == "Stutter") {
         ui->basicStackedWidget->setCurrentIndex(0);
     }
-    else if (itemString == "Copier")
-    {
+    else if (itemString == "Copier"){
         ui->basicStackedWidget->setCurrentIndex(1);
     }
-    else if (itemString == "2-Point Function")
-    {
+    else if (itemString == "2-Point Function"){
         ui->basicStackedWidget->setCurrentIndex(2);
     }
-    else if (itemString == "Normalizer")
-    {
+    else if (itemString == "Normalizer"){
         ui->basicStackedWidget->setCurrentIndex(3);
     }
-    else if (itemString == "Adjuster")
-    {
+    else if (itemString == "Adjuster"){
         ui->basicStackedWidget->setCurrentIndex(4);
     }
 
@@ -217,12 +212,10 @@ void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
 
     ui->stackedWidget->setCurrentIndex(2);
 
-    if      (itemString == "Pack Splitter")
-    {
+    if      (itemString == "Pack Splitter"){
         ui->advancedStackedWidget->setCurrentIndex(0);
     }
-    if      (itemString == "Advanced Adjuster")
-    {
+    if      (itemString == "Advanced Adjuster"){
         ui->advancedStackedWidget->setCurrentIndex(1);
     }
 }
@@ -233,12 +226,10 @@ void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
 
     ui->stackedWidget->setCurrentIndex(3);
 
-    if      (itemString == "Default Values")
-    {
+    if      (itemString == "Default Values"){
         ui->settingsTabWidget->setCurrentIndex(0);
     }
-    else if (itemString == "Error Log")
-    {
+    else if (itemString == "Error Log"){
         ui->settingsTabWidget->setCurrentIndex(1);
     }
 }
@@ -358,8 +349,7 @@ void amber::on_stutter_generateButton_clicked()
     if (noteList.getSize() == 0){
         STATMSG("Got size 0.");
         return;
-    } else if (noteList.getLoadFail())
-    {
+    } else if (noteList.getLoadFail()){
         STATMSG("Load Unsuccessful.");
         return;
     }
@@ -367,8 +357,7 @@ void amber::on_stutter_generateButton_clicked()
     noteList.makeUnique();
 
     // Generate all SVs in basic format
-    for (int i = 0; i < (noteList.getSize() - 1); ++ i)
-    {
+    for (int i = 0; i < (noteList.getSize() - 1); ++ i){
         TimingPointList stutter;
         // First SV
         stutter.append(TimingPoint(noteList[i].getOffset(), initSV, false));
@@ -405,13 +394,11 @@ void amber::on_copier_generateButton_clicked()
     timingPointStr = ui->copier_inputBox_2->toPlainText();
 
     // Invalid Cases
-    if (!ValidObj::assertHitObject(hitObjStr))
-    {
+    if (!ValidObj::assertHitObject(hitObjStr)){
         STATMSG("Input Box 1 is not a HitObject.");
         return;
     }
-    if (!ValidObj::assertTimingPoint(timingPointStr.split('\n')))
-    {
+    if (!ValidObj::assertTimingPoint(timingPointStr.split('\n'))){
         STATMSG("Input Box 2 is not a TimingPoint.");
         return;
     }
@@ -436,10 +423,8 @@ void amber::on_copier_generateButton_clicked()
     // Zero the list to make use of OM_HO's initial offset
     timingPointList.zero();
 
-    for (int tempHO = 0; tempHO < hitObjectList.getSize(); tempHO++)
-    {
-        for (int tempTP = 0; tempTP < timingPointList.getSize(); tempTP++)
-        {
+    for (int tempHO = 0; tempHO < hitObjectList.getSize(); tempHO++) {
+        for (int tempTP = 0; tempTP < timingPointList.getSize(); tempTP++){
             // We take the zero-ed list and add the offset from hitObjectList
             timingPointList.addOffset(hitObjectList[tempHO].getOffset());
 
@@ -512,8 +497,7 @@ void amber::on_TPF_BPMRadio_clicked()
 // Reset Values to Default
 void amber::on_TPF_defaultButton_clicked()
 {
-    if (ui->TPF_SVRadio->isChecked())
-    {
+    if (ui->TPF_SVRadio->isChecked()){
         ui->TPF_initialTPSlider->setMaximum(1000);
         ui->TPF_initialTPSlider->setMinimum(10);
         ui->TPF_initialTPSlider->setValue(100);
@@ -529,8 +513,7 @@ void amber::on_TPF_defaultButton_clicked()
         ui->TPF_initialTPGroup->setTitle("Initial SV:");
         ui->TPF_endTPGroup->setTitle("End SV:");
     }
-    else if (ui->TPF_BPMRadio->isChecked())
-    {
+    else if (ui->TPF_BPMRadio->isChecked()){
         ui->TPF_initialTPSlider->setMaximum(500000);
         ui->TPF_initialTPSlider->setMinimum(100);
         ui->TPF_initialTPSlider->setValue(100);
@@ -545,9 +528,7 @@ void amber::on_TPF_defaultButton_clicked()
 
         ui->TPF_initialTPGroup->setTitle("Initial BPM:");
         ui->TPF_endTPGroup->setTitle("End BPM:");
-    }
-    else
-    {
+    }else{
         return;
     }
 }
@@ -599,18 +580,14 @@ void amber::on_TPF_generateButton_clicked()
     outputBox->clear();
 
     // Set startOffset and endOffset
-    if (ui->TPF_editorInputLine->text().isEmpty())
-    {
+    if (ui->TPF_editorInputLine->text().isEmpty()){
         STATMSG("No Input detected");
         return;
     }
-    else if (noteInput.getSize() == 2)
-    {
+    else if (noteInput.getSize() == 2){
         initialOffset = noteInput[0].getOffset();
         endOffset = noteInput[1].getOffset();
-    }
-    else
-    {
+    }else{
         STATMSG("Make sure you input 2 Editor Hit Objects in the Input.");
         return;
     }
@@ -630,8 +607,7 @@ void amber::on_TPF_generateButton_clicked()
 
     double xValue;
 
-    for (int i = 0; i < intermediatePoints + 1; ++i)
-    {
+    for (int i = 0; i < intermediatePoints + 1; ++i){
         // We find the distance between each point via xValue
         xValue = i / ((double)intermediatePoints);
         xData[i] = (xValue * (endOffset - initialOffset).value()) + initialOffset.value();
@@ -672,19 +648,16 @@ void amber::on_TPF_generateButton_clicked()
     averageLabel->setFont(QFont(font().family(), 12));
 
     // Set Axis
-    if (isSV)
-    {
+    if (isSV){
         customPlot->yAxis->setLabel("SV");
         customPlot->yAxis->setRange(0.1, 10.0); // Default osu!mania SV clamps
     }
-    else if (isBPM)
-    {
+    else if (isBPM){
         customPlot->yAxis->setLabel("BPM");
         customPlot->yAxis->setRange(minTP < 0 ? 0 : minTP, // We clamp on 0 BPM
                                     maxTP * 1.1); // We have some space at the top to make it look better
     }
-    else
-    {
+    else{
         return;
     }
 
@@ -754,24 +727,21 @@ void amber::on_normalizer_generateButton_clicked()
     }
 
     // Add items into List widget for user to select
-    for (int temp = 0; temp < timingPointList.getSize(); temp++){
+    for (int i = 0; i < timingPointList.getSize(); ++i){
         listWidget->addItem(QString("BPM: ")
-                            .append(QString::number(timingPointList[temp].getValue()))
+                            .append(QString::number(timingPointList[i].getValue()))
                             .append(" | Offset: ")
-                            .append(QString(timingPointList[temp].getOffset())));
+                            .append(QString(timingPointList[i].getOffset())));
     }
 
     // Case of overriding
-    if (overrideCheck->isChecked())
-    {
+    if (overrideCheck->isChecked()){
         normalizeBPM = overrideDoubleSpinBox->value();
     }
-    else if (customBPMLine->text() != "Awaiting Selection...")
-    {
+    else if (customBPMLine->text() != "Awaiting Selection..."){
         normalizeBPM = customBPMLine->text().toDouble();
     }
-    else
-    {
+    else{
         STATMSG("Select 1 BPM Timing Point or use the Manual Override");
         return;
     }
@@ -781,8 +751,7 @@ void amber::on_normalizer_generateButton_clicked()
             + (" BPM"));
 
     // Append to output
-    for (int temp = 0; temp < timingPointList.getSize(); temp ++)
-    {
+    for (int temp = 0; temp < timingPointList.getSize(); temp ++){
         timingPointList.convertToSV(normalizeBPM);
         outputBox->append(timingPointList[temp].toString());
     }
@@ -806,51 +775,42 @@ void amber::on_default_savePreferencesButton_clicked()
 
 void amber::on_adjuster_multiplySpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked())
-    {
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
         amber::on_adjuster_generateButton_clicked();
     }
-    if (ui->adjuster_multiplySpinBox->value() != 1)
-    {
+    if (ui->adjuster_multiplySpinBox->value() != 1){
         ui->adjuster_autoZeroCheck->setEnabled(false);
         ui->adjuster_autoZeroCheck->setChecked(false);
 
         ui->adjuster_zeroSpinBox->setEnabled(true);
-    }
-    else
-    {
+    }else{
         ui->adjuster_autoZeroCheck->setEnabled(true);
     }
 }
 void amber::on_adjuster_zeroSpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked())
-    {
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
         amber::on_adjuster_generateButton_clicked();
     }
 }
 void amber::on_adjuster_offsetSpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked())
-    {
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
         amber::on_adjuster_generateButton_clicked();
     }
 }
 void amber::on_adjuster_addSpinBox_editingFinished()
 {
-    if (ui->adjuster_liveUpdateCheck->isChecked())
-    {
+    if (ui->adjuster_liveUpdateCheck->isChecked()){
         amber::on_adjuster_generateButton_clicked();
     }
 }
 void amber::on_adjuster_autoZeroCheck_stateChanged(int arg1)
 {
-    if (arg1 == Qt::Checked)
-    {
+    if (arg1 == Qt::Checked){
         ui->adjuster_zeroSpinBox->setEnabled(false);
     }
-    else if (arg1 == Qt::Unchecked)
-    {
+    else if (arg1 == Qt::Unchecked){
         ui->adjuster_zeroSpinBox->setEnabled(true);
     }
 }
@@ -864,10 +824,10 @@ void amber::on_adjuster_generateButton_clicked()
                    *addSpinBox;
     QSpinBox       *offsetSpinBox;
     QCheckBox      *autoZeroCheck,
-            *invertCheck;
+                   *invertCheck;
     QCustomPlot    *customPlot;
     QRadioButton   *SVRadio,
-            *graphLineRadio;
+                   *graphLineRadio;
 
     inputBox          = ui->adjuster_inputBox;
     outputBox         = ui->adjuster_outputBox;
@@ -953,8 +913,8 @@ void amber::on_adjuster_generateButton_clicked()
 
     QList<Offset> offsetList = inputTPList.getOffsetList(info);
     QList<double> offsetList_d;
-    for (int i = 0; i < offsetList.length(); i ++){
-        offsetList_d.append(offsetList[i]);
+    for (const auto &i : offsetList){
+        offsetList_d.append(i);
     }
 
     // Declare Data
@@ -982,11 +942,9 @@ void amber::on_adjuster_generateButton_clicked()
     outputBox->clear();
 
     // Generate Output
-    for (int temp = 0; temp < inputTPList.getSize(); temp++)
-    {
-        outputBox->append(inputTPList[temp].toString());
+    for (int i = 0; i < inputTPList.getSize(); ++i){
+        outputBox->append(inputTPList[i].toString());
     }
-
 
     return;
 }
@@ -1044,8 +1002,7 @@ void amber::on_PS_browseButton_clicked()
     browseLine->setText(filePath);
     QDir fileDir(filePath);
 
-    if (filePath.right(5) == "Songs")
-    {
+    if (filePath.right(5) == "Songs"){
         STATMSG("File Path loaded successfully");
     } else if (!filePath.isEmpty()){
         STATMSG("File Path might be incorrect, make sure it's the [Songs] Folder!");
@@ -1062,10 +1019,10 @@ void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
     QDir mapDir(mapPath);
 
     QListWidget *audioListWidget,
-            *difficultyListWidget;
+                *difficultyListWidget;
 
     QStringList audioFilter,
-            difficultyFilter;
+                difficultyFilter;
 
     audioListWidget      = ui->PS_audioFileListListWidget;
     difficultyListWidget = ui->PS_difficultyListListWidget;
@@ -1127,44 +1084,35 @@ void amber::on_PS_controlSplitButton_clicked()
     convName        = "Converted Files";
 
     // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
-    QDir convDir(  songsFolderPath
-                   + "/"
-                   + mapName
-                   + "/"
-                   + convName);
+    QDir convDir(songsFolderPath + "/" +
+                 mapName + "/" +
+                 convName);
 
     // CREATE: CONVERTED FILES FOLDER
-    if (convDir.mkpath(".") == false) // Cannot create Convert Files Dir
-    {
-        if (convDir.exists())
-        {
+    if (convDir.mkpath(".") == false){ // Cannot create Convert Files Dir
+        if (convDir.exists()){
             STATMSG("Convert folder exists already.");
             // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
-            QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
-                                                            + mapName
-                                                            + "/"
-                                                            + convName));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(songsFolderPath +
+                                                          mapName + "/" +
+                                                          convName));
         }
-        else
-        {
+        else{
             STATMSG("Convert folder couldn't be created");
             return;
         }
     }
-    else
-    {
+    else{
         STATMSG("Convert folder successfully created");
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
-        QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
-                                                        + "/"
-                                                        + mapName
-                                                        + "/"
-                                                        + convName));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(songsFolderPath + "/" +
+                                                      mapName + "/" +
+                                                      convName));
     }
 
     // CREATE: AUDIO FILES FOLDER
-    for (int i = 0; i < audioListWidget->count(); i ++)
+    for (int i = 0; i < audioListWidget->count(); ++ i)
     {
         /* We firstly create the directories for each of the maps by referring to the audio name
          * We then copy over the audio files to each of those files
@@ -1174,57 +1122,41 @@ void amber::on_PS_controlSplitButton_clicked()
         audioFolderName.replace(".","_");
 
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
-        QDir audioFolderDir(  songsFolderPath
-                              + "/"
-                              + mapName
-                              + "/"
-                              + convName
-                              + "/"
-                              + audioFolderName);
+        QDir audioFolderDir(songsFolderPath + "/" +
+                            mapName + "/" +
+                            convName + "/" +
+                            audioFolderName);
 
         // D:\osu!\Songs\100000 ARTIST - SONG\audio.mp3
-        QFile audioCopyFile(  songsFolderPath
-                              + "/"
-                              + mapName
-                              + "/"
-                              + audioName);
+        QFile audioCopyFile(songsFolderPath + "/" +
+                            mapName + "/" +
+                            audioName);
 
         // Make audio folder for each audio file
-        if (audioFolderDir.mkpath(".") == false)
-        {
+        if (audioFolderDir.mkpath(".") == false){
             STATMSG("Audio folder couldn't be created");
             return;
-        }
-        else
-        {
+        }else{
             STATMSG("Audio folder successfully created");
         }
 
         // COPY: AUDIO FILES
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
-        if (audioCopyFile.copy(  songsFolderPath
-                                 + "/"
-                                 + mapName
-                                 + "/"
-                                 + convName
-                                 + "/"
-                                 + audioFolderName
-                                 + "/"
-                                 + audioName)
-                == false )
-        {
+        if (audioCopyFile.copy(songsFolderPath + "/" +
+                               mapName + "/" +
+                               convName + "/" +
+                               audioFolderName + "/" +
+                               audioName) == false ){
             STATMSG("Copying Failed or File already exists");
         }
-        else
-        {
+        else{
             STATMSG("Copying successful");
         }
 
     }
 
     // COPY: DIFFICULTY & BG OVER
-    for (int i = 0; i < difficultyListWidget->count(); i ++)
-    {
+    for (int i = 0; i < difficultyListWidget->count(); ++ i){
         /* REFERENCE
          *
          * [General]
@@ -1242,11 +1174,9 @@ void amber::on_PS_controlSplitButton_clicked()
 
         difficultyName = difficultyListWidget->item(i)->text();
 
-        QFile difficultyFile(  songsFolderPath
-                               + "/"
-                               + mapName
-                               + "/"
-                               + difficultyName);
+        QFile difficultyFile(songsFolderPath + "/" +
+                             mapName + "/" +
+                             difficultyName);
 
         // READ: DIFFICULTY
         difficultyFile.open(QIODevice::ReadOnly);
@@ -1256,12 +1186,10 @@ void amber::on_PS_controlSplitButton_clicked()
         {
             strStream = difficultyStream.readLine();
 
-            if (strStream.contains("AudioFilename:")) // CHECK FOR AUDIO FILE NAME
-            {
+            if (strStream.contains("AudioFilename:")){ // CHECK FOR AUDIO FILE NAME
                 difficultyAudioFolderName = strStream.right(strStream.length() - 15).replace(".","_");
             }
-            else if (strStream.contains(",\"") && strStream.contains("\",")) // CHECK FOR BG FILE NAME
-            {
+            else if (strStream.contains(",\"") && strStream.contains("\",")){ // CHECK FOR BG FILE NAME
                 difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
                 break;
             }
@@ -1270,42 +1198,30 @@ void amber::on_PS_controlSplitButton_clicked()
         difficultyFile.close();
 
         // D:\osu!\Songs\100000 ARTIST - SONG\difficulty.osu
-        QFile difficultyCopyFile(  songsFolderPath
-                                   + "/"
-                                   + mapName
-                                   + "/"
-                                   + difficultyName);
+        QFile difficultyCopyFile(songsFolderPath+ "/" +
+                                 mapName + "/" +
+                                 difficultyName);
 
         // COPY: DIFFICULTY
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\difficulty.osu
-        difficultyCopyFile.copy(  songsFolderPath
-                                  + "/"
-                                  + mapName
-                                  + "/"
-                                  + convName
-                                  + "/"
-                                  + difficultyAudioFolderName
-                                  + "/"
-                                  + difficultyName);
+        difficultyCopyFile.copy(songsFolderPath + "/" +
+                                mapName+ "/" +
+                                convName + "/" +
+                                difficultyAudioFolderName + "/" +
+                                difficultyName);
 
         // D:\osu!\Songs\100000 ARTIST - SONG\bg.jpg
-        QFile difficultyBGCopyFile(  songsFolderPath
-                                     + "/"
-                                     + mapName
-                                     + "/"
-                                     + difficultyBGFileName);
+        QFile difficultyBGCopyFile(songsFolderPath + "/" +
+                                   mapName + "/" +
+                                   difficultyBGFileName);
 
         // COPY: AUDIO
         // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
-        difficultyBGCopyFile.copy(  songsFolderPath
-                                    + "/"
-                                    + mapName
-                                    + "/"
-                                    + convName
-                                    + "/"
-                                    + difficultyAudioFolderName
-                                    + "/"
-                                    + difficultyBGFileName);
+        difficultyBGCopyFile.copy(songsFolderPath + "/" +
+                                  mapName + "/" +
+                                  convName + "/" +
+                                  difficultyAudioFolderName + "/" +
+                                  difficultyBGFileName);
 
 
     }
@@ -1315,15 +1231,11 @@ void amber::on_PS_controlOpenFolderButton_clicked()
     QString songsFolderPath,
             mapName;
 
-    if (ui->PS_browseLine->text() != "" || ui->PS_mapListListWidget->selectedItems().size() != 0)
-    {
+    if (ui->PS_browseLine->text() != "" || ui->PS_mapListListWidget->selectedItems().size() != 0){
         songsFolderPath = ui->PS_browseLine->text();
         mapName = ui->PS_mapListListWidget->selectedItems()[0]->text();
         QDesktopServices::openUrl(QUrl::fromLocalFile(songsFolderPath + "/" + mapName));
-
-    }
-    else
-    {
+    }else{
         STATMSG("No Map Folder Specified");
         return;
     }

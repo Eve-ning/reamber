@@ -21167,10 +21167,10 @@ QVector<QCPDataRange> QCPGraph::getNonNanSegments(const QVector<QPointF> *lineDa
         ++i;
       if (i == n)
         break;
-      currentSegment.setBegin(i++);
+      currentSegment.setBegin(++ i);
       while (i < n && !qIsNaN(lineData->at(i).y())) // seek next NaN data point or end of data
         ++i;
-      currentSegment.setEnd(i++);
+      currentSegment.setEnd(++ i);
       result.append(currentSegment);
     }
   } else // keyOrientation == Qt::Vertical
@@ -21181,10 +21181,10 @@ QVector<QCPDataRange> QCPGraph::getNonNanSegments(const QVector<QPointF> *lineDa
         ++i;
       if (i == n)
         break;
-      currentSegment.setBegin(i++);
+      currentSegment.setBegin(++ i);
       while (i < n && !qIsNaN(lineData->at(i).x())) // seek next NaN data point or end of data
         ++i;
-      currentSegment.setEnd(i++);
+      currentSegment.setEnd(++ i);
       result.append(currentSegment);
     }
   }

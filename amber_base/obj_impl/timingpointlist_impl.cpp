@@ -59,7 +59,7 @@ void TimingPointList_impl::setOffsetList(const QList<Offset> &offsetList_)
     AmberException::assertLengthMatch(timingPointList.length(),
                                       offsetList_.length());
 
-    for (int i = 0; i < offsetList_.length(); i++)
+    for (int i = 0; i < offsetList_.length(); ++ i)
     {
         timingPointList[i].setOffset(offsetList_[i]);
     }
@@ -69,7 +69,7 @@ void TimingPointList_impl::setCodeList(const QList<std::shared_ptr<TimeCode>> &c
     AmberException::assertLengthMatch(timingPointList.length(),
                                       codeList_.length());
 
-    for (int i = 0; i < codeList_.length(); i++)
+    for (int i = 0; i < codeList_.length(); ++ i)
     {
         timingPointList[i].setCode(codeList_[i]);
     }
@@ -79,7 +79,7 @@ void TimingPointList_impl::setValueList(const QList<double> &valueList_)
     AmberException::assertLengthMatch(timingPointList.length(),
                                       valueList_.length());
 
-    for (int i = 0; i < valueList_.length(); i++)
+    for (int i = 0; i < valueList_.length(); ++ i)
     {
         timingPointList[i].setValue(valueList_[i]);
     }
