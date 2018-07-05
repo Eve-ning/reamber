@@ -42,4 +42,4 @@ Possible tools that I'll implement are all listed in the wiki.
 
 ## Dependencies
 
-- [http://www.qcustomplot.com/]QCustomPlot
+- [http://www.qcustomplot.com](QCustomPlot)
