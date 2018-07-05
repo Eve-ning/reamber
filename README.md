@@ -4,42 +4,34 @@
 
 ## :star: [Release v0.0.1a happened](https://github.com/Eve-ning/amber/releases)
 
-## Currently Working On...
-
-#### Advanced Adjuster
-A new experimental tool, more info when I'm done
-
-#### Recreation of Project Skeletal
-I think it's important to state that I'm currently still working on this project, I'm currently building a better framework/skeletal for this whole project so that it's more flexible. A lot of back-end changes are expected.
-### [Skeletal Repo](https://github.com/Eve-ning/amber_base)
-
-### Estimated Time of Project Completion
-Feb 2019
-
 ## Purpose
 
 This program is designed to be as user-friendly as possible, removing most uncommon terminologies and simplifying the process of mapping osu!mania maps.
 
 ## What it does
 
-It includes various tools to help you in mapping:
+It includes various SV tools to help you in mapping:
 
 - Stutter
 - Copier
 - Two Point Function
 - Normalizer
 - Adjuster
-- Pack Splitter
-- *more to come...*
-
-Currently there are more SV/BPM related tools rather than general ones since there are already existing tools for most of what I have in mind.
 
 ## Future Updates
 
-In the future I'll be focusing more on general tools and possibly extending the reach of these SV/BPM tools towards more experienced mappers.
+In the future I'll most likely come back to this and work on another tool from scratch again
 
-Possible tools that I'll implement are all listed in the wiki.
+## Hindsight
+
+What I realized was happening was that there were too much code to look after and maintain, sieving through all of them was taxing and pretty much slowed my progress to a halt. So I pretty much ended up "giving up".
+
+This doesn't mean that the program is useless at this point, it has done all it can do for beginner mappers and went well in hindsight. I don't think I'm capable of doing big things, I'll have to let go for now.
+
+I'll be working on something else, so I might come back to this. If I do, I'll make sure there are more things to expect, but as of now, this is what I have to offer.
 
 ## Dependencies
 
 - [http://www.qcustomplot.com](QCustomPlot)
+
+### Project has wrapped up on July 2018
