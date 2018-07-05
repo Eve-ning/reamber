@@ -39,3 +39,7 @@ Currently there are more SV/BPM related tools rather than general ones since the
 In the future I'll be focusing more on general tools and possibly extending the reach of these SV/BPM tools towards more experienced mappers.
 
 Possible tools that I'll implement are all listed in the wiki.
+
+## Dependencies
+
+- [http://www.qcustomplot.com/]QCustomPlot
