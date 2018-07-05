@@ -29,8 +29,6 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->setupUi(this);
     tb = ui->statusBox;
 
-    ui->toolBox->setCurrentIndex(0);
-
     setWindowIcon(QIcon(":/amberResources/icons/amberIcn.ico"));
 
     // Pre-RenderGraphs
@@ -186,7 +184,13 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
     QString itemString;
     itemString = item->text();
 
-    ui->stackedWidget->setCurrentIndex(1);
+    if (itemString == "Home")
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+        return;
+    } else {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
 
     if      (itemString == "Stutter")
     {
@@ -209,43 +213,6 @@ void amber::on_basicWidgetList_itemClicked(QListWidgetItem *item)
         ui->basicStackedWidget->setCurrentIndex(4);
     }
 
-}
-void amber::on_advancedWidgetList_itemClicked(QListWidgetItem *item)
-{
-    QString itemString;
-    itemString = item->text();
-
-    ui->stackedWidget->setCurrentIndex(2);
-
-    if      (itemString == "Pack Splitter")
-    {
-        ui->advancedStackedWidget->setCurrentIndex(0);
-    }
-    if      (itemString == "Advanced Adjuster")
-    {
-        ui->advancedStackedWidget->setCurrentIndex(1);
-    }
-}
-void amber::on_settingsWidgetList_itemClicked(QListWidgetItem *item)
-{
-    QString itemString;
-    itemString = item->text();
-
-    ui->stackedWidget->setCurrentIndex(3);
-
-    if      (itemString == "Default Values")
-    {
-        ui->settingsTabWidget->setCurrentIndex(0);
-    }
-    else if (itemString == "Error Log")
-    {
-        ui->settingsTabWidget->setCurrentIndex(1);
-    }
-}
-
-void amber::on_toolBox_currentChanged(int index)
-{
-    ui->stackedWidget->setCurrentIndex(index);
 }
 
 // --------------------------------------------------------------------------------------------------------< INPUT >
@@ -797,11 +764,6 @@ void amber::on_normalizer_BPMListWidget_itemPressed(QListWidgetItem *item)
 
 // --------------------------------------------------------------------------------------------------------< DEFAULT >
 
-void amber::on_default_savePreferencesButton_clicked()
-{
-    //
-}
-
 // --------------------------------------------------------------------------------------------------------< ADJUSTER >
 
 void amber::on_adjuster_multiplySpinBox_editingFinished()
@@ -1030,335 +992,304 @@ void amber::on_adjuster_defaultButton_clicked()
 
 // --------------------------------------------------------------------------------------------------------< PACK SPLITTER >
 
-void amber::on_PS_browseButton_clicked()
-{
-    QLineEdit   *browseLine;
-    QListWidget *mapListWidget;
-    QString      filePath;
+//void amber::on_PS_browseButton_clicked()
+//{
+//    QLineEdit   *browseLine;
+//    QListWidget *mapListWidget;
+//    QString      filePath;
 
-    browseLine    = ui->PS_browseLine;
-    mapListWidget = ui->PS_mapListListWidget;
+//    browseLine    = ui->PS_browseLine;
+//    mapListWidget = ui->PS_mapListListWidget;
 
-    filePath = QFileDialog::getExistingDirectory(this, "Open osu! Song Folder", "/home",
-                                                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    browseLine->setText(filePath);
-    QDir fileDir(filePath);
+//    filePath = QFileDialog::getExistingDirectory(this, "Open osu! Song Folder", "/home",
+//                                                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+//    browseLine->setText(filePath);
+//    QDir fileDir(filePath);
 
-    if (filePath.right(5) == "Songs")
-    {
-        STATMSG("File Path loaded successfully");
-    } else if (!filePath.isEmpty()){
-        STATMSG("File Path might be incorrect, make sure it's the [Songs] Folder!");
-    } else {
-        STATMSG("File Path cannot be loaded");
-    }
+//    if (filePath.right(5) == "Songs")
+//    {
+//        STATMSG("File Path loaded successfully");
+//    } else if (!filePath.isEmpty()){
+//        STATMSG("File Path might be incorrect, make sure it's the [Songs] Folder!");
+//    } else {
+//        STATMSG("File Path cannot be loaded");
+//    }
 
-    mapListWidget->clear();
-    mapListWidget->addItems(fileDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs));
-}
-void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
-{
-    QString mapPath = ui->PS_browseLine->text() + "/" + item->text();
-    QDir mapDir(mapPath);
+//    mapListWidget->clear();
+//    mapListWidget->addItems(fileDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs));
+//}
+//void amber::on_PS_mapListListWidget_itemClicked(QListWidgetItem *item)
+//{
+//    QString mapPath = ui->PS_browseLine->text() + "/" + item->text();
+//    QDir mapDir(mapPath);
 
-    QListWidget *audioListWidget,
-            *difficultyListWidget;
+//    QListWidget *audioListWidget,
+//            *difficultyListWidget;
 
-    QStringList audioFilter,
-            difficultyFilter;
+//    QStringList audioFilter,
+//            difficultyFilter;
 
-    audioListWidget      = ui->PS_audioFileListListWidget;
-    difficultyListWidget = ui->PS_difficultyListListWidget;
+//    audioListWidget      = ui->PS_audioFileListListWidget;
+//    difficultyListWidget = ui->PS_difficultyListListWidget;
 
-    audioFilter     .append("*.mp3");
-    audioFilter     .append("*.ogg");
-    difficultyFilter.append("*.osu");
+//    audioFilter     .append("*.mp3");
+//    audioFilter     .append("*.ogg");
+//    difficultyFilter.append("*.osu");
 
-    audioListWidget->clear();
-    audioListWidget->addItems(mapDir.entryList(audioFilter, QDir::NoDotAndDotDot | QDir::Files));
+//    audioListWidget->clear();
+//    audioListWidget->addItems(mapDir.entryList(audioFilter, QDir::NoDotAndDotDot | QDir::Files));
 
-    difficultyListWidget->clear();
-    difficultyListWidget->addItems(mapDir.entryList(difficultyFilter, QDir::NoDotAndDotDot | QDir::Files));
-}
-void amber::on_PS_controlSplitButton_clicked()
-{
-    QListWidget *mapListWidget,
-            *audioListWidget,
-            *difficultyListWidget;
-    QLineEdit   *browseLine;
-    QString     songsFolderPath,
-            mapName,
-            convName,
-            audioFolderName,
-            audioName,
-            difficultyName;
+//    difficultyListWidget->clear();
+//    difficultyListWidget->addItems(mapDir.entryList(difficultyFilter, QDir::NoDotAndDotDot | QDir::Files));
+//}
+//void amber::on_PS_controlSplitButton_clicked()
+//{
+//    QListWidget *mapListWidget,
+//            *audioListWidget,
+//            *difficultyListWidget;
+//    QLineEdit   *browseLine;
+//    QString     songsFolderPath,
+//            mapName,
+//            convName,
+//            audioFolderName,
+//            audioName,
+//            difficultyName;
 
-    mapListWidget        = ui->PS_mapListListWidget;
-    audioListWidget      = ui->PS_audioFileListListWidget;
-    difficultyListWidget = ui->PS_difficultyListListWidget;
-    browseLine           = ui->PS_browseLine;
+//    mapListWidget        = ui->PS_mapListListWidget;
+//    audioListWidget      = ui->PS_audioFileListListWidget;
+//    difficultyListWidget = ui->PS_difficultyListListWidget;
+//    browseLine           = ui->PS_browseLine;
 
-    /* EXAMPLE
-     * [songsFolderPath]
-     * D:\osu!\Songs
-     *
-     * [mapName]
-     * 100000 ARTIST - SONG
-     *
-     * [convName]
-     * Converted Files
-     *
-     * [audioFolderName]
-     * audio_mp3
-     *
-     * [audioName]
-     * audio.mp3
-     *
-     * [difficultyName]
-     * difficulty.osu
-     *
-     * [difficultyBGFileName]
-     * bg.jpg
-     */
-
-
-    songsFolderPath = browseLine->text();
-    mapName         = mapListWidget->selectedItems()[0]->text();
-    convName        = "Converted Files";
-
-    // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
-    QDir convDir(  songsFolderPath
-                   + "/"
-                   + mapName
-                   + "/"
-                   + convName);
-
-    // CREATE: CONVERTED FILES FOLDER
-    if (convDir.mkpath(".") == false) // Cannot create Convert Files Dir
-    {
-        if (convDir.exists())
-        {
-            STATMSG("Convert folder exists already.");
-            // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
-            QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
-                                                            + mapName
-                                                            + "/"
-                                                            + convName));
-        }
-        else
-        {
-            STATMSG("Convert folder couldn't be created");
-            return;
-        }
-    }
-    else
-    {
-        STATMSG("Convert folder successfully created");
-
-        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
-        QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
-                                                        + "/"
-                                                        + mapName
-                                                        + "/"
-                                                        + convName));
-    }
-
-    // CREATE: AUDIO FILES FOLDER
-    for (int i = 0; i < audioListWidget->count(); i ++)
-    {
-        /* We firstly create the directories for each of the maps by referring to the audio name
-         * We then copy over the audio files to each of those files
-         */
-        audioName       = audioListWidget->item(i)->text();
-        audioFolderName = audioName;
-        audioFolderName.replace(".","_");
-
-        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
-        QDir audioFolderDir(  songsFolderPath
-                              + "/"
-                              + mapName
-                              + "/"
-                              + convName
-                              + "/"
-                              + audioFolderName);
-
-        // D:\osu!\Songs\100000 ARTIST - SONG\audio.mp3
-        QFile audioCopyFile(  songsFolderPath
-                              + "/"
-                              + mapName
-                              + "/"
-                              + audioName);
-
-        // Make audio folder for each audio file
-        if (audioFolderDir.mkpath(".") == false)
-        {
-            STATMSG("Audio folder couldn't be created");
-            return;
-        }
-        else
-        {
-            STATMSG("Audio folder successfully created");
-        }
-
-        // COPY: AUDIO FILES
-        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
-        if (audioCopyFile.copy(  songsFolderPath
-                                 + "/"
-                                 + mapName
-                                 + "/"
-                                 + convName
-                                 + "/"
-                                 + audioFolderName
-                                 + "/"
-                                 + audioName)
-                == false )
-        {
-            STATMSG("Copying Failed or File already exists");
-        }
-        else
-        {
-            STATMSG("Copying successful");
-        }
-
-    }
-
-    // COPY: DIFFICULTY & BG OVER
-    for (int i = 0; i < difficultyListWidget->count(); i ++)
-    {
-        /* REFERENCE
-         *
-         * [General]
-         * AudioFilename: audio.mp3
-         * AudioLeadIn: 0
-         *
-         * [Events]
-         * // Background and Video events
-         * 0,0,"BG.jpg",0,0
-         */
-
-        QString strStream,
-                difficultyAudioFolderName,
-                difficultyBGFileName;
-
-        difficultyName = difficultyListWidget->item(i)->text();
-
-        QFile difficultyFile(  songsFolderPath
-                               + "/"
-                               + mapName
-                               + "/"
-                               + difficultyName);
-
-        // READ: DIFFICULTY
-        difficultyFile.open(QIODevice::ReadOnly);
-        QTextStream difficultyStream(&difficultyFile);
-
-        while (!difficultyFile.atEnd())
-        {
-            strStream = difficultyStream.readLine();
-
-            if (strStream.contains("AudioFilename:")) // CHECK FOR AUDIO FILE NAME
-            {
-                difficultyAudioFolderName = strStream.right(strStream.length() - 15).replace(".","_");
-            }
-            else if (strStream.contains(",\"") && strStream.contains("\",")) // CHECK FOR BG FILE NAME
-            {
-                difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
-                break;
-            }
-        }
-
-        difficultyFile.close();
-
-        // D:\osu!\Songs\100000 ARTIST - SONG\difficulty.osu
-        QFile difficultyCopyFile(  songsFolderPath
-                                   + "/"
-                                   + mapName
-                                   + "/"
-                                   + difficultyName);
-
-        // COPY: DIFFICULTY
-        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\difficulty.osu
-        difficultyCopyFile.copy(  songsFolderPath
-                                  + "/"
-                                  + mapName
-                                  + "/"
-                                  + convName
-                                  + "/"
-                                  + difficultyAudioFolderName
-                                  + "/"
-                                  + difficultyName);
-
-        // D:\osu!\Songs\100000 ARTIST - SONG\bg.jpg
-        QFile difficultyBGCopyFile(  songsFolderPath
-                                     + "/"
-                                     + mapName
-                                     + "/"
-                                     + difficultyBGFileName);
-
-        // COPY: AUDIO
-        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
-        difficultyBGCopyFile.copy(  songsFolderPath
-                                    + "/"
-                                    + mapName
-                                    + "/"
-                                    + convName
-                                    + "/"
-                                    + difficultyAudioFolderName
-                                    + "/"
-                                    + difficultyBGFileName);
+//    /* EXAMPLE
+//     * [songsFolderPath]
+//     * D:\osu!\Songs
+//     *
+//     * [mapName]
+//     * 100000 ARTIST - SONG
+//     *
+//     * [convName]
+//     * Converted Files
+//     *
+//     * [audioFolderName]
+//     * audio_mp3
+//     *
+//     * [audioName]
+//     * audio.mp3
+//     *
+//     * [difficultyName]
+//     * difficulty.osu
+//     *
+//     * [difficultyBGFileName]
+//     * bg.jpg
+//     */
 
 
-    }
-}
-void amber::on_PS_controlOpenFolderButton_clicked()
-{
-    QString songsFolderPath,
-            mapName;
+//    songsFolderPath = browseLine->text();
+//    mapName         = mapListWidget->selectedItems()[0]->text();
+//    convName        = "Converted Files";
 
-    if (ui->PS_browseLine->text() != "" || ui->PS_mapListListWidget->selectedItems().size() != 0)
-    {
-        songsFolderPath = ui->PS_browseLine->text();
-        mapName = ui->PS_mapListListWidget->selectedItems()[0]->text();
-        QDesktopServices::openUrl(QUrl::fromLocalFile(songsFolderPath + "/" + mapName));
+//    // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
+//    QDir convDir(  songsFolderPath
+//                   + "/"
+//                   + mapName
+//                   + "/"
+//                   + convName);
 
-    }
-    else
-    {
-        STATMSG("No Map Folder Specified");
-        return;
-    }
-}
+//    // CREATE: CONVERTED FILES FOLDER
+//    if (convDir.mkpath(".") == false) // Cannot create Convert Files Dir
+//    {
+//        if (convDir.exists())
+//        {
+//            STATMSG("Convert folder exists already.");
+//            // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
+//            QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
+//                                                            + mapName
+//                                                            + "/"
+//                                                            + convName));
+//        }
+//        else
+//        {
+//            STATMSG("Convert folder couldn't be created");
+//            return;
+//        }
+//    }
+//    else
+//    {
+//        STATMSG("Convert folder successfully created");
+
+//        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files
+//        QDesktopServices::openUrl(QUrl::fromLocalFile(  songsFolderPath
+//                                                        + "/"
+//                                                        + mapName
+//                                                        + "/"
+//                                                        + convName));
+//    }
+
+//    // CREATE: AUDIO FILES FOLDER
+//    for (int i = 0; i < audioListWidget->count(); i ++)
+//    {
+//        /* We firstly create the directories for each of the maps by referring to the audio name
+//         * We then copy over the audio files to each of those files
+//         */
+//        audioName       = audioListWidget->item(i)->text();
+//        audioFolderName = audioName;
+//        audioFolderName.replace(".","_");
+
+//        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
+//        QDir audioFolderDir(  songsFolderPath
+//                              + "/"
+//                              + mapName
+//                              + "/"
+//                              + convName
+//                              + "/"
+//                              + audioFolderName);
+
+//        // D:\osu!\Songs\100000 ARTIST - SONG\audio.mp3
+//        QFile audioCopyFile(  songsFolderPath
+//                              + "/"
+//                              + mapName
+//                              + "/"
+//                              + audioName);
+
+//        // Make audio folder for each audio file
+//        if (audioFolderDir.mkpath(".") == false)
+//        {
+//            STATMSG("Audio folder couldn't be created");
+//            return;
+//        }
+//        else
+//        {
+//            STATMSG("Audio folder successfully created");
+//        }
+
+//        // COPY: AUDIO FILES
+//        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\audio.mp3
+//        if (audioCopyFile.copy(  songsFolderPath
+//                                 + "/"
+//                                 + mapName
+//                                 + "/"
+//                                 + convName
+//                                 + "/"
+//                                 + audioFolderName
+//                                 + "/"
+//                                 + audioName)
+//                == false )
+//        {
+//            STATMSG("Copying Failed or File already exists");
+//        }
+//        else
+//        {
+//            STATMSG("Copying successful");
+//        }
+
+//    }
+
+//    // COPY: DIFFICULTY & BG OVER
+//    for (int i = 0; i < difficultyListWidget->count(); i ++)
+//    {
+//        /* REFERENCE
+//         *
+//         * [General]
+//         * AudioFilename: audio.mp3
+//         * AudioLeadIn: 0
+//         *
+//         * [Events]
+//         * // Background and Video events
+//         * 0,0,"BG.jpg",0,0
+//         */
+
+//        QString strStream,
+//                difficultyAudioFolderName,
+//                difficultyBGFileName;
+
+//        difficultyName = difficultyListWidget->item(i)->text();
+
+//        QFile difficultyFile(  songsFolderPath
+//                               + "/"
+//                               + mapName
+//                               + "/"
+//                               + difficultyName);
+
+//        // READ: DIFFICULTY
+//        difficultyFile.open(QIODevice::ReadOnly);
+//        QTextStream difficultyStream(&difficultyFile);
+
+//        while (!difficultyFile.atEnd())
+//        {
+//            strStream = difficultyStream.readLine();
+
+//            if (strStream.contains("AudioFilename:")) // CHECK FOR AUDIO FILE NAME
+//            {
+//                difficultyAudioFolderName = strStream.right(strStream.length() - 15).replace(".","_");
+//            }
+//            else if (strStream.contains(",\"") && strStream.contains("\",")) // CHECK FOR BG FILE NAME
+//            {
+//                difficultyBGFileName = strStream.mid(strStream.indexOf(",\"") + 2,strStream.indexOf("\",") - 5);
+//                break;
+//            }
+//        }
+
+//        difficultyFile.close();
+
+//        // D:\osu!\Songs\100000 ARTIST - SONG\difficulty.osu
+//        QFile difficultyCopyFile(  songsFolderPath
+//                                   + "/"
+//                                   + mapName
+//                                   + "/"
+//                                   + difficultyName);
+
+//        // COPY: DIFFICULTY
+//        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\difficulty.osu
+//        difficultyCopyFile.copy(  songsFolderPath
+//                                  + "/"
+//                                  + mapName
+//                                  + "/"
+//                                  + convName
+//                                  + "/"
+//                                  + difficultyAudioFolderName
+//                                  + "/"
+//                                  + difficultyName);
+
+//        // D:\osu!\Songs\100000 ARTIST - SONG\bg.jpg
+//        QFile difficultyBGCopyFile(  songsFolderPath
+//                                     + "/"
+//                                     + mapName
+//                                     + "/"
+//                                     + difficultyBGFileName);
+
+//        // COPY: AUDIO
+//        // D:\osu!\Songs\100000 ARTIST - SONG\Converted Files\audio_mp3\bg.jpg
+//        difficultyBGCopyFile.copy(  songsFolderPath
+//                                    + "/"
+//                                    + mapName
+//                                    + "/"
+//                                    + convName
+//                                    + "/"
+//                                    + difficultyAudioFolderName
+//                                    + "/"
+//                                    + difficultyBGFileName);
+
+
+//    }
+//}
+//void amber::on_PS_controlOpenFolderButton_clicked()
+//{
+//    QString songsFolderPath,
+//            mapName;
+
+//    if (ui->PS_browseLine->text() != "" || ui->PS_mapListListWidget->selectedItems().size() != 0)
+//    {
+//        songsFolderPath = ui->PS_browseLine->text();
+//        mapName = ui->PS_mapListListWidget->selectedItems()[0]->text();
+//        QDesktopServices::openUrl(QUrl::fromLocalFile(songsFolderPath + "/" + mapName));
+
+//    }
+//    else
+//    {
+//        STATMSG("No Map Folder Specified");
+//        return;
+//    }
+//}
 
 // --------------------------------------------------------------------------------------------------------< ADV ADJUSTER >
 
-// void amber::on_AA_generate_clicked()
-// {
-
-// }
-// void amber::on_AA_addEffect_clicked()
-// {
-// QListWidget *effectList = ui->AA_effectList;
-// QComboBox   *comboBox   = ui->AA_comboBox;
-
-// AAObj *newObject;
-
-// // Add to ListWidget and our AAObjList
-// effectList->addItem(comboBox->currentText());
-
-// newObject = new AAObj(AAName(comboBox->currentText()));
-// AAObjList.append(newObject);
-
-// }
-
-// void amber::on_AA_effectList_itemDoubleClicked(QListWidgetItem *item)
-// {
-// int currentIndex;
-// AAObj *currentAAObj;
-
-// currentIndex = ui->AA_effectList->row(item);
-// currentAAObj = AAObjList[currentIndex];
-
-// currentAAObj->setForm();
-// currentAAObj->showForm();
-
-// }

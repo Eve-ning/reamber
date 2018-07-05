@@ -78,10 +78,9 @@ private slots:
 
     // TOOLBAR
     void on_basicWidgetList_itemClicked(QListWidgetItem *item);
-    void on_settingsWidgetList_itemClicked(QListWidgetItem *item);
-    void on_toolBox_currentChanged(int index);
-    void on_advancedWidgetList_itemClicked(QListWidgetItem *item);
-    void on_default_savePreferencesButton_clicked();
+//    void on_settingsWidgetList_itemClicked(QListWidgetItem *item);
+//    void on_advancedWidgetList_itemClicked(QListWidgetItem *item);
+//    void on_default_savePreferencesButton_clicked();
 
     // HOME
     void on_home_githubIconLabel_clicked();
@@ -101,16 +100,14 @@ private slots:
     void on_adjuster_defaultButton_clicked();
 
     // PACK SPLITTER
-    void on_PS_browseButton_clicked();
-    void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
-    void on_PS_controlSplitButton_clicked();
-    void on_PS_controlOpenFolderButton_clicked();
+//    void on_PS_browseButton_clicked();
+//    void on_PS_mapListListWidget_itemClicked(QListWidgetItem *item);
+//    void on_PS_controlSplitButton_clicked();
+//    void on_PS_controlOpenFolderButton_clicked();
 
 private:
     QTextBrowser *tb;
     Ui::amber *ui;
-
-
 };
 
 

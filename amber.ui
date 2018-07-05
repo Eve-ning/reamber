@@ -6,9 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1680</width>
-    <height>787</height>
+    <width>1621</width>
+    <height>747</height>
    </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>amber</string>
@@ -18,7 +21,7 @@
     <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="homeSPage">
        <property name="enabled">
@@ -153,7 +156,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_2">
+         <spacer name="home_vs">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -181,9 +184,9 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>4</number>
           </property>
-          <widget class="QWidget" name="basicStackedWidgetPage1">
+          <widget class="QWidget" name="stutter_page">
            <layout class="QGridLayout" name="gridLayout_31">
             <item row="6" column="1">
              <widget class="QPushButton" name="stutter_generateButton">
@@ -265,7 +268,7 @@
              </widget>
             </item>
             <item row="7" column="1">
-             <spacer name="verticalSpacer_3">
+             <spacer name="stutter_vs">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -302,7 +305,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <spacer name="verticalSpacer_4">
+             <spacer name="stutter_vs2">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -407,7 +410,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="basicStackedWidgetPage2">
+          <widget class="QWidget" name="copier_page">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <widget class="QGroupBox" name="copier_inputGroup">
@@ -454,7 +457,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="basicStackedWidgetPage3">
+          <widget class="QWidget" name="TPF_page">
            <layout class="QGridLayout" name="gridLayout_35">
             <item row="0" column="0">
              <widget class="QGroupBox" name="TPF_editorInputGroup">
@@ -774,7 +777,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="basicStackedWidgetPage4">
+          <widget class="QWidget" name="normalizer_page">
            <layout class="QGridLayout" name="gridLayout_44">
             <item row="0" column="0">
              <widget class="QGroupBox" name="normalizer_inputGroup">
@@ -896,7 +899,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="basicStackedWidgetPage5">
+          <widget class="QWidget" name="adjuster_page">
            <layout class="QGridLayout" name="gridLayout_10">
             <item row="0" column="0" rowspan="2">
              <layout class="QGridLayout" name="adjuster_group">
@@ -1037,6 +1040,13 @@
                  <string>Options</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_38">
+                 <item row="3" column="0">
+                  <widget class="QCheckBox" name="adjuster_liveUpdateCheck">
+                   <property name="text">
+                    <string>Live Graph Update</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="2" column="0">
                   <widget class="QCheckBox" name="adjuster_invertCheck">
                    <property name="sizePolicy">
@@ -1053,13 +1063,6 @@
                    </property>
                    <property name="text">
                     <string>Invert</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QCheckBox" name="adjuster_liveUpdateCheck">
-                   <property name="text">
-                    <string>Live Graph Update</string>
                    </property>
                   </widget>
                  </item>
@@ -1286,1256 +1289,18 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="advancedSPage">
-       <layout class="QGridLayout" name="gridLayout_7">
-        <item row="0" column="0">
-         <widget class="QStackedWidget" name="advancedStackedWidget">
-          <property name="currentIndex">
-           <number>1</number>
-          </property>
-          <widget class="QWidget" name="advancedStackedWidgetPage1">
-           <layout class="QGridLayout" name="gridLayout_49">
-            <item row="0" column="0">
-             <widget class="QGroupBox" name="PS_browseGroup">
-              <property name="title">
-               <string>osu! Song Folder</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_43">
-               <item row="0" column="1">
-                <widget class="QPushButton" name="PS_browseButton">
-                 <property name="text">
-                  <string>Browse ...</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="PS_browseLine"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QGroupBox" name="PS_mapListGroup">
-              <property name="title">
-               <string>Map List</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_45">
-               <item row="0" column="0">
-                <widget class="QListWidget" name="PS_mapListListWidget"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QGroupBox" name="PS_audioFileListGroup">
-              <property name="title">
-               <string>Audio File List</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_46">
-               <item row="0" column="0">
-                <widget class="QListWidget" name="PS_audioFileListListWidget">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QGroupBox" name="PS_difficultyListGroup">
-              <property name="title">
-               <string>Difficulty List</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_47">
-               <item row="0" column="0">
-                <widget class="QListWidget" name="PS_difficultyListListWidget">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QGroupBox" name="PS_controlGroup">
-              <property name="title">
-               <string>Controls</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_48">
-               <item row="0" column="0">
-                <widget class="QPushButton" name="PS_controlSplitButton">
-                 <property name="text">
-                  <string>Split Pack</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QPushButton" name="PS_controlOpenFolderButton">
-                 <property name="text">
-                  <string>Open Map Folder</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="advancedStackedWidgetPage2">
-           <layout class="QGridLayout" name="gridLayout_55">
-            <item row="0" column="0">
-             <widget class="QGroupBox" name="AA_inputGroup">
-              <property name="title">
-               <string>Input</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_57">
-               <item row="0" column="0">
-                <widget class="QPlainTextEdit" name="AA_inputBox">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>800</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QGroupBox" name="AA_outputGroup">
-              <property name="title">
-               <string>Output</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_58">
-               <item row="0" column="0">
-                <widget class="QTextBrowser" name="AA_outputBox">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>800</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="1" rowspan="3">
-             <widget class="QGroupBox" name="AA_effectGroup">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="title">
-               <string>Effects</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_56">
-               <item row="0" column="0" rowspan="7">
-                <widget class="QListWidget" name="AA_effectList">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QComboBox" name="AA_comboBox"/>
-               </item>
-               <item row="0" column="2">
-                <widget class="QPushButton" name="AA_addEffect">
-                 <property name="text">
-                  <string>Add Effect</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1" colspan="2">
-                <widget class="QPushButton" name="AA_dupeEffect">
-                 <property name="text">
-                  <string>Duplicate Effect</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1" colspan="2">
-                <widget class="QPushButton" name="AA_editEffect">
-                 <property name="text">
-                  <string>Edit Effect</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1" colspan="2">
-                <widget class="QPushButton" name="AA_moveUpEffect">
-                 <property name="text">
-                  <string>Move Up Effect</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1" colspan="2">
-                <widget class="QPushButton" name="AA_moveDownEffect">
-                 <property name="text">
-                  <string>Move Down Effect</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1" colspan="2">
-                <widget class="QPushButton" name="AA_delEffect">
-                 <property name="text">
-                  <string>Delete Effect</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="1" colspan="2">
-                <spacer name="AA_vertSpac">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>275</width>
-                   <height>429</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="AA_generate">
-              <property name="text">
-               <string>Generate</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="settingsSPage">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QTabWidget" name="settingsTabWidget">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="tabDefault">
-           <attribute name="title">
-            <string>Default</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_9">
-            <item row="0" column="0">
-             <layout class="QGridLayout" name="defaultValueGroupTotal">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="defaultValueGroup1">
-                <item row="0" column="0">
-                 <layout class="QGridLayout" name="def_xAxisGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_xAxisLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_xAxis</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_xAxisLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>256</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="1" column="0">
-                 <layout class="QGridLayout" name="def_yAxisGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_yAxisLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_yAxis</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_yAxisLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>192</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="2" column="0">
-                 <layout class="QGridLayout" name="def_offsetGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_offsetLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_offset</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_offsetLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="3" column="0">
-                 <layout class="QGridLayout" name="def_lnParameterGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_lnParameterLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_lnParameter</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_lnParameterLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>128,0</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="4" column="0">
-                 <layout class="QGridLayout" name="def_lnOffsetGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_lnOffsetLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_lnOffset</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_lnOffsetLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>-1</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="5" column="0">
-                 <layout class="QGridLayout" name="def_bpmCodeGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_bpmCodeLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_bpmCode</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_bpmCodeLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>600</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="6" column="0">
-                 <layout class="QGridLayout" name="def_svCodeGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_svCodeLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_svCode</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_svCodeLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>-100</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="7" column="0">
-                 <layout class="QGridLayout" name="def_bpmValueGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_bpmValueLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_bpmValue</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_bpmValueLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>100</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="8" column="0">
-                 <layout class="QGridLayout" name="def_svValueGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_svValueLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_svValue</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_svValueLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>1</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="9" column="0">
-                 <layout class="QGridLayout" name="def_columnGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_columnLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_column</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_columnLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="10" column="0">
-                 <layout class="QGridLayout" name="def_noOfKeysGroup">
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_noOfKeysLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>4</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_noOfKeysLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_noOfKeys</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" colspan="2">
-                   <spacer name="def_verticalSpacer_3">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="1">
-               <layout class="QGridLayout" name="defaultValueGroup2">
-                <item row="0" column="0">
-                 <layout class="QGridLayout" name="def_timingPointLabelGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_timingPointLabelLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_timingPointLabel</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_timingPointLabelLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>TIMINGPOINT</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="1" column="0">
-                 <layout class="QGridLayout" name="def_hitObjectLabelGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_hitObjectLabelLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_hitObjectLabel</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_hitObjectLabelLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>HITOBJECT</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="2" column="0">
-                 <layout class="QGridLayout" name="def_nnExtensionGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_nnExtensionLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_nnExtension</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_nnExtensionLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>1,0,0:0:0:0:</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="4" column="0">
-                 <layout class="QGridLayout" name="def_bpmExtensionGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_bpmExtensionLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_bpmExtension</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_bpmExtensionLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>4,3,0,20,1,0</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="3" column="0">
-                 <layout class="QGridLayout" name="def_lnExtensionGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_lnExtensionLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_lnExtension</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_lnExtensionLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>:0:0:0:0:</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="5" column="0">
-                 <layout class="QGridLayout" name="def_svExtensionGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_svExtensionLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_svExtension</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_svExtensionLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>4,3,0,20,0,0</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="6" column="0">
-                 <layout class="QGridLayout" name="def_timingPointTypeGroup">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="def_timingPointTypeLabel">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>def_timingPointType</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="def_timingPointTypeLine">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>SV</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="7" column="0">
-                 <spacer name="def_verticalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <widget class="QPushButton" name="default_savePreferencesButton">
-              <property name="text">
-               <string>Save Preferences</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <spacer name="def_verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab">
-           <attribute name="title">
-            <string>Error Log</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_53">
-            <item row="0" column="1" rowspan="2">
-             <widget class="QGroupBox" name="el_parameterGroup">
-              <property name="title">
-               <string>Parameters</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_50">
-               <item row="0" column="0">
-                <widget class="QTextBrowser" name="el_parameterBrowser"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QGroupBox" name="el_statusGroup">
-              <property name="title">
-               <string>Program Status</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_51">
-               <item row="0" column="0">
-                <widget class="QLabel" name="el_stutterStatus">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Stutter</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="el_copierStatus">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Copier</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="el_tpfStatus">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Two Point Function</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="el_normalizerStatus">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Normalizer</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="el_adjusterStatus">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Adjuster</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="el_packSplitter">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Pack Splitter</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="el_1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>*</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0">
-                <widget class="QLabel" name="el_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>*</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="0">
-                <widget class="QLabel" name="el_3">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>*</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="0">
-                <spacer name="el_verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="0" rowspan="2">
-             <widget class="QGroupBox" name="el_messageGroup">
-              <property name="title">
-               <string>Debug Messages</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_52">
-               <item row="0" column="0">
-                <widget class="QTextBrowser" name="el_messageBrowser"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="statusGroup">
+      <property name="title">
+       <string>Status</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_14">
+       <item row="0" column="0">
+        <widget class="QTextBrowser" name="statusBox"/>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="0" column="0">
@@ -2560,174 +1325,41 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QToolBox" name="toolBox">
-         <property name="currentIndex">
-          <number>1</number>
+        <widget class="QListWidget" name="basicWidgetList">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
          </property>
-         <widget class="QWidget" name="homePage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>176</width>
-            <height>561</height>
-           </rect>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <attribute name="label">
+         <item>
+          <property name="text">
            <string>Home</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_54">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="homeWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="basicPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>176</width>
-            <height>561</height>
-           </rect>
           </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         </item>
+         <item>
+          <property name="text">
+           <string>Stutter</string>
           </property>
-          <attribute name="label">
-           <string>Basic Functions</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="basicWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Stutter</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Copier</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>2-Point Function</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Normalizer</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Adjuster</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="advancedPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>176</width>
-            <height>561</height>
-           </rect>
+         </item>
+         <item>
+          <property name="text">
+           <string>Copier</string>
           </property>
-          <attribute name="label">
-           <string>Advanced Functions</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="advancedWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Pack Splitter</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Advanced Adjuster</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="settingsPage">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>176</width>
-            <height>561</height>
-           </rect>
+         </item>
+         <item>
+          <property name="text">
+           <string>2-Point Function</string>
           </property>
-          <attribute name="label">
-           <string>Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="0">
-            <widget class="QListWidget" name="settingsWidgetList">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>Default Values</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Error Log</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+         </item>
+         <item>
+          <property name="text">
+           <string>Normalizer</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Adjuster</string>
+          </property>
+         </item>
         </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QGroupBox" name="statusGroup">
-      <property name="title">
-       <string>Status</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_14">
-       <item row="0" column="0">
-        <widget class="QTextBrowser" name="statusBox"/>
        </item>
       </layout>
      </widget>
@@ -2739,7 +1371,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1680</width>
+     <width>1621</width>
      <height>20</height>
     </rect>
    </property>
