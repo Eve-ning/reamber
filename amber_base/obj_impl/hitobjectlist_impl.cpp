@@ -133,7 +133,7 @@ void HitObjectList_impl::setOffsetList(const QList<Offset>& newOffsetList)
 {
     AmberException::assertLengthMatch(hitObjectList.length(), newOffsetList.length());
 
-    for (int i = 0; i < newOffsetList.length(); ++ i)
+    for (int i = 0; i < newOffsetList.length(); i++)
     {
         hitObjectList[i].setOffset(newOffsetList[i]);
     }
@@ -144,7 +144,7 @@ void HitObjectList_impl::setXAxisList(const QList<XAxis>& newXAxisList)
 {
     AmberException::assertLengthMatch(hitObjectList.length(), newXAxisList.length());
 
-    for (int i = 0; i < newXAxisList.length(); ++ i)
+    for (int i = 0; i < newXAxisList.length(); i++)
     {
         hitObjectList[i].setColumn(newXAxisList[i]);
     }
@@ -155,7 +155,7 @@ void HitObjectList_impl::setColumnList(const QList<Column>& newColumnList)
 {
     AmberException::assertLengthMatch(hitObjectList.length(), newColumnList.length());
 
-    for (int i = 0; i < newColumnList.length(); ++ i)
+    for (int i = 0; i < newColumnList.length(); i++)
     {
         hitObjectList[i].setColumn(newColumnList[i]);
     }
