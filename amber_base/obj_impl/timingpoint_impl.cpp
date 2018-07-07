@@ -42,9 +42,9 @@ void TimingPoint_impl::loadTP(const QString &TP)
 
         // Check if it's BPM
         if (TP_splitComma[6] == "1") {
-            timeCode = std::make_shared<BPM>(BPM(TP_splitComma[1].toDouble()));
+            timeCode = std::make_shared<BPM>(BPM(BPM::BPM_CONV / TP_splitComma[1].toDouble()));
         } else {
-            timeCode = std::make_shared<SliderVelocity>(SliderVelocity(TP_splitComma[1].toDouble()));
+            timeCode = std::make_shared<SliderVelocity>(SliderVelocity(SliderVelocity::SV_CONV / TP_splitComma[1].toDouble()));
         }
     }
     else
