@@ -2,7 +2,7 @@
 
 # :bar_chart: [Amber Wiki](https://github.com/Eve-ning/amber/wiki)
 
-## :star: [Release v0.0.1b happened and is being delayed sorry (copier issues)](https://github.com/Eve-ning/amber/releases/tag/v0.0.1-beta)
+## :star: [Release v0.0.1b happened](https://github.com/Eve-ning/amber/releases/tag/v0.0.1-beta)
 
 ## Purpose
 
