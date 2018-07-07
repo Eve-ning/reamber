@@ -7,6 +7,7 @@
     </qresource>
     <qresource prefix="/icons">
         <file>amberResources/icons/amberIcn.ico</file>
+        <file>amberResources/icons/icon_500_eaI_icon.ico</file>
     </qresource>
     <qresource prefix="/labels">
         <file>amberResources/labels/repoLabel.png</file>

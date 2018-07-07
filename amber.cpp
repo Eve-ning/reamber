@@ -29,7 +29,7 @@ amber::amber(QWidget *parent) : QMainWindow(parent), ui(new Ui::amber)
     ui->setupUi(this);
     tb = ui->statusBox;
 
-    setWindowIcon(QIcon(":/amberResources/icons/amberIcn.ico"));
+    setWindowIcon(QIcon(":/amberResources/icons/icon_500_eaI_icon.ico"));
 
     // Pre-RenderGraphs
     ui->adjuster_customPlot->addGraph();
@@ -865,23 +865,31 @@ void amber::on_adjuster_generateButton_clicked()
         return;
     }
 
+    QList<double> tempVlist = inputTPList.getValueList();
+
+    double zero = zeroSpinBox->value();
+    bool invert = invertCheck->checkState() == Qt::CheckState::Checked;
+    double multiply = multiplySpinBox->value();
+    double add = addSpinBox->value();
+
     // ZERO -
-    inputTPList.subtractValue(zeroSpinBox->value());
+    std::for_each(tempVlist.begin(), tempVlist.end(), [zero](double &a) { a -= zero; });
 
     // INVERT
-    if (invertCheck->isChecked())
-    {
-        inputTPList.multiplyValue(-1);
+    if (invert) {
+        std::for_each(tempVlist.begin(), tempVlist.end(), [invert](double &a) { a *= -1 ; });
     }
 
     // MULTIPLY
-    inputTPList.multiplyValue(multiplySpinBox->value());
+    std::for_each(tempVlist.begin(), tempVlist.end(), [multiply](double &a) { a *= multiply; });
 
     // ADD
-    inputTPList.addValue(addSpinBox->value());
+    std::for_each(tempVlist.begin(), tempVlist.end(), [add](double &a) { a += add; });
 
     // ZERO +
-    inputTPList.addValue(zeroSpinBox->value());
+    std::for_each(tempVlist.begin(), tempVlist.end(), [zero](double &a){ a += zero; });
+
+    inputTPList.setValueList(tempVlist);
 
     // OFFSET
     inputTPList.addOffset(offsetSpinBox->value());
@@ -891,14 +899,6 @@ void amber::on_adjuster_generateButton_clicked()
 
     minTP = inputTPList.getMinValue(info);
     maxTP = inputTPList.getMaxValue(info);
-
-    // If the values are too close together (threshold : 10), separate to at least 10
-    // Update: I'm not sure why i do this
-//    if (qFabs(maxTP - minTP) < 10 && !isSV)
-//    {
-//        minTP -= 5;
-//        maxTP += 5;
-//    }
 
     // Calculate averageSV and averageBPM
     averageTP = inputTPList.getAverage(info);

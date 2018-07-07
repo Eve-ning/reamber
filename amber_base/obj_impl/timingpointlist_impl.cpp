@@ -790,6 +790,8 @@ void TimingPointList_impl::zero()
 
     Offset min;
 
+    min = getMinOffset();
+
     for (const auto &i : timingPointList){
         newOffsetList.append(Offset(i.getOffset() - min));
     }
