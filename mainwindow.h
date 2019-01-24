@@ -15,6 +15,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+
+
+    void on_copier_generate_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

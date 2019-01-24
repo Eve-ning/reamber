@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += D:\qtdoc\reamber_base\src
-LIBS += -LD:\qtdoc\reamber\base_lib -lreamber_base
+LIBS += -LD:\qtdoc\reamber_base\Debug -lreamber_base
 
 SOURCES += \
         main.cpp \
