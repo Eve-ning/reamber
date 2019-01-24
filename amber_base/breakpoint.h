@@ -1,11 +1,12 @@
 #ifndef COM_BREAKP_H
 #define COM_BREAKP_H
+#include <QString>
+#include <QStringList>
 #include <QDebug>
-#include "amber_base/common.h"
-#include "amber_base/validity/amberexception.h"
-#include "amber_base/baseclass_inc.h"
+#include "common.h"
+#include "osuobject.h"
 
-class BreakPoint
+class BreakPoint : public osuObject
 {
 public:
     // CONSTRUCTORS
@@ -16,21 +17,21 @@ public:
     void loadBreakP(QString newBreakPoint);
 
     // SETTERS}
-    void setStartBreak(double value_){ offset = value_; }
-    void setEndBreak(double value_){ offsetEnd = value_; }
-    void setLength  (double value_){ offsetEnd = value_ - double(offset); }
+    void setStartBreak(double startBreak){ offset = startBreak; } // Alias for setOffset
+    void setEndBreak(double endBreak){ length = endBreak - offset; }
+    void setLength  (double length_){ length = length_; }
 
     // GETTERS
     void   getInfo() const;
     double getStartBreak() const { return offset; } // Alias for getOffset
-    double getEndBreak  () const { return offsetEnd;}
-    double getLength    () const { return double(offsetEnd) - double(offset); }
+    double getEndBreak  () const { return offset + length;}
+    double getLength    () const { return length; }
 
     QString toString() const;
 
+
 protected:
-    Offset offset;
-    Offset offsetEnd;
+    double length;
 
 };
 

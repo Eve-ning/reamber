@@ -1,4 +1,4 @@
-#include "amber_base/breakpointlist.h"
+#include "breakpointlist.h"
 
 BreakPointList::BreakPointList()
 {
@@ -15,10 +15,10 @@ void BreakPointList::loadBreakPList(QList<BreakPoint> newBreakPointList)
     curBreakPointList = newBreakPointList;
 }
 
-BreakPoint &BreakPointList::operator [](int i){
+BreakPoint &BreakPointList::operator [](int i) {
     if (i >= getSize())
     {
-        AmberException(AmberException::INDEX_OUT_OF_RANGE,
+        AExc(AExc::INDEX_OUT_OF_RANGE,
              QString("Within BreakPointList\n"
                      "Access: %1\n"
                      "Last i: %2"           )
@@ -30,7 +30,7 @@ BreakPoint &BreakPointList::operator [](int i){
 BreakPoint BreakPointList::operator [](int i) const {
     if (i >= getSize())
     {
-        AmberException(AmberException::INDEX_OUT_OF_RANGE,
+        AExc(AExc::INDEX_OUT_OF_RANGE,
              QString("Within BreakPointList\n"
                      "Access: %1\n"
                      "Last i: %2"           )
@@ -45,7 +45,7 @@ QList<double> BreakPointList::getStartList() const
     BreakPoint OM_BreakP;
     QList<double> output;
 
-    foreach (OM_BreakP, curBreakPointList){
+    foreach (OM_BreakP, curBreakPointList) {
         output.append(OM_BreakP.getStartBreak());
     }
     return output;
@@ -55,7 +55,7 @@ QList<double> BreakPointList::getEndList() const
     BreakPoint OM_BreakP;
     QList<double> output;
 
-    foreach (OM_BreakP, curBreakPointList){
+    foreach (OM_BreakP, curBreakPointList) {
         output.append(OM_BreakP.getEndBreak());
     }
     return output;
@@ -65,7 +65,7 @@ QList<double> BreakPointList::getLengthList() const
     BreakPoint OM_BreakP;
     QList<double> output;
 
-    foreach (OM_BreakP, curBreakPointList){
+    foreach (OM_BreakP, curBreakPointList) {
         output.append(OM_BreakP.getLength());
     }
     return output;

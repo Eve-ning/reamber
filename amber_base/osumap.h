@@ -2,18 +2,29 @@
 #define COM_MAP_H
 
 
-#include "amber_base/hitobjectlist.h"
-#include "amber_base/timingpointlist.h"
-#include "amber_base/breakpointlist.h"
-
-#include <QFileInfo>
-
-#include "amber_base/baseclass_inc.h"
+#include "hitobjectlist.h"
+#include "timingpointlist.h"
+#include "breakpointlist.h"
 #include <QDebug>
 
 class  osuMap
 {
 public:
+
+    enum class cSampleSet
+    {
+        NORMAL,
+        SOFT  ,
+        DRUM  ,
+        AUTO
+    };
+    enum class cGameMode
+    {
+        STANDARD,
+        TAIKO,
+        CTB,
+        MANIA
+    };
 
     // CONSTRUCTORS
     osuMap();
@@ -27,14 +38,14 @@ public:
     void getInfo() const;
 
     // SETTERS
-    void setOsuFileName      (CommonFile      osuFileName_    ){ osuFileName        = osuFileName_    ; }
-    void setAudioFileName    (CommonFile      audioFileName_  ){ audioFileName      = audioFileName_  ; }
+    void setOsuFileName      (QString         osuFileName_    ){ osuFileName        = osuFileName_    ; }
+    void setAudioFileName    (QString         audioFileName_  ){ audioFileName      = audioFileName_  ; }
     void setAudioLeadIn      (int             audioLeadIn_    ){ audioLeadIn        = audioLeadIn_    ; }
     void setPreviewTime      (int             previewTime_    ){ previewTime        = previewTime_    ; }
     void setCountdown        (bool            countdown_      ){ countdown          = countdown_      ; }
-    void setSampleSet        (SampleSet       sampleSet_      ){ sampleSet          = sampleSet_      ; }
+    void setSampleSet        (cSampleSet      sampleSet_      ){ sampleSet          = sampleSet_      ; }
     void setStackLeniency    (double          stackLeniency_  ){ stackLeniency      = stackLeniency_  ; }
-    void setGameMode         (GameMode        gameMode_       ){ gameMode           = gameMode_       ; }
+    void setGameMode         (cGameMode       gameMode_       ){ gameMode           = gameMode_       ; }
     void setLetterbox        (bool            letterbox_      ){ letterbox          = letterbox_      ; }
     void setSpecialStyle     (bool            specialStyle_   ){ specialStyle       = specialStyle_   ; }
     void setWidescreen       (bool            widescreen_     ){ widescreen         = widescreen_     ; }
@@ -58,48 +69,48 @@ public:
     void setAR               (double          AR_             ){ AR                 = AR_             ; }
     void setSliderMult       (double          sliderMult_     ){ sliderMult         = sliderMult_     ; }
     void setSliderTick       (double          sliderTick_     ){ sliderTick         = sliderTick_     ; }
-    void setBGFileName       (CommonFile      bgFileName_     ){ bgFileName         = bgFileName_     ; }
-    void setVideoFileName    (CommonFile      videoFileName_  ){ videoFileName      = videoFileName_  ; }
+    void setBGFileName       (QString         bgFileName_     ){ bgFileName         = bgFileName_     ; }
+    void setVideoFileName    (QString         videoFileName_  ){ videoFileName      = videoFileName_  ; }
     void setBreakPList       (BreakPointList  breakPList_     ){ breakPList         = breakPList_     ; }
     void setHitObjectList    (HitObjectList   hitObjectList_  ){ hitObjectList      = hitObjectList_  ; }
     void setTimingPointList  (TimingPointList timingPointList_){ timingPointList    = timingPointList_; }
 
     // GETTERS
-    CommonFile      getOsuFileName      () const { return osuFileName    ; }
-    CommonFile      getAudioFileName    () const { return audioFileName  ; }
-    int             getAudioLeadIn      () const { return audioLeadIn    ; }
-    int             getPreviewTime      () const { return previewTime    ; }
-    bool            getCountdown        () const { return countdown      ; }
-    SampleSet       getSampleSet        () const { return sampleSet      ; }
-    double          getStackLeniency    () const { return stackLeniency  ; }
-    GameMode        getGameMode         () const { return gameMode       ; }
-    bool            getLetterbox        () const { return letterbox      ; }
-    bool            getSpecialStyle     () const { return specialStyle   ; }
-    bool            getWidescreen       () const { return widescreen     ; }
-    double          getDistanceSpacing  () const { return distanceSpacing; }
-    int             getBeatDivisor      () const { return beatDivisor    ; }
-    int             getGridSize         () const { return gridSize       ; }
-    double          getTimelineZoom     () const { return timelineZoom   ; }
-    QString         getTitle            () const { return title          ; }
-    QString         getUnicodeTitle     () const { return unicodeTitle   ; }
-    QString         getArtist           () const { return artist         ; }
-    QString         getUnicodeArtist    () const { return unicodeArtist  ; }
-    QString         getCreator          () const { return creator        ; }
-    QString         getDifficultyName   () const { return difficultyName ; }
-    QString         getSource           () const { return source         ; }
-    QStringList     getTags             () const { return tags           ; }
-    int             getBeatmapID        () const { return beatmapID      ; }
-    int             getBeatmapSetID     () const { return beatmapSetID   ; }
-    double          getHP               () const { return HP             ; }
-    double          getCS               () const { return CS             ; }
-    double          getOD               () const { return OD             ; }
-    double          getAR               () const { return AR             ; }
-    double          getSliderMult       () const { return sliderMult     ; }
-    double          getSliderTick       () const { return sliderTick     ; }
-    CommonFile      getBGFileName       () const { return bgFileName     ; }
-    CommonFile      getVideoFileName    () const { return videoFileName  ; }
-    BreakPointList  getBreakPList       () const { return breakPList     ; }
-    HitObjectList   getHitObjectList    () const { return hitObjectList  ; }
+    QString         getOsuFileName      () const { return osuFileName       ; }
+    QString         getAudioFileName    () const { return audioFileName     ; }
+    int             getAudioLeadIn      () const { return audioLeadIn       ; }
+    int             getPreviewTime      () const { return previewTime       ; }
+    bool            getCountdown        () const { return countdown         ; }
+    cSampleSet      getSampleSet        () const { return sampleSet         ; }
+    double          getStackLeniency    () const { return stackLeniency     ; }
+    cGameMode       getGameMode         () const { return gameMode          ; }
+    bool            getLetterbox        () const { return letterbox         ; }
+    bool            getSpecialStyle     () const { return specialStyle      ; }
+    bool            getWidescreen       () const { return widescreen        ; }
+    double          getDistanceSpacing  () const { return distanceSpacing   ; }
+    int             getBeatDivisor      () const { return beatDivisor       ; }
+    int             getGridSize         () const { return gridSize          ; }
+    double          getTimelineZoom     () const { return timelineZoom      ; }
+    QString         getTitle            () const { return title             ; }
+    QString         getUnicodeTitle     () const { return unicodeTitle      ; }
+    QString         getArtist           () const { return artist            ; }
+    QString         getUnicodeArtist    () const { return unicodeArtist     ; }
+    QString         getCreator          () const { return creator           ; }
+    QString         getDifficultyName   () const { return difficultyName    ; }
+    QString         getSource           () const { return source            ; }
+    QStringList     getTags             () const { return tags              ; }
+    int             getBeatmapID        () const { return beatmapID         ; }
+    int             getBeatmapSetID     () const { return beatmapSetID      ; }
+    double          getHP               () const { return HP                ; }
+    double          getCS               () const { return CS                ; }
+    double          getOD               () const { return OD                ; }
+    double          getAR               () const { return AR                ; }
+    double          getSliderMult       () const { return sliderMult        ; }
+    double          getSliderTick       () const { return sliderTick        ; }
+    QString         getBGFileName       () const { return bgFileName        ; }
+    QString         getVideoFileName    () const { return videoFileName     ; }
+    BreakPointList  getBreakPList       () const { return breakPList        ; }
+    HitObjectList   getHitObjectList    () const { return hitObjectList     ; }
     TimingPointList getTimingPointList  () const { return timingPointList; }
 
     // OPERS
@@ -113,13 +124,13 @@ public:
 protected:
 
     // General
-    CommonFile audioFileName;
-    Offset     audioLeadIn;
-    Offset     previewTime;
+    QString    audioFileName;
+    int        audioLeadIn;
+    int        previewTime;
     bool       countdown;
-    SampleSet  sampleSet;
+    cSampleSet sampleSet;
     double     stackLeniency;
-    GameMode   gameMode;
+    cGameMode  gameMode;
     bool       letterbox;
     bool       specialStyle;
     bool       widescreen;
@@ -151,9 +162,9 @@ protected:
     double  sliderTick;
 
     // Misc
-    CommonFile bgFileName;
-    CommonFile videoFileName;
-    CommonFile osuFileName;
+    QString bgFileName;
+    QString videoFileName;
+    QString osuFileName;
 
     // Breaks
     BreakPointList breakPList;

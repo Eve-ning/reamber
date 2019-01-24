@@ -1,103 +1,43 @@
-#include "amber_base/osumap.h"
+#include "osumap.h"
 
-/*
- *    // General
-    CommonFile audioFileName;
-    Offset     audioLeadIn;
-    Offset     previewTime;
-    bool       countdown;
-    SampleSet  sampleSet;
-    double     stackLeniency;
-    cGameMode  gameMode;
-    bool       letterbox;
-    bool       specialStyle;
-    bool       widescreen;
-
-    // Editor
-    double  distanceSpacing;
-    int     beatDivisor;
-    int     gridSize;
-    double  timelineZoom;
-
-    // Metadata
-    QString title;
-    QString unicodeTitle;
-    QString artist;
-    QString unicodeArtist;
-    QString creator;
-    QString difficultyName;
-    QString source;
-    QStringList tags;
-    int     beatmapID;
-    int     beatmapSetID;
-
-    // Difficulty
-    double  HP;
-    double  CS;
-    double  OD;
-    double  AR;
-    double  sliderMult;
-    double  sliderTick;
-
-    // Misc
-    CommonFile bgFileName;
-    CommonFile videoFileName;
-    CommonFile osuFileName;
-
-    // Breaks
-    BreakPointList breakPList;
-
-    // HitObject and TimingPoint
-    HitObjectList hitObjectList;
-    TimingPointList timingPointList;
-*/
 // CONSTRUCTORS
-osuMap::osuMap():
-
-    audioFileName    ( "audio.mp3"         ),
-    audioLeadIn      ( 0                   ),
-    previewTime      ( 0                   ),
-    countdown        ( false               ),
-    sampleSet        ( SampleSet::SAMPLE_SET::NORMAL  ),
-    stackLeniency    ( 0                   ),
-    gameMode         ( GameMode::GAME_MODE::MANIA    ),
-    letterbox        ( false               ),
-    specialStyle     ( false               ),
-    widescreen       ( false               ),
-    distanceSpacing  ( 1.0                 ),
-    beatDivisor      ( 4                   ),
-    gridSize         ( 4                   ),
-    timelineZoom     ( 1.0                 ),
-    title            ( "unknownTitle"      ),
-    unicodeTitle     ( "unknownUTitle"     ),
-    artist           ( "unknownArtist"     ),
-    unicodeArtist    ( "unknownUArtist"    ),
-    creator          ( "unknownCreator"    ),
-    difficultyName   ( "unknownDifficulty" ),
-    source           ( ""                  ),
-    tags             ( QStringList("")     ),
-    beatmapID        ( 0                   ),
-    beatmapSetID     ( -1                  ),
-    HP               ( 5                   ),
-    CS               ( 5                   ),
-    OD               ( 5                   ),
-    AR               ( 5                   ),
-    sliderMult       ( 1.0                 ),
-    sliderTick       ( 1                   ),
-    bgFileName       ( "bg.jpg"            ),
-    videoFileName    ( "video.avi"         ),
-    osuFileName      ( "temp.osu"          ),
-    breakPList       (),
-    hitObjectList    ( HitObjectList()     ),
-    timingPointList  ( TimingPointList()   )
-{}
-
+osuMap::osuMap()
+{
+    // Load Default Map
+    osuFileName      = ""                  ;
+    audioFileName    = "audio.mp3"         ;
+    specialStyle     = false               ;
+    widescreen       = false               ;
+    distanceSpacing  = 1.0                 ;
+    beatDivisor      = 4                   ;
+    gridSize         = 4                   ;
+    timelineZoom     = 1.0                 ;
+    title            = "unknownTitle"      ;
+    unicodeTitle     = "unknownUTitle"     ;
+    artist           = "unknownArtist"     ;
+    unicodeArtist    = "unknownUArtist"    ;
+    creator          = "unknownCreator"    ;
+    difficultyName   = "unknownDifficulty" ;
+    source           = ""                  ;
+    tags             = QStringList("")     ;
+    beatmapID        = 0                   ;
+    beatmapSetID     = -1                  ;
+    HP               = 5                   ;
+    CS               = 5                   ;
+    OD               = 5                   ;
+    AR               = 5                   ;
+    sliderMult       = 1.0                 ;
+    sliderTick       = 1                   ;
+    bgFileName       = "bg.jpg"            ;
+    hitObjectList        = HitObjectList()        ;
+    timingPointList        = TimingPointList()        ;
+}
 
 // LOADERS
 void osuMap::loadMap(QString newMapString)
 {
     // Convert to StringList then pass to StringList Handler
-    loadMap(newMapString.split('\n',QString::KeepEmptyParts));
+    loadMap(newMapString.split("\n",QString::KeepEmptyParts));
 }
 void osuMap::loadMap(QFileInfo newMapPath)
 {
@@ -107,15 +47,15 @@ void osuMap::loadMap(QFileInfo newMapPath)
 
     newMapFile.setFileName(newMapPath.filePath());
 
-    if (newMapFile.open(QFile::ReadOnly)){
+    if (newMapFile.open(QFile::ReadOnly)) {
         QTextStream mapStream(&newMapFile);
-        while (!mapStream.atEnd()){
+        while (!mapStream.atEnd()) {
             mapStringList.append(mapStream.readLine());
         }
     }
     else
     {
-         AmberException(AmberException::MAP_LOADFAIL,
+         AExc(AExc::MAP_LOADFAIL,
               QString("Map cannot be opened.\n"
                       "Map Path: " + newMapFile.fileName()));
          newMapFile.close();
@@ -160,18 +100,18 @@ void osuMap::loadMap(QStringList newMapStringList)
     sliderTick         = 1                   ;
     bgFileName         = "bg.jpg"            ;
     hitObjectList      = HitObjectList()     ;
-    timingPointList    = TimingPointList()   ;
+    timingPointList = TimingPointList()   ;
 
 
-    if (indexMapStringList[0]  != -1){ audioFileName
+    if (indexMapStringList[0]  != -1) { audioFileName
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified(); }
-    if (indexMapStringList[1]  != -1){ audioLeadIn
+    if (indexMapStringList[1]  != -1) { audioLeadIn
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[2]  != -1){ previewTime
+    if (indexMapStringList[2]  != -1) { previewTime
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[3]  != -1){ countdown
+    if (indexMapStringList[3]  != -1) { countdown
                 = bool (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()); }
-    if (indexMapStringList[4]  != -1){ // sampleSet
+    if (indexMapStringList[4]  != -1) { // sampleSet
 
         QString temp;
 
@@ -179,102 +119,102 @@ void osuMap::loadMap(QStringList newMapStringList)
 
         if (temp == "None")
         {
-            sampleSet = SampleSet(SampleSet::SAMPLE_SET::AUTO);
+            sampleSet = osuMap::cSampleSet::AUTO;
         }
         else if (temp == "Soft")
         {
-            sampleSet = SampleSet(SampleSet::SAMPLE_SET::SOFT);
+            sampleSet = osuMap::cSampleSet::SOFT;
         }
         else if (temp == "Normal")
         {
-            sampleSet = SampleSet(SampleSet::SAMPLE_SET::NORMAL);
+            sampleSet = osuMap::cSampleSet::NORMAL;
         }
         else if (temp == "Drum")
         {
-            sampleSet = SampleSet(SampleSet::SAMPLE_SET::DRUM);
+            sampleSet = osuMap::cSampleSet::DRUM;
         }
         else
         {
-            sampleSet = SampleSet(SampleSet::SAMPLE_SET::AUTO);
+            sampleSet = osuMap::cSampleSet::AUTO;
         }
     }
-    if (indexMapStringList[5]  != -1){ stackLeniency
+    if (indexMapStringList[5]  != -1) { stackLeniency
                 = newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[6]  != -1){ // gameMode
-        switch (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()){
+    if (indexMapStringList[6]  != -1) { // gameMode
+        switch (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()) {
         case 0:
-            gameMode = GameMode(GameMode::GAME_MODE::STANDARD);
+            gameMode = cGameMode::STANDARD;
             break;
         case 1:
-            gameMode = GameMode(GameMode::GAME_MODE::TAIKO);
+            gameMode = cGameMode::TAIKO;
             break;
         case 2:
-            gameMode = GameMode(GameMode::GAME_MODE::CTB);
+            gameMode = cGameMode::CTB;
             break;
         case 3:
-            gameMode = GameMode(GameMode::GAME_MODE::MANIA);
+            gameMode = cGameMode::MANIA;
             break;
         default:
-            gameMode = GameMode(GameMode::GAME_MODE::STANDARD);
+            gameMode = cGameMode::STANDARD;
             break;
         }
        }
-    if (indexMapStringList[7]  != -1){ letterbox
+    if (indexMapStringList[7]  != -1) { letterbox
                 = bool (newMapStringList[indexMapStringList[0]].split(":")[1].simplified().toInt()); }
-    if (indexMapStringList[8]  != -1){ specialStyle
+    if (indexMapStringList[8]  != -1) { specialStyle
                 = bool (newMapStringList[indexMapStringList[8]].split(":")[1].simplified().toInt()); }
-    if (indexMapStringList[9]  != -1){ widescreen
+    if (indexMapStringList[9]  != -1) { widescreen
                 = bool (newMapStringList[indexMapStringList[9]].split(":")[1].simplified().toInt()); }
-    if (indexMapStringList[10] != -1){ distanceSpacing
+    if (indexMapStringList[10] != -1) { distanceSpacing
                 = newMapStringList[indexMapStringList[10]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[11] != -1){ beatDivisor
+    if (indexMapStringList[11] != -1) { beatDivisor
                 = newMapStringList[indexMapStringList[11]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[12] != -1){ gridSize
+    if (indexMapStringList[12] != -1) { gridSize
                 = newMapStringList[indexMapStringList[12]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[13] != -1){ timelineZoom
+    if (indexMapStringList[13] != -1) { timelineZoom
                 = newMapStringList[indexMapStringList[13]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[14] != -1){ title
+    if (indexMapStringList[14] != -1) { title
                 =newMapStringList[indexMapStringList[14]].right // We do .right() instead of split just in case parameter contains ':'
                 (
                     newMapStringList[indexMapStringList[14]].length() -newMapStringList[indexMapStringList[14]].indexOf(":") - 1
                 ).simplified();
     }
-    if (indexMapStringList[15] != -1){ unicodeTitle
+    if (indexMapStringList[15] != -1) { unicodeTitle
                 =newMapStringList[indexMapStringList[15]].right
                 (
                     newMapStringList[indexMapStringList[15]].length() -newMapStringList[indexMapStringList[15]].indexOf(":") - 1
                 ).simplified();
     }
-    if (indexMapStringList[16] != -1){ artist
+    if (indexMapStringList[16] != -1) { artist
                 =newMapStringList[indexMapStringList[16]].right
                 (
                     newMapStringList[indexMapStringList[16]].length() -newMapStringList[indexMapStringList[16]].indexOf(":") - 1
                 ).simplified();
     }
-    if (indexMapStringList[17] != -1){ unicodeArtist
+    if (indexMapStringList[17] != -1) { unicodeArtist
                 =newMapStringList[indexMapStringList[17]].right
                 (
                     newMapStringList[indexMapStringList[17]].length() -newMapStringList[indexMapStringList[17]].indexOf(":") - 1
                 ).simplified();
     }
-    if (indexMapStringList[18] != -1){ creator
+    if (indexMapStringList[18] != -1) { creator
                 = newMapStringList[indexMapStringList[18]].split(":")[1].simplified();  }
-    if (indexMapStringList[19] != -1){ difficultyName
+    if (indexMapStringList[19] != -1) { difficultyName
                 = newMapStringList[indexMapStringList[19]].right
                   (
                      newMapStringList[indexMapStringList[19]].length() -newMapStringList[indexMapStringList[19]].indexOf(":") - 1
                   ).simplified();
     }
-    if (indexMapStringList[20] != -1){ source
+    if (indexMapStringList[20] != -1) { source
                 = newMapStringList[indexMapStringList[20]].right
                   (
                      newMapStringList[indexMapStringList[20]].length() -newMapStringList[indexMapStringList[20]].indexOf(":") - 1
                   ).simplified();
     }
-    if (indexMapStringList[21] != -1){ // tags
+    if (indexMapStringList[21] != -1) { // tags
         QString trimTag;
 
-        trimTag = newMapStringList[indexMapStringList[21]].right
+        trimTag =newMapStringList[indexMapStringList[21]].right
                   (
                      newMapStringList[indexMapStringList[21]].length() -newMapStringList[indexMapStringList[21]].indexOf(":") - 1
                   ).simplified();
@@ -282,24 +222,24 @@ void osuMap::loadMap(QStringList newMapStringList)
         trimTag.replace(",", " "); // Just in case tags are separated by ','
         tags             = trimTag.split(" ",QString::SkipEmptyParts);
     }
-    if (indexMapStringList[22] != -1){ beatmapID
+    if (indexMapStringList[22] != -1) { beatmapID
                 = newMapStringList[indexMapStringList[22]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[23] != -1){ beatmapSetID
+    if (indexMapStringList[23] != -1) { beatmapSetID
                 = newMapStringList[indexMapStringList[23]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[24] != -1){ HP
+    if (indexMapStringList[24] != -1) { HP
                 = newMapStringList[indexMapStringList[24]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[25] != -1){ CS
+    if (indexMapStringList[25] != -1) { CS
                 = newMapStringList[indexMapStringList[25]].split(":")[1].simplified().toDouble();
                 }
-    if (indexMapStringList[26] != -1){ OD
+    if (indexMapStringList[26] != -1) { OD
                 = newMapStringList[indexMapStringList[26]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[27] != -1){ AR
+    if (indexMapStringList[27] != -1) { AR
                 = newMapStringList[indexMapStringList[27]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[28] != -1){ sliderMult
+    if (indexMapStringList[28] != -1) { sliderMult
                 = newMapStringList[indexMapStringList[28]].split(":")[1].simplified().toDouble(); }
-    if (indexMapStringList[29] != -1){ sliderTick
+    if (indexMapStringList[29] != -1) { sliderTick
                 = newMapStringList[indexMapStringList[29]].split(":")[1].simplified().toInt(); }
-    if (indexMapStringList[30] != -1){ // bgFileName
+    if (indexMapStringList[30] != -1) { // bgFileName
         QString lineBGFileName,
                 trimBGFileName;
         int firstQuoteIndex,
@@ -314,7 +254,7 @@ void osuMap::loadMap(QStringList newMapStringList)
 
         bgFileName = trimBGFileName;
                  }
-    if (indexMapStringList[31] != -1){ // videoFileName
+    if (indexMapStringList[31] != -1) { // videoFileName
         QString lineVideoFileName;
         int firstQuoteIndex,
             secondQuoteIndex;
@@ -326,7 +266,7 @@ void osuMap::loadMap(QStringList newMapStringList)
 
         videoFileName = lineVideoFileName.mid(firstQuoteIndex + 1, secondQuoteIndex - firstQuoteIndex - 1);
                  }
-    if (indexMapStringList[32] != -1){ // BreakP
+    if (indexMapStringList[32] != -1) { // BreakP
 
         int startBreakPIndex,
             endBreakPIndex;
@@ -350,7 +290,7 @@ void osuMap::loadMap(QStringList newMapStringList)
             }
         }
                  }
-    if (indexMapStringList[33] != -1){ // curTimingPointList
+    if (indexMapStringList[33] != -1) { // curTimingPointList
         int startOM_TPIndex,
             endOM_TPIndex;
 
@@ -368,7 +308,7 @@ void osuMap::loadMap(QStringList newMapStringList)
         }
 
     }
-    if (indexMapStringList[34] != -1){ // hitObjectList
+    if (indexMapStringList[34] != -1) { // hitObjectList
         int startOM_HOIndex,
             endOM_HOIndex;
 
@@ -394,42 +334,81 @@ void osuMap::loadMap(QStringList newMapStringList)
 // GETTERS
 void osuMap::getInfo() const
 {
+    QString sampleSetStr,
+            gameModeStr;
+
+    // CONVERT SAMPLESET TO STR
+    switch (sampleSet) {
+    case osuMap::cSampleSet::AUTO:
+        sampleSetStr = "AUTO";
+        break;
+    case osuMap::cSampleSet::SOFT:
+        sampleSetStr = "SOFT";
+        break;
+    case osuMap::cSampleSet::NORMAL:
+        sampleSetStr = "NORMAL";
+        break;
+    case osuMap::cSampleSet::DRUM:
+        sampleSetStr = "DRUM";
+        break;
+    default:
+        break;
+    }
+
+    // CONVERT SAMPLESET TO STR
+    switch (gameMode) {
+    case osuMap::cGameMode::STANDARD:
+        gameModeStr = "STANDARD";
+        break;
+    case osuMap::cGameMode::TAIKO:
+        gameModeStr = "TAIKO";
+        break;
+    case osuMap::cGameMode::CTB:
+        gameModeStr = "CTB";
+        break;
+    case osuMap::cGameMode::MANIA:
+        gameModeStr = "MANIA";
+        break;
+    default:
+        break;
+    }
+
     qDebug() << "[---- Map Info ----]";
-    qDebug() << "AUDIOFILENAME    : " << audioFileName.toString();
-    qDebug() << "AUDIOLEADIN      : " << QString(audioLeadIn);
-    qDebug() << "PREVIEWTIME      : " << QString(previewTime);
-    qDebug() << "COUNTDOWN        : " << countdown;
-    qDebug() << "SAMPLESET        : " << QString(sampleSet);
-    qDebug() << "STACKLENIENCY    : " << QString::number(stackLeniency);
-    qDebug() << "GAMEMODE         : " << QString(gameMode);
-    qDebug() << "LETTERBOX        : " << letterbox;
-    qDebug() << "SPECIALSTYLE     : " << specialStyle;
-    qDebug() << "WIDESCREEN       : " << widescreen;
+    qDebug() << "AUDIOFILENAME    : " << audioFileName                   ;
+    qDebug() << "AUDIOLEADIN      : " << QString::number(audioLeadIn    );
+    qDebug() << "PREVIEWTIME      : " << QString::number(previewTime    );
+    qDebug() << "COUNTDOWN        : " << countdown                       ;
+    qDebug() << "SAMPLESET        : " << sampleSetStr                    ;
+    qDebug() << "STACKLENIENCY    : " << QString::number(stackLeniency  );
+    qDebug() << "GAMEMODE         : " << gameModeStr                     ;
+    qDebug() << "LETTERBOX        : " << letterbox                       ;
+    qDebug() << "SPECIALSTYLE     : " << specialStyle                    ;
+    qDebug() << "WIDESCREEN       : " << widescreen                      ;
     qDebug() << "DISTANCESPACING  : " << QString::number(distanceSpacing);
-    qDebug() << "BEATDIVISOR      : " << QString::number(beatDivisor);
-    qDebug() << "GRIDSIZE         : " << QString::number(gridSize);
-    qDebug() << "TIMELINEZOOM     : " << QString::number(timelineZoom);
-    qDebug() << "TITLE            : " << title;
-    qDebug() << "UNICODETITLE     : " << unicodeTitle;
-    qDebug() << "ARTIST           : " << artist;
-    qDebug() << "UNICODEARTIST    : " << unicodeArtist;
-    qDebug() << "CREATOR          : " << creator;
-    qDebug() << "DIFFICULTYNAME   : " << difficultyName;
-    qDebug() << "SOURCE           : " << source;
-    qDebug() << "TAGS             : " << tags;
-    qDebug() << "BEATMAPID        : " << QString::number(beatmapID);
-    qDebug() << "BEATMAPSETID     : " << QString::number(beatmapSetID);
-    qDebug() << "HP               : " << QString::number(HP);
-    qDebug() << "CS               : " << QString::number(CS);
-    qDebug() << "OD               : " << QString::number(OD);
-    qDebug() << "AR               : " << QString::number(AR);
-    qDebug() << "SLIDERMULT       : " << QString::number(sliderMult);
-    qDebug() << "SLIDERTICK       : " << QString::number(sliderTick);
-    qDebug() << "BGFILENAME       : " << bgFileName.toString();
-    qDebug() << "VIDEOFILENAME    : " << videoFileName.toString();
-    qDebug() << "BreakPList <SIZE>: " << breakPList.getSize();
-    qDebug() << "OM_TPLIST  <SIZE>: " << timingPointList.getSize();
-    qDebug() << "OM_HOLIST  <SIZE>: " << hitObjectList.getSize();
+    qDebug() << "BEATDIVISOR      : " << QString::number(beatDivisor    );
+    qDebug() << "GRIDSIZE         : " << QString::number(gridSize       );
+    qDebug() << "TIMELINEZOOM     : " << QString::number(timelineZoom   );
+    qDebug() << "TITLE            : " << title                           ;
+    qDebug() << "UNICODETITLE     : " << unicodeTitle                    ;
+    qDebug() << "ARTIST           : " << artist                          ;
+    qDebug() << "UNICODEARTIST    : " << unicodeArtist                   ;
+    qDebug() << "CREATOR          : " << creator                         ;
+    qDebug() << "DIFFICULTYNAME   : " << difficultyName                  ;
+    qDebug() << "SOURCE           : " << source                          ;
+    qDebug() << "TAGS             : " << tags                            ;
+    qDebug() << "BEATMAPID        : " << QString::number(beatmapID      );
+    qDebug() << "BEATMAPSETID     : " << QString::number(beatmapSetID   );
+    qDebug() << "HP               : " << QString::number(HP             );
+    qDebug() << "CS               : " << QString::number(CS             );
+    qDebug() << "OD               : " << QString::number(OD             );
+    qDebug() << "AR               : " << QString::number(AR             );
+    qDebug() << "SLIDERMULT       : " << QString::number(sliderMult     );
+    qDebug() << "SLIDERTICK       : " << QString::number(sliderTick     );
+    qDebug() << "BGFILENAME       : " << bgFileName                      ;
+    qDebug() << "VIDEOFILENAME    : " << videoFileName                   ;
+    qDebug() << "BreakPList <SIZE>: " << breakPList.getSize()            ;
+    qDebug() << "OM_TPLIST  <SIZE>: " << timingPointList.getSize()             ;
+    qDebug() << "OM_HOLIST  <SIZE>: " << hitObjectList.getSize()             ;
 }
 
 void osuMap::copyAudioFileTo(QFileInfo copyLocation)
@@ -438,7 +417,7 @@ void osuMap::copyAudioFileTo(QFileInfo copyLocation)
 
     if (!oldLocation.copy(copyLocation.filePath()))
     {
-         AmberException(AmberException::FILE_COPY_FAIL, "Fail to copy audio file");
+         AExc(AExc::FILE_COPY_FAIL, "Fail to copy audio file");
          return;
     }
 }
@@ -448,7 +427,7 @@ void osuMap::copyOsuFileTo(QFileInfo copyLocation)
 
     if (oldLocation.copy(copyLocation.filePath()))
     {
-         AmberException(AmberException::FILE_COPY_FAIL, "Fail to copy .osu file");
+         AExc(AExc::FILE_COPY_FAIL, "Fail to copy .osu file");
          return;
     }
 }
@@ -458,7 +437,7 @@ void osuMap::copyBGFileTo(QFileInfo copyLocation)
 
     if (oldLocation.copy(copyLocation.filePath()))
     {
-         AmberException(AmberException::FILE_COPY_FAIL, "Fail to copy background file");
+         AExc(AExc::FILE_COPY_FAIL, "Fail to copy background file");
          return;
     }
 }
@@ -516,8 +495,8 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
             REG_bgFileName     ("//Background and Video events"),
             REG_videoFileName  ("Video,.*"),
             REG_breakPList     ("//Break Periods"),
-            REG_TPList         (".*TimingPoints.*"),
-            REG_HOList         (".*HitObjects.*");
+            REG_timingPointList      (".*TimingPoints.*"),
+            REG_OM_HOList      (".*HitObjects.*");
 
     settingsRegList = {REG_audioFileName  ,
                        REG_audioLeadIn    ,
@@ -552,8 +531,8 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
                        REG_bgFileName     ,
                        REG_videoFileName  ,
                        REG_breakPList     ,
-                       REG_TPList         ,
-                       REG_HOList         };
+                       REG_timingPointList      ,
+                       REG_OM_HOList      };
 
     bool    FLAG_audioFileName   = false,
             FLAG_audioLeadIn     = false,
@@ -588,8 +567,8 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
             FLAG_bgFileName      = false,
             FLAG_videoFileName   = false,
             FLAG_breakPList      = false,
-            FLAG_TPList          = false,
-            FLAG_HOList          = false;
+            FLAG_timingPointList       = false,
+            FLAG_OM_HOList       = false;
 
     flagRegList = {FLAG_audioFileName  ,
                    FLAG_audioLeadIn    ,
@@ -624,21 +603,21 @@ QList<int> osuMap::findMapSettings(QStringList &mapSList)
                    FLAG_bgFileName     ,
                    FLAG_videoFileName  ,
                    FLAG_breakPList     ,
-                   FLAG_TPList         ,
-                   FLAG_HOList         };
+                   FLAG_timingPointList      ,
+                   FLAG_OM_HOList      };
 
     qDebug() << "[---- RegEx Matching ----]";
 
     for (int tempS = 0; tempS < mapSList.length(); tempS ++)
     {
-        for (int tempR = 0; tempR < settingsRegList.length(); tempR ++){
+        for (int tempR = 0; tempR < settingsRegList.length(); tempR ++) {
 
             if (flagRegList[tempR] == true) // When it is true, that means the parameter has been found
             {
                 continue;
             }
 
-            else if (settingsRegList[tempR].exactMatch(mapSList[tempS])){
+            else if (settingsRegList[tempR].exactMatch(mapSList[tempS])) {
                 settingsRegList[tempR].setPatternSyntax(QRegExp::Wildcard);
 
                 qDebug() << "Pattern : " << settingsRegList[tempR].pattern();

@@ -1,7 +1,7 @@
 #ifndef cMAPSET_H
 #define cMAPSET_H
 
-#include "amber_base/osumap.h"
+#include "osumap.h"
 
 class  osuMapSet
 {
@@ -15,9 +15,9 @@ public:
     QList<int               >getAudioLeadInList    () const;
     QList<int               >getPreviewTimeList    () const;
     QList<bool              >getCountdownList      () const;
-    QList<SampleSet>         getSampleSetList      () const;
+    QList<osuMap::cSampleSet>getSampleSetList      () const;
     QList<double            >getStackLeniencyList  () const;
-    QList<GameMode          >getGameModeList       () const;
+    QList<osuMap::cGameMode> getGameModeList       () const;
     QList<bool              >getLetterboxList      () const;
     QList<bool              >getSpecialStyleList   () const;
     QList<bool              >getWidescreenList     () const;
@@ -52,9 +52,9 @@ public:
     void setAudioLeadInList      (QList<int               >newAudioLeadInList    );
     void setPreviewTimeList      (QList<int               >newPreviewTimeList    );
     void setCountdownList        (QList<bool              >newCountdownList      );
-    void setSampleSetList        (QList<SampleSet>         newSampleSetList      );
+    void setSampleSetList        (QList<osuMap::cSampleSet>newSampleSetList      );
     void setStackLeniencyList    (QList<double            >newStackLeniencyList  );
-    void setGameModeList         (QList<GameMode          >newGameModeList       );
+    void setGameModeList         (QList<osuMap::cGameMode >newGameModeList       );
     void setLetterboxList        (QList<bool              >newLetterboxList      );
     void setSpecialStyleList     (QList<bool              >newSpecialStyleList   );
     void setWidescreenList       (QList<bool              >newWidescreenList     );
