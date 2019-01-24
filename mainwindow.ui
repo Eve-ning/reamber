@@ -177,7 +177,7 @@
            <item row="0" column="0" rowspan="2">
             <widget class="QGroupBox" name="copier_ho_lo">
              <property name="title">
-              <string>hit_object_input</string>
+              <string>editor_hit_object_input</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_13">
               <item row="0" column="0">
@@ -648,7 +648,7 @@
                  </sizepolicy>
                 </property>
                 <property name="title">
-                 <string>input</string>
+                 <string>editor_hit_object_input</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_26">
                  <item row="0" column="0">
