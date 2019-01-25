@@ -34,3 +34,9 @@ void MainWindow::on_copier_generate_clicked()
                     lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true),true,true)->get_string_raw("\n"))
                 );
 }
+
+
+void MainWindow::on_tpf_initsv_valueChangedD(double value)
+{
+
+}
