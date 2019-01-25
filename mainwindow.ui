@@ -479,7 +479,7 @@
                   </widget>
                  </item>
                  <item row="3" column="0">
-                  <widget class="QDoubleSlider" name="tpf_initsv">
+                  <widget class="QSlider" name="tpf_initsv">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -550,9 +550,6 @@
                    </property>
                    <property name="value">
                     <number>0</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
                    </property>
                   </widget>
                  </item>
@@ -920,16 +917,6 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QDoubleSlider</class>
-   <extends>QSlider</extends>
-   <header>qdoubleslider.h</header>
-   <slots>
-    <signal>doubleValueChanged(double)</signal>
-   </slots>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>

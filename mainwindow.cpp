@@ -35,8 +35,59 @@ void MainWindow::on_copier_generate_clicked()
                 );
 }
 
-
-void MainWindow::on_tpf_initsv_valueChangedD(double value)
+void MainWindow::on_tpf_initsv_valueChanged(int value)
 {
+    ui->tpf_initsv_val->setText(QString::number(value/100.0));
+}
 
+void MainWindow::on_tpf_endsv_valueChanged(int value)
+{
+    ui->tpf_endsv_val->setText(QString::number(value/100.0));
+}
+
+void MainWindow::on_tpf_freq_valueChanged(int value)
+{
+    ui->tpf_freq_val->setText(QString::number(value/100.0));
+}
+
+void MainWindow::on_tpf_ampl_valueChanged(int value)
+{
+    ui->tpf_ampl_val->setText(QString::number(value/100.0));
+}
+
+void MainWindow::on_normalizer_generate_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->normalizer_input->toPlainText().toStdString(), '\n');
+
+    // Break if empty
+    if (tp_v.size() == 0){
+        return;
+    }
+
+    // Remove Items
+    ui->normalizer_bpmlist->clear();
+
+    // Extract BPMs out of the vector only
+    auto bpm_tp_v = tp_v.get_bpm_only();
+    QStringList bpm_tp_v_str;
+
+    for (auto bpm_tp : bpm_tp_v) {
+        bpm_tp_v_str.append(QString::number(bpm_tp.get_value()));
+    }
+
+    // Add Items
+    ui->normalizer_bpmlist->addItems(bpm_tp_v_str);
+
+    ui->normalizer_output->setPlainText(
+                QString::fromStdString(
+                    lib_functions::create_normalize(tp_v, ui->normalizer_bpm->value(), false).get_string_raw()
+                    )
+                );
+}
+
+// Automatically set the BPM value after selecting
+void MainWindow::on_normalizer_bpmlist_itemClicked(QListWidgetItem *item)
+{
+    ui->normalizer_bpm->setValue(item->text().toDouble());
 }
