@@ -97,26 +97,48 @@ void MainWindow::on_stutter_initsv_vs_valueChanged(int value)
     ui->stutter_initsv_val->setText(QString::number(value/100.0));
 }
 
+void MainWindow::on_stutter_initbpm_vs_valueChanged(int value)
+{
+    ui->stutter_initbpm_val->setText(QString::number(value/100.0));
+}
+
 void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
 {
     ui->stutter_threshold_val->setText(QString::number(value/100.0));
 
-    // We would also like to limit the initial SV values
-    std::vector<double> init_lim = lib_functions::create_basic_stutter_initial_sv_limits(
-                value/100.0, ui->stutter_avesv->text().toDouble(), 0.1, 10.0);
+    if (ui->stutter_type_sv->isChecked()){
+        // We limit the initial SV values
+        std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
+                    value/100.0, ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
-    qDebug() << init_lim[0] << "<->" << init_lim[1];
+        if (init_lim[0] >= SV_MIN) {
+            ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * 100.0));
+        } else {
+            ui->stutter_initsv_vs->setMinimum(10);
+        }
+        if (init_lim[1] <= SV_MAX) {
+            ui->stutter_initsv_vs->setMaximum(int(init_lim[1] * 100.0));
+        } else {
+            ui->stutter_initsv_vs->setMaximum(1000);
+        }
+    } else if (ui->stutter_type_bpm->isChecked()) {
+        // We limit the initial BPM values
+        std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
+                    value/100.0, ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
-    if (init_lim[0] >= 0.1) {
-        ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * 100.0));
-    } else {
-        ui->stutter_initsv_vs->setMinimum(10);
+        if (init_lim[0] >= BPM_MIN) {
+            ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * 100.0));
+        } else {
+            ui->stutter_initbpm_vs->setMinimum(0);
+        }
+        if (init_lim[1] <= BPM_MAX) {
+            ui->stutter_initbpm_vs->setMaximum(int(init_lim[1] * 100.0));
+        } else {
+            ui->stutter_initbpm_vs->setMaximum(1000000);
+        }
     }
-    if (init_lim[1] <= 10.0) {
-        ui->stutter_initsv_vs->setMaximum(int(init_lim[1] * 100.0));
-    } else {
-        ui->stutter_initsv_vs->setMaximum(1000);
-    }
+
+
 }
 
 void MainWindow::on_stutter_generate_clicked()
@@ -124,15 +146,32 @@ void MainWindow::on_stutter_generate_clicked()
     hit_object_v ho_v;
     ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
 
+    // Break if empty
+    if (ho_v.size() == 0){
+        return;
+    }
+
+    timing_point_v tp_v;
+
+    // Depends on which radio is checked, we generate a different output
+    if (ui->stutter_type_sv->isChecked()){
+        tp_v = lib_functions::create_basic_stutter(
+                    ho_v.get_offset_v(true),
+                    ui->stutter_initsv_val->text().toDouble(),
+                    ui->stutter_threshold_val->text().toDouble(),
+                    ui->stutter_avesv->value(),
+                    false);
+
+    } else if (ui->stutter_type_bpm->isChecked()) {
+        tp_v = lib_functions::create_basic_stutter(
+                    ho_v.get_offset_v(true),
+                    ui->stutter_initbpm_val->text().toDouble(),
+                    ui->stutter_threshold_val->text().toDouble(),
+                    ui->stutter_avebpm->value(),
+                    true);
+    }
+
     ui->stutter_output->setPlainText(
-                QString::fromStdString(
-                    lib_functions::create_basic_stutter(
-                        ho_v.get_offset_v(true),
-                        ui->stutter_initsv_val->text().toDouble(),
-                        ui->stutter_threshold_val->text().toDouble(),
-                        ui->stutter_avesv->value(),
-                        false
-                    ).get_string_raw("\n")
-                    )
-                );
+                QString::fromStdString(tp_v.get_string_raw("\n")));
 }
+

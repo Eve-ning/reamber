@@ -47,13 +47,32 @@
              </layout>
             </widget>
            </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QPushButton" name="stutter_generate">
+             <property name="text">
+              <string>Generate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QGroupBox" name="stutter_output_lo">
+             <property name="title">
+              <string>output</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="0">
+               <widget class="QPlainTextEdit" name="stutter_output"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QGroupBox" name="stutter_controls_lo">
              <property name="title">
               <string>controls</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="1">
+              <item row="0" column="3">
                <widget class="QGroupBox" name="stutter_threshold_lo">
                 <property name="title">
                  <string>threshold</string>
@@ -66,6 +85,16 @@
                   <widget class="QLabel" name="stutter_threshold_min">
                    <property name="text">
                     <string>min</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="stutter_threshold_val">
+                   <property name="text">
+                    <string>50%</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -101,20 +130,36 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="stutter_threshold_val">
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QGroupBox" name="stutter_type_lo">
+                <property name="title">
+                 <string>type</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_38">
+                 <item row="1" column="0">
+                  <widget class="QRadioButton" name="stutter_type_sv">
                    <property name="text">
-                    <string>50%</string>
+                    <string>SV</string>
                    </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QRadioButton" name="stutter_type_bpm">
+                   <property name="text">
+                    <string>BPM</string>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </widget>
               </item>
-              <item row="0" column="0">
+              <item row="0" column="1">
                <widget class="QGroupBox" name="stutter_initsv_lo">
                 <property name="title">
                  <string>initial_sv</string>
@@ -178,7 +223,93 @@
                 </layout>
                </widget>
               </item>
-              <item row="1" column="0" colspan="2">
+              <item row="0" column="0">
+               <widget class="QGroupBox" name="stutter_initbpm_lo">
+                <property name="title">
+                 <string>initial_bpm</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_36">
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="stutter_initbpm_max">
+                   <property name="text">
+                    <string>max</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="stutter_initbpm_min">
+                   <property name="text">
+                    <string>min</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="stutter_initbpm_val">
+                   <property name="text">
+                    <string>120.0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QSlider" name="stutter_initbpm_vs">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>1000000</number>
+                   </property>
+                   <property name="value">
+                    <number>120</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QGroupBox" name="stutter_avebpm_lo">
+                <property name="title">
+                 <string>average_bpm</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_37">
+                 <item row="0" column="0">
+                  <widget class="QDoubleSpinBox" name="stutter_avebpm">
+                   <property name="minimum">
+                    <double>0.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>100000.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>120.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="1">
                <widget class="QGroupBox" name="stutter_avesv_lo">
                 <property name="title">
                  <string>average_sv</string>
@@ -201,25 +332,6 @@
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QGroupBox" name="stutter_output_lo">
-             <property name="title">
-              <string>output</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <widget class="QPlainTextEdit" name="stutter_output"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QPushButton" name="stutter_generate">
-             <property name="text">
-              <string>Generate</string>
-             </property>
             </widget>
            </item>
           </layout>

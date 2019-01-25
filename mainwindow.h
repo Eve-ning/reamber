@@ -39,8 +39,14 @@ private slots:
 
     void on_stutter_generate_clicked();
 
+    void on_stutter_initbpm_vs_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
+    double SV_MIN = 0.1;
+    double SV_MAX = 10.0;
+    double BPM_MIN = 0.00001;
+    double BPM_MAX = 1000000; // 1,000,000
 };
 
 #endif // MAINWINDOW_H
