@@ -94,7 +94,7 @@
                  <item row="0" column="0">
                   <widget class="QLabel" name="stutter_threshold_val">
                    <property name="text">
-                    <string>50%</string>
+                    <string>0.5</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -119,8 +119,11 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
                    <property name="maximum">
-                    <number>100</number>
+                    <number>99</number>
                    </property>
                    <property name="value">
                     <number>50</number>

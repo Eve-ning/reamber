@@ -37,22 +37,22 @@ void MainWindow::on_copier_generate_clicked()
 
 void MainWindow::on_tpf_initsv_valueChanged(int value)
 {
-    ui->tpf_initsv_val->setText(QString::number(value/100.0));
+    ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
 }
 
 void MainWindow::on_tpf_endsv_valueChanged(int value)
 {
-    ui->tpf_endsv_val->setText(QString::number(value/100.0));
+    ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
 }
 
 void MainWindow::on_tpf_freq_valueChanged(int value)
 {
-    ui->tpf_freq_val->setText(QString::number(value/100.0));
+    ui->tpf_freq_val->setText(QString::number(value/VS_TO_VAL));
 }
 
 void MainWindow::on_tpf_ampl_valueChanged(int value)
 {
-    ui->tpf_ampl_val->setText(QString::number(value/100.0));
+    ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
 }
 
 void MainWindow::on_normalizer_generate_clicked()
@@ -94,17 +94,17 @@ void MainWindow::on_normalizer_bpmlist_itemClicked(QListWidgetItem *item)
 
 void MainWindow::on_stutter_initsv_vs_valueChanged(int value)
 {
-    ui->stutter_initsv_val->setText(QString::number(value/100.0));
+    ui->stutter_initsv_val->setText(QString::number(value/VS_TO_VAL));
 }
 
 void MainWindow::on_stutter_initbpm_vs_valueChanged(int value)
 {
-    ui->stutter_initbpm_val->setText(QString::number(value/100.0));
+    ui->stutter_initbpm_val->setText(QString::number(value/VS_TO_VAL));
 }
 
 void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
 {
-    ui->stutter_threshold_val->setText(QString::number(value/100.0));
+    ui->stutter_threshold_val->setText(QString::number(value/VS_TO_VAL));
 
     if (ui->stutter_type_sv->isChecked()){
         // We limit the initial SV values
@@ -112,14 +112,14 @@ void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
                     value/100.0, ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
         if (init_lim[0] >= SV_MIN) {
-            ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * 100.0));
+            ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
         } else {
-            ui->stutter_initsv_vs->setMinimum(10);
+            ui->stutter_initsv_vs->setMinimum(int(SV_MIN * VS_TO_VAL));
         }
         if (init_lim[1] <= SV_MAX) {
-            ui->stutter_initsv_vs->setMaximum(int(init_lim[1] * 100.0));
+            ui->stutter_initsv_vs->setMaximum(int(init_lim[1] * VS_TO_VAL));
         } else {
-            ui->stutter_initsv_vs->setMaximum(1000);
+            ui->stutter_initsv_vs->setMaximum(int(SV_MAX * VS_TO_VAL));
         }
     } else if (ui->stutter_type_bpm->isChecked()) {
         // We limit the initial BPM values
@@ -127,14 +127,14 @@ void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
                     value/100.0, ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
         if (init_lim[0] >= BPM_MIN) {
-            ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * 100.0));
+            ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
         } else {
-            ui->stutter_initbpm_vs->setMinimum(0);
+            ui->stutter_initbpm_vs->setMinimum(int(BPM_MIN * VS_TO_VAL));
         }
         if (init_lim[1] <= BPM_MAX) {
-            ui->stutter_initbpm_vs->setMaximum(int(init_lim[1] * 100.0));
+            ui->stutter_initbpm_vs->setMaximum(int(init_lim[1] * VS_TO_VAL));
         } else {
-            ui->stutter_initbpm_vs->setMaximum(1000000);
+            ui->stutter_initbpm_vs->setMaximum(int(BPM_MAX * VS_TO_VAL));
         }
     }
 

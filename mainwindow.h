@@ -43,10 +43,15 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    // Define "global" variables
     double SV_MIN = 0.1;
     double SV_MAX = 10.0;
-    double BPM_MIN = 0.00001;
+    double BPM_MIN = 0.1;
     double BPM_MAX = 1000000; // 1,000,000
+
+    // This value is to convert vertical slider values to val
+    double VS_TO_VAL = 100.0;
 };
 
 #endif // MAINWINDOW_H
