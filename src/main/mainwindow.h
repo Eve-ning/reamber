@@ -33,7 +33,14 @@ private slots:
 
     void on_tpf_generate_clicked();
 
+    void on_stutter_avebpm_valueChanged(double);
+
+    void on_stutter_avesv_valueChanged(double);
+
 private:
+
+    void stutter_limit_update();
+
     Ui::MainWindow *ui;
 
     // Define "global" variables

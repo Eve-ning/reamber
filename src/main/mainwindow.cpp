@@ -39,17 +39,14 @@ void MainWindow::on_tpf_initsv_valueChanged(int value)
 {
     ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
 }
-
 void MainWindow::on_tpf_endsv_valueChanged(int value)
 {
     ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
 }
-
 void MainWindow::on_tpf_freq_valueChanged(int value)
 {
     ui->tpf_freq_val->setText(QString::number(value/VS_TO_VAL));
 }
-
 void MainWindow::on_tpf_ampl_valueChanged(int value)
 {
     ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
@@ -85,8 +82,6 @@ void MainWindow::on_normalizer_generate_clicked()
                     )
                 );
 }
-
-// Automatically set the BPM value after selecting
 void MainWindow::on_normalizer_bpmlist_itemClicked(QListWidgetItem *item)
 {
     ui->normalizer_bpm->setValue(item->text().toDouble());
@@ -96,51 +91,15 @@ void MainWindow::on_stutter_initsv_vs_valueChanged(int value)
 {
     ui->stutter_initsv_val->setText(QString::number(value/VS_TO_VAL));
 }
-
 void MainWindow::on_stutter_initbpm_vs_valueChanged(int value)
 {
     ui->stutter_initbpm_val->setText(QString::number(value/VS_TO_VAL));
 }
-
 void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
 {
     ui->stutter_threshold_val->setText(QString::number(value/VS_TO_VAL));
-
-    if (ui->stutter_type_sv->isChecked()){
-        // We limit the initial SV values
-        std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
-                    value/VS_TO_VAL, ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
-
-        if (init_lim[0] >= SV_MIN) {
-            ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
-        } else {
-            ui->stutter_initsv_vs->setMinimum(int(SV_MIN * VS_TO_VAL));
-        }
-        if (init_lim[1] <= SV_MAX) {
-            ui->stutter_initsv_vs->setMaximum(int(init_lim[1] * VS_TO_VAL));
-        } else {
-            ui->stutter_initsv_vs->setMaximum(int(SV_MAX * VS_TO_VAL));
-        }
-    } else if (ui->stutter_type_bpm->isChecked()) {
-        // We limit the initial BPM values
-        std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
-                    value/100.0, ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
-
-        if (init_lim[0] >= BPM_MIN) {
-            ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
-        } else {
-            ui->stutter_initbpm_vs->setMinimum(int(BPM_MIN * VS_TO_VAL));
-        }
-        if (init_lim[1] <= BPM_MAX) {
-            ui->stutter_initbpm_vs->setMaximum(int(init_lim[1] * VS_TO_VAL));
-        } else {
-            ui->stutter_initbpm_vs->setMaximum(int(BPM_MAX * VS_TO_VAL));
-        }
-    }
-
-
+    stutter_limit_update();
 }
-
 void MainWindow::on_stutter_generate_clicked()
 {
     hit_object_v ho_v;
@@ -174,6 +133,16 @@ void MainWindow::on_stutter_generate_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
 }
+void MainWindow::on_stutter_avebpm_valueChanged(double)
+{
+    stutter_limit_update();
+}
+void MainWindow::on_stutter_avesv_valueChanged(double)
+{
+    stutter_limit_update();
+}
+
+
 
 void MainWindow::on_tpf_generate_clicked()
 {
@@ -189,32 +158,49 @@ void MainWindow::on_tpf_generate_clicked()
     double offset_adjust = ui->tpf_offset_val->value();
     ho_v[0].set_offset(ho_v[0].get_offset() + offset_adjust);
     ho_v[1].set_offset(ho_v[1].get_offset() + offset_adjust);
-
-
-
 }
 
+void MainWindow::stutter_limit_update()
+{
+    if (ui->stutter_type_sv->isChecked()){
+        // We limit the initial SV values
+        std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
+                    ui->stutter_threshold_val->text().toDouble()/VS_TO_VAL,
+                    ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
+        // If the lower limit is lower than SV_MIN we curb the setMinimum
+        if (init_lim[0] >= SV_MIN) {
+            ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
+        } else {
+            ui->stutter_initsv_vs->setMinimum(int(SV_MIN * VS_TO_VAL));
+        }
 
+        // If the upper limit is higher than SV_MAX we curb the setMaximum
+        if (init_lim[1] <= SV_MAX) {
+            ui->stutter_initsv_vs->setMaximum(int(init_lim[1] * VS_TO_VAL));
+        } else {
+            ui->stutter_initsv_vs->setMaximum(int(SV_MAX * VS_TO_VAL));
+        }
+    } else if (ui->stutter_type_bpm->isChecked()) {
+        // We limit the initial BPM values
+        std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
+                    ui->stutter_threshold_val->text().toDouble()/VS_TO_VAL,
+                    ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
+        // If the lower limit is higher than BPM_MIN we curb the setMinimum
+        if (init_lim[0] >= BPM_MIN) {
+            ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
+        } else {
+            ui->stutter_initbpm_vs->setMinimum(int(BPM_MIN * VS_TO_VAL));
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // If the upper limit is lower than BPM_MAX we curb the setMaximum
+        if (init_lim[1] <= BPM_MAX) {
+            ui->stutter_initbpm_vs->setMaximum(int(init_lim[1] * VS_TO_VAL));
+        } else {
+            ui->stutter_initbpm_vs->setMaximum(int(BPM_MAX * VS_TO_VAL));
+        }
+    }
+}
 
 

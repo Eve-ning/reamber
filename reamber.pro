@@ -28,12 +28,8 @@ LIBS += -LD:\qtdoc\reamber_base\Debug -lreamber_base
 
 SOURCES += \
     src/main/main.cpp \
-    src/main/mainwindow.cpp \
-    src/ui_functions/mainwindow_copier.cpp \
-    src/main/main.cpp \
-    src/main/mainwindow.cpp \
+    src/main/mainwindow.cpp
 HEADERS += \
-    src/main/mainwindow.h \
     src/main/mainwindow.h
 
 FORMS += \
