@@ -13,7 +13,7 @@ TEMPLATE = app
 
 
 # The following define makes your compiler emit warnings if you use
-# any feature of Qt which has been marked as deprecated (the exact warnings
+# any feature of Qt which has been marked as deprecated  (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -28,16 +28,21 @@ LIBS += -LD:\qtdoc\reamber_base\Debug -lreamber_base
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    src/main/main.cpp \
+    src/main/mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h
+    src/main/mainwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    src/ui/mainwindow.ui
 
 DISTFILES += \
-    naming_conventions
+    naming_conventions \
+    src/README.md \
+    src/naming_conventions
 
 
 

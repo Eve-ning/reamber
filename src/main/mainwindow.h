@@ -17,29 +17,22 @@ public:
     ~MainWindow();
 
 private slots:
-
-
     void on_copier_generate_clicked();
 
     void on_tpf_initsv_valueChanged(int value);
-
     void on_tpf_endsv_valueChanged(int value);
-
     void on_tpf_freq_valueChanged(int value);
-
     void on_tpf_ampl_valueChanged(int value);
 
     void on_normalizer_generate_clicked();
-
     void on_normalizer_bpmlist_itemClicked(QListWidgetItem *item);
 
     void on_stutter_initsv_vs_valueChanged(int value);
-
     void on_stutter_threshold_vs_valueChanged(int value);
-
     void on_stutter_generate_clicked();
-
     void on_stutter_initbpm_vs_valueChanged(int value);
+
+    void on_tpf_generate_clicked();
 
 private:
     Ui::MainWindow *ui;

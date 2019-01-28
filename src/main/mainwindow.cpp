@@ -109,7 +109,7 @@ void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
     if (ui->stutter_type_sv->isChecked()){
         // We limit the initial SV values
         std::vector<double> init_lim = lib_functions::create_basic_stutter_init_limits(
-                    value/100.0, ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
+                    value/VS_TO_VAL, ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
         if (init_lim[0] >= SV_MIN) {
             ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
@@ -174,4 +174,47 @@ void MainWindow::on_stutter_generate_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
 }
+
+void MainWindow::on_tpf_generate_clicked()
+{
+    hit_object_v ho_v;
+    ho_v.load_editor_hit_object(ui->tpf_input->text().toStdString(), 0);
+    std::vector<double> offset_v = ho_v.get_offset_v(true);
+
+    if (offset_v.size() < 2){
+        return; // Needs to be at least 2
+    }
+
+    // Adjust offset
+    double offset_adjust = ui->tpf_offset_val->value();
+    ho_v[0].set_offset(ho_v[0].get_offset() + offset_adjust);
+    ho_v[1].set_offset(ho_v[1].get_offset() + offset_adjust);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
