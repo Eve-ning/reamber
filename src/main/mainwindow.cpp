@@ -35,23 +35,6 @@ void MainWindow::on_copier_generate_clicked()
                 );
 }
 
-void MainWindow::on_tpf_initsv_valueChanged(int value)
-{
-    ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
-}
-void MainWindow::on_tpf_endsv_valueChanged(int value)
-{
-    ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
-}
-void MainWindow::on_tpf_freq_valueChanged(int value)
-{
-    ui->tpf_freq_val->setText(QString::number(value/VS_TO_VAL));
-}
-void MainWindow::on_tpf_ampl_valueChanged(int value)
-{
-    ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
-}
-
 void MainWindow::on_normalizer_generate_clicked()
 {
     timing_point_v tp_v;
@@ -142,8 +125,30 @@ void MainWindow::on_stutter_avesv_valueChanged(double)
     stutter_limit_update();
 }
 
-
-
+void MainWindow::on_tpf_initsv_valueChanged(int value)
+{
+    ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
+}
+void MainWindow::on_tpf_endsv_valueChanged(int value)
+{
+    ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
+}
+void MainWindow::on_tpf_freq_valueChanged(int value)
+{
+    ui->tpf_freq_val->setText(QString::number(value/VS_TO_VAL));
+}
+void MainWindow::on_tpf_ampl_valueChanged(int value)
+{
+    ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
+}
+void MainWindow::on_tpf_phase_valueChanged(int value)
+{
+    ui->tpf_phase_val->setText(QString::number(value));
+}
+void MainWindow::on_tpf_power_valueChanged(int value)
+{
+    ui->tpf_power_val->setText(QString::number(value/10.0));
+}
 void MainWindow::on_tpf_generate_clicked()
 {
     hit_object_v ho_v;
@@ -153,11 +158,69 @@ void MainWindow::on_tpf_generate_clicked()
     if (offset_v.size() < 2){
         return; // Needs to be at least 2
     }
+    if ((offset_v[1] - offset_v[0]) <= 0.0){
+        return; // Needs to be > 0
+    }
+
+    // Extract all values from TPF
+    double initsv = ui->tpf_initsv_val->text().toDouble();
+    double endsv = ui->tpf_endsv_val->text().toDouble();
+    double ampl = ui->tpf_ampl_val->text().toDouble();
+    double freq = ui->tpf_freq_val->text().toDouble();
+    double phase = ui->tpf_phase_val->text().toDouble();
+    double power = ui->tpf_power_val->text().toDouble();
+    double interpts = ui->tpf_interpts->value();
+
+    bool curve_sine = ui->tpf_curve_sine->isChecked();
+    bool curve_power = ui->tpf_curve_power->isChecked();
+    bool curve_invert_y = ui->tpf_curve_invert_y->isChecked();
 
     // Adjust offset
     double offset_adjust = ui->tpf_offset_val->value();
-    ho_v[0].set_offset(ho_v[0].get_offset() + offset_adjust);
-    ho_v[1].set_offset(ho_v[1].get_offset() + offset_adjust);
+    offset_v[0] += offset_adjust;
+    offset_v[1] += offset_adjust;
+
+    // Calculate all offsets with interpts
+    double offset_difference = offset_v[1] - offset_v[0];
+    double interpts_gap = offset_difference / (interpts + 1);
+
+    for (int x = 1; x <= interpts; x ++) {
+        double offset_append;
+        offset_append = x * interpts_gap + offset_v[0];
+        offset_v.push_back(offset_append);
+    }
+
+    // The function should be
+    // f(offset) =
+    // <PRM><LINEAR> (mx + c) + ampl *
+    // <SEC><SINE>   sin[(x * 2 * PI + phs) * freq]
+    // <SEC><POWER>  x^pwr
+    auto tpf_function = [&](double progress) -> double {
+        double primary = 0;
+        double gradient = (endsv - initsv);
+        primary = (progress * gradient + initsv);
+        double secondary = 0;
+        if (curve_sine) {
+            secondary = ampl * sin(((progress + (phase/360.0)) * MATH_PI * 2) * freq);
+        } else if (curve_power) {
+            secondary = ampl * pow(progress, power);
+        }
+        return curve_invert_y ? (primary - secondary) : (primary + secondary);
+    };
+
+    // Create all the timing points
+    timing_point_v tp_v;
+
+    for (double offset : offset_v) {
+        timing_point tp;
+        double progress = (offset - offset_v[0])/offset_difference;
+        tp.load_parameters(offset, tpf_function(progress), ui->tpf_type_bpm->isChecked(), false, 4);
+        tp_v.push_back(tp);
+    }
+
+    tp_v.sort_by_offset(true);
+
+    ui->tpf_output->setPlainText(QString::fromStdString(tp_v.get_string_raw()));
 }
 
 void MainWindow::stutter_limit_update()
@@ -202,5 +265,8 @@ void MainWindow::stutter_limit_update()
         }
     }
 }
+
+
+
 
 
