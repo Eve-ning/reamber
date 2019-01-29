@@ -142,7 +142,13 @@ void MainWindow::on_tpf_freq_valueChanged(int value)
 }
 void MainWindow::on_tpf_ampl_valueChanged(int value)
 {
-    ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
+    if (ui->tpf_type_bpm->isChecked()) {
+        // BPM amplitude will only scale [-1 ~ 1]
+        ui->tpf_ampl_val->setText(QString::number(value/(VS_TO_VAL * 10)));
+    } else {
+        ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
+    }
+
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_phase_valueChanged(int value)
@@ -168,9 +174,11 @@ void MainWindow::on_tpf_generate_clicked()
         return; // Needs to be > 0
     }
 
+    bool is_bpm = ui->tpf_type_bpm->isChecked();
+
     // Extract all values from TPF
-    double initsv = ui->tpf_initsv_val->text().toDouble();
-    double endsv = ui->tpf_endsv_val->text().toDouble();
+    double inittp = is_bpm ? ui->tpf_initbpm->value() : ui->tpf_initsv_val->text().toDouble();
+    double endtp = is_bpm ? ui->tpf_endbpm->value() :ui->tpf_endsv_val->text().toDouble();
     double ampl = ui->tpf_ampl_val->text().toDouble();
     double freq = ui->tpf_freq_val->text().toDouble();
     double phase = ui->tpf_phase_val->text().toDouble();
@@ -198,19 +206,25 @@ void MainWindow::on_tpf_generate_clicked()
 
     // The function should be
     // f(offset) =
-    // <PRM><LINEAR> (mx + c) + ampl *
-    // <SEC><SINE>   sin[(x * 2 * PI + phs) * freq]
-    // <SEC><POWER>  x^pwr
+    // <PRIMARY>   <LINEAR> (mx + c) + ampl *
+    // <SECONDARY> <SINE>   sin[(x * 2 * PI + phs) * freq]
+    // <SECONDARY> <POWER>  x^pwr
     auto tpf_function = [&](double progress) -> double {
         double primary = 0;
-        double gradient = (endsv - initsv);
-        primary = (progress * gradient + initsv);
+        double gradient = (endtp - inittp);
+        primary = (progress * gradient + inittp);
         double secondary = 0;
         if (curve_sine) {
-            secondary = ampl * sin(((progress + (phase/360.0)) * MATH_PI * 2) * freq);
+            secondary = ampl * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq) ;
         } else if (curve_power) {
             secondary = ampl * pow(progress, power);
         }
+
+        // This is so that the curve scales relative to the average linear BPM
+        if (is_bpm) {
+            secondary *= ((endtp + inittp) / 2);
+        }
+
         return curve_invert_y ? (primary - secondary) : (primary + secondary);
     };
 
@@ -271,6 +285,7 @@ void MainWindow::stutter_limit_update()
         }
     }
 }
+
 
 
 

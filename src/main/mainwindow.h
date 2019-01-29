@@ -22,6 +22,9 @@ private slots:
     void on_tpf_endsv_valueChanged(int value);
     void on_tpf_freq_valueChanged(int value);
     void on_tpf_ampl_valueChanged(int value);
+    void on_tpf_generate_clicked();
+    void on_tpf_phase_valueChanged(int value);
+    void on_tpf_power_valueChanged(int value);
 
     void on_normalizer_generate_clicked();
     void on_normalizer_bpmlist_itemClicked(QListWidgetItem *item);
@@ -32,12 +35,6 @@ private slots:
     void on_stutter_initbpm_vs_valueChanged(int value);
     void on_stutter_avebpm_valueChanged(double);
     void on_stutter_avesv_valueChanged(double);
-
-    void on_tpf_generate_clicked();
-
-    void on_tpf_phase_valueChanged(int value);
-
-    void on_tpf_power_valueChanged(int value);
 
 private:
 
@@ -51,7 +48,7 @@ private:
     double BPM_MIN = 0.1;
     double BPM_MAX = 1000000; // 1,000,000
 
-    long double MATH_PI = 3.14159265358979323846;
+    long double MATH_PI = 3.14159265358979323846l;
 
     // This value is to convert vertical slider values to val
     double VS_TO_VAL = 100.0;
