@@ -128,26 +128,32 @@ void MainWindow::on_stutter_avesv_valueChanged(double)
 void MainWindow::on_tpf_initsv_valueChanged(int value)
 {
     ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
+    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_endsv_valueChanged(int value)
 {
     ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
+    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_freq_valueChanged(int value)
 {
     ui->tpf_freq_val->setText(QString::number(value/VS_TO_VAL));
+    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_ampl_valueChanged(int value)
 {
     ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
+    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_phase_valueChanged(int value)
 {
     ui->tpf_phase_val->setText(QString::number(value));
+    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_power_valueChanged(int value)
 {
     ui->tpf_power_val->setText(QString::number(value/10.0));
+    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_generate_clicked()
 {

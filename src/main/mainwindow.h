@@ -51,7 +51,7 @@ private:
     double BPM_MIN = 0.1;
     double BPM_MAX = 1000000; // 1,000,000
 
-    double MATH_PI = 3.14159265358979323846;
+    long double MATH_PI = 3.14159265358979323846;
 
     // This value is to convert vertical slider values to val
     double VS_TO_VAL = 100.0;
