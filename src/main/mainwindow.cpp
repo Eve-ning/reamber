@@ -186,8 +186,9 @@ void MainWindow::on_tpf_generate_clicked()
     double power = ui->tpf_power_val->text().toDouble();
     double interpts = ui->tpf_interpts->value();
 
-    bool curve_sine = ui->tpf_curve_sine->isChecked();
-    bool curve_power = ui->tpf_curve_power->isChecked();
+    bool curve_sine = ui->tpf_curve_type->currentText() == "sine";
+    bool curve_power = ui->tpf_curve_type->currentText() == "power";
+
     bool curve_invert_y = ui->tpf_curve_invert_y->isChecked();
 
     bool output_curb = ui->tpf_output_curb;
@@ -317,8 +318,10 @@ void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector
     auto customplot = ui->tpf_customplot;
     customplot->graph(0)->setData(q_offset_v,q_value_v);
 
+    // We'll have different curbing for BPM and SV
     double value_rng_min;
     double value_rng_max;
+
     if (is_bpm) {
         value_rng_min = *std::min_element(value_v.begin(), value_v.end());
         value_rng_max = *std::max_element(value_v.begin(), value_v.end());

@@ -474,29 +474,39 @@
                  <string>curve_type</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_39">
-                 <item row="0" column="1">
-                  <widget class="QRadioButton" name="tpf_curve_power">
-                   <property name="text">
-                    <string>power</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="0">
-                  <widget class="QRadioButton" name="tpf_curve_sine">
-                   <property name="text">
-                    <string>sine</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
+                  <widget class="QComboBox" name="tpf_curve_type">
+                   <item>
+                    <property name="text">
+                     <string>sine</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>power</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
-                 <item row="0" column="2">
+                 <item row="0" column="1">
                   <widget class="QCheckBox" name="tpf_curve_invert_y">
                    <property name="text">
                     <string>invert_y</string>
                    </property>
                   </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <spacer name="tpf_hs">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
