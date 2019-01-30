@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1078</width>
-    <height>642</height>
+    <width>1082</width>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -363,10 +363,17 @@
               <item row="0" column="0">
                <widget class="QPlainTextEdit" name="tpf_output"/>
               </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QCheckBox" name="tpf_output_live">
                 <property name="text">
                  <string>live_graph_updates</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="tpf_output_curb">
+                <property name="text">
+                 <string>curb_values</string>
                 </property>
                </widget>
               </item>
@@ -464,27 +471,27 @@
                  <string>curve_type</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_39">
+                 <item row="0" column="1">
+                  <widget class="QRadioButton" name="tpf_curve_power">
+                   <property name="text">
+                    <string>power</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="0">
                   <widget class="QRadioButton" name="tpf_curve_sine">
                    <property name="text">
-                    <string>Sine Curve</string>
+                    <string>sine</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QRadioButton" name="tpf_curve_power">
-                   <property name="text">
-                    <string>Power Curve</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
+                 <item row="0" column="2">
                   <widget class="QCheckBox" name="tpf_curve_invert_y">
                    <property name="text">
-                    <string>Invert-Y</string>
+                    <string>invert_y</string>
                    </property>
                   </widget>
                  </item>
@@ -1161,7 +1168,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1078</width>
+     <width>1082</width>
      <height>20</height>
     </rect>
    </property>

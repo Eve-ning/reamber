@@ -36,11 +36,16 @@ private slots:
     void on_stutter_avebpm_valueChanged(double);
     void on_stutter_avesv_valueChanged(double);
 
+
 private:
 
     void stutter_limit_update();
     void tpf_init_customplot();
     void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
+
+    // Squeezes the value to the defined MIN and MAX limits below and returns it
+    double curb_value(double value, bool is_bpm);
+    std::vector<double> curb_value_v(std::vector<double> value_v, bool is_bpm);
 
     Ui::MainWindow *ui;
 

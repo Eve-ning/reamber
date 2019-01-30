@@ -190,6 +190,8 @@ void MainWindow::on_tpf_generate_clicked()
     bool curve_power = ui->tpf_curve_power->isChecked();
     bool curve_invert_y = ui->tpf_curve_invert_y->isChecked();
 
+    bool output_curb = ui->tpf_output_curb;
+
     // Adjust offset
     double offset_adjust = ui->tpf_offset_val->value();
     offset_v[0] += offset_adjust;
@@ -226,7 +228,12 @@ void MainWindow::on_tpf_generate_clicked()
             secondary *= ((endtp + inittp) / 2);
         }
 
-        return curve_invert_y ? (primary - secondary) : (primary + secondary);
+        // Curb values if needed
+        if (output_curb) {
+            return curb_value(curve_invert_y ? (primary - secondary) : (primary + secondary), is_bpm);
+        } else {
+            return curve_invert_y ? (primary - secondary) : (primary + secondary);
+        }
     };
 
     // Create all the timing points
@@ -239,8 +246,10 @@ void MainWindow::on_tpf_generate_clicked()
         tp_v.push_back(tp);
     }
 
+    // Sort by offset
     tp_v.sort_by_offset(true);
 
+    // Call update on the plot
     tpf_update_customplot(tp_v.get_offset_v(), tp_v.get_value_v(), is_bpm);
 
     ui->tpf_output->setPlainText(QString::fromStdString(tp_v.get_string_raw()));
@@ -324,3 +333,24 @@ void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector
     customplot->replot();
 }
 
+double MainWindow::curb_value(double value, bool is_bpm)
+{
+    if (is_bpm) {
+        value = value > BPM_MAX ? BPM_MAX : value;
+        value = value < BPM_MIN ? BPM_MIN : value;
+    } else {
+        value = value > SV_MAX ? SV_MAX : value;
+        value = value < SV_MIN ? SV_MIN : value;
+    }
+
+    return value;
+}
+
+std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool is_bpm)
+{
+    std::vector<double> output;
+    for (double value : value_v) {
+        output.push_back(curb_value(value, is_bpm));
+    }
+    return output;
+}
