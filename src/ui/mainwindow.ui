@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1083</width>
-    <height>605</height>
+    <width>1078</width>
+    <height>642</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -373,7 +373,7 @@
              </layout>
             </widget>
            </item>
-           <item row="2" column="0" colspan="4">
+           <item row="3" column="0" colspan="4">
             <widget class="QPushButton" name="tpf_generate">
              <property name="text">
               <string>Generate</string>
@@ -454,6 +454,12 @@
               </item>
               <item row="7" column="4">
                <widget class="QGroupBox" name="tpf_curve_type_lo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="title">
                  <string>curve_type</string>
                 </property>
@@ -998,6 +1004,16 @@
              </layout>
             </widget>
            </item>
+           <item row="2" column="0" colspan="3">
+            <widget class="QCustomPlot" name="tpf_customplot" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>60</height>
+              </size>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -1145,7 +1161,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1083</width>
+     <width>1078</width>
      <height>20</height>
     </rect>
    </property>
@@ -1161,6 +1177,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header location="global">src\dependencies\qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

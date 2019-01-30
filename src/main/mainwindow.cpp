@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    tpf_init_customplot();
 }
 
 MainWindow::~MainWindow()
@@ -217,7 +218,7 @@ void MainWindow::on_tpf_generate_clicked()
         if (curve_sine) {
             secondary = ampl * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq) ;
         } else if (curve_power) {
-            secondary = ampl * pow(progress, power);
+            secondary = ampl * pow(progress, power); // this doesn't affect it too much
         }
 
         // This is so that the curve scales relative to the average linear BPM
@@ -239,6 +240,8 @@ void MainWindow::on_tpf_generate_clicked()
     }
 
     tp_v.sort_by_offset(true);
+
+    tpf_update_customplot(tp_v.get_offset_v(), tp_v.get_value_v(), is_bpm);
 
     ui->tpf_output->setPlainText(QString::fromStdString(tp_v.get_string_raw()));
 }
@@ -286,8 +289,38 @@ void MainWindow::stutter_limit_update()
     }
 }
 
+void MainWindow::tpf_init_customplot()
+{
+    auto customplot = ui->tpf_customplot;
+    customplot->addGraph();
 
+    customplot->xAxis->setLabel("offset");
+    customplot->yAxis->setLabel("value");
 
+    customplot->replot();
+}
 
+void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm)
+{
+    QVector<double> q_offset_v = QVector<double>::fromStdVector(offset_v);
+    QVector<double> q_value_v = QVector<double>::fromStdVector(value_v);
 
+    auto customplot = ui->tpf_customplot;
+    customplot->graph(0)->setData(q_offset_v,q_value_v);
+
+    double value_rng_min;
+    double value_rng_max;
+    if (is_bpm) {
+        value_rng_min = *std::min_element(value_v.begin(), value_v.end());
+        value_rng_max = *std::max_element(value_v.begin(), value_v.end());
+    } else {
+        value_rng_min = SV_MIN;
+        value_rng_max = SV_MAX;
+    }
+
+    customplot->xAxis->setRange(*std::min_element(offset_v.begin(), offset_v.end()), *std::max_element(offset_v.begin(), offset_v.end()));
+    customplot->yAxis->setRange(SV_MIN, SV_MAX);
+
+    customplot->replot();
+}
 

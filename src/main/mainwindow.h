@@ -39,6 +39,8 @@ private slots:
 private:
 
     void stutter_limit_update();
+    void tpf_init_customplot();
+    void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
 
     Ui::MainWindow *ui;
 

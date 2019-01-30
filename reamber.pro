@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,9 +28,11 @@ LIBS += -LD:\qtdoc\reamber_base\Debug -lreamber_base
 
 SOURCES += \
     src/main/main.cpp \
-    src/main/mainwindow.cpp
+    src/main/mainwindow.cpp \
+    src/dependencies/qcustomplot.cpp
 HEADERS += \
-    src/main/mainwindow.h
+    src/main/mainwindow.h \
+    src/dependencies/qcustomplot.h
 
 FORMS += \
     src/ui/mainwindow.ui
