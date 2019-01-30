@@ -221,7 +221,7 @@ void MainWindow::on_tpf_generate_clicked()
         if (curve_sine) {
             secondary = ampl * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq) ;
         } else if (curve_power) {
-            secondary = ampl * pow(progress, power); // this doesn't affect it too much
+            secondary = pow(progress * ampl, power); // this doesn't affect it too much
         }
 
         // This is so that the curve scales relative to the average linear BPM
