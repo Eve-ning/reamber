@@ -36,7 +36,6 @@ private slots:
     void on_stutter_avebpm_valueChanged(double);
     void on_stutter_avesv_valueChanged(double);
 
-
 private:
 
     void stutter_limit_update();
