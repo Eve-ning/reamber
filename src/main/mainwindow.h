@@ -35,6 +35,7 @@ private slots:
     void on_stutter_initbpm_vs_valueChanged(int value);
     void on_stutter_avebpm_valueChanged(double);
     void on_stutter_avesv_valueChanged(double);
+    void on_stutter_1ms_front_clicked();
 
 private:
 
@@ -52,7 +53,7 @@ private:
     double SV_MIN = 0.1;
     double SV_MAX = 10.0;
     double BPM_MIN = 0.1;
-    double BPM_MAX = 1000000; // 1,000,000
+    double BPM_MAX = 10000000; // 10,000,000
 
     long double MATH_PI = 3.14159265358979323846l;
 
