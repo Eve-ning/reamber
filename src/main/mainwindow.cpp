@@ -137,6 +137,24 @@ void MainWindow::on_stutter_preset_nft_clicked()
 }
 
 
+void MainWindow::on_stutter_preset_nbt_clicked()
+{
+    hit_object_v ho_v;
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+
+    // Break if empty
+    if (ho_v.size() == 0){
+        return;
+    }
+
+    timing_point_v tp_v = lib_functions::create_stutter_absolute(
+                ho_v.get_offset_v(true),BPM_MIN,BPM_MIN,ui->stutter_avebpm->value(), true, false, true);
+
+    ui->stutter_output->setPlainText(
+                QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+
+
 void MainWindow::on_stutter_preset_mft_clicked()
 {
     hit_object_v ho_v;
@@ -157,12 +175,50 @@ void MainWindow::on_stutter_preset_mft_clicked()
     tp_teleport.set_offset(0);
     tp_normalized.set_offset(1);
 
+    tp_teleport.set_is_bpm(true);
+    tp_normalized.set_is_bpm(true);
+
     tp_v.push_back(tp_teleport);
     tp_v.push_back(tp_normalized);
 
     ui->stutter_output->setPlainText(
                 QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
 }
+
+void MainWindow::on_stutter_preset_mbt_clicked()
+{
+    hit_object_v ho_v;
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+
+    // Break if empty
+    if (ho_v.size() == 0){
+        return;
+    }
+
+    for (auto& ho : ho_v){
+        ho.set_offset(ho.get_offset()-1);
+    }
+
+    timing_point_v tp_v;
+    timing_point tp_teleport;
+    timing_point tp_normalized;
+
+    tp_teleport.set_value(BPM_MAX);
+    tp_normalized.set_value(ui->stutter_avebpm->value());
+
+    tp_teleport.set_offset(0);
+    tp_normalized.set_offset(1);
+
+    tp_teleport.set_is_bpm(true);
+    tp_normalized.set_is_bpm(true);
+
+    tp_v.push_back(tp_teleport);
+    tp_v.push_back(tp_normalized);
+
+    ui->stutter_output->setPlainText(
+                QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
+}
+
 
 void MainWindow::on_stutter_avebpm_valueChanged(double)
 {
@@ -405,5 +461,6 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     }
     return output;
 }
+
 
 

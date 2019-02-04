@@ -40,6 +40,10 @@ private slots:
 
     void on_stutter_preset_mft_clicked();
 
+    void on_stutter_preset_nbt_clicked();
+
+    void on_stutter_preset_mbt_clicked();
+
 private:
 
     void stutter_limit_update();
