@@ -38,6 +38,8 @@ private slots:
 
     void on_stutter_preset_nft_clicked();
 
+    void on_stutter_preset_mft_clicked();
+
 private:
 
     void stutter_limit_update();

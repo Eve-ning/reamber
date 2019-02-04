@@ -137,6 +137,33 @@ void MainWindow::on_stutter_preset_nft_clicked()
 }
 
 
+void MainWindow::on_stutter_preset_mft_clicked()
+{
+    hit_object_v ho_v;
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+
+    // Break if empty
+    if (ho_v.size() == 0){
+        return;
+    }
+
+    timing_point_v tp_v;
+    timing_point tp_teleport;
+    timing_point tp_normalized;
+
+    tp_teleport.set_value(BPM_MAX);
+    tp_normalized.set_value(ui->stutter_avebpm->value());
+
+    tp_teleport.set_offset(0);
+    tp_normalized.set_offset(1);
+
+    tp_v.push_back(tp_teleport);
+    tp_v.push_back(tp_normalized);
+
+    ui->stutter_output->setPlainText(
+                QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
+}
+
 void MainWindow::on_stutter_avebpm_valueChanged(double)
 {
     stutter_limit_update();
@@ -153,7 +180,6 @@ void MainWindow::stutter_limit_update()
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
-        qDebug() << init_lim[0] << "-" << init_lim[1];
         // If the lower limit is lower than SV_MIN we curb the setMinimum
         if (init_lim[0] >= SV_MIN) {
             ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
@@ -173,7 +199,6 @@ void MainWindow::stutter_limit_update()
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
-        qDebug() << init_lim[0] << "-" << init_lim[1];
         // If the lower limit is higher than BPM_MIN we curb the setMinimum
         if (init_lim[0] >= BPM_MIN) {
             ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
