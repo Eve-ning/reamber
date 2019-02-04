@@ -117,8 +117,7 @@ void MainWindow::on_stutter_generate_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
 }
-
-void MainWindow::on_stutter_1ms_front_clicked()
+void MainWindow::on_stutter_preset_nft_clicked()
 {
     hit_object_v ho_v;
     ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
@@ -128,15 +127,15 @@ void MainWindow::on_stutter_1ms_front_clicked()
         return;
     }
 
-    timing_point_v tp_v;
+    timing_point_v tp_v = lib_functions::create_stutter_absolute(
+                ho_v.get_offset_v(true),BPM_MIN,BPM_MIN,ui->stutter_avebpm->value(), true, false, true);
 
-    tp_v = lib_functions::create_stutter_absolute(ho_v.get_offset_v(true),
-                                           ui->stutter_initbpm_val->text().toDouble(),
-                                           1, ui->stutter_avebpm->value(), true, true);
+    tp_v = lib_functions::stutter_swap(tp_v);
 
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
 }
+
 
 void MainWindow::on_stutter_avebpm_valueChanged(double)
 {
@@ -150,10 +149,11 @@ void MainWindow::stutter_limit_update()
 {
     if (ui->stutter_type_sv->isChecked()){
         // We limit the initial SV values
-        std::vector<double> init_lim = lib_functions::create_stutter_rel_init_limits(
-                    ui->stutter_threshold_val->text().toDouble()/VS_TO_VAL,
+        std::vector<double> init_lim = lib_functions::get_stutter_rel_init_limits(
+                    ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
+        qDebug() << init_lim[0] << "-" << init_lim[1];
         // If the lower limit is lower than SV_MIN we curb the setMinimum
         if (init_lim[0] >= SV_MIN) {
             ui->stutter_initsv_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
@@ -169,10 +169,11 @@ void MainWindow::stutter_limit_update()
         }
     } else if (ui->stutter_type_bpm->isChecked()) {
         // We limit the initial BPM values
-        std::vector<double> init_lim = lib_functions::create_stutter_rel_init_limits(
-                    ui->stutter_threshold_val->text().toDouble()/VS_TO_VAL,
+        std::vector<double> init_lim = lib_functions::get_stutter_rel_init_limits(
+                    ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
+        qDebug() << init_lim[0] << "-" << init_lim[1];
         // If the lower limit is higher than BPM_MIN we curb the setMinimum
         if (init_lim[0] >= BPM_MIN) {
             ui->stutter_initbpm_vs->setMinimum(int(init_lim[0] * VS_TO_VAL));
@@ -379,4 +380,5 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     }
     return output;
 }
+
 

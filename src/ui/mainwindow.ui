@@ -31,50 +31,23 @@
            <string>stutter</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="3" rowspan="2">
+            <widget class="QGroupBox" name="stutter_output_lo">
+             <property name="title">
+              <string>output</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="0">
+               <widget class="QPlainTextEdit" name="stutter_output"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="2" column="0" colspan="4">
             <widget class="QPushButton" name="stutter_generate">
              <property name="text">
               <string>Generate</string>
              </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QGroupBox" name="stutter_1ms">
-             <property name="title">
-              <string>bpm_teleport_1ms</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_46">
-              <item row="3" column="0">
-               <widget class="QPushButton" name="stutter_1ms_back">
-                <property name="text">
-                 <string>From Back</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="stutter_1ms_front">
-                <property name="text">
-                 <string>From Front</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QGroupBox" name="groupBox_2">
-                <property name="title">
-                 <string>initial_bpm_1ms</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_44">
-                 <item row="0" column="0">
-                  <widget class="QDoubleSpinBox" name="doubleSpinBox">
-                   <property name="maximum">
-                    <double>100000000.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
             </widget>
            </item>
            <item row="1" column="1">
@@ -89,6 +62,59 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="0" column="1">
+            <widget class="QGroupBox" name="stutter_preset_lo">
+             <property name="title">
+              <string>presets</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_46">
+              <item row="5" column="0">
+               <widget class="QPushButton" name="stutter_preset_nbt">
+                <property name="text">
+                 <string>Normalized Back Teleport</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QPushButton" name="stutter_preset_nft">
+                <property name="text">
+                 <string>Normalized Front Teleport</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QPushButton" name="stutter_preset_mbt">
+                <property name="text">
+                 <string>Max Back Teleport</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QPushButton" name="stutter_preset_mft">
+                <property name="text">
+                 <string>Max Front Teleport</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="2" rowspan="2">
+            <widget class="QGroupBox" name="stutter_input_lo">
+             <property name="title">
+              <string>input</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <item row="0" column="1" rowspan="2" colspan="2">
+               <widget class="QPlainTextEdit" name="stutter_input">
+                <property name="placeholderText">
+                 <string>&lt;Editor Hit Object&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
            <item row="0" column="0" rowspan="2">
             <widget class="QGroupBox" name="stutter_controls_lo">
@@ -297,34 +323,6 @@
                  </item>
                 </layout>
                </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="2" rowspan="2">
-            <widget class="QGroupBox" name="stutter_input_lo">
-             <property name="title">
-              <string>input</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="1" rowspan="2" colspan="2">
-               <widget class="QPlainTextEdit" name="stutter_input">
-                <property name="placeholderText">
-                 <string>&lt;Editor Hit Object&gt;</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="3" rowspan="2">
-            <widget class="QGroupBox" name="stutter_output_lo">
-             <property name="title">
-              <string>output</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <widget class="QPlainTextEdit" name="stutter_output"/>
               </item>
              </layout>
             </widget>

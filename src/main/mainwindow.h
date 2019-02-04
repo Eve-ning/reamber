@@ -35,7 +35,8 @@ private slots:
     void on_stutter_initbpm_vs_valueChanged(int value);
     void on_stutter_avebpm_valueChanged(double);
     void on_stutter_avesv_valueChanged(double);
-    void on_stutter_1ms_front_clicked();
+
+    void on_stutter_preset_nft_clicked();
 
 private:
 
