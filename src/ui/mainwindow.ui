@@ -1212,7 +1212,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="alter_preset_tab">
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="alter_self">
               <attribute name="title">
@@ -1283,7 +1283,7 @@
                 </widget>
                </item>
                <item row="2" column="0">
-                <spacer name="verticalSpacer_2">
+                <spacer name="alter_vs_1">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -1360,39 +1360,39 @@
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="alter_preset_convert">
+             <widget class="QWidget" name="alter_convert">
               <attribute name="title">
                <string>convert</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_56">
                <item row="0" column="0">
-                <widget class="QGroupBox" name="groupBox_3">
+                <widget class="QGroupBox" name="alter_convert_lo">
                  <property name="title">
                   <string>convert</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_50">
                   <item row="1" column="0">
-                   <widget class="QPushButton" name="pushButton_5">
+                   <widget class="QPushButton" name="alter_convert_to_bpm">
                     <property name="text">
                      <string>Convert To BPM</string>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="0">
-                   <widget class="QPushButton" name="pushButton_6">
+                   <widget class="QPushButton" name="alter_convert_to_sv">
                     <property name="text">
                      <string>Convert To SV</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1" rowspan="2">
-                   <widget class="QGroupBox" name="groupBox_5">
+                   <widget class="QGroupBox" name="alter_convert_ref_lo">
                     <property name="title">
                      <string>reference bpm</string>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_51">
                      <item row="0" column="0">
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+                      <widget class="QDoubleSpinBox" name="alter_convert_ref">
                        <property name="minimum">
                         <double>0.010000000000000</double>
                        </property>
@@ -1425,26 +1425,26 @@
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="alter_preset_cross">
+             <widget class="QWidget" name="alter_cross">
               <attribute name="title">
                <string>cross</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_58">
                <item row="0" column="0">
-                <widget class="QGroupBox" name="groupBox_6">
+                <widget class="QGroupBox" name="alter_cross_lo">
                  <property name="title">
                   <string>cross</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_57">
                   <item row="0" column="0">
-                   <widget class="QPushButton" name="pushButton_7">
+                   <widget class="QPushButton" name="alter_cross_mv_b">
                     <property name="text">
                      <string>Cross Multiply Values</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QPushButton" name="pushButton_8">
+                   <widget class="QPushButton" name="alter_cross_av_b">
                     <property name="text">
                      <string>Cross Add Values</string>
                     </property>
@@ -1454,7 +1454,7 @@
                 </widget>
                </item>
                <item row="1" column="0">
-                <spacer name="verticalSpacer_3">
+                <spacer name="alter_vs_3">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
