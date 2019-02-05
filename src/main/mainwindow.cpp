@@ -195,6 +195,7 @@ void MainWindow::on_stutter_preset_mbt_clicked()
         return;
     }
 
+    // move back by 1ms
     for (auto& ho : ho_v){
         ho.set_offset(ho.get_offset()-1);
     }
