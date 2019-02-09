@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidget>
+#include <custom_lib_functions/lib_functions.h>
 namespace Ui {
 class MainWindow;
 }
@@ -35,20 +36,25 @@ private slots:
     void on_stutter_initbpm_vs_valueChanged(int value);
     void on_stutter_avebpm_valueChanged(double);
     void on_stutter_avesv_valueChanged(double);
-
     void on_stutter_preset_nft_clicked();
-
     void on_stutter_preset_mft_clicked();
-
     void on_stutter_preset_nbt_clicked();
-
     void on_stutter_preset_mbt_clicked();
+
+    void on_alter_self_mv_b_clicked();
+    void on_alter_self_av_b_clicked();
+    void on_alter_self_mo_b_clicked();
+    void on_alter_self_ao_b_clicked();
+    void on_alter_self_del_b_clicked();
 
 private:
 
     void stutter_limit_update();
     void tpf_init_customplot();
     void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
+    timing_point_v alter_get_input();
+    timing_point_v alter_get_input_cross();
+    void alter_set_output(const timing_point_v *tp_v);
 
     // Squeezes the value to the defined MIN and MAX limits below and returns it
     double curb_value(double value, bool is_bpm);

@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QString>
 #include <QDebug>
-#include <custom_lib_functions/lib_functions.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -135,8 +135,6 @@ void MainWindow::on_stutter_preset_nft_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
 }
-
-
 void MainWindow::on_stutter_preset_nbt_clicked()
 {
     hit_object_v ho_v;
@@ -153,8 +151,6 @@ void MainWindow::on_stutter_preset_nbt_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
 }
-
-
 void MainWindow::on_stutter_preset_mft_clicked()
 {
     hit_object_v ho_v;
@@ -184,7 +180,6 @@ void MainWindow::on_stutter_preset_mft_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
 }
-
 void MainWindow::on_stutter_preset_mbt_clicked()
 {
     hit_object_v ho_v;
@@ -219,7 +214,6 @@ void MainWindow::on_stutter_preset_mbt_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
 }
-
 
 void MainWindow::on_stutter_avebpm_valueChanged(double)
 {
@@ -402,8 +396,6 @@ void MainWindow::on_tpf_generate_clicked()
     ui->tpf_output->setPlainText(QString::fromStdString(tp_v.get_string_raw()));
 }
 
-
-
 void MainWindow::tpf_init_customplot()
 {
     auto customplot = ui->tpf_customplot;
@@ -414,7 +406,6 @@ void MainWindow::tpf_init_customplot()
 
     customplot->replot();
 }
-
 void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm)
 {
     QVector<double> q_offset_v = QVector<double>::fromStdVector(offset_v);
@@ -453,7 +444,6 @@ double MainWindow::curb_value(double value, bool is_bpm)
 
     return value;
 }
-
 std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool is_bpm)
 {
     std::vector<double> output;
@@ -463,5 +453,41 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     return output;
 }
 
+void MainWindow::on_alter_self_mv_b_clicked()
+{
+    timing_point_v tp = alter_get_input();
+    tp *= ui->alter_self_mv->value();
+    alter_set_output(&tp);
+}
+void MainWindow::on_alter_self_av_b_clicked()
+{
+    timing_point_v tp = alter_get_input();
+    tp += ui->alter_self_mv->value();
+    alter_set_output(&tp);
+}
+timing_point_v MainWindow::alter_get_input() {
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    return tp_v;
+}
+void MainWindow::alter_set_output(const timing_point_v *tp_v) {
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v->get_string_raw("\n")));
+}
 
+void MainWindow::on_alter_self_mo_b_clicked()
+{
+    timing_point_v tp = alter_get_input();
+    tp.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
+        return offset * parameter;
+    });
+    alter_set_output(&tp);
+}
 
+void MainWindow::on_alter_self_ao_b_clicked()
+{
+    timing_point_v tp = alter_get_input();
+    tp.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
+        return offset + parameter;
+    });
+    alter_set_output(&tp);
+}

@@ -1186,7 +1186,11 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_48">
            <item row="0" column="0">
-            <widget class="QPlainTextEdit" name="alter_input"/>
+            <widget class="QPlainTextEdit" name="alter_input">
+             <property name="placeholderText">
+              <string>&lt;Timing Point&gt;</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -1198,7 +1202,11 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_53">
            <item row="0" column="0">
-            <widget class="QPlainTextEdit" name="alter_input_cross"/>
+            <widget class="QPlainTextEdit" name="alter_input_cross">
+             <property name="placeholderText">
+              <string>&lt;Timing Point&gt;</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -1212,7 +1220,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="alter_preset_tab">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="alter_self">
               <attribute name="title">
