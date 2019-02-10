@@ -18,7 +18,7 @@
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_stutter">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -771,7 +771,7 @@
                     <item row="0" column="0">
                      <widget class="QLabel" name="tpf_freq_val">
                       <property name="text">
-                       <string>0.0</string>
+                       <string>1.0</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -790,10 +790,16 @@
                        <number>0</number>
                       </property>
                       <property name="maximum">
-                       <number>10000</number>
+                       <number>200</number>
+                      </property>
+                      <property name="singleStep">
+                       <number>5</number>
+                      </property>
+                      <property name="pageStep">
+                       <number>5</number>
                       </property>
                       <property name="value">
-                       <number>0</number>
+                       <number>1</number>
                       </property>
                      </widget>
                     </item>

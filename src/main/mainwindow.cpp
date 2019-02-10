@@ -280,7 +280,7 @@ void MainWindow::on_tpf_endsv_valueChanged(int value)
 }
 void MainWindow::on_tpf_freq_valueChanged(int value)
 {
-    ui->tpf_freq_val->setText(QString::number(value/VS_TO_VAL));
+    ui->tpf_freq_val->setText(QString::number(value/2.0));
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
 void MainWindow::on_tpf_ampl_valueChanged(int value)
@@ -495,12 +495,4 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     return output;
 }
 
-//timing_point_v MainWindow::alter_get_input() {
-//    timing_point_v tp_v;
-//    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
-//    return tp_v;
-//}
-//void MainWindow::alter_set_output(const timing_point_v *tp_v) {
-//    ui->alter_output->setPlainText(QString::fromStdString(tp_v->get_string_raw("\n")));
-//}
 
