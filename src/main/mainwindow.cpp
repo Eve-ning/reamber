@@ -333,7 +333,7 @@ void MainWindow::on_tpf_generate_clicked()
 
     bool curve_invert_y = ui->tpf_curve_invert_y->isChecked();
 
-    bool output_curb = ui->tpf_output_curb;
+    bool output_curb = ui->tpf_output_curb->isChecked();
 
     // Adjust offset
     double offset_adjust = ui->tpf_offset_val->value();
