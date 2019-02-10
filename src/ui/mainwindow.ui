@@ -1276,7 +1276,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="alter_preset_tab">
              <property name="currentIndex">
-              <number>1</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="alter_self">
               <attribute name="title">
@@ -1516,17 +1516,27 @@
                   <string>cross</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_57">
-                  <item row="0" column="0">
+                  <item row="1" column="0">
                    <widget class="QPushButton" name="alter_cross_mv_b">
                     <property name="text">
                      <string>Cross Multiply Values</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="0">
+                  <item row="2" column="0">
                    <widget class="QPushButton" name="alter_cross_av_b">
                     <property name="text">
                      <string>Cross Add Values</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label">
+                    <property name="text">
+                     <string>&lt;input&gt; crossed BY &lt;input_cross&gt;</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>

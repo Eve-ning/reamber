@@ -538,3 +538,23 @@ void MainWindow::on_alter_convert_to_sv_clicked()
 
     ui->alter_output->setPlainText(QString::fromStdString(tp_v_sv.get_string_raw("\n")));
 }
+
+void MainWindow::on_alter_cross_mv_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    timing_point_v tp_v_cross;
+    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n');
+    tp_v.cross_effect_multiply(tp_v_cross);
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+
+void MainWindow::on_alter_cross_av_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    timing_point_v tp_v_cross;
+    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n');
+    tp_v.cross_effect_add(tp_v_cross);
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}

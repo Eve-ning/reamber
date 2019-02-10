@@ -50,6 +50,10 @@ private slots:
 
     void on_alter_convert_to_sv_clicked();
 
+    void on_alter_cross_mv_b_clicked();
+
+    void on_alter_cross_av_b_clicked();
+
 private:
 
     // Updates stutter tab's threshold limit while changing parameters
