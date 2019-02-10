@@ -15,10 +15,60 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" rowspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>functions</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_29">
+       <item row="0" column="0">
+        <widget class="QListWidget" name="listWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>stutter</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>copier</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2point_function</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>normalizer</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>alter</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_stutter">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -1226,7 +1276,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="alter_preset_tab">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="alter_self">
               <attribute name="title">
@@ -1315,38 +1365,7 @@
                   <string>create/delete</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_49">
-                  <item row="2" column="1">
-                   <widget class="QSpinBox" name="alter_self_subd_by_b_2">
-                    <property name="minimum">
-                     <number>1</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QPushButton" name="alter_self_subd_by_b">
-                    <property name="text">
-                     <string>Subdivide By</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSpinBox" name="alter_self_del">
-                    <property name="minimum">
-                     <number>1</number>
-                    </property>
-                    <property name="maximum">
-                     <number>999999</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QPushButton" name="alter_self_del_b">
-                    <property name="text">
-                     <string>Delete nth</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0">
+                  <item row="4" column="0">
                    <widget class="QPushButton" name="alter_self_subd_to_b">
                     <property name="text">
                      <string>Subdivide To</string>
@@ -1354,6 +1373,13 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
+                   <widget class="QSpinBox" name="alter_self_subd_by_b_2">
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
                    <widget class="QDoubleSpinBox" name="alter_self_subd_to">
                     <property name="suffix">
                      <string>ms</string>
@@ -1369,10 +1395,34 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="1">
+                  <item row="1" column="2">
                    <widget class="QSpinBox" name="alter_self_del_offset"/>
                   </item>
+                  <item row="3" column="0">
+                   <widget class="QPushButton" name="alter_self_subd_by_b">
+                    <property name="text">
+                     <string>Subdivide By</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="1" column="0">
+                   <widget class="QPushButton" name="alter_self_del_b">
+                    <property name="text">
+                     <string>Delete nth</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="alter_self_del">
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>999999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
                    <widget class="QLabel" name="alter_self_del_offset_l">
                     <property name="layoutDirection">
                      <enum>Qt::LeftToRight</enum>
@@ -1517,51 +1567,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="0" column="0" rowspan="2">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string>functions</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_29">
-       <item row="0" column="0">
-        <widget class="QListWidget" name="listWidget">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>stutter</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>copier</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>2point_function</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>normalizer</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
      </widget>
     </item>
    </layout>

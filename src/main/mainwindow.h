@@ -46,6 +46,10 @@ private slots:
     void on_alter_self_ao_b_clicked();
     void on_alter_self_del_b_clicked();
 
+    void on_alter_convert_to_bpm_clicked();
+
+    void on_alter_convert_to_sv_clicked();
+
 private:
 
     // Updates stutter tab's threshold limit while changing parameters

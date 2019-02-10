@@ -495,4 +495,46 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     return output;
 }
 
+void MainWindow::on_alter_convert_to_bpm_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    timing_point_v tp_v_sv = tp_v.get_sv_only();
+    timing_point_v tp_v_bpm = tp_v.get_bpm_only();
 
+    double value;
+    double reference = ui->alter_convert_ref->value();
+
+    for (timing_point tp_sv : tp_v_sv){
+        value = tp_sv.get_value();
+        tp_sv.set_value(value * reference);
+        tp_sv.set_is_bpm(true);
+        tp_v_bpm.push_back(tp_sv);
+    }
+
+    tp_v_bpm.sort_by_offset(true);
+
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v_bpm.get_string_raw("\n")));
+}
+
+void MainWindow::on_alter_convert_to_sv_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    timing_point_v tp_v_sv = tp_v.get_sv_only();
+    timing_point_v tp_v_bpm = tp_v.get_bpm_only();
+
+    double value;
+    double reference = ui->alter_convert_ref->value();
+
+    for (timing_point tp_bpm : tp_v_bpm){
+        value = tp_bpm.get_value();
+        tp_bpm.set_value(value / reference);
+        tp_bpm.set_is_sv(true);
+        tp_v_sv.push_back(tp_bpm);
+    }
+
+    tp_v_sv.sort_by_offset(true);
+
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v_sv.get_string_raw("\n")));
+}
