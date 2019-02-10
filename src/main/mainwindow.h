@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QListWidget>
-#include <custom_lib_functions/lib_functions.h>
 namespace Ui {
 class MainWindow;
 }
@@ -49,12 +48,17 @@ private slots:
 
 private:
 
+    // Updates stutter tab's threshold limit while changing parameters
     void stutter_limit_update();
+
+    // Initializes and updates tpf's graph respectively
     void tpf_init_customplot();
     void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
-    timing_point_v alter_get_input();
-    timing_point_v alter_get_input_cross();
-    void alter_set_output(const timing_point_v *tp_v);
+
+//    // Extracts alter's inputs and output. This is a separate function as it's called a lot.
+//    timing_point_v alter_get_input();
+//    timing_point_v alter_get_input_cross();
+//    void alter_set_output(const timing_point_v *tp_v);
 
     // Squeezes the value to the defined MIN and MAX limits below and returns it
     double curb_value(double value, bool is_bpm);

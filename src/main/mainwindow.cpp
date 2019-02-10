@@ -3,6 +3,8 @@
 #include <QString>
 #include <QDebug>
 
+#include <custom_lib_functions/lib_functions.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -432,6 +434,46 @@ void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector
     customplot->replot();
 }
 
+void MainWindow::on_alter_self_mv_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v *= ui->alter_self_mv->value();
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+void MainWindow::on_alter_self_av_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v += ui->alter_self_mv->value();
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+void MainWindow::on_alter_self_mo_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
+        return offset * parameter;
+    });
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+void MainWindow::on_alter_self_ao_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.offset_arithmetic(ui->alter_self_ao->value(), [](double offset, double parameter){
+        return offset + parameter;
+    });
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+void MainWindow::on_alter_self_del_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    lib_functions::delete_nth(&tp_v, ui->alter_self_del->value(), ui->alter_self_del_offset->value());
+    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+}
+
 double MainWindow::curb_value(double value, bool is_bpm)
 {
     if (is_bpm) {
@@ -453,41 +495,12 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     return output;
 }
 
-void MainWindow::on_alter_self_mv_b_clicked()
-{
-    timing_point_v tp = alter_get_input();
-    tp *= ui->alter_self_mv->value();
-    alter_set_output(&tp);
-}
-void MainWindow::on_alter_self_av_b_clicked()
-{
-    timing_point_v tp = alter_get_input();
-    tp += ui->alter_self_mv->value();
-    alter_set_output(&tp);
-}
-timing_point_v MainWindow::alter_get_input() {
-    timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
-    return tp_v;
-}
-void MainWindow::alter_set_output(const timing_point_v *tp_v) {
-    ui->alter_output->setPlainText(QString::fromStdString(tp_v->get_string_raw("\n")));
-}
+//timing_point_v MainWindow::alter_get_input() {
+//    timing_point_v tp_v;
+//    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+//    return tp_v;
+//}
+//void MainWindow::alter_set_output(const timing_point_v *tp_v) {
+//    ui->alter_output->setPlainText(QString::fromStdString(tp_v->get_string_raw("\n")));
+//}
 
-void MainWindow::on_alter_self_mo_b_clicked()
-{
-    timing_point_v tp = alter_get_input();
-    tp.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
-        return offset * parameter;
-    });
-    alter_set_output(&tp);
-}
-
-void MainWindow::on_alter_self_ao_b_clicked()
-{
-    timing_point_v tp = alter_get_input();
-    tp.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
-        return offset + parameter;
-    });
-    alter_set_output(&tp);
-}
