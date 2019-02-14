@@ -1,3 +1,5 @@
+![banner](rsc/banner_trnsp_400w.png)
+
 # re:amber
 re:amber is basically a rework of amber, which unfortunately ended in somewhat of a gridlock.
 
@@ -6,8 +8,6 @@ This is looking to remedy that issue... by redoing the whole thing.
 # other parts of the project
 - [reamber_base](https://github.com/Eve-ning/reamber_base)
 - [reamber_base_test_unit](https://github.com/Eve-ning/reamber_base_test)
-
-![amberLogo](http://puu.sh/z235w/e2127a205c.png)
 
 # :bar_chart: [amber Wiki](https://github.com/Eve-ning/amber/wiki)
 
