@@ -396,6 +396,11 @@ void MainWindow::on_tpf_generate_clicked()
     // Call update on the plot
     tpf_update_customplot(tp_v.get_offset_v(), tp_v.get_value_v(), is_bpm);
 
+    // Update Average SV
+    ui->tpf_output_ave->setText(is_bpm ?
+                                QString::number(tp_v.get_average_bpm_value()) :
+                                QString::number(tp_v.get_average_sv_value()));
+
     ui->tpf_output->setPlainText(QString::fromStdString(tp_v.get_string_raw()));
 }
 
