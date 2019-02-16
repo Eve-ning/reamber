@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1130</width>
-    <height>603</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -524,7 +524,7 @@
               <string>controls</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_17">
-              <item row="0" column="0" colspan="2">
+              <item row="0" column="0" colspan="3">
                <widget class="QGroupBox" name="tpf_input_lo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -546,7 +546,69 @@
                 </layout>
                </widget>
               </item>
-              <item row="3" column="0" colspan="2">
+              <item row="3" column="0" colspan="3">
+               <widget class="QGroupBox" name="tpf_interpts_lo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>intermediate_points</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_25">
+                 <item row="0" column="0">
+                  <widget class="QSpinBox" name="tpf_interpts">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximum">
+                    <number>1000</number>
+                   </property>
+                   <property name="value">
+                    <number>50</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0" rowspan="2" colspan="3">
+               <widget class="QGroupBox" name="tpf_offset_lo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>offset_shift</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_21">
+                 <item row="0" column="0">
+                  <widget class="QSpinBox" name="tpf_offset_val">
+                   <property name="suffix">
+                    <string>ms</string>
+                   </property>
+                   <property name="prefix">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="3">
                <widget class="QGroupBox" name="tpf_type_lo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -578,8 +640,8 @@
                 </layout>
                </widget>
               </item>
-              <item row="4" column="0" rowspan="2" colspan="2">
-               <widget class="QGroupBox" name="tpf_interpts_lo">
+              <item row="5" column="0" colspan="3">
+               <widget class="QGroupBox" name="tpf_curve_type_lo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -587,60 +649,34 @@
                  </sizepolicy>
                 </property>
                 <property name="title">
-                 <string>intermediate_points</string>
+                 <string>curve_type</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_25">
+                <layout class="QGridLayout" name="gridLayout_39">
+                 <item row="0" column="1">
+                  <widget class="QCheckBox" name="tpf_curve_invert_y">
+                   <property name="text">
+                    <string>invert_y</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="0">
-                  <widget class="QSpinBox" name="tpf_interpts">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximum">
-                    <number>1000</number>
-                   </property>
-                   <property name="value">
-                    <number>50</number>
-                   </property>
+                  <widget class="QComboBox" name="tpf_curve_type">
+                   <item>
+                    <property name="text">
+                     <string>sine</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>power</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
                </widget>
               </item>
-              <item row="1" column="0" rowspan="2" colspan="2">
-               <widget class="QGroupBox" name="tpf_offset_lo">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>offset_shift</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_21">
-                 <item row="0" column="0">
-                  <widget class="QSpinBox" name="tpf_offset_val">
-                   <property name="suffix">
-                    <string>ms</string>
-                   </property>
-                   <property name="prefix">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="0" column="2" rowspan="8">
+              <item row="0" column="3" rowspan="8">
                <widget class="QGroupBox" name="tpf_parameters_lo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -652,7 +688,7 @@
                  <string>parameters</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_28">
-                 <item row="0" column="7" rowspan="3">
+                 <item row="0" column="6" rowspan="3">
                   <widget class="QGroupBox" name="tpf_ampl_lo">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -708,7 +744,7 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="0" column="9" rowspan="3">
+                 <item row="0" column="8" rowspan="3">
                   <widget class="QGroupBox" name="tpf_power_lo">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -764,66 +800,7 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QGroupBox" name="tpf_initbpm_lo">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="title">
-                    <string>initial_bpm</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_42">
-                    <item row="2" column="0">
-                     <widget class="QDoubleSpinBox" name="tpf_initbpm">
-                      <property name="decimals">
-                       <number>2</number>
-                      </property>
-                      <property name="minimum">
-                       <double>0.010000000000000</double>
-                      </property>
-                      <property name="maximum">
-                       <double>1000000.000000000000000</double>
-                      </property>
-                      <property name="value">
-                       <double>120.000000000000000</double>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <spacer name="tpf_vs_2">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="5" rowspan="3">
+                 <item row="0" column="4" rowspan="3">
                   <widget class="QGroupBox" name="tpf_endsv_lo">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -879,47 +856,7 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QGroupBox" name="tpf_endbpm_lo">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="title">
-                    <string>end_bpm</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_43">
-                    <item row="0" column="0">
-                     <widget class="QDoubleSpinBox" name="tpf_endbpm">
-                      <property name="decimals">
-                       <number>2</number>
-                      </property>
-                      <property name="minimum">
-                       <double>0.010000000000000</double>
-                      </property>
-                      <property name="maximum">
-                       <double>1000000.000000000000000</double>
-                      </property>
-                      <property name="value">
-                       <double>120.000000000000000</double>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="0" column="6" rowspan="3">
+                 <item row="0" column="5" rowspan="3">
                   <widget class="QGroupBox" name="tpf_freq_lo">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -978,63 +915,7 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="0" column="8" rowspan="3">
-                  <widget class="QGroupBox" name="tpf_phase_lo">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="title">
-                    <string>phase</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_40">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="tpf_phase_val">
-                      <property name="text">
-                       <string>0.0</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QSlider" name="tpf_phase">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimum">
-                       <number>-360</number>
-                      </property>
-                      <property name="maximum">
-                       <number>360</number>
-                      </property>
-                      <property name="value">
-                       <number>0</number>
-                      </property>
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="0" column="3" rowspan="3">
+                 <item row="0" column="2" rowspan="3">
                   <widget class="QGroupBox" name="tpf_initsv_lo">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1090,54 +971,141 @@
                    </layout>
                   </widget>
                  </item>
+                 <item row="0" column="7" rowspan="3">
+                  <widget class="QGroupBox" name="tpf_phase_lo">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>phase</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_40">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="tpf_phase_val">
+                      <property name="text">
+                       <string>0.0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QSlider" name="tpf_phase">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimum">
+                       <number>-360</number>
+                      </property>
+                      <property name="maximum">
+                       <number>360</number>
+                      </property>
+                      <property name="value">
+                       <number>0</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
-              <item row="6" column="0" colspan="2">
-               <widget class="QGroupBox" name="tpf_curve_type_lo">
+              <item row="6" column="2">
+               <widget class="QGroupBox" name="tpf_endbpm_lo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="title">
-                 <string>curve_type</string>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_39">
+                <property name="title">
+                 <string>end_bpm</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_43">
                  <item row="0" column="0">
-                  <widget class="QComboBox" name="tpf_curve_type">
-                   <item>
-                    <property name="text">
-                     <string>sine</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>power</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QCheckBox" name="tpf_curve_invert_y">
-                   <property name="text">
-                    <string>invert_y</string>
+                  <widget class="QDoubleSpinBox" name="tpf_endbpm">
+                   <property name="decimals">
+                    <number>2</number>
+                   </property>
+                   <property name="minimum">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>120.000000000000000</double>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="2">
-                  <spacer name="horizontalSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                </layout>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QGroupBox" name="tpf_initbpm_lo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>initial_bpm</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_42">
+                 <item row="2" column="0">
+                  <widget class="QDoubleSpinBox" name="tpf_initbpm">
+                   <property name="decimals">
+                    <number>2</number>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
+                   <property name="minimum">
+                    <double>0.010000000000000</double>
                    </property>
-                  </spacer>
+                   <property name="maximum">
+                    <double>1000000.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>120.000000000000000</double>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>

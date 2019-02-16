@@ -1,5 +1,4 @@
 <RCC>
-    <qresource prefix="/ico"/>
     <qresource prefix="/">
         <file>rsc/amber.ico</file>
     </qresource>
