@@ -72,7 +72,7 @@
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_stutter">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -577,37 +577,6 @@
                 </layout>
                </widget>
               </item>
-              <item row="1" column="0" rowspan="2" colspan="3">
-               <widget class="QGroupBox" name="tpf_offset_lo">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>offset_shift</string>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_21">
-                 <item row="0" column="0">
-                  <widget class="QSpinBox" name="tpf_offset_val">
-                   <property name="suffix">
-                    <string>ms</string>
-                   </property>
-                   <property name="prefix">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
               <item row="4" column="0" colspan="3">
                <widget class="QGroupBox" name="tpf_type_lo">
                 <property name="sizePolicy">
@@ -674,6 +643,53 @@
                   </widget>
                  </item>
                 </layout>
+               </widget>
+              </item>
+              <item row="6" column="2" rowspan="3">
+               <widget class="QGroupBox" name="tpf_endbpm_lo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>end_bpm</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_43">
+                 <item row="0" column="0">
+                  <widget class="QDoubleSpinBox" name="tpf_endbpm">
+                   <property name="decimals">
+                    <number>2</number>
+                   </property>
+                   <property name="minimum">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>120.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="8" column="3">
+               <widget class="QPushButton" name="tpf_reset">
+                <property name="text">
+                 <string>Reset Parameters</string>
+                </property>
                </widget>
               </item>
               <item row="0" column="3" rowspan="8">
@@ -1030,47 +1046,7 @@
                 </layout>
                </widget>
               </item>
-              <item row="6" column="2">
-               <widget class="QGroupBox" name="tpf_endbpm_lo">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>50</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>end_bpm</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_43">
-                 <item row="0" column="0">
-                  <widget class="QDoubleSpinBox" name="tpf_endbpm">
-                   <property name="decimals">
-                    <number>2</number>
-                   </property>
-                   <property name="minimum">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="maximum">
-                    <double>1000000.000000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>120.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="6" column="1">
+              <item row="6" column="1" rowspan="3">
                <widget class="QGroupBox" name="tpf_initbpm_lo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1104,6 +1080,37 @@
                    </property>
                    <property name="value">
                     <double>120.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0" rowspan="2" colspan="3">
+               <widget class="QGroupBox" name="tpf_offset_lo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>offset_shift</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_21">
+                 <item row="0" column="0">
+                  <widget class="QSpinBox" name="tpf_offset_val">
+                   <property name="suffix">
+                    <string>ms</string>
+                   </property>
+                   <property name="prefix">
+                    <string/>
                    </property>
                   </widget>
                  </item>
@@ -1338,19 +1345,15 @@
                   <string>create/delete</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_49">
-                  <item row="4" column="0">
-                   <widget class="QPushButton" name="alter_self_subd_to_b">
-                    <property name="text">
-                     <string>Subdivide To</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="3" column="1">
                    <widget class="QSpinBox" name="alter_self_subd_by_b_2">
                     <property name="minimum">
                      <number>1</number>
                     </property>
                    </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QSpinBox" name="alter_self_del_offset"/>
                   </item>
                   <item row="4" column="1">
                    <widget class="QDoubleSpinBox" name="alter_self_subd_to">
@@ -1368,9 +1371,6 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="2">
-                   <widget class="QSpinBox" name="alter_self_del_offset"/>
-                  </item>
                   <item row="3" column="0">
                    <widget class="QPushButton" name="alter_self_subd_by_b">
                     <property name="text">
@@ -1378,20 +1378,17 @@
                     </property>
                    </widget>
                   </item>
+                  <item row="4" column="0">
+                   <widget class="QPushButton" name="alter_self_subd_to_b">
+                    <property name="text">
+                     <string>Subdivide To</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="1" column="0">
                    <widget class="QPushButton" name="alter_self_del_b">
                     <property name="text">
                      <string>Delete nth</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QSpinBox" name="alter_self_del">
-                    <property name="minimum">
-                     <number>1</number>
-                    </property>
-                    <property name="maximum">
-                     <number>999999</number>
                     </property>
                    </widget>
                   </item>
@@ -1405,6 +1402,16 @@
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="alter_self_del">
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="maximum">
+                     <number>999999</number>
                     </property>
                    </widget>
                   </item>

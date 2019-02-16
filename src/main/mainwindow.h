@@ -45,14 +45,12 @@ private slots:
     void on_alter_self_mo_b_clicked();
     void on_alter_self_ao_b_clicked();
     void on_alter_self_del_b_clicked();
-
     void on_alter_convert_to_bpm_clicked();
-
     void on_alter_convert_to_sv_clicked();
-
     void on_alter_cross_mv_b_clicked();
-
     void on_alter_cross_av_b_clicked();
+
+    void on_tpf_reset_clicked();
 
 private:
 

@@ -403,6 +403,33 @@ void MainWindow::on_tpf_generate_clicked()
 
     ui->tpf_output->setPlainText(QString::fromStdString(tp_v.get_string_raw()));
 }
+void MainWindow::on_tpf_reset_clicked()
+{
+    ui->tpf_ampl->setValue(0);
+    ui->tpf_freq->setValue(1);
+    // freq slider on 1 sets to 0.5 for some reason, will manually set this to 0.5
+    ui->tpf_freq_val->setText("1.0");
+
+    ui->tpf_interpts->setValue(50);
+
+    ui->tpf_phase->setValue(0);
+    ui->tpf_power->setValue(10);
+
+    ui->tpf_initsv->setValue(100);
+    ui->tpf_endsv->setValue(100);
+
+    ui->tpf_initbpm->setValue(120);
+    ui->tpf_endbpm->setValue(120);
+
+    ui->tpf_offset_val->setValue(0);
+
+    ui->tpf_type_sv->setChecked(true);
+    ui->tpf_type_bpm->setChecked(false);
+    ui->tpf_curve_type->setCurrentIndex(0);
+    ui->tpf_curve_invert_y->setChecked(false);
+//    ui->tpf_output_curb->setChecked(true);
+//    ui->tpf_output_live->setChecked(false);
+}
 
 void MainWindow::tpf_init_customplot()
 {
@@ -522,7 +549,6 @@ void MainWindow::on_alter_convert_to_bpm_clicked()
 
     ui->alter_output->setPlainText(QString::fromStdString(tp_v_bpm.get_string_raw("\n")));
 }
-
 void MainWindow::on_alter_convert_to_sv_clicked()
 {
     timing_point_v tp_v;
@@ -544,7 +570,6 @@ void MainWindow::on_alter_convert_to_sv_clicked()
 
     ui->alter_output->setPlainText(QString::fromStdString(tp_v_sv.get_string_raw("\n")));
 }
-
 void MainWindow::on_alter_cross_mv_b_clicked()
 {
     timing_point_v tp_v;
@@ -554,7 +579,6 @@ void MainWindow::on_alter_cross_mv_b_clicked()
     tp_v.cross_effect_multiply(tp_v_cross);
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
-
 void MainWindow::on_alter_cross_av_b_clicked()
 {
     timing_point_v tp_v;
@@ -564,3 +588,4 @@ void MainWindow::on_alter_cross_av_b_clicked()
     tp_v.cross_effect_add(tp_v_cross);
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
+
