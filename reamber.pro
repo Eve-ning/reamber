@@ -42,5 +42,8 @@ DISTFILES += \
     src/README.md \
     src/naming_conventions
 
+RESOURCES += \
+    rsc.qrc
+
 
 

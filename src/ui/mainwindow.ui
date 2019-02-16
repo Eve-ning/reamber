@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>amber</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../rsc.qrc">
+    <normaloff>:/rsc/amber.ico</normaloff>:/rsc/amber.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -1611,7 +1615,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../rsc.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>listWidget</sender>
