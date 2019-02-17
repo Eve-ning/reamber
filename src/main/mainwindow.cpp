@@ -1,17 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <custom_lib_functions/lib_functions.h>
 #include <QString>
 #include <QDebug>
-
-#include <custom_lib_functions/lib_functions.h>
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    stutter_limit_update();
     tpf_init_customplot();
 }
 
@@ -56,7 +54,7 @@ void MainWindow::on_normalizer_generate_clicked()
     auto bpm_tp_v = tp_v.get_bpm_only();
     QStringList bpm_tp_v_str;
 
-    for (auto bpm_tp : bpm_tp_v) {
+    for (const auto& bpm_tp : bpm_tp_v) {
         bpm_tp_v_str.append(QString::number(bpm_tp.get_value()));
     }
 
@@ -90,6 +88,7 @@ void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
 void MainWindow::on_stutter_generate_clicked()
 {
     hit_object_v ho_v;
+
     ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
 
     // Break if empty
@@ -362,7 +361,7 @@ void MainWindow::on_tpf_generate_clicked()
         primary = (progress * gradient + inittp);
         double secondary = 0;
         if (curve_sine) {
-            secondary = ampl * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq) ;
+            secondary = ampl * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq);
         } else if (curve_power) {
             secondary = pow(progress * ampl, power);
         }
@@ -375,9 +374,9 @@ void MainWindow::on_tpf_generate_clicked()
         // Curb values if needed
         if (output_curb) {
             return curb_value(curve_invert_y ? (primary - secondary) : (primary + secondary), is_bpm);
-        } else {
+        } 
             return curve_invert_y ? (primary - secondary) : (primary + secondary);
-        }
+        
     };
 
     // Create all the timing points
@@ -462,7 +461,7 @@ void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector
     }
 
     customplot->xAxis->setRange(*std::min_element(offset_v.begin(), offset_v.end()), *std::max_element(offset_v.begin(), offset_v.end()));
-    customplot->yAxis->setRange(SV_MIN, SV_MAX);
+    customplot->yAxis->setRange(value_rng_min, value_rng_max);
 
     customplot->replot();
 }
@@ -522,6 +521,7 @@ double MainWindow::curb_value(double value, bool is_bpm)
 std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool is_bpm)
 {
     std::vector<double> output;
+    output.reserve(value_v.size());
     for (double value : value_v) {
         output.push_back(curb_value(value, is_bpm));
     }
