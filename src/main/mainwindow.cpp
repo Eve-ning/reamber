@@ -24,11 +24,11 @@ void MainWindow::on_copier_generate_clicked()
     // However, we don't actually need correct keys for hit_object
 
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->copier_tp->toPlainText().toStdString());
+    tp_v.load_raw_timing_point(ui->copier_tp->toPlainText().toStdString().c_str());
 
     // We default keys to 0
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->copier_ho->toPlainText().toStdString());
+    ho_v.load_editor_hit_object(ui->copier_ho->toPlainText().toStdString().c_str());
 
     // We only need the offset_v of ho_v to copy
     ui->copier_output->setPlainText(
@@ -40,7 +40,7 @@ void MainWindow::on_copier_generate_clicked()
 void MainWindow::on_normalizer_generate_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->normalizer_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->normalizer_input->toPlainText().toStdString().c_str(), '\n');
 
     // Break if empty
     if (tp_v.size() == 0){
@@ -88,8 +88,7 @@ void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
 void MainWindow::on_stutter_generate_clicked()
 {
     hit_object_v ho_v;
-
-    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString().c_str());
 
     // Break if empty
     if (ho_v.size() == 0){
@@ -118,11 +117,12 @@ void MainWindow::on_stutter_generate_clicked()
 
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
+
 }
 void MainWindow::on_stutter_preset_nft_clicked()
 {
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString().c_str());
 
     // Break if empty
     if (ho_v.size() == 0){
@@ -140,7 +140,7 @@ void MainWindow::on_stutter_preset_nft_clicked()
 void MainWindow::on_stutter_preset_nbt_clicked()
 {
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString().c_str());
 
     // Break if empty
     if (ho_v.size() == 0){
@@ -156,7 +156,7 @@ void MainWindow::on_stutter_preset_nbt_clicked()
 void MainWindow::on_stutter_preset_mft_clicked()
 {
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString().c_str());
 
     // Break if empty
     if (ho_v.size() == 0){
@@ -185,7 +185,7 @@ void MainWindow::on_stutter_preset_mft_clicked()
 void MainWindow::on_stutter_preset_mbt_clicked()
 {
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString().c_str());
 
     // Break if empty
     if (ho_v.size() == 0){
@@ -307,7 +307,7 @@ void MainWindow::on_tpf_power_valueChanged(int value)
 void MainWindow::on_tpf_generate_clicked()
 {
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->tpf_input->text().toStdString(), 0);
+    ho_v.load_editor_hit_object(ui->tpf_input->text().toStdString().c_str(), 0);
     std::vector<double> offset_v = ho_v.get_offset_v(true);
 
     if (offset_v.size() < 2){
@@ -469,21 +469,21 @@ void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector
 void MainWindow::on_alter_self_mv_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     tp_v *= ui->alter_self_mv->value();
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_self_av_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     tp_v += ui->alter_self_mv->value();
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_self_mo_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     tp_v.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
         return offset * parameter;
     });
@@ -492,7 +492,7 @@ void MainWindow::on_alter_self_mo_b_clicked()
 void MainWindow::on_alter_self_ao_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     tp_v.offset_arithmetic(ui->alter_self_ao->value(), [](double offset, double parameter){
         return offset + parameter;
     });
@@ -501,7 +501,7 @@ void MainWindow::on_alter_self_ao_b_clicked()
 void MainWindow::on_alter_self_del_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     lib_functions::delete_nth(&tp_v, ui->alter_self_del->value(), ui->alter_self_del_offset->value());
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
@@ -531,7 +531,7 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
 void MainWindow::on_alter_convert_to_bpm_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     timing_point_v tp_v_sv = tp_v.get_sv_only();
     timing_point_v tp_v_bpm = tp_v.get_bpm_only();
 
@@ -552,7 +552,7 @@ void MainWindow::on_alter_convert_to_bpm_clicked()
 void MainWindow::on_alter_convert_to_sv_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     timing_point_v tp_v_sv = tp_v.get_sv_only();
     timing_point_v tp_v_bpm = tp_v.get_bpm_only();
 
@@ -573,18 +573,18 @@ void MainWindow::on_alter_convert_to_sv_clicked()
 void MainWindow::on_alter_cross_mv_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     timing_point_v tp_v_cross;
-    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n');
+    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString().c_str(), '\n');
     tp_v.cross_effect_multiply(tp_v_cross);
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_cross_av_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString().c_str(), '\n');
     timing_point_v tp_v_cross;
-    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n');
+    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString().c_str(), '\n');
     tp_v.cross_effect_add(tp_v_cross);
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
