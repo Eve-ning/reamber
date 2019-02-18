@@ -46,15 +46,4 @@ RESOURCES += \
     rsc.qrc
 
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../reamber_base/debug/ -lreamber_base
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../reamber_base/debug/ -lreamber_base
-#else:unix: LIBS += -L$$PWD/../reamber_base/ -lreamber_base
 
-#INCLUDEPATH += $$PWD/../reamber_base/Debug
-#DEPENDPATH += $$PWD/../reamber_base/Debug
-
-#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../reamber_base/debug/libreamber_base.a
-#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../reamber_base/debug/libreamber_base.a
-#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../reamber_base/debug/reamber_base.lib
-#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../reamber_base/debug/reamber_base.lib
-#else:unix: PRE_TARGETDEPS += $$PWD/../reamber_base/libreamber_base.a
