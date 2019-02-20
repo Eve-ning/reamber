@@ -72,7 +72,7 @@
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_stutter">
        <layout class="QGridLayout" name="gridLayout_3">
@@ -921,10 +921,10 @@
                        <number>200</number>
                       </property>
                       <property name="singleStep">
-                       <number>5</number>
+                       <number>1</number>
                       </property>
                       <property name="pageStep">
-                       <number>5</number>
+                       <number>2</number>
                       </property>
                       <property name="value">
                        <number>1</number>
@@ -1259,7 +1259,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="alter_preset_tab">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="alter_self">
               <attribute name="title">
@@ -1272,9 +1272,6 @@
                   <string>alter</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_54">
-                  <item row="2" column="1">
-                   <widget class="QSpinBox" name="alter_self_mo"/>
-                  </item>
                   <item row="0" column="0">
                    <widget class="QPushButton" name="alter_self_mv_b">
                     <property name="text">
@@ -1283,7 +1280,11 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QDoubleSpinBox" name="alter_self_mv"/>
+                   <widget class="QDoubleSpinBox" name="alter_self_mv">
+                    <property name="minimum">
+                     <double>-99.900000000000006</double>
+                    </property>
+                   </widget>
                   </item>
                   <item row="3" column="1">
                    <widget class="QSpinBox" name="alter_self_ao">
@@ -1323,6 +1324,16 @@
                    <widget class="QPushButton" name="alter_self_ao_b">
                     <property name="text">
                      <string>Add Offsets By</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QDoubleSpinBox" name="alter_self_mo">
+                    <property name="minimum">
+                     <double>-99.900000000000006</double>
+                    </property>
+                    <property name="singleStep">
+                     <double>0.100000000000000</double>
                     </property>
                    </widget>
                   </item>
