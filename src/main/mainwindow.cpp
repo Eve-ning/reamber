@@ -500,7 +500,6 @@ void MainWindow::on_alter_self_ao_b_clicked()
     });
     ui->alter_output->setPlainText(QString::fromStdString(new_tp_v.get_string_raw("\n")));
 }
-
 void MainWindow::on_alter_self_del_b_clicked()
 {
     timing_point_v tp_v;
@@ -512,26 +511,15 @@ void MainWindow::on_alter_self_del_b_clicked()
                 QString::fromStdString(del_tp_v->get_string_raw("\n")));
 }
 
-double MainWindow::curb_value(double value, bool is_bpm)
+void MainWindow::on_alter_self_subd_by_b_clicked()
 {
-    if (is_bpm) {
-        value = value > BPM_MAX ? BPM_MAX : value;
-        value = value < BPM_MIN ? BPM_MIN : value;
-    } else {
-        value = value > SV_MAX ? SV_MAX : value;
-        value = value < SV_MIN ? SV_MIN : value;
-    }
-
-    return value;
-}
-std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool is_bpm)
-{
-    std::vector<double> output;
-    output.reserve(value_v.size());
-    for (double value : value_v) {
-        output.push_back(curb_value(value, is_bpm));
-    }
-    return output;
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    auto subd_tp_v =
+            lib_functions::create_copies_subdivision(
+                &tp_v, static_cast<unsigned int>(ui->alter_self_subd_by->value()), true);
+    ui->alter_output->setPlainText(
+                QString::fromStdString(subd_tp_v->get_string_raw("\n")));
 }
 
 void MainWindow::on_alter_convert_to_bpm_clicked()
@@ -595,3 +583,24 @@ void MainWindow::on_alter_cross_av_b_clicked()
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 
+double MainWindow::curb_value(double value, bool is_bpm)
+{
+    if (is_bpm) {
+        value = value > BPM_MAX ? BPM_MAX : value;
+        value = value < BPM_MIN ? BPM_MIN : value;
+    } else {
+        value = value > SV_MAX ? SV_MAX : value;
+        value = value < SV_MIN ? SV_MIN : value;
+    }
+
+    return value;
+}
+std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool is_bpm)
+{
+    std::vector<double> output;
+    output.reserve(value_v.size());
+    for (double value : value_v) {
+        output.push_back(curb_value(value, is_bpm));
+    }
+    return output;
+}
