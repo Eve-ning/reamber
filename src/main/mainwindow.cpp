@@ -11,12 +11,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     stutter_limit_update();
     tpf_init_customplot();
+
+    // Initializes clipboard copying
+    clipboard = QApplication::clipboard();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 void MainWindow::on_copier_generate_clicked()
 {
@@ -118,6 +122,7 @@ void MainWindow::on_stutter_generate_clicked()
 
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
+
 }
 void MainWindow::on_stutter_preset_nft_clicked()
 {
@@ -533,7 +538,6 @@ void MainWindow::on_alter_self_subd_to_b_clicked()
                 QString::fromStdString(subd_tp_v->get_string_raw("\n")));
 }
 
-
 void MainWindow::on_alter_convert_to_bpm_clicked()
 {
     timing_point_v tp_v;
@@ -595,6 +599,7 @@ void MainWindow::on_alter_cross_av_b_clicked()
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 
+// GENERAL FUNCTIONS
 double MainWindow::curb_value(double value, bool is_bpm)
 {
     if (is_bpm) {
@@ -615,4 +620,32 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
         output.push_back(curb_value(value, is_bpm));
     }
     return output;
+}
+void MainWindow::clipboard_copy(QString str)
+{
+    if (ui->clipboard_copy->isChecked()) {
+        clipboard->setText(str);
+    }
+}
+
+// CLIPBOARD COPY
+void MainWindow::on_alter_output_textChanged()
+{
+    clipboard_copy(ui->alter_output->toPlainText());
+}
+void MainWindow::on_stutter_output_textChanged()
+{
+    clipboard_copy(ui->stutter_output->toPlainText());
+}
+void MainWindow::on_copier_output_textChanged()
+{
+    clipboard_copy(ui->copier_output->toPlainText());
+}
+void MainWindow::on_tpf_output_textChanged()
+{
+    clipboard_copy(ui->tpf_output->toPlainText());
+}
+void MainWindow::on_normalizer_output_textChanged()
+{
+    clipboard_copy(ui->normalizer_output->toPlainText());
 }

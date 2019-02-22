@@ -56,7 +56,21 @@ private slots:
 
     void on_alter_self_subd_to_b_clicked();
 
+    void on_alter_output_textChanged();
+
+    void on_stutter_output_textChanged();
+
+    void on_copier_output_textChanged();
+
+    void on_tpf_output_textChanged();
+
+    void on_normalizer_output_textChanged();
+
 private:
+
+    QClipboard *clipboard;
+
+    void clipboard_copy(QString str);
 
     // Updates stutter tab's threshold limit while changing parameters
     void stutter_limit_update();
