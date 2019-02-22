@@ -54,6 +54,8 @@ private slots:
 
     void on_alter_self_subd_by_b_clicked();
 
+    void on_alter_self_subd_to_b_clicked();
+
 private:
 
     // Updates stutter tab's threshold limit while changing parameters

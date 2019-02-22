@@ -505,8 +505,8 @@ void MainWindow::on_alter_self_del_b_clicked()
     timing_point_v tp_v;
     tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
     auto del_tp_v = lib_functions::delete_nth(&tp_v,
-                                              ui->alter_self_del->value(),
-                                              ui->alter_self_del_offset->value());
+                                              static_cast<unsigned int>(ui->alter_self_del->value()),
+                                              static_cast<unsigned int>(ui->alter_self_del_offset->value()));
     ui->alter_output->setPlainText(
                 QString::fromStdString(del_tp_v->get_string_raw("\n")));
 }
@@ -516,11 +516,23 @@ void MainWindow::on_alter_self_subd_by_b_clicked()
     timing_point_v tp_v;
     tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
     auto subd_tp_v =
-            lib_functions::create_copies_subdivision(
+            lib_functions::create_copies_subdivision_by(
                 &tp_v, static_cast<unsigned int>(ui->alter_self_subd_by->value()), true);
     ui->alter_output->setPlainText(
                 QString::fromStdString(subd_tp_v->get_string_raw("\n")));
 }
+
+void MainWindow::on_alter_self_subd_to_b_clicked()
+{
+    timing_point_v tp_v;
+    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    auto subd_tp_v =
+            lib_functions::create_copies_subdivision_to(
+                &tp_v, static_cast<unsigned int>(ui->alter_self_subd_to->value()), true);
+    ui->alter_output->setPlainText(
+                QString::fromStdString(subd_tp_v->get_string_raw("\n")));
+}
+
 
 void MainWindow::on_alter_convert_to_bpm_clicked()
 {
