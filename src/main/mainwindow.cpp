@@ -477,33 +477,39 @@ void MainWindow::on_alter_self_av_b_clicked()
 {
     timing_point_v tp_v;
     tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
-    tp_v += ui->alter_self_mv->value();
+    tp_v += ui->alter_self_av->value();
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_self_mo_b_clicked()
 {
     timing_point_v tp_v;
     tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
-    tp_v.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
+
+    auto new_tp_v = tp_v.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
         return offset * parameter;
     });
-    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+
+    ui->alter_output->setPlainText(QString::fromStdString(new_tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_self_ao_b_clicked()
 {
     timing_point_v tp_v;
     tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
-    tp_v.offset_arithmetic(ui->alter_self_ao->value(), [](double offset, double parameter){
+    auto new_tp_v = tp_v.offset_arithmetic(ui->alter_self_ao->value(), [](double offset, double parameter){
         return offset + parameter;
     });
-    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+    ui->alter_output->setPlainText(QString::fromStdString(new_tp_v.get_string_raw("\n")));
 }
+
 void MainWindow::on_alter_self_del_b_clicked()
 {
     timing_point_v tp_v;
     tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
-    lib_functions::delete_nth(&tp_v, ui->alter_self_del->value(), ui->alter_self_del_offset->value());
-    ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
+    auto del_tp_v = lib_functions::delete_nth(&tp_v,
+                                              ui->alter_self_del->value(),
+                                              ui->alter_self_del_offset->value());
+    ui->alter_output->setPlainText(
+                QString::fromStdString(del_tp_v->get_string_raw("\n")));
 }
 
 double MainWindow::curb_value(double value, bool is_bpm)
