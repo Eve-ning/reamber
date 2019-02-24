@@ -21,14 +21,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_copier_generate_clicked()
 {
     // We need the tp_v and ho_v for copier
     // However, we don't actually need correct keys for hit_object
 
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->copier_tp->toPlainText().toStdString());
+
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->copier_tp->toPlainText().toStdString())){
+        return;
+    }
 
     // We default keys to 0
     hit_object_v ho_v;
@@ -44,10 +47,14 @@ void MainWindow::on_copier_generate_clicked()
 void MainWindow::on_normalizer_generate_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->normalizer_input->toPlainText().toStdString(), '\n');
+
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->normalizer_input->toPlainText().toStdString(), '\n')) {
+        return;
+    };
 
     // Break if empty
-    if (tp_v.size() == 0){
+    if (tp_v.get_bpm_only().size() == 0){
         return;
     }
 
@@ -93,7 +100,10 @@ void MainWindow::on_stutter_generate_clicked()
 {
     hit_object_v ho_v;
 
-    ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString());
+    // Break if fail
+    if (!ho_v.load_editor_hit_object(ui->stutter_input->toPlainText().toStdString())) {
+        return;
+    }
 
     // Break if empty
     if (ho_v.size() == 0){
@@ -312,7 +322,12 @@ void MainWindow::on_tpf_power_valueChanged(int value)
 void MainWindow::on_tpf_generate_clicked()
 {
     hit_object_v ho_v;
-    ho_v.load_editor_hit_object(ui->tpf_input->text().toStdString(), 0);
+
+    // Break if fail
+    if (!ho_v.load_editor_hit_object(ui->tpf_input->text().toStdString(), 0)) {
+        return;
+    }
+
     std::vector<double> offset_v = ho_v.get_offset_v(true);
 
     if (offset_v.size() < 2){
@@ -474,21 +489,30 @@ void MainWindow::tpf_update_customplot(std::vector<double> offset_v, std::vector
 void MainWindow::on_alter_self_mv_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     tp_v *= ui->alter_self_mv->value();
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_self_av_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     tp_v += ui->alter_self_av->value();
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_self_mo_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
 
     auto new_tp_v = tp_v.offset_arithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
         return offset * parameter;
@@ -499,7 +523,10 @@ void MainWindow::on_alter_self_mo_b_clicked()
 void MainWindow::on_alter_self_ao_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     auto new_tp_v = tp_v.offset_arithmetic(ui->alter_self_ao->value(), [](double offset, double parameter){
         return offset + parameter;
     });
@@ -508,7 +535,10 @@ void MainWindow::on_alter_self_ao_b_clicked()
 void MainWindow::on_alter_self_del_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     auto del_tp_v = lib_functions::delete_nth(&tp_v,
                                               static_cast<unsigned int>(ui->alter_self_del->value()),
                                               static_cast<unsigned int>(ui->alter_self_del_offset->value()));
@@ -519,7 +549,10 @@ void MainWindow::on_alter_self_del_b_clicked()
 void MainWindow::on_alter_self_subd_by_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     auto subd_tp_v =
             lib_functions::create_copies_subdivision_by(
                 &tp_v, static_cast<unsigned int>(ui->alter_self_subd_by->value()), true);
@@ -530,7 +563,10 @@ void MainWindow::on_alter_self_subd_by_b_clicked()
 void MainWindow::on_alter_self_subd_to_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     auto subd_tp_v =
             lib_functions::create_copies_subdivision_to(
                 &tp_v, static_cast<unsigned int>(ui->alter_self_subd_to->value()), true);
@@ -541,7 +577,10 @@ void MainWindow::on_alter_self_subd_to_b_clicked()
 void MainWindow::on_alter_convert_to_bpm_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     timing_point_v tp_v_sv = tp_v.get_sv_only();
     timing_point_v tp_v_bpm = tp_v.get_bpm_only();
 
@@ -562,7 +601,10 @@ void MainWindow::on_alter_convert_to_bpm_clicked()
 void MainWindow::on_alter_convert_to_sv_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     timing_point_v tp_v_sv = tp_v.get_sv_only();
     timing_point_v tp_v_bpm = tp_v.get_bpm_only();
 
@@ -583,18 +625,28 @@ void MainWindow::on_alter_convert_to_sv_clicked()
 void MainWindow::on_alter_cross_mv_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     timing_point_v tp_v_cross;
-    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n');
+    if (!tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     tp_v.cross_effect_multiply(tp_v_cross);
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
 void MainWindow::on_alter_cross_av_b_clicked()
 {
     timing_point_v tp_v;
-    tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n');
+    // Break if fail
+    if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     timing_point_v tp_v_cross;
-    tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n');
+    if (!tp_v_cross.load_raw_timing_point(ui->alter_input_cross->toPlainText().toStdString(), '\n')) {
+        return;
+    }
     tp_v.cross_effect_add(tp_v_cross);
     ui->alter_output->setPlainText(QString::fromStdString(tp_v.get_string_raw("\n")));
 }
@@ -621,6 +673,8 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     }
     return output;
 }
+
+
 void MainWindow::clipboard_copy(QString str)
 {
     if (ui->clipboard_copy->isChecked()) {

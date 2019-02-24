@@ -100,6 +100,12 @@ private:
 
     // This value is to convert vertical slider values to val
     double VS_TO_VAL = 100.0;
+
+    void* load_eho(const std::string& str);
+    void* load_tp(const std::string& str);
+    void* load_tp_v(const std::string& str);
+    void* load_ho(const std::string& str);
+    void* load_ho_v(const std::string& str);
 };
 
 #endif // MAINWINDOW_H
