@@ -25,6 +25,7 @@ private slots:
     void on_tpf_generate_clicked();
     void on_tpf_phase_valueChanged(int value);
     void on_tpf_power_valueChanged(int value);
+    void on_tpf_reset_clicked();
 
     void on_normalizer_generate_clicked();
     void on_normalizer_bpmlist_itemClicked(QListWidgetItem *item);
@@ -49,21 +50,14 @@ private slots:
     void on_alter_convert_to_sv_clicked();
     void on_alter_cross_mv_b_clicked();
     void on_alter_cross_av_b_clicked();
-
-    void on_tpf_reset_clicked();
-
     void on_alter_self_subd_by_b_clicked();
-
     void on_alter_self_subd_to_b_clicked();
 
+    // Trigger Clipboard
     void on_alter_output_textChanged();
-
     void on_stutter_output_textChanged();
-
     void on_copier_output_textChanged();
-
     void on_tpf_output_textChanged();
-
     void on_normalizer_output_textChanged();
 
 private:
@@ -78,11 +72,6 @@ private:
     // Initializes and updates tpf's graph respectively
     void tpf_init_customplot();
     void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
-
-//    // Extracts alter's inputs and output. This is a separate function as it's called a lot.
-//    timing_point_v alter_get_input();
-//    timing_point_v alter_get_input_cross();
-//    void alter_set_output(const timing_point_v *tp_v);
 
     // Squeezes the value to the defined MIN and MAX limits below and returns it
     double curb_value(double value, bool is_bpm);
@@ -100,12 +89,6 @@ private:
 
     // This value is to convert vertical slider values to val
     double VS_TO_VAL = 100.0;
-
-    void* load_eho(const std::string& str);
-    void* load_tp(const std::string& str);
-    void* load_tp_v(const std::string& str);
-    void* load_ho(const std::string& str);
-    void* load_ho_v(const std::string& str);
 };
 
 #endif // MAINWINDOW_H
