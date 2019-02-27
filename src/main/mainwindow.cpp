@@ -21,6 +21,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_home_repo_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber", QUrl::TolerantMode));
+}
+void MainWindow::on_home_wiki_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/wiki", QUrl::TolerantMode));
+}
+void MainWindow::on_home_report_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/issues/new", QUrl::TolerantMode));
+}
+void MainWindow::on_home_releases_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/releases", QUrl::TolerantMode));
+}
+
 void MainWindow::on_copier_generate_clicked()
 {
     // We need the tp_v and ho_v for copier
@@ -231,7 +248,6 @@ void MainWindow::on_stutter_preset_mbt_clicked()
     ui->stutter_output->setPlainText(
                 QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
 }
-
 void MainWindow::on_stutter_avebpm_valueChanged(double)
 {
     stutter_limit_update();
@@ -545,7 +561,6 @@ void MainWindow::on_alter_self_del_b_clicked()
     ui->alter_output->setPlainText(
                 QString::fromStdString(del_tp_v->get_string_raw("\n")));
 }
-
 void MainWindow::on_alter_self_subd_by_b_clicked()
 {
     timing_point_v tp_v;
@@ -559,7 +574,6 @@ void MainWindow::on_alter_self_subd_by_b_clicked()
     ui->alter_output->setPlainText(
                 QString::fromStdString(subd_tp_v->get_string_raw("\n")));
 }
-
 void MainWindow::on_alter_self_subd_to_b_clicked()
 {
     timing_point_v tp_v;
@@ -674,7 +688,6 @@ std::vector<double> MainWindow::curb_value_v(std::vector<double> value_v, bool i
     return output;
 }
 
-
 void MainWindow::clipboard_copy(QString str)
 {
     if (ui->clipboard_copy->isChecked()) {
@@ -703,3 +716,4 @@ void MainWindow::on_normalizer_output_textChanged()
 {
     clipboard_copy(ui->normalizer_output->toPlainText());
 }
+

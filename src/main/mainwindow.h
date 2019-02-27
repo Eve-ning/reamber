@@ -16,6 +16,12 @@ public:
     ~MainWindow();
 
 private slots:
+
+    void on_home_repo_clicked();
+    void on_home_wiki_clicked();
+    void on_home_report_clicked();
+    void on_home_releases_clicked();
+
     void on_copier_generate_clicked();
 
     void on_tpf_initsv_valueChanged(int value);
@@ -63,7 +69,6 @@ private slots:
 private:
 
     QClipboard *clipboard;
-
     void clipboard_copy(QString str);
 
     // Updates stutter tab's threshold limit while changing parameters
