@@ -14,7 +14,7 @@ re:amber is a rework of amber, which was discontinued.
 
 ### current
 
-*first expected release in march*
+- v0.1.0a: https://github.com/Eve-ning/reamber/releases/tag/v0.1.0-alpha
 
 ### deprecated
 *note that these releases are old, totally independent in development of the current one*
