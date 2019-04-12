@@ -51,6 +51,8 @@ DISTFILES += \
 RESOURCES += \
     rsc.qrc
 
+RC_ICONS = rsc/amber.ico
+
 
 
 

@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>amber</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="../../rsc.qrc">
-    <normaloff>:/rsc/amber.ico</normaloff>:/rsc/amber.ico</iconset>
-  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="2">
@@ -1706,9 +1702,7 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../rsc.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>listWidget</sender>
