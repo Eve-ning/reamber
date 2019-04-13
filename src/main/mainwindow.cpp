@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <custom_lib_functions/lib_functions.h>
+#include <amber_f/lib_functions.h>
 #include <QString>
 #include <QDebug>
 
@@ -57,7 +57,7 @@ void MainWindow::on_copier_generate_clicked()
     // We only need the offset_v of ho_v to copy
     ui->copier_output->setPlainText(
                 QString::fromStdString(
-                    lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true),true,true)->get_string_raw("\n"))
+                    amber_f::copy(&tp_v, ho_v.get_offset_v(true),true,true)->get_string_raw("\n"))
                 );
 }
 
@@ -91,7 +91,7 @@ void MainWindow::on_normalizer_generate_clicked()
 
     ui->normalizer_output->setPlainText(
                 QString::fromStdString(
-                    lib_functions::create_normalize(tp_v, ui->normalizer_bpm->value(), false).get_string_raw()
+                    amber_f::normalize(tp_v, ui->normalizer_bpm->value(), false).get_string_raw()
                     )
                 );
 }
@@ -131,7 +131,7 @@ void MainWindow::on_stutter_generate_clicked()
 
     // Depends on which radio is checked, we generate a different output
     if (ui->stutter_type_sv->isChecked()){
-        tp_v = lib_functions::create_stutter_relative(
+        tp_v = amber_f::stutter_rel(
                     ho_v.get_offset_v(true),
                     ui->stutter_initsv_val->text().toDouble(),
                     ui->stutter_threshold_val->text().toDouble(),
@@ -139,7 +139,7 @@ void MainWindow::on_stutter_generate_clicked()
                     false, true);
 
     } else if (ui->stutter_type_bpm->isChecked()) {
-        tp_v = lib_functions::create_stutter_relative(
+        tp_v = amber_f::stutter_rel(
                     ho_v.get_offset_v(true),
                     ui->stutter_initbpm_val->text().toDouble(),
                     ui->stutter_threshold_val->text().toDouble(),
@@ -161,10 +161,10 @@ void MainWindow::on_stutter_preset_nft_clicked()
         return;
     }
 
-    timing_point_v tp_v = lib_functions::create_stutter_absolute(
+    timing_point_v tp_v = amber_f::stutter_abs(
                 ho_v.get_offset_v(true),BPM_MIN,BPM_MIN,ui->stutter_avebpm->value(), true, false, true);
 
-    tp_v = lib_functions::stutter_swap(tp_v);
+    tp_v = amber_f::stutter_swap(tp_v);
 
     ui->stutter_output->setPlainText(
                 QString::fromStdString(tp_v.get_string_raw("\n")));
@@ -179,7 +179,7 @@ void MainWindow::on_stutter_preset_nbt_clicked()
         return;
     }
 
-    timing_point_v tp_v = lib_functions::create_stutter_absolute(
+    timing_point_v tp_v = amber_f::stutter_abs(
                 ho_v.get_offset_v(true),BPM_MIN,BPM_MIN,ui->stutter_avebpm->value(), true, false, true);
 
     ui->stutter_output->setPlainText(
@@ -212,7 +212,7 @@ void MainWindow::on_stutter_preset_mft_clicked()
     tp_v.push_back(tp_normalized);
 
     ui->stutter_output->setPlainText(
-                QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
+                QString::fromStdString(amber_f::copy(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
 }
 void MainWindow::on_stutter_preset_mbt_clicked()
 {
@@ -246,7 +246,7 @@ void MainWindow::on_stutter_preset_mbt_clicked()
     tp_v.push_back(tp_normalized);
 
     ui->stutter_output->setPlainText(
-                QString::fromStdString(lib_functions::create_copies(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
+                QString::fromStdString(amber_f::copy(&tp_v, ho_v.get_offset_v(true), true, true)->get_string_raw("\n")));
 }
 void MainWindow::on_stutter_avebpm_valueChanged(double)
 {
@@ -260,7 +260,7 @@ void MainWindow::stutter_limit_update()
 {
     if (ui->stutter_type_sv->isChecked()){
         // We limit the initial SV values
-        std::vector<double> init_lim = lib_functions::get_stutter_rel_init_limits(
+        std::vector<double> init_lim = amber_f::stutter_rel_init_limits(
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
 
@@ -279,7 +279,7 @@ void MainWindow::stutter_limit_update()
         }
     } else if (ui->stutter_type_bpm->isChecked()) {
         // We limit the initial BPM values
-        std::vector<double> init_lim = lib_functions::get_stutter_rel_init_limits(
+        std::vector<double> init_lim = amber_f::stutter_rel_init_limits(
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
@@ -555,7 +555,7 @@ void MainWindow::on_alter_self_del_b_clicked()
     if (!tp_v.load_raw_timing_point(ui->alter_input->toPlainText().toStdString(), '\n')) {
         return;
     }
-    auto del_tp_v = lib_functions::delete_nth(&tp_v,
+    auto del_tp_v = amber_f::delete_nth(&tp_v,
                                               static_cast<unsigned int>(ui->alter_self_del->value()),
                                               static_cast<unsigned int>(ui->alter_self_del_offset->value()));
     ui->alter_output->setPlainText(
@@ -569,7 +569,7 @@ void MainWindow::on_alter_self_subd_by_b_clicked()
         return;
     }
     auto subd_tp_v =
-            lib_functions::create_copies_subdivision_by(
+            amber_f::copy_subd_by(
                 &tp_v, static_cast<unsigned int>(ui->alter_self_subd_by->value()), true);
     ui->alter_output->setPlainText(
                 QString::fromStdString(subd_tp_v->get_string_raw("\n")));
@@ -582,7 +582,7 @@ void MainWindow::on_alter_self_subd_to_b_clicked()
         return;
     }
     auto subd_tp_v =
-            lib_functions::create_copies_subdivision_to(
+            amber_f::copy_subd_to(
                 &tp_v, static_cast<unsigned int>(ui->alter_self_subd_to->value()), true);
     ui->alter_output->setPlainText(
                 QString::fromStdString(subd_tp_v->get_string_raw("\n")));
