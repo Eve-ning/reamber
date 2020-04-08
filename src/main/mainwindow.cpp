@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <amber_f/lib_functions.h>
+#include <amber_f/amber_f.h>
 #include <QString>
 #include <QDebug>
 
