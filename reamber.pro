@@ -24,12 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    depend/qcustomplot.cpp \
     src/main/main.cpp \
-    src/main/mainwindow.cpp \
-    src/dependencies/qcustomplot.cpp
+    src/main/mainwindow.cpp
 HEADERS += \
-    src/main/mainwindow.h \
-    src/dependencies/qcustomplot.h
+    depend/qcustomplot.h \
+    src/main/mainwindow.h
 
 FORMS += \
     src/ui/mainwindow.ui
@@ -50,6 +50,5 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-reamber_base-D
 else:unix: LIBS += -L$$PWD/../build-reamber_base-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/ -lreamber_base
 
 INCLUDEPATH += \
-$$PWD/../reamber_base \
 $$PWD/../reamber_base/include
 DEPENDPATH += $$PWD/../reamber_base/include

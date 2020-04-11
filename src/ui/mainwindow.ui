@@ -80,7 +80,7 @@
     <item row="0" column="1" rowspan="3">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_home">
        <layout class="QGridLayout" name="gridLayout_52">
@@ -1698,7 +1698,7 @@
   <customwidget>
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
-   <header location="global">src\dependencies\qcustomplot.h</header>
+   <header location="global">depend/qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
