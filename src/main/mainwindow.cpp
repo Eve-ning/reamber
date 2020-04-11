@@ -8,8 +8,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+    ui(new Ui::MainWindow) {
     ui->setupUi(this);
     stutter_limit_update();
     tpf_init_customplot();
@@ -18,30 +17,23 @@ MainWindow::MainWindow(QWidget *parent) :
     clipboard = QApplication::clipboard();
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::on_home_repo_clicked()
-{
+void MainWindow::on_home_repo_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber", QUrl::TolerantMode));
 }
-void MainWindow::on_home_wiki_clicked()
-{
+void MainWindow::on_home_wiki_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/wiki", QUrl::TolerantMode));
 }
-void MainWindow::on_home_report_clicked()
-{
+void MainWindow::on_home_report_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/issues/new", QUrl::TolerantMode));
 }
-void MainWindow::on_home_releases_clicked()
-{
+void MainWindow::on_home_releases_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/releases", QUrl::TolerantMode));
 }
 
-void MainWindow::on_copier_generate_clicked()
-{
+// ========================= COPIER =========================
+void MainWindow::on_copier_generate_clicked() {
     // We need the tpV and hoV for copier
     // However, we don't actually need correct keys for hit_object
     TimingPointV tpV;
@@ -62,8 +54,9 @@ void MainWindow::on_copier_generate_clicked()
                     true).getStringRaw("\n"));
 }
 
-void MainWindow::on_normalizer_generate_clicked()
-{
+
+// ========================= NORMALIZER =========================
+void MainWindow::on_normalizer_generate_clicked() {
     TimingPointV tpV;
 
     // Break if fail
@@ -79,9 +72,7 @@ void MainWindow::on_normalizer_generate_clicked()
     auto bpmTpV = tpV.getBpmOnly();
     QStringList bpmTpVStr;
 
-    for (const auto& bpm_tp : bpmTpV) {
-        bpmTpVStr.append(QString::number(bpm_tp.getValue()));
-    }
+    for (const auto& bpmTp : bpmTpV) bpmTpVStr.append(QString::number(bpmTp.getValue()));
 
     // Add Items
     ui->normalizer_bpmlist->addItems(bpmTpVStr);
@@ -91,26 +82,23 @@ void MainWindow::on_normalizer_generate_clicked()
                                      ui->normalizer_bpm->value(),
                                      false).getStringRaw());
 }
-void MainWindow::on_normalizer_bpmlist_itemClicked(QListWidgetItem *item)
-{
+void MainWindow::on_normalizer_bpmlist_itemClicked(QListWidgetItem *item) {
     ui->normalizer_bpm->setValue(item->text().toDouble());
 }
 
-void MainWindow::on_stutter_initsv_vs_valueChanged(int value)
-{
+// ========================= STUTTER =========================
+
+void MainWindow::on_stutter_initsv_vs_valueChanged(int value) {
     ui->stutter_initsv_val->setText(QString::number(value/VS_TO_VAL));
 }
-void MainWindow::on_stutter_initbpm_vs_valueChanged(int value)
-{
+void MainWindow::on_stutter_initbpm_vs_valueChanged(int value) {
     ui->stutter_initbpm_val->setText(QString::number(value/VS_TO_VAL));
 }
-void MainWindow::on_stutter_threshold_vs_valueChanged(int value)
-{
+void MainWindow::on_stutter_threshold_vs_valueChanged(int value) {
     ui->stutter_threshold_val->setText(QString::number(value/VS_TO_VAL));
     stutter_limit_update();
 }
-void MainWindow::on_stutter_generate_clicked()
-{
+void MainWindow::on_stutter_generate_clicked() {
     HitObjectV hoV;
     auto t = ui->stutter_input->toPlainText();
     // Break if fail
@@ -122,28 +110,26 @@ void MainWindow::on_stutter_generate_clicked()
     TimingPointV tpV;
 
     // Depends on which radio is checked, we generate a different output
-    if (ui->stutter_type_sv->isChecked()){
+    if (ui->stutter_type_sv->isChecked())
         tpV = algorithm::stutterRel(
                     hoV.getOffsetV(true),
                     ui->stutter_initsv_val->text().toDouble(),
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avesv->value(),
                     false, true);
-
-    } else if (ui->stutter_type_bpm->isChecked()) {
+    else if (ui->stutter_type_bpm->isChecked())
         tpV = algorithm::stutterRel(
                     hoV.getOffsetV(true),
                     ui->stutter_initbpm_val->text().toDouble(),
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avebpm->value(),
                     true, true);
-    }
+
 
     ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
 
 }
-void MainWindow::on_stutter_preset_nft_clicked()
-{
+void MainWindow::on_stutter_preset_nft_clicked() {
     HitObjectV hoV;
     hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
 
@@ -163,8 +149,7 @@ void MainWindow::on_stutter_preset_nft_clicked()
 
     ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_stutter_preset_nbt_clicked()
-{
+void MainWindow::on_stutter_preset_nbt_clicked() {
     HitObjectV hoV;
     hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
 
@@ -176,13 +161,12 @@ void MainWindow::on_stutter_preset_nbt_clicked()
 
     ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_stutter_preset_mft_clicked()
-{
+void MainWindow::on_stutter_preset_mft_clicked() {
     HitObjectV hoV;
     hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
 
     // Break if empty
-    if (hoV.size() == 0)return;
+    if (hoV.size() == 0) return;
 
     TimingPointV tpV;
     TimingPoint tpTeleport;
@@ -207,8 +191,7 @@ void MainWindow::on_stutter_preset_mft_clicked()
                     true,
                     true).getStringRaw("\n"));
 }
-void MainWindow::on_stutter_preset_mbt_clicked()
-{
+void MainWindow::on_stutter_preset_mbt_clicked() {
     HitObjectV hoV;
     hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
 
@@ -242,8 +225,7 @@ void MainWindow::on_stutter_preset_mbt_clicked()
 }
 void MainWindow::on_stutter_avebpm_valueChanged(double) { stutter_limit_update(); }
 void MainWindow::on_stutter_avesv_valueChanged(double) { stutter_limit_update(); }
-void MainWindow::stutter_limit_update()
-{
+void MainWindow::stutter_limit_update() {
     if (ui->stutter_type_sv->isChecked()){
         // We limit the initial SV values
         QVector<double> initLim = algorithm::stutterRelInitLimits(
@@ -285,44 +267,39 @@ void MainWindow::stutter_limit_update()
     }
 }
 
-void MainWindow::on_tpf_initsv_valueChanged(int value)
-{
+
+// ========================= 2PF =========================
+void MainWindow::on_tpf_initsv_valueChanged(int value) {
     ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
-void MainWindow::on_tpf_endsv_valueChanged(int value)
-{
+void MainWindow::on_tpf_endsv_valueChanged(int value) {
     ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
-void MainWindow::on_tpf_freq_valueChanged(int value)
-{
+void MainWindow::on_tpf_freq_valueChanged(int value) {
     ui->tpf_freq_val->setText(QString::number(value/2.0));
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
-void MainWindow::on_tpf_ampl_valueChanged(int value)
-{
-    if (ui->tpf_type_bpm->isChecked()) {
+void MainWindow::on_tpf_ampl_valueChanged(int value) {
+    if (ui->tpf_type_bpm->isChecked())
         // BPM amplitude will only scale [-1 ~ 1]
         ui->tpf_ampl_val->setText(QString::number(value/(VS_TO_VAL * 10)));
-    } else {
+    else
         ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
-    }
 
-    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+
+    if (ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
-void MainWindow::on_tpf_phase_valueChanged(int value)
-{
+void MainWindow::on_tpf_phase_valueChanged(int value) {
     ui->tpf_phase_val->setText(QString::number(value));
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
-void MainWindow::on_tpf_power_valueChanged(int value)
-{
+void MainWindow::on_tpf_power_valueChanged(int value) {
     ui->tpf_power_val->setText(QString::number(value/10.0));
     if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
 }
-void MainWindow::on_tpf_generate_clicked()
-{
+void MainWindow::on_tpf_generate_clicked() {
     HitObjectV hoV;
 
     // Break if fail
@@ -413,8 +390,7 @@ void MainWindow::on_tpf_generate_clicked()
 
     ui->tpf_output->setPlainText(tpV.getStringRaw());
 }
-void MainWindow::on_tpf_reset_clicked()
-{
+void MainWindow::on_tpf_reset_clicked() {
     ui->tpf_ampl->setValue(0);
     ui->tpf_freq->setValue(1);
     // freq slider on 1 sets to 0.5 for some reason, will manually set this to 0.5
@@ -441,8 +417,7 @@ void MainWindow::on_tpf_reset_clicked()
 //    ui->tpf_output_live->setChecked(false);
 }
 
-void MainWindow::tpf_init_customplot()
-{
+void MainWindow::tpf_init_customplot() {
     auto customplot = ui->tpf_customplot;
     customplot->addGraph();
 
@@ -451,8 +426,7 @@ void MainWindow::tpf_init_customplot()
 
     customplot->replot();
 }
-void MainWindow::tpf_update_customplot(std::vector<double> offsetV, std::vector<double> value_v, bool is_bpm)
-{
+void MainWindow::tpf_update_customplot(std::vector<double> offsetV, std::vector<double> value_v, bool is_bpm) {
     QVector<double> q_offset_v = QVector<double>::fromStdVector(offsetV);
     QVector<double> q_value_v = QVector<double>::fromStdVector(value_v);
 
@@ -478,8 +452,9 @@ void MainWindow::tpf_update_customplot(std::vector<double> offsetV, std::vector<
     customplot->replot();
 }
 
-void MainWindow::on_alter_self_mv_b_clicked()
-{
+
+// ========================= ALTER =========================
+void MainWindow::on_alter_self_mv_b_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
@@ -488,8 +463,7 @@ void MainWindow::on_alter_self_mv_b_clicked()
     tpV *= ui->alter_self_mv->value();
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_self_av_b_clicked()
-{
+void MainWindow::on_alter_self_av_b_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
@@ -498,8 +472,7 @@ void MainWindow::on_alter_self_av_b_clicked()
     tpV += ui->alter_self_av->value();
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_self_mo_b_clicked()
-{
+void MainWindow::on_alter_self_mo_b_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
@@ -512,8 +485,7 @@ void MainWindow::on_alter_self_mo_b_clicked()
 
     ui->alter_output->setPlainText(newTpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_self_ao_b_clicked()
-{
+void MainWindow::on_alter_self_ao_b_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) return;
@@ -525,20 +497,18 @@ void MainWindow::on_alter_self_ao_b_clicked()
     });
     ui->alter_output->setPlainText(newTpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_self_del_b_clicked()
-{
+void MainWindow::on_alter_self_del_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
+    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n'))
         return;
-    }
+
     auto delTpV = algorithm::deleteNth<TimingPoint>(QSPtr<TimingPointV>::create(tpV),
                                          static_cast<unsigned int>(ui->alter_self_del->value()),
                                          static_cast<unsigned int>(ui->alter_self_del_offset->value()));
     ui->alter_output->setPlainText(delTpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_self_subd_by_b_clicked()
-{
+void MainWindow::on_alter_self_subd_by_b_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
@@ -550,8 +520,7 @@ void MainWindow::on_alter_self_subd_by_b_clicked()
                 static_cast<unsigned int>(ui->alter_self_subd_by->value()), true);
     ui->alter_output->setPlainText(subdTpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_self_subd_to_b_clicked()
-{
+void MainWindow::on_alter_self_subd_to_b_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
@@ -564,8 +533,7 @@ void MainWindow::on_alter_self_subd_to_b_clicked()
     ui->alter_output->setPlainText(subdTpV.getStringRaw("\n"));
 }
 
-void MainWindow::on_alter_convert_to_bpm_clicked()
-{
+void MainWindow::on_alter_convert_to_bpm_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
@@ -592,9 +560,9 @@ void MainWindow::on_alter_convert_to_sv_clicked()
 {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
+    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n'))
         return;
-    }
+
     TimingPointV tpVSv = tpV.getSvOnly();
     TimingPointV tpVBpm = tpV.getBpmOnly();
 
@@ -637,7 +605,8 @@ void MainWindow::on_alter_cross_av_b_clicked()
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
 }
 
-// GENERAL FUNCTIONS
+
+// ========================= GENERIC =========================
 double MainWindow::clipValue(double value, bool isBpm)
 {
     if (isBpm) {
@@ -654,36 +623,28 @@ std::vector<double> MainWindow::clipValueV(std::vector<double> valueV, bool isBp
 {
     std::vector<double> output;
     output.reserve(valueV.size());
-    for (double value : valueV) {
-        output.push_back(clipValue(value, isBpm));
-    }
+    for (double value : valueV) output.push_back(clipValue(value, isBpm));
     return output;
 }
 
-void MainWindow::clipboard_copy(QString str)
-{
+void MainWindow::clipboard_copy(QString str) {
     if (ui->clipboard_copy->isChecked()) clipboard->setText(str);
 }
 
 // CLIPBOARD COPY
-void MainWindow::on_alter_output_textChanged()
-{
+void MainWindow::on_alter_output_textChanged() {
     clipboard_copy(ui->alter_output->toPlainText());
 }
-void MainWindow::on_stutter_output_textChanged()
-{
+void MainWindow::on_stutter_output_textChanged() {
     clipboard_copy(ui->stutter_output->toPlainText());
 }
-void MainWindow::on_copier_output_textChanged()
-{
+void MainWindow::on_copier_output_textChanged() {
     clipboard_copy(ui->copier_output->toPlainText());
 }
-void MainWindow::on_tpf_output_textChanged()
-{
+void MainWindow::on_tpf_output_textChanged() {
     clipboard_copy(ui->tpf_output->toPlainText());
 }
-void MainWindow::on_normalizer_output_textChanged()
-{
+void MainWindow::on_normalizer_output_textChanged() {
     clipboard_copy(ui->normalizer_output->toPlainText());
 }
 
