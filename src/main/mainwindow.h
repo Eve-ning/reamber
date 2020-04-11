@@ -80,7 +80,7 @@ private:
 
     // Squeezes the value to the defined MIN and MAX limits below and returns it
     double curb_value(double value, bool is_bpm);
-    std::vector<double> curb_value_v(std::vector<double> value_v, bool is_bpm);
+    std::vector<double> curb_value_v(std::vector<double> valueV, bool isBpm);
 
     Ui::MainWindow *ui;
 
