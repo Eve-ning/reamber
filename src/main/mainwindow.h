@@ -79,16 +79,16 @@ private:
     void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
 
     // Squeezes the value to the defined MIN and MAX limits below and returns it
-    double curb_value(double value, bool is_bpm);
-    std::vector<double> curb_value_v(std::vector<double> valueV, bool isBpm);
+    double clipValue(double value, bool is_bpm);
+    std::vector<double> clipValueV(std::vector<double> valueV, bool isBpm);
 
     Ui::MainWindow *ui;
 
     // Define "global" variables
-    double SV_MIN = 0.1;
-    double SV_MAX = 10.0;
-    double BPM_MIN = 0.1;
-    double BPM_MAX = 10000000; // 10,000,000
+    constexpr static double SV_MIN = 0.1;
+    constexpr static double SV_MAX = 10.0;
+    constexpr static double BPM_MIN = 0.1;
+    constexpr static double BPM_MAX = 10000000; // 10,000,000
 
     long double MATH_PI = 3.14159265358979323846l;
 

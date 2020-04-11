@@ -383,7 +383,7 @@ void MainWindow::on_tpf_generate_clicked()
         if (isBpm) secondary *= ((endTp + initTp) / 2);
 
         // Curb values if needed
-        if (output_curb)  return curb_value(curve_invert_y ? (primary - secondary) : (primary + secondary), isBpm);
+        if (output_curb)  return clipValue(curve_invert_y ? (primary - secondary) : (primary + secondary), isBpm);
 
         return curve_invert_y ? (primary - secondary) : (primary + secondary);
     };
@@ -638,7 +638,7 @@ void MainWindow::on_alter_cross_av_b_clicked()
 }
 
 // GENERAL FUNCTIONS
-double MainWindow::curb_value(double value, bool isBpm)
+double MainWindow::clipValue(double value, bool isBpm)
 {
     if (isBpm) {
         value = value > BPM_MAX ? BPM_MAX : value;
@@ -650,12 +650,12 @@ double MainWindow::curb_value(double value, bool isBpm)
 
     return value;
 }
-std::vector<double> MainWindow::curb_value_v(std::vector<double> valueV, bool isBpm)
+std::vector<double> MainWindow::clipValueV(std::vector<double> valueV, bool isBpm)
 {
     std::vector<double> output;
     output.reserve(valueV.size());
     for (double value : valueV) {
-        output.push_back(curb_value(value, isBpm));
+        output.push_back(clipValue(value, isBpm));
     }
     return output;
 }
