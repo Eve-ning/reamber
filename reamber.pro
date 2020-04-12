@@ -24,18 +24,36 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    depend/qcustomplot.cpp \
-    src/main/main.cpp \
-    src/main/mainwindow.cpp
+    src/common.cpp \
+    src/function/alter.cpp \
+    src/function/copier.cpp \
+    src/function/stutter.cpp \
+    src/function/normalizer.cpp \
+    src/function/twopointfunction.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    depend/qcustomplot.cpp
+
 HEADERS += \
-    depend/qcustomplot.h \
-    src/main/mainwindow.h
+    include/common.h \
+    include/function/alter.h \
+    include/function/copier.h \
+    include/function/normalizer.h \
+    include/function/stutter.h \
+    include/function/twopointfunction.h \
+    include/mainwindow.h \
+    depend/qcustomplot.h
 
 FORMS += \
-    src/ui/mainwindow.ui
+    ui/alter.ui \
+    ui/copier.ui \
+    ui/normalizer.ui \
+    ui/stutter.ui \
+    ui/twopointfunction.ui \
+    ui/mainwindow.ui \
+    ui/stutter.ui
 
 DISTFILES += \
-    naming_conventions \
     src/README.md \
     src/naming_conventions
 
@@ -50,5 +68,6 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-reamber_base-D
 else:unix: LIBS += -L$$PWD/../build-reamber_base-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/ -lreamber_base
 
 INCLUDEPATH += \
-$$PWD/../reamber_base/include
+$$PWD/../reamber_base/include \
+$$PWD/include
 DEPENDPATH += $$PWD/../reamber_base/include
