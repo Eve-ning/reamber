@@ -32,7 +32,8 @@ SOURCES += \
     src/function/twopointfunction.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
-    depend/qcustomplot.cpp
+    depend/qcustomplot.cpp \
+    twopointbezier.cpp
 
 HEADERS += \
     include/common.h \
@@ -42,9 +43,11 @@ HEADERS += \
     include/function/stutter.h \
     include/function/twopointfunction.h \
     include/mainwindow.h \
-    depend/qcustomplot.h
+    depend/qcustomplot.h \
+    twopointbezier.h
 
 FORMS += \
+    twopointbezier.ui \
     ui/alter.ui \
     ui/copier.ui \
     ui/normalizer.ui \
