@@ -39,11 +39,11 @@ void MainWindow::on_copier_generate_clicked() {
     TimingPointV tpV;
 
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->copier_tp->toPlainText())) return;
+    if (!tpV.loadRaw(ui->copier_tp->toPlainText())) return;
 
     // We default keys to 0
     HitObjectV hoV;
-    hoV.loadEditorHitObject(ui->copier_ho->toPlainText());
+    hoV.loadEditor(ui->copier_ho->toPlainText());
 
     // We only need the offsetV of hoV to copy
     ui->copier_output->setPlainText(
@@ -60,7 +60,7 @@ void MainWindow::on_normalizer_generate_clicked() {
     TimingPointV tpV;
 
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->normalizer_input->toPlainText(), '\n')) return;
+    if (!tpV.loadRaw(ui->normalizer_input->toPlainText(), '\n')) return;
 
     // Break if empty
     if (tpV.getBpmOnly().size() == 0) return;
@@ -102,7 +102,7 @@ void MainWindow::on_stutter_generate_clicked() {
     HitObjectV hoV;
     auto t = ui->stutter_input->toPlainText();
     // Break if fail
-    if (!hoV.loadEditorHitObject(t)) return;
+    if (!hoV.loadEditor(t)) return;
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -131,7 +131,7 @@ void MainWindow::on_stutter_generate_clicked() {
 }
 void MainWindow::on_stutter_preset_nft_clicked() {
     HitObjectV hoV;
-    hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->stutter_input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -151,7 +151,7 @@ void MainWindow::on_stutter_preset_nft_clicked() {
 }
 void MainWindow::on_stutter_preset_nbt_clicked() {
     HitObjectV hoV;
-    hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->stutter_input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -163,7 +163,7 @@ void MainWindow::on_stutter_preset_nbt_clicked() {
 }
 void MainWindow::on_stutter_preset_mft_clicked() {
     HitObjectV hoV;
-    hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->stutter_input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -193,7 +193,7 @@ void MainWindow::on_stutter_preset_mft_clicked() {
 }
 void MainWindow::on_stutter_preset_mbt_clicked() {
     HitObjectV hoV;
-    hoV.loadEditorHitObject(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->stutter_input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -303,7 +303,7 @@ void MainWindow::on_tpf_generate_clicked() {
     HitObjectV hoV;
 
     // Break if fail
-    if (!hoV.loadEditorHitObject(ui->tpf_input->text(), 0))  return;
+    if (!hoV.loadEditor(ui->tpf_input->text(), 0)) return;
 
     QVector<double> offsetV = hoV.getOffsetV(true);
 
@@ -457,27 +457,22 @@ void MainWindow::tpf_update_customplot(std::vector<double> offsetV, std::vector<
 void MainWindow::on_alter_self_mv_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
-        return;
-    }
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
+
     tpV *= ui->alter_self_mv->value();
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
 }
 void MainWindow::on_alter_self_av_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
-        return;
-    }
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
     tpV += ui->alter_self_av->value();
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
 }
 void MainWindow::on_alter_self_mo_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
-        return;
-    }
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
 
     auto newTpV = tpV.offsetArithmetic(ui->alter_self_mo->value(), [](double offset, double parameter){
         return offset * parameter;
@@ -488,7 +483,7 @@ void MainWindow::on_alter_self_mo_b_clicked() {
 void MainWindow::on_alter_self_ao_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) return;
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
 
     auto newTpV = tpV.offsetArithmetic(
                 ui->alter_self_ao->value(),
@@ -500,8 +495,7 @@ void MainWindow::on_alter_self_ao_b_clicked() {
 void MainWindow::on_alter_self_del_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n'))
-        return;
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
 
     auto delTpV = algorithm::deleteNth<TimingPoint>(QSPtr<TimingPointV>::create(tpV),
                                          static_cast<unsigned int>(ui->alter_self_del->value()),
@@ -511,9 +505,7 @@ void MainWindow::on_alter_self_del_b_clicked() {
 void MainWindow::on_alter_self_subd_by_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
-        return;
-    }
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n'))  return;
     auto subdTpV =
             algorithm::copySubdBy<TimingPoint>(
                 QSPtr<TimingPointV>::create(tpV),
@@ -523,9 +515,7 @@ void MainWindow::on_alter_self_subd_by_b_clicked() {
 void MainWindow::on_alter_self_subd_to_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
-        return;
-    }
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
     auto subdTpV =
             algorithm::copySubdTo<TimingPoint>(
                 QSPtr<TimingPointV>::create(tpV),
@@ -536,9 +526,8 @@ void MainWindow::on_alter_self_subd_to_b_clicked() {
 void MainWindow::on_alter_convert_to_bpm_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n')) {
-        return;
-    }
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
+
     TimingPointV tpVSv = tpV.getSvOnly();
     TimingPointV tpVBpm = tpV.getBpmOnly();
 
@@ -556,12 +545,10 @@ void MainWindow::on_alter_convert_to_bpm_clicked() {
 
     ui->alter_output->setPlainText(tpVBpm.getStringRaw("\n"));
 }
-void MainWindow::on_alter_convert_to_sv_clicked()
-{
+void MainWindow::on_alter_convert_to_sv_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n'))
-        return;
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n')) return;
 
     TimingPointV tpVSv = tpV.getSvOnly();
     TimingPointV tpVBpm = tpV.getBpmOnly();
@@ -580,26 +567,24 @@ void MainWindow::on_alter_convert_to_sv_clicked()
 
     ui->alter_output->setPlainText(tpVSv.getStringRaw("\n"));
 }
-void MainWindow::on_alter_cross_mv_b_clicked()
-{
+void MainWindow::on_alter_cross_mv_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n'))  return;
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n'))  return;
 
     TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRawTimingPoint(ui->alter_input_cross->toPlainText(), '\n'))  return;
+    if (!tp_v_cross.loadRaw(ui->alter_input_cross->toPlainText(), '\n'))  return;
 
     tpV.crossEffectMultiply(tp_v_cross);
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_alter_cross_av_b_clicked()
-{
+void MainWindow::on_alter_cross_av_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRawTimingPoint(ui->alter_input->toPlainText(), '\n'))  return;
+    if (!tpV.loadRaw(ui->alter_input->toPlainText(), '\n'))  return;
 
     TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRawTimingPoint(ui->alter_input_cross->toPlainText(), '\n')) return;
+    if (!tp_v_cross.loadRaw(ui->alter_input_cross->toPlainText(), '\n')) return;
 
     tpV.crossEffectAdd(tp_v_cross);
     ui->alter_output->setPlainText(tpV.getStringRaw("\n"));
@@ -607,8 +592,7 @@ void MainWindow::on_alter_cross_av_b_clicked()
 
 
 // ========================= GENERIC =========================
-double MainWindow::clipValue(double value, bool isBpm)
-{
+double MainWindow::clipValue(double value, bool isBpm) {
     if (isBpm) {
         value = value > BPM_MAX ? BPM_MAX : value;
         value = value < BPM_MIN ? BPM_MIN : value;
