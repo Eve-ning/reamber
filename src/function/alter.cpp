@@ -70,7 +70,7 @@ void Alter::on_self_del_b_clicked() {
 void Alter::on_self_subd_by_b_clicked() {
     TimingPointV tpV;
     // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
+    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
     auto subdTpV =
             algorithm::copySubdBy<TimingPoint>(
                 QSPtr<TimingPointV>::create(tpV),

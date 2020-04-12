@@ -2,7 +2,6 @@
 #include "ui_copier.h"
 #include "algorithm/algorithm.h"
 
-
 Copier::Copier(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Copier)
