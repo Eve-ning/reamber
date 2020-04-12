@@ -16,19 +16,19 @@ Stutter::~Stutter()
 }
 
 
-void Stutter::on_stutter_initsv_vs_valueChanged(int value) {
-    ui->stutter_initsv_val->setText(QString::number(value/VS_TO_VAL));
+void Stutter::on_initsv_vs_valueChanged(int value) {
+    ui->initsv_val->setText(QString::number(value/VS_TO_VAL));
 }
-void Stutter::on_stutter_initbpm_vs_valueChanged(int value) {
-    ui->stutter_initbpm_val->setText(QString::number(value/VS_TO_VAL));
+void Stutter::on_initbpm_vs_valueChanged(int value) {
+    ui->initbpm_val->setText(QString::number(value/VS_TO_VAL));
 }
-void Stutter::on_stutter_threshold_vs_valueChanged(int value) {
-    ui->stutter_threshold_val->setText(QString::number(value/VS_TO_VAL));
+void Stutter::on_threshold_vs_valueChanged(int value) {
+    ui->threshold_val->setText(QString::number(value/VS_TO_VAL));
     stutter_limit_update();
 }
-void Stutter::on_stutter_generate_clicked() {
+void Stutter::on_generate_clicked() {
     HitObjectV hoV;
-    auto t = ui->stutter_input->toPlainText();
+    auto t = ui->input->toPlainText();
     // Break if fail
     if (!hoV.loadEditor(t)) return;
 
@@ -38,31 +38,31 @@ void Stutter::on_stutter_generate_clicked() {
     TimingPointV tpV;
 
     // Depends on which radio is checked, we generate a different output
-    if (ui->stutter_type_sv->isChecked())
+    if (ui->type_sv->isChecked())
         tpV = algorithm::stutterRel(
                     hoV.getOffsetV(true),
-                    ui->stutter_initsv_val->text().toDouble(),
-                    ui->stutter_threshold_val->text().toDouble(),
-                    ui->stutter_avesv->value(),
+                    ui->initsv_val->text().toDouble(),
+                    ui->threshold_val->text().toDouble(),
+                    ui->avesv->value(),
                     false, true,
-                    ui->stutter_skip_last->isChecked());
-    else if (ui->stutter_type_bpm->isChecked())
+                    ui->skip_last->isChecked());
+    else if (ui->type_bpm->isChecked())
         tpV = algorithm::stutterRel(
                     hoV.getOffsetV(true),
-                    ui->stutter_initbpm_val->text().toDouble(),
-                    ui->stutter_threshold_val->text().toDouble(),
-                    ui->stutter_avebpm->value(),
+                    ui->initbpm_val->text().toDouble(),
+                    ui->threshold_val->text().toDouble(),
+                    ui->avebpm->value(),
                     true, true,
-                    ui->stutter_skip_last->isChecked());
+                    ui->skip_last->isChecked());
 
 
 
-    ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
+    ui->output->setPlainText(tpV.getStringRaw("\n"));
 
 }
-void Stutter::on_stutter_preset_nft_clicked() { // Normalized Front Teleport
+void Stutter::on_preset_nft_clicked() { // Normalized Front Teleport
     HitObjectV hoV;
-    hoV.loadEditor(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -71,7 +71,7 @@ void Stutter::on_stutter_preset_nft_clicked() { // Normalized Front Teleport
                 hoV.getOffsetV(true),
                 BPM_MIN,
                 BPM_MIN,
-                ui->stutter_avebpm->value(),
+                ui->avebpm->value(),
                 true,
                 false,
                 true,
@@ -82,11 +82,11 @@ void Stutter::on_stutter_preset_nft_clicked() { // Normalized Front Teleport
 
     tpV.popBack();
 
-    ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
+    ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
-void Stutter::on_stutter_preset_nbt_clicked() { // Normalized Back Teleport
+void Stutter::on_preset_nbt_clicked() { // Normalized Back Teleport
     HitObjectV hoV;
-    hoV.loadEditor(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -95,17 +95,17 @@ void Stutter::on_stutter_preset_nbt_clicked() { // Normalized Back Teleport
                 hoV.getOffsetV(true),
                 BPM_MIN,
                 BPM_MIN,
-                ui->stutter_avebpm->value(),
+                ui->avebpm->value(),
                 true,
                 false,
                 true,
-                ui->stutter_skip_last->isChecked());
+                ui->skip_last->isChecked());
 
-    ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
+    ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
-void Stutter::on_stutter_preset_mft_clicked() { // Max Front Teleport
+void Stutter::on_preset_mft_clicked() { // Max Front Teleport
     HitObjectV hoV;
-    hoV.loadEditor(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -115,7 +115,7 @@ void Stutter::on_stutter_preset_mft_clicked() { // Max Front Teleport
     TimingPoint tpNormalized;
 
     tpTeleport.setValue(BPM_MAX);
-    tpNormalized.setValue(ui->stutter_avebpm->value());
+    tpNormalized.setValue(ui->avebpm->value());
 
     tpTeleport.setOffset(0);
     tpNormalized.setOffset(1);
@@ -126,16 +126,16 @@ void Stutter::on_stutter_preset_mft_clicked() { // Max Front Teleport
     tpV.pushBack(tpTeleport);
     tpV.pushBack(tpNormalized);
 
-    ui->stutter_output->setPlainText(
+    ui->output->setPlainText(
                 algorithm::copy<TimingPoint>(
                     QSPtr<TimingPointV>::create(tpV),
                     hoV.getOffsetV(true),
                     true,
                     true).getStringRaw("\n"));
 }
-void Stutter::on_stutter_preset_mbt_clicked() { // Max Back Teleport
+void Stutter::on_preset_mbt_clicked() { // Max Back Teleport
     HitObjectV hoV;
-    hoV.loadEditor(ui->stutter_input->toPlainText());
+    hoV.loadEditor(ui->input->toPlainText());
 
     // Break if empty
     if (hoV.size() == 0) return;
@@ -148,7 +148,7 @@ void Stutter::on_stutter_preset_mbt_clicked() { // Max Back Teleport
     TimingPoint tpNormalized;
 
     tpTeleport.setValue(BPM_MAX);
-    tpNormalized.setValue(ui->stutter_avebpm->value());
+    tpNormalized.setValue(ui->avebpm->value());
 
     tpTeleport.setOffset(0);
     tpNormalized.setOffset(1);
@@ -159,61 +159,61 @@ void Stutter::on_stutter_preset_mbt_clicked() { // Max Back Teleport
     tpV.pushBack(tpTeleport);
     tpV.pushBack(tpNormalized);
 
-    ui->stutter_output->setPlainText(
+    ui->output->setPlainText(
                 algorithm::copy<TimingPoint>(
                     QSPtr<TimingPointV>::create(tpV),
                     hoV.getOffsetV(true),
                     true, true).getStringRaw("\n"));
 }
-void Stutter::on_stutter_avebpm_valueChanged(double) { stutter_limit_update(); }
-void Stutter::on_stutter_avesv_valueChanged(double) { stutter_limit_update(); }
+void Stutter::on_avebpm_valueChanged(double) { stutter_limit_update(); }
+void Stutter::on_avesv_valueChanged(double) { stutter_limit_update(); }
 void Stutter::stutter_limit_update() {
-    if (ui->stutter_type_sv->isChecked()){
+    if (ui->type_sv->isChecked()){
         // We limit the initial SV values
         QVector<double> initLim = algorithm::stutterRelInitLimits(
-                    ui->stutter_threshold_val->text().toDouble(),
-                    ui->stutter_avesv->text().toDouble(), SV_MIN, SV_MAX);
+                    ui->threshold_val->text().toDouble(),
+                    ui->avesv->text().toDouble(), SV_MIN, SV_MAX);
 
         // If the lower limit is lower than SV_MIN we curb the setMinimum
         if (initLim[0] >= SV_MIN)
-            ui->stutter_initsv_vs->setMinimum(int(initLim[0] * VS_TO_VAL));
+            ui->initsv_vs->setMinimum(int(initLim[0] * VS_TO_VAL));
         else
-            ui->stutter_initsv_vs->setMinimum(int(SV_MIN * VS_TO_VAL));
+            ui->initsv_vs->setMinimum(int(SV_MIN * VS_TO_VAL));
 
 
         // If the upper limit is higher than SV_MAX we curb the setMaximum
         if (initLim[1] <= SV_MAX)
-            ui->stutter_initsv_vs->setMaximum(int(initLim[1] * VS_TO_VAL));
+            ui->initsv_vs->setMaximum(int(initLim[1] * VS_TO_VAL));
         else
-            ui->stutter_initsv_vs->setMaximum(int(SV_MAX * VS_TO_VAL));
+            ui->initsv_vs->setMaximum(int(SV_MAX * VS_TO_VAL));
 
-    } else if (ui->stutter_type_bpm->isChecked()) {
+    } else if (ui->type_bpm->isChecked()) {
         // We limit the initial BPM values
         QVector<double> initLim = algorithm::stutterRelInitLimits(
-                    ui->stutter_threshold_val->text().toDouble(),
-                    ui->stutter_avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
+                    ui->threshold_val->text().toDouble(),
+                    ui->avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
         // If the lower limit is higher than BPM_MIN we curb the setMinimum
         if (initLim[0] >= BPM_MIN) {
-            ui->stutter_initbpm_vs->setMinimum(int(initLim[0] * VS_TO_VAL));
+            ui->initbpm_vs->setMinimum(int(initLim[0] * VS_TO_VAL));
         } else {
-            ui->stutter_initbpm_vs->setMinimum(int(BPM_MIN * VS_TO_VAL));
+            ui->initbpm_vs->setMinimum(int(BPM_MIN * VS_TO_VAL));
         }
 
         // If the upper limit is lower than BPM_MAX we curb the setMaximum
         if (initLim[1] <= BPM_MAX) {
-            ui->stutter_initbpm_vs->setMaximum(int(initLim[1] * VS_TO_VAL));
+            ui->initbpm_vs->setMaximum(int(initLim[1] * VS_TO_VAL));
         } else {
-            ui->stutter_initbpm_vs->setMaximum(int(BPM_MAX * VS_TO_VAL));
+            ui->initbpm_vs->setMaximum(int(BPM_MAX * VS_TO_VAL));
         }
     }
 }
 
 QString Stutter::output() const
 {
-    return ui->stutter_output->toPlainText();
+    return ui->output->toPlainText();
 }
 
-void Stutter::on_stutter_output_textChanged() {
+void Stutter::on_output_textChanged() {
     emit outputChanged();
 }

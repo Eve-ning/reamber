@@ -17,70 +17,70 @@ TwoPointFunction::~TwoPointFunction()
 
 QString TwoPointFunction::output() const
 {
-    return ui->tpf_output->toPlainText();
+    return ui->output->toPlainText();
 }
 
-void TwoPointFunction::on_tpf_initsv_valueChanged(int value) {
-    ui->tpf_initsv_val->setText(QString::number(value/VS_TO_VAL));
-    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+void TwoPointFunction::on_initsv_valueChanged(int value) {
+    ui->initsv_val->setText(QString::number(value/VS_TO_VAL));
+    if(ui->output_live->isChecked()) on_generate_clicked();
 }
-void TwoPointFunction::on_tpf_endsv_valueChanged(int value) {
-    ui->tpf_endsv_val->setText(QString::number(value/VS_TO_VAL));
-    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+void TwoPointFunction::on_endsv_valueChanged(int value) {
+    ui->endsv_val->setText(QString::number(value/VS_TO_VAL));
+    if(ui->output_live->isChecked()) on_generate_clicked();
 }
-void TwoPointFunction::on_tpf_freq_valueChanged(int value) {
-    ui->tpf_freq_val->setText(QString::number(value/2.0));
-    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+void TwoPointFunction::on_freq_valueChanged(int value) {
+    ui->freq_val->setText(QString::number(value/2.0));
+    if(ui->output_live->isChecked()) on_generate_clicked();
 }
-void TwoPointFunction::on_tpf_ampl_valueChanged(int value) {
-    if (ui->tpf_type_bpm->isChecked())
+void TwoPointFunction::on_ampl_valueChanged(int value) {
+    if (ui->type_bpm->isChecked())
         // BPM amplitude will only scale [-1 ~ 1]
-        ui->tpf_ampl_val->setText(QString::number(value/(VS_TO_VAL * 10)));
+        ui->ampl_val->setText(QString::number(value/(VS_TO_VAL * 10)));
     else
-        ui->tpf_ampl_val->setText(QString::number(value/VS_TO_VAL));
+        ui->ampl_val->setText(QString::number(value/VS_TO_VAL));
 
 
-    if (ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+    if (ui->output_live->isChecked()) on_generate_clicked();
 }
-void TwoPointFunction::on_tpf_phase_valueChanged(int value) {
-    ui->tpf_phase_val->setText(QString::number(value));
-    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+void TwoPointFunction::on_phase_valueChanged(int value) {
+    ui->phase_val->setText(QString::number(value));
+    if(ui->output_live->isChecked()) on_generate_clicked();
 }
-void TwoPointFunction::on_tpf_power_valueChanged(int value) {
-    ui->tpf_power_val->setText(QString::number(value/10.0));
-    if(ui->tpf_output_live->isChecked()) on_tpf_generate_clicked();
+void TwoPointFunction::on_power_valueChanged(int value) {
+    ui->power_val->setText(QString::number(value/10.0));
+    if(ui->output_live->isChecked()) on_generate_clicked();
 }
-void TwoPointFunction::on_tpf_generate_clicked() {
+void TwoPointFunction::on_generate_clicked() {
     HitObjectV hoV;
 
     // Break if fail
-    if (!hoV.loadEditor(ui->tpf_input->text(), 0)) return;
+    if (!hoV.loadEditor(ui->input->text(), 0)) return;
 
     QVector<double> offsetV = hoV.getOffsetV(true);
 
     if (offsetV.size() < 2) return; // Needs to be at least 2
     if ((offsetV[1] - offsetV[0]) <= 0.0) return; // Needs to be > 0
 
-    bool isBpm = ui->tpf_type_bpm->isChecked();
+    bool isBpm = ui->type_bpm->isChecked();
 
     // Extract all values from TpF
-    double initTp = isBpm ? ui->tpf_initbpm->value() : ui->tpf_initsv_val->text().toDouble();
-    double endTp = isBpm ? ui->tpf_endbpm->value() :ui->tpf_endsv_val->text().toDouble();
-    double ampl = ui->tpf_ampl_val->text().toDouble();
-    double freq = ui->tpf_freq_val->text().toDouble();
-    double phase = ui->tpf_phase_val->text().toDouble();
-    double power = ui->tpf_power_val->text().toDouble();
-    double interpts = ui->tpf_interpts->value();
+    double initTp = isBpm ? ui->initbpm->value() : ui->initsv_val->text().toDouble();
+    double endTp = isBpm ? ui->endbpm->value() :ui->endsv_val->text().toDouble();
+    double ampl = ui->ampl_val->text().toDouble();
+    double freq = ui->freq_val->text().toDouble();
+    double phase = ui->phase_val->text().toDouble();
+    double power = ui->power_val->text().toDouble();
+    double interpts = ui->interpts->value();
 
-    bool curve_sine = ui->tpf_curve_type->currentText() == "sine";
-    bool curve_power = ui->tpf_curve_type->currentText() == "power";
+    bool curve_sine = ui->curve_type->currentText() == "sine";
+    bool curve_power = ui->curve_type->currentText() == "power";
 
-    bool curve_invert_y = ui->tpf_curve_invert_y->isChecked();
+    bool curve_invert_y = ui->curve_invert_y->isChecked();
 
-    bool output_curb = ui->tpf_output_curb->isChecked();
+    bool output_curb = ui->output_curb->isChecked();
 
     // Adjust offset
-    double offset_adjust = ui->tpf_offset_val->value();
+    double offset_adjust = ui->offset_val->value();
     offsetV[0] += offset_adjust;
     offsetV[1] += offset_adjust;
 
@@ -122,7 +122,7 @@ void TwoPointFunction::on_tpf_generate_clicked() {
     for (double offset : offsetV) {
         TimingPoint tp;
         double progress = (offset - offsetV[0])/offset_difference;
-        tp.loadParameters(offset, tpf_function(progress), ui->tpf_type_bpm->isChecked(), false, 4);
+        tp.loadParameters(offset, tpf_function(progress), ui->type_bpm->isChecked(), false, 4);
         tpV.pushBack(tp);
     }
 
@@ -135,41 +135,41 @@ void TwoPointFunction::on_tpf_generate_clicked() {
                           isBpm);
 
     // Update Average SV
-    ui->tpf_output_ave->setText(isBpm ?
+    ui->output_ave->setText(isBpm ?
                                 QString::number(tpV.getAverageBpmValue()) :
                                 QString::number(tpV.getAverageSvValue()));
 
-    ui->tpf_output->setPlainText(tpV.getStringRaw());
+    ui->output->setPlainText(tpV.getStringRaw());
 }
-void TwoPointFunction::on_tpf_reset_clicked() {
-    ui->tpf_ampl->setValue(0);
-    ui->tpf_freq->setValue(1);
+void TwoPointFunction::on_reset_clicked() {
+    ui->ampl->setValue(0);
+    ui->freq->setValue(1);
     // freq slider on 1 sets to 0.5 for some reason, will manually set this to 0.5
-    ui->tpf_freq_val->setText("1.0");
+    ui->freq_val->setText("1.0");
 
-    ui->tpf_interpts->setValue(50);
+    ui->interpts->setValue(50);
 
-    ui->tpf_phase->setValue(0);
-    ui->tpf_power->setValue(10);
+    ui->phase->setValue(0);
+    ui->power->setValue(10);
 
-    ui->tpf_initsv->setValue(100);
-    ui->tpf_endsv->setValue(100);
+    ui->initsv->setValue(100);
+    ui->endsv->setValue(100);
 
-    ui->tpf_initbpm->setValue(120);
-    ui->tpf_endbpm->setValue(120);
+    ui->initbpm->setValue(120);
+    ui->endbpm->setValue(120);
 
-    ui->tpf_offset_val->setValue(0);
+    ui->offset_val->setValue(0);
 
-    ui->tpf_type_sv->setChecked(true);
-    ui->tpf_type_bpm->setChecked(false);
-    ui->tpf_curve_type->setCurrentIndex(0);
-    ui->tpf_curve_invert_y->setChecked(false);
-//    ui->tpf_output_curb->setChecked(true);
-//    ui->tpf_output_live->setChecked(false);
+    ui->type_sv->setChecked(true);
+    ui->type_bpm->setChecked(false);
+    ui->curve_type->setCurrentIndex(0);
+    ui->curve_invert_y->setChecked(false);
+//    ui->output_curb->setChecked(true);
+//    ui->output_live->setChecked(false);
 }
 
 void TwoPointFunction::tpf_init_customplot() {
-    auto customplot = ui->tpf_customplot;
+    auto customplot = ui->customplot;
     customplot->addGraph();
 
     customplot->xAxis->setLabel("offset");
@@ -181,7 +181,7 @@ void TwoPointFunction::tpf_update_customplot(std::vector<double> offsetV, std::v
     QVector<double> q_offset_v = QVector<double>::fromStdVector(offsetV);
     QVector<double> q_value_v = QVector<double>::fromStdVector(value_v);
 
-    auto customplot = ui->tpf_customplot;
+    auto customplot = ui->customplot;
     customplot->graph(0)->setData(q_offset_v,q_value_v);
 
     // We'll have different curbing for BPM and SV
@@ -203,6 +203,6 @@ void TwoPointFunction::tpf_update_customplot(std::vector<double> offsetV, std::v
     customplot->replot();
 }
 
-void TwoPointFunction::on_tpf_output_textChanged() {
+void TwoPointFunction::on_output_textChanged() {
     emit outputChanged();
 }
