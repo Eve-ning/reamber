@@ -66,6 +66,7 @@ private slots:
     void on_tpf_output_textChanged();
     void on_normalizer_output_textChanged();
 
+
 private:
 
     QClipboard *clipboard;

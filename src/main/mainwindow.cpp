@@ -116,20 +116,23 @@ void MainWindow::on_stutter_generate_clicked() {
                     ui->stutter_initsv_val->text().toDouble(),
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avesv->value(),
-                    false, true);
+                    false, true,
+                    ui->stutter_skip_last->isChecked());
     else if (ui->stutter_type_bpm->isChecked())
         tpV = algorithm::stutterRel(
                     hoV.getOffsetV(true),
                     ui->stutter_initbpm_val->text().toDouble(),
                     ui->stutter_threshold_val->text().toDouble(),
                     ui->stutter_avebpm->value(),
-                    true, true);
+                    true, true,
+                    ui->stutter_skip_last->isChecked());
+
 
 
     ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
 
 }
-void MainWindow::on_stutter_preset_nft_clicked() {
+void MainWindow::on_stutter_preset_nft_clicked() { // Normalized Front Teleport
     HitObjectV hoV;
     hoV.loadEditor(ui->stutter_input->toPlainText());
 
@@ -143,13 +146,17 @@ void MainWindow::on_stutter_preset_nft_clicked() {
                 ui->stutter_avebpm->value(),
                 true,
                 false,
-                true);
+                true,
+                false);
 
+    // We cannot directly omit since we need to stutter swap here
     tpV = algorithm::stutterSwap(tpV);
+
+    tpV.popBack();
 
     ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_stutter_preset_nbt_clicked() {
+void MainWindow::on_stutter_preset_nbt_clicked() { // Normalized Back Teleport
     HitObjectV hoV;
     hoV.loadEditor(ui->stutter_input->toPlainText());
 
@@ -157,11 +164,18 @@ void MainWindow::on_stutter_preset_nbt_clicked() {
     if (hoV.size() == 0) return;
 
     TimingPointV tpV = algorithm::stutterAbs(
-                hoV.getOffsetV(true),BPM_MIN,BPM_MIN,ui->stutter_avebpm->value(), true, false, true);
+                hoV.getOffsetV(true),
+                BPM_MIN,
+                BPM_MIN,
+                ui->stutter_avebpm->value(),
+                true,
+                false,
+                true,
+                ui->stutter_skip_last->isChecked());
 
     ui->stutter_output->setPlainText(tpV.getStringRaw("\n"));
 }
-void MainWindow::on_stutter_preset_mft_clicked() {
+void MainWindow::on_stutter_preset_mft_clicked() { // Max Front Teleport
     HitObjectV hoV;
     hoV.loadEditor(ui->stutter_input->toPlainText());
 
@@ -191,7 +205,7 @@ void MainWindow::on_stutter_preset_mft_clicked() {
                     true,
                     true).getStringRaw("\n"));
 }
-void MainWindow::on_stutter_preset_mbt_clicked() {
+void MainWindow::on_stutter_preset_mbt_clicked() { // Max Back Teleport
     HitObjectV hoV;
     hoV.loadEditor(ui->stutter_input->toPlainText());
 

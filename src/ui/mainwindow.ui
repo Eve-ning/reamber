@@ -188,7 +188,7 @@
            <string>stutter</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="3" rowspan="2">
+           <item row="0" column="3" rowspan="3">
             <widget class="QGroupBox" name="stutter_output_lo">
              <property name="title">
               <string>output</string>
@@ -200,25 +200,12 @@
              </layout>
             </widget>
            </item>
-           <item row="2" column="0" colspan="4">
+           <item row="3" column="0" colspan="4">
             <widget class="QPushButton" name="stutter_generate">
              <property name="text">
               <string>Generate</string>
              </property>
             </widget>
-           </item>
-           <item row="1" column="1">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item row="0" column="1">
             <widget class="QGroupBox" name="stutter_preset_lo">
@@ -257,7 +244,7 @@
              </layout>
             </widget>
            </item>
-           <item row="0" column="2" rowspan="2">
+           <item row="0" column="2" rowspan="3">
             <widget class="QGroupBox" name="stutter_input_lo">
              <property name="title">
               <string>input</string>
@@ -273,7 +260,7 @@
              </layout>
             </widget>
            </item>
-           <item row="0" column="0" rowspan="2">
+           <item row="0" column="0" rowspan="3">
             <widget class="QGroupBox" name="stutter_controls_lo">
              <property name="title">
               <string>controls</string>
@@ -482,6 +469,35 @@
                   </widget>
                  </item>
                 </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="1">
+            <widget class="QGroupBox" name="stutter_settings_lo">
+             <property name="title">
+              <string>settings</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_59">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="stutter_skip_last">
+                <property name="text">
+                 <string>Skip Last Point</string>
+                </property>
                </widget>
               </item>
              </layout>
