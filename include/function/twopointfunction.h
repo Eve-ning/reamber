@@ -33,8 +33,8 @@ private slots:
 
 
     // Initializes and updates tpf's graph respectively
-    void tpf_init_customplot();
-    void tpf_update_customplot(std::vector<double> offset_v, std::vector<double> value_v, bool is_bpm);
+    void tpfInitCustomplot();
+    void tpfUpdateCustomplot(QVector<double> offset_v, QVector<double> valueV, bool isBpm);
 
     void on_output_textChanged();
 

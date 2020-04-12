@@ -7,7 +7,7 @@ TwoPointFunction::TwoPointFunction(QWidget *parent) :
     ui(new Ui::TwoPointFunction)
 {
     ui->setupUi(this);
-    tpf_init_customplot();
+    tpfInitCustomplot();
 }
 
 TwoPointFunction::~TwoPointFunction()
@@ -130,7 +130,7 @@ void TwoPointFunction::on_generate_clicked() {
     tpV.sortByOffset(true);
 
     // Call update on the plot
-    tpf_update_customplot(tpV.getOffsetV().toStdVector(),
+    tpfUpdateCustomplot(tpV.getOffsetV().toStdVector(),
                           tpV.getValueV().toStdVector(),
                           isBpm);
 
@@ -168,7 +168,7 @@ void TwoPointFunction::on_reset_clicked() {
 //    ui->output_live->setChecked(false);
 }
 
-void TwoPointFunction::tpf_init_customplot() {
+void TwoPointFunction::tpfInitCustomplot() {
     auto customplot = ui->customplot;
     customplot->addGraph();
 
@@ -177,20 +177,18 @@ void TwoPointFunction::tpf_init_customplot() {
 
     customplot->replot();
 }
-void TwoPointFunction::tpf_update_customplot(std::vector<double> offsetV, std::vector<double> value_v, bool is_bpm) {
-    QVector<double> q_offset_v = QVector<double>::fromStdVector(offsetV);
-    QVector<double> q_value_v = QVector<double>::fromStdVector(value_v);
+void TwoPointFunction::tpfUpdateCustomplot(QVector<double> offsetV, QVector<double> valueV, bool isBpm) {
 
     auto customplot = ui->customplot;
-    customplot->graph(0)->setData(q_offset_v,q_value_v);
+    customplot->graph(0)->setData(offsetV,valueV);
 
     // We'll have different curbing for BPM and SV
     double value_rng_min;
     double value_rng_max;
 
-    if (is_bpm) {
-        value_rng_min = *std::min_element(value_v.begin(), value_v.end());
-        value_rng_max = *std::max_element(value_v.begin(), value_v.end());
+    if (isBpm) {
+        value_rng_min = *std::min_element(valueV.begin(), valueV.end());
+        value_rng_max = *std::max_element(valueV.begin(), valueV.end());
     } else {
         value_rng_min = SV_MIN;
         value_rng_max = SV_MAX;

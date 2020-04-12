@@ -16,7 +16,7 @@ public:
     explicit Stutter(QWidget *parent = nullptr);
     ~Stutter();
     // Updates stutter tab's threshold limit while changing parameters
-    void stutter_limit_update();
+    void stutterLimitUpdate();
     QString output() const;
 
 signals:

@@ -7,7 +7,7 @@ Stutter::Stutter(QWidget *parent) :
     ui(new Ui::Stutter)
 {
     ui->setupUi(this);
-    stutter_limit_update();
+    stutterLimitUpdate();
 }
 
 Stutter::~Stutter()
@@ -24,7 +24,7 @@ void Stutter::on_initbpm_vs_valueChanged(int value) {
 }
 void Stutter::on_threshold_vs_valueChanged(int value) {
     ui->threshold_val->setText(QString::number(value/VS_TO_VAL));
-    stutter_limit_update();
+    stutterLimitUpdate();
 }
 void Stutter::on_generate_clicked() {
     HitObjectV hoV;
@@ -165,9 +165,9 @@ void Stutter::on_preset_mbt_clicked() { // Max Back Teleport
                     hoV.getOffsetV(true),
                     true, true).getStringRaw("\n"));
 }
-void Stutter::on_avebpm_valueChanged(double) { stutter_limit_update(); }
-void Stutter::on_avesv_valueChanged(double) { stutter_limit_update(); }
-void Stutter::stutter_limit_update() {
+void Stutter::on_avebpm_valueChanged(double) { stutterLimitUpdate(); }
+void Stutter::on_avesv_valueChanged(double) { stutterLimitUpdate(); }
+void Stutter::stutterLimitUpdate() {
     if (ui->type_sv->isChecked()){
         // We limit the initial SV values
         QVector<double> initLim = algorithm::stutterRelInitLimits(
