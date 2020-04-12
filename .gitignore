@@ -1,5 +1,6 @@
 archive/
 *.autosave
+deploy/
 
 #################
 ## Eclipse

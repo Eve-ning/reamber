@@ -1,37 +1,26 @@
-![amberLogo](http://puu.sh/z235w/e2127a205c.png)
+![banner](rsc/banner_trnsp_400w.png)
 
-# :bar_chart: [Amber Wiki](https://github.com/Eve-ning/amber/wiki)
+# re:amber
+re:amber is a rework of amber, which was discontinued.
 
-## :star: [Release v0.0.1b happened](https://github.com/Eve-ning/amber/releases/tag/v0.0.1-beta)
+**status of project**
+back to refactor
 
-## Purpose
+## resources
+### other parts of the project
+ - [reamber_base](https://github.com/Eve-ning/reamber_base)
+ - [reamber_base_test_unit](https://github.com/Eve-ning/reamber_base_test)
 
-This program is designed to be as user-friendly as possible, removing most uncommon terminologies and simplifying the process of mapping osu!mania maps.
+### :bar_chart: [amber Wiki](https://github.com/Eve-ning/amber/wiki)
 
-## What it does
+## :star: releases
 
-It includes various SV tools to help you in mapping:
+### current
 
-- Stutter
-- Copier
-- Two Point Function
-- Normalizer
-- Adjuster
+  - [v0.1.0](https://github.com/Eve-ning/reamber/releases/tag/v0.1.0-alpha)
 
-## Future Updates
+### deprecated
+*note that these releases are old, totally independent in development of the current one*
 
-In the future I'll most likely come back to this and work on another tool from scratch again
+  - [v0.0.1b](https://github.com/Eve-ning/amber/releases/tag/v0.0.1-beta)
 
-## Hindsight
-
-What I realized was happening was that there were too much code to look after and maintain, sieving through all of them was taxing and pretty much slowed my progress to a halt. So I pretty much ended up "giving up".
-
-This doesn't mean that the program is useless at this point, it has done all it can do for beginner mappers and went well in hindsight. I don't think I'm capable of doing big things, I'll have to let go for now.
-
-I'll be working on something else, so I might come back to this. If I do, I'll make sure there are more things to expect, but as of now, this is what I have to offer.
-
-## Dependencies
-
-- [http://www.qcustomplot.com](QCustomPlot)
-
-### Project has wrapped up on July 2018

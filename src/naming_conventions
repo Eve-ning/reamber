@@ -1,0 +1,11 @@
+Naming Conventions of UI:
+- Most objects are named with snake_casing
+
+Shorthands:
+vs: vertical spacer
+lo: layout/group
+
+Naming Conventions of Code:
+- HitObjects are either:
+ - Editor HitObjects (e_ho)
+ - Raw HitObjects    (r_ho)
