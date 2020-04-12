@@ -22,10 +22,10 @@ signals:
     void outputChanged();
 
 private slots:
-    void on_normalizer_generate_clicked();
-    void on_normalizer_bpmlist_itemClicked(QListWidgetItem *item);
+    void on_generate_clicked();
+    void on_bpmlist_itemClicked(QListWidgetItem *item);
 
-    void on_normalizer_output_textChanged();
+    void on_output_textChanged();
 
 private:
     Ui::Normalizer *ui;

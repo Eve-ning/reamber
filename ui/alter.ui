@@ -15,19 +15,19 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="alter_lo">
+    <widget class="QGroupBox" name="lo">
      <property name="title">
       <string>alter</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_60">
       <item row="0" column="0">
-       <widget class="QGroupBox" name="alter_input_lo">
+       <widget class="QGroupBox" name="input_lo">
         <property name="title">
          <string>input</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_48">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="alter_input">
+          <widget class="QPlainTextEdit" name="input">
            <property name="placeholderText">
             <string>&lt;Timing Point&gt;</string>
            </property>
@@ -37,43 +37,43 @@
        </widget>
       </item>
       <item row="0" column="1" rowspan="2">
-       <widget class="QGroupBox" name="alter_preset_lo">
+       <widget class="QGroupBox" name="preset_lo">
         <property name="title">
          <string>presets</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_45">
          <item row="0" column="0">
-          <widget class="QTabWidget" name="alter_preset_tab">
+          <widget class="QTabWidget" name="preset_tab">
            <property name="currentIndex">
             <number>0</number>
            </property>
-           <widget class="QWidget" name="alter_self">
+           <widget class="QWidget" name="self">
             <attribute name="title">
              <string>self</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_55">
              <item row="0" column="0">
-              <widget class="QGroupBox" name="alter_self_lo_1">
+              <widget class="QGroupBox" name="self_lo_1">
                <property name="title">
                 <string>alter</string>
                </property>
                <layout class="QGridLayout" name="gridLayout_54">
                 <item row="0" column="0">
-                 <widget class="QPushButton" name="alter_self_mv_b">
+                 <widget class="QPushButton" name="self_mv_b">
                   <property name="text">
                    <string>Multiply Values By</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QDoubleSpinBox" name="alter_self_mv">
+                 <widget class="QDoubleSpinBox" name="self_mv">
                   <property name="minimum">
                    <double>-99.900000000000006</double>
                   </property>
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QSpinBox" name="alter_self_ao">
+                 <widget class="QSpinBox" name="self_ao">
                   <property name="minimum">
                    <number>-999999</number>
                   </property>
@@ -83,14 +83,14 @@
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QPushButton" name="alter_self_mo_b">
+                 <widget class="QPushButton" name="self_mo_b">
                   <property name="text">
                    <string>Multiply Offsets By</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QDoubleSpinBox" name="alter_self_av">
+                 <widget class="QDoubleSpinBox" name="self_av">
                   <property name="minimum">
                    <double>-999999.000000000000000</double>
                   </property>
@@ -100,21 +100,21 @@
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QPushButton" name="alter_self_av_b">
+                 <widget class="QPushButton" name="self_av_b">
                   <property name="text">
                    <string>Add Values By</string>
                   </property>
                  </widget>
                 </item>
                 <item row="3" column="0">
-                 <widget class="QPushButton" name="alter_self_ao_b">
+                 <widget class="QPushButton" name="self_ao_b">
                   <property name="text">
                    <string>Add Offsets By</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QDoubleSpinBox" name="alter_self_mo">
+                 <widget class="QDoubleSpinBox" name="self_mo">
                   <property name="minimum">
                    <double>-99.900000000000006</double>
                   </property>
@@ -127,7 +127,7 @@
               </widget>
              </item>
              <item row="2" column="0">
-              <spacer name="alter_vs_1">
+              <spacer name="vs_1">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -140,23 +140,23 @@
               </spacer>
              </item>
              <item row="1" column="0">
-              <widget class="QGroupBox" name="alter_self_lo_2">
+              <widget class="QGroupBox" name="self_lo_2">
                <property name="title">
                 <string>create/delete</string>
                </property>
                <layout class="QGridLayout" name="gridLayout_49">
                 <item row="3" column="1">
-                 <widget class="QSpinBox" name="alter_self_subd_by">
+                 <widget class="QSpinBox" name="self_subd_by">
                   <property name="minimum">
                    <number>1</number>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="2">
-                 <widget class="QSpinBox" name="alter_self_del_offset"/>
+                 <widget class="QSpinBox" name="self_del_offset"/>
                 </item>
                 <item row="4" column="1">
-                 <widget class="QDoubleSpinBox" name="alter_self_subd_to">
+                 <widget class="QDoubleSpinBox" name="self_subd_to">
                   <property name="suffix">
                    <string>ms</string>
                   </property>
@@ -172,28 +172,28 @@
                  </widget>
                 </item>
                 <item row="3" column="0">
-                 <widget class="QPushButton" name="alter_self_subd_by_b">
+                 <widget class="QPushButton" name="self_subd_by_b">
                   <property name="text">
                    <string>Subdivide By</string>
                   </property>
                  </widget>
                 </item>
                 <item row="4" column="0">
-                 <widget class="QPushButton" name="alter_self_subd_to_b">
+                 <widget class="QPushButton" name="self_subd_to_b">
                   <property name="text">
                    <string>Subdivide To</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QPushButton" name="alter_self_del_b">
+                 <widget class="QPushButton" name="self_del_b">
                   <property name="text">
                    <string>Delete nth</string>
                   </property>
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QLabel" name="alter_self_del_offset_l">
+                 <widget class="QLabel" name="self_del_offset_l">
                   <property name="layoutDirection">
                    <enum>Qt::LeftToRight</enum>
                   </property>
@@ -206,7 +206,7 @@
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QSpinBox" name="alter_self_del">
+                 <widget class="QSpinBox" name="self_del">
                   <property name="minimum">
                    <number>1</number>
                   </property>
@@ -220,39 +220,39 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="alter_convert">
+           <widget class="QWidget" name="convert">
             <attribute name="title">
              <string>convert</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_56">
              <item row="0" column="0">
-              <widget class="QGroupBox" name="alter_convert_lo">
+              <widget class="QGroupBox" name="convert_lo">
                <property name="title">
                 <string>convert</string>
                </property>
                <layout class="QGridLayout" name="gridLayout_50">
                 <item row="1" column="0">
-                 <widget class="QPushButton" name="alter_convert_to_bpm">
+                 <widget class="QPushButton" name="convert_to_bpm">
                   <property name="text">
                    <string>Convert To BPM</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QPushButton" name="alter_convert_to_sv">
+                 <widget class="QPushButton" name="convert_to_sv">
                   <property name="text">
                    <string>Convert To SV</string>
                   </property>
                  </widget>
                 </item>
                 <item row="1" column="1" rowspan="2">
-                 <widget class="QGroupBox" name="alter_convert_ref_lo">
+                 <widget class="QGroupBox" name="convert_ref_lo">
                   <property name="title">
                    <string>reference bpm</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_51">
                    <item row="0" column="0">
-                    <widget class="QDoubleSpinBox" name="alter_convert_ref">
+                    <widget class="QDoubleSpinBox" name="convert_ref">
                      <property name="minimum">
                       <double>0.010000000000000</double>
                      </property>
@@ -271,7 +271,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <spacer name="alter_vs_2">
+              <spacer name="vs_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -285,26 +285,26 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="alter_cross">
+           <widget class="QWidget" name="cross">
             <attribute name="title">
              <string>cross</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_58">
              <item row="0" column="0">
-              <widget class="QGroupBox" name="alter_cross_lo">
+              <widget class="QGroupBox" name="cross_lo">
                <property name="title">
                 <string>cross</string>
                </property>
                <layout class="QGridLayout" name="gridLayout_57">
                 <item row="1" column="0">
-                 <widget class="QPushButton" name="alter_cross_mv_b">
+                 <widget class="QPushButton" name="cross_mv_b">
                   <property name="text">
                    <string>Cross Multiply Values</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QPushButton" name="alter_cross_av_b">
+                 <widget class="QPushButton" name="cross_av_b">
                   <property name="text">
                    <string>Cross Add Values</string>
                   </property>
@@ -324,7 +324,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <spacer name="alter_vs_3">
+              <spacer name="vs_3">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -344,25 +344,25 @@
        </widget>
       </item>
       <item row="0" column="2" rowspan="2">
-       <widget class="QGroupBox" name="alter_output_lo">
+       <widget class="QGroupBox" name="output_lo">
         <property name="title">
          <string>output</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_47">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="alter_output"/>
+          <widget class="QPlainTextEdit" name="output"/>
          </item>
         </layout>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QGroupBox" name="alter_input_cross_lo">
+       <widget class="QGroupBox" name="input_cross_lo">
         <property name="title">
          <string>input_cross</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_53">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="alter_input_cross">
+          <widget class="QPlainTextEdit" name="input_cross">
            <property name="placeholderText">
             <string>&lt;Timing Point&gt;</string>
            </property>

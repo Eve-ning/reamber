@@ -15,19 +15,19 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="copier_lo">
+    <widget class="QGroupBox" name="lo">
      <property name="title">
       <string>copier</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_12">
       <item row="0" column="0" rowspan="2">
-       <widget class="QGroupBox" name="copier_ho_lo">
+       <widget class="QGroupBox" name="ho_lo">
         <property name="title">
          <string>hit_object_input</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_13">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="copier_ho">
+          <widget class="QPlainTextEdit" name="ho">
            <property name="placeholderText">
             <string>&lt;Editor Hit Object&gt;</string>
            </property>
@@ -37,13 +37,13 @@
        </widget>
       </item>
       <item row="0" column="1" rowspan="2">
-       <widget class="QGroupBox" name="copier_tp_lo">
+       <widget class="QGroupBox" name="tp_lo">
         <property name="title">
          <string>timing_point_input</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_14">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="copier_tp">
+          <widget class="QPlainTextEdit" name="tp">
            <property name="placeholderText">
             <string>&lt;Timing Point&gt;</string>
            </property>
@@ -53,19 +53,19 @@
        </widget>
       </item>
       <item row="0" column="2" rowspan="2">
-       <widget class="QGroupBox" name="copier_output_lo">
+       <widget class="QGroupBox" name="output_lo">
         <property name="title">
          <string>output</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_15">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="copier_output"/>
+          <widget class="QPlainTextEdit" name="output"/>
          </item>
         </layout>
        </widget>
       </item>
       <item row="2" column="0" colspan="3">
-       <widget class="QPushButton" name="copier_generate">
+       <widget class="QPushButton" name="generate">
         <property name="text">
          <string>Generate</string>
         </property>

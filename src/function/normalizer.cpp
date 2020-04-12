@@ -16,20 +16,20 @@ Normalizer::~Normalizer()
 
 QString Normalizer::output() const
 {
-    return ui->normalizer_output->toPlainText();
+    return ui->output->toPlainText();
 }
 
-void Normalizer::on_normalizer_generate_clicked() {
+void Normalizer::on_generate_clicked() {
     TimingPointV tpV;
 
     // Break if fail
-    if (!tpV.loadRaw(ui->normalizer_input->toPlainText(), '\n')) return;
+    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
 
     // Break if empty
     if (tpV.getBpmOnly().size() == 0) return;
 
     // Remove Items
-    ui->normalizer_bpmlist->clear();
+    ui->bpmlist->clear();
 
     // Extract BPMs out of the vector only
     auto bpmTpV = tpV.getBpmOnly();
@@ -38,17 +38,17 @@ void Normalizer::on_normalizer_generate_clicked() {
     for (const auto& bpmTp : bpmTpV) bpmTpVStr.append(QString::number(bpmTp.getValue()));
 
     // Add Items
-    ui->normalizer_bpmlist->addItems(bpmTpVStr);
+    ui->bpmlist->addItems(bpmTpVStr);
 
-    ui->normalizer_output->setPlainText(
+    ui->output->setPlainText(
                 algorithm::normalize(tpV,
-                                     ui->normalizer_bpm->value(),
+                                     ui->bpm->value(),
                                      false).getStringRaw());
 }
-void Normalizer::on_normalizer_bpmlist_itemClicked(QListWidgetItem *item) {
-    ui->normalizer_bpm->setValue(item->text().toDouble());
+void Normalizer::on_bpmlist_itemClicked(QListWidgetItem *item) {
+    ui->bpm->setValue(item->text().toDouble());
 }
 
-void Normalizer::on_normalizer_output_textChanged() {
+void Normalizer::on_output_textChanged() {
     emit outputChanged();
 }

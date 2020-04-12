@@ -16,7 +16,7 @@ public:
     explicit Stutter(QWidget *parent = nullptr);
     ~Stutter();
     // Updates stutter tab's threshold limit while changing parameters
-    void stutter_limit_update();
+    void stutterLimitUpdate();
     QString output() const;
 
 signals:
@@ -24,19 +24,19 @@ signals:
 
 private slots:
 
-    void on_stutter_initsv_vs_valueChanged(int value);
-    void on_stutter_threshold_vs_valueChanged(int value);
-    void on_stutter_generate_clicked();
-    void on_stutter_initbpm_vs_valueChanged(int value);
-    void on_stutter_avebpm_valueChanged(double);
-    void on_stutter_avesv_valueChanged(double);
-    void on_stutter_preset_nft_clicked();
-    void on_stutter_preset_mft_clicked();
-    void on_stutter_preset_nbt_clicked();
-    void on_stutter_preset_mbt_clicked();
+    void on_initsv_vs_valueChanged(int value);
+    void on_threshold_vs_valueChanged(int value);
+    void on_generate_clicked();
+    void on_initbpm_vs_valueChanged(int value);
+    void on_avebpm_valueChanged(double);
+    void on_avesv_valueChanged(double);
+    void on_preset_nft_clicked();
+    void on_preset_mft_clicked();
+    void on_preset_nbt_clicked();
+    void on_preset_mbt_clicked();
 
 
-    void on_stutter_output_textChanged();
+    void on_output_textChanged();
 
 private:
 

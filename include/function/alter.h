@@ -22,19 +22,19 @@ signals:
 
 private slots:
 
-    void on_alter_self_mv_b_clicked();
-    void on_alter_self_av_b_clicked();
-    void on_alter_self_mo_b_clicked();
-    void on_alter_self_ao_b_clicked();
-    void on_alter_self_del_b_clicked();
-    void on_alter_convert_to_bpm_clicked();
-    void on_alter_convert_to_sv_clicked();
-    void on_alter_cross_mv_b_clicked();
-    void on_alter_cross_av_b_clicked();
-    void on_alter_self_subd_by_b_clicked();
-    void on_alter_self_subd_to_b_clicked();
+    void on_self_mv_b_clicked();
+    void on_self_av_b_clicked();
+    void on_self_mo_b_clicked();
+    void on_self_ao_b_clicked();
+    void on_self_del_b_clicked();
+    void on_convert_to_bpm_clicked();
+    void on_convert_to_sv_clicked();
+    void on_cross_mv_b_clicked();
+    void on_cross_av_b_clicked();
+    void on_self_subd_by_b_clicked();
+    void on_self_subd_to_b_clicked();
 
-    void on_alter_output_textChanged();
+    void on_output_textChanged();
 
 private:
     Ui::Alter *ui;

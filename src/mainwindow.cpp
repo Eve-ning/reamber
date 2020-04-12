@@ -47,25 +47,20 @@ void MainWindow::clipboard_copy(QString str) {
 void MainWindow::alterClipboardCopy(){
     clipboard_copy(ui->widget_alter->output());
 }
-
 void MainWindow::copierClipboardCopy(){
     clipboard_copy(ui->widget_copier->output());
 }
-
 void MainWindow::normalizerClipboardCopy(){
     clipboard_copy(ui->widget_norm->output());
 }
-
 void MainWindow::stutterClipboardCopy(){
     clipboard_copy(ui->widget_stutter->output());
 }
-
 void MainWindow::tpfClipboardCopy(){
     clipboard_copy(ui->widget_tpf->output());
 }
 
 
-void MainWindow::on_listWidget_currentRowChanged(int currentRow)
-{
+void MainWindow::on_listWidget_currentRowChanged(int currentRow) {
     ui->stackedWidget->setCurrentIndex(currentRow);
 }

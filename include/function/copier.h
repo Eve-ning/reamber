@@ -22,9 +22,8 @@ signals:
     void outputChanged();
 
 private slots:
-    void on_copier_generate_clicked();
-
-    void on_copier_output_textChanged();
+    void on_generate_clicked();
+    void on_output_textChanged();
 
 private:
     Ui::Copier *ui;
