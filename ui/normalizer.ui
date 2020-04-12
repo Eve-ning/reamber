@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Normalizer</class>
+ <widget class="QWidget" name="Normalizer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>709</width>
+    <height>469</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="normalizer_lo">
+     <property name="title">
+      <string>normalizer</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_33">
+      <item row="0" column="0" rowspan="2">
+       <widget class="QGroupBox" name="normalizer_input_lo">
+        <property name="title">
+         <string>input</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_31">
+         <item row="0" column="0">
+          <widget class="QPlainTextEdit" name="normalizer_input">
+           <property name="placeholderText">
+            <string>&lt;Timing Point&gt;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="normalizer_controls_lo">
+        <property name="title">
+         <string>controls</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_34">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="normalizer_bpm_lo">
+           <property name="title">
+            <string>bpm</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_35">
+            <item row="0" column="0">
+             <widget class="QDoubleSpinBox" name="normalizer_bpm">
+              <property name="maximum">
+               <double>999999999.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>120.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="normalizer_bpmlist_lo">
+        <property name="title">
+         <string>bpm list</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_30">
+         <item row="1" column="0">
+          <widget class="QListWidget" name="normalizer_bpmlist"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="2">
+       <widget class="QGroupBox" name="normalizer_output_lo">
+        <property name="title">
+         <string>output</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_32">
+         <item row="0" column="0">
+          <widget class="QPlainTextEdit" name="normalizer_output"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QPushButton" name="normalizer_generate">
+        <property name="text">
+         <string>Generate</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
