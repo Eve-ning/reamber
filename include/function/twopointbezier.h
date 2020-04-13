@@ -20,15 +20,9 @@ protected:
     QVector<QVector2D> createBezier();
 
 private slots:
-    void on_y1ms_valueChanged(double arg1);
-    void on_x2ms_valueChanged(double arg1);
-    void on_y2ms_valueChanged(double arg1);
-    void on_x3ms_valueChanged(double arg1);
-    void on_y3ms_valueChanged(double arg1);
-    void on_y4ms_valueChanged(double arg1);
-    void on_x4ms_valueChanged(double arg1);
-    void on_x2p_valueChanged(double arg1);
-    void on_x3p_valueChanged(double arg1);
+    void addPoint(QMouseEvent *event);
+    void popPoint();
+    void mouseEventHandler(QMouseEvent *event);
     void on_interval_valueChanged(int arg1);
 
 private:

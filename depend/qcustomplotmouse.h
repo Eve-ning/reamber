@@ -2,18 +2,21 @@
 #define QCUSTOMPLOTMOUSE_H
 
 #include "depend/qcustomplot.h"
-class QMouseEvent;
 
 class QCustomPlotMouse : public QCustomPlot
 {
+public:
     Q_OBJECT
 
     public:
     explicit QCustomPlotMouse(QWidget* parent = nullptr);
 
-    ~QCustomPlotMouse();
+    ~QCustomPlotMouse() override;
+
+    void mouseDoubleClickEvent(QMouseEvent * event) override;
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
+signals:
+    void doubleClickEvent(QMouseEvent * event);
 
 };
 

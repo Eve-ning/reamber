@@ -3,16 +3,22 @@
 #include "depend/qcustomplot.h"
 #include <QVector2D>
 #include <QtGlobal>
+#include <QMouseEvent>
 
 TwoPointBezier::TwoPointBezier(QWidget *parent) :
     QWidget(parent),
-    p(QVector<QVector2D>(4)),
+    p(QVector<QVector2D>(2)),
     interval(1000.0),
     ui(new Ui::TwoPointBezier)
 {
     ui->setupUi(this);
     ui->customplot->addGraph();
+    ui->customplot->addGraph();
+
+    connect(ui->customplot, SIGNAL(doubleClickEvent(QMouseEvent*)),
+            this, SLOT(mouseEventHandler(QMouseEvent*)));
     initP();
+    updatePlot();
 }
 
 TwoPointBezier::~TwoPointBezier()
@@ -26,13 +32,14 @@ QVector<QVector2D> TwoPointBezier::createBezier(double start, double end) {
     int size = p.size();
     double t = start;
 
-    auto factorial = [](int a) -> int {
-        int sum = 1;
+    auto factorial = [](int a) -> long long {
+        long long sum = 1;
         for (int i = 2; i <= a; i ++) sum *= i;
         return sum;
     };
 
     QVector<QVector2D> out;
+    QVector<QVector2D> p = QVector<QVector2D>(this->p);
     std::sort(p.begin(), p.end(), [](QVector2D a, QVector2D b){ return a.x() < b.x(); });
 
     // API to include ends
@@ -40,7 +47,7 @@ QVector<QVector2D> TwoPointBezier::createBezier(double start, double end) {
         double sumX = 0.0;
         double sumY = 0.0;
         for (int n = 0; n < size; n ++) {
-            int coeff = factorial(size - 1) / (factorial(n) * factorial(size - n - 1));
+            long long coeff = factorial(size - 1) / (factorial(n) * factorial(size - n - 1));
             sumX += coeff * pow(1.0 - t, size - n - 1) * pow(t, n) * double(p[n].x());
             sumY += coeff * pow(1.0 - t, size - n - 1) * pow(t, n) * double(p[n].y());
         }
@@ -60,6 +67,30 @@ QVector<QVector2D> TwoPointBezier::createBezier() {
                         *std::max_element(x.begin(), x.end()));
 }
 
+void TwoPointBezier::addPoint(QMouseEvent * event) {
+    if (p.size() == 15) return;
+    qDebug() << float(ui->customplot->xAxis->pixelToCoord(event->pos().x()));
+    qDebug() << float(ui->customplot->yAxis->pixelToCoord(event->pos().y()));
+    qDebug() << p.size();
+    p.push_back(QVector2D(float(ui->customplot->xAxis->pixelToCoord(event->pos().x())),
+                          float(ui->customplot->yAxis->pixelToCoord(event->pos().y()))));
+    updatePlot();
+}
+
+void TwoPointBezier::popPoint(){
+    if (p.size() == 2) return;
+    p.pop_back();
+    updatePlot();
+}
+
+void TwoPointBezier::mouseEventHandler(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+        addPoint(event);
+    else if (event->button() == Qt::RightButton)
+        popPoint();
+}
+
 bool TwoPointBezier::live() const {
     return ui->check_live->isChecked();
 }
@@ -67,6 +98,8 @@ bool TwoPointBezier::live() const {
 void TwoPointBezier::updatePlot() {
     if (!live()) return;
     auto customplot = ui->customplot;
+
+    // Set Bezier
     auto vec = createBezier();
     QVector<double> x = QVector<double>();
     QVector<double> y = QVector<double>();
@@ -79,35 +112,29 @@ void TwoPointBezier::updatePlot() {
     auto yMinMax = std::minmax_element(y.begin(), y.end());
     customplot->xAxis->setRange(*xMinMax.first * 0.9, *xMinMax.second * 1.1);
     customplot->yAxis->setRange(*yMinMax.first * 0.9, *yMinMax.second * 1.1);
+
+    // Set Scatter
+    QVector<double> xs = QVector<double>();
+    QVector<double> ys = QVector<double>();
+    for (auto i : p){
+        xs.push_back(double(i.x()));
+        ys.push_back(double(i.y()));
+    }
+
+    customplot->graph(1)->setData(xs, ys, false);
+    customplot->graph(1)->setPen(QColor(50, 50, 50, 120));
+    customplot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 5));
+
+
     customplot->replot();
+
 }
 
 void TwoPointBezier::initP()
 {
-    p[0] = QVector2D(float(ui->x1ms->value()), float(ui->y1ms->value()));
-    p[1] = QVector2D(float(ui->x2ms->value()), float(ui->y2ms->value()));
-    p[2] = QVector2D(float(ui->x3ms->value()), float(ui->y3ms->value()));
-    p[3] = QVector2D(float(ui->x4ms->value()), float(ui->y4ms->value()));
+    p[0] = QVector2D(0, 1);
+    p[1] = QVector2D(100000, 2);
 }
 
-void TwoPointBezier::on_y1ms_valueChanged(double arg1){ p[0].setY(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_x2ms_valueChanged(double arg1){ p[1].setX(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_y2ms_valueChanged(double arg1){ p[1].setY(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_x3ms_valueChanged(double arg1){ p[2].setX(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_y3ms_valueChanged(double arg1){ p[2].setY(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_x4ms_valueChanged(double arg1){ p[3].setX(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_y4ms_valueChanged(double arg1){ p[3].setY(float(arg1)); updatePlot(); }
-void TwoPointBezier::on_x2p_valueChanged(double arg1){
-    auto xms = float(arg1 / 100.0) * (p[3].x() - p[0].x()) + p[0].x();
-    p[1].setX(xms);
-    ui->x2ms->setValue(double(xms));
-    updatePlot();
-}
-void TwoPointBezier::on_x3p_valueChanged(double arg1){
-    auto xms = float(arg1 / 100.0) * (p[3].x() - p[0].x()) + p[0].x();
-    p[2].setX(xms);
-    ui->x3ms->setValue(double(xms));
-    updatePlot();
-}
 void TwoPointBezier::on_interval_valueChanged(int arg1){ interval = arg1; updatePlot(); }
 
