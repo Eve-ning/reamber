@@ -20,13 +20,13 @@
       <string>two_point_bezier</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="1">
+      <item row="1" column="2">
        <widget class="QGroupBox" name="groupBox_2">
         <property name="title">
          <string>Plot</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
+         <item row="0" column="1">
           <widget class="QCustomPlotMouse" name="customplot" native="true"/>
          </item>
         </layout>
@@ -41,10 +41,10 @@
          <item row="2" column="0" colspan="2">
           <widget class="QGroupBox" name="par_lo">
            <property name="title">
-            <string>Parameters</string>
+            <string>parameters</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
-            <item row="0" column="0" rowspan="3">
+            <item row="1" column="0" rowspan="3" colspan="2">
              <widget class="QGroupBox" name="interval_lo">
               <property name="title">
                <string>Interval</string>
@@ -69,8 +69,141 @@
               </layout>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QCheckBox" name="check_live">
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="start_lo">
+              <property name="title">
+               <string>start_anchor</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="0" column="0">
+                <widget class="QLabel" name="startOffsetLabel">
+                 <property name="text">
+                  <string>offset</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="startValueLabel">
+                 <property name="text">
+                  <string>value</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="startValue">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="suffix">
+                  <string> (SV)</string>
+                 </property>
+                 <property name="minimum">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>10.000000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QSpinBox" name="startOffset">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="suffix">
+                  <string>ms</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QRadioButton" name="svRadio">
+              <property name="text">
+               <string>SV</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QGroupBox" name="end_lo">
+              <property name="title">
+               <string>end_anchor</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_10">
+               <item row="1" column="0">
+                <widget class="QLabel" name="endValueLabel">
+                 <property name="text">
+                  <string>value</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="endOffsetLabel">
+                 <property name="text">
+                  <string>offset</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="endValue">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="suffix">
+                  <string> (SV)</string>
+                 </property>
+                 <property name="minimum">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>10.000000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QSpinBox" name="endOffset">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="suffix">
+                  <string>ms</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QRadioButton" name="bpmRadio">
+              <property name="text">
+               <string>BPM</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" rowspan="2">
+             <widget class="QCheckBox" name="liveCheck">
               <property name="text">
                <string>Live Updates</string>
               </property>
@@ -91,7 +224,14 @@
             <string>output</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_7">
-            <item row="0" column="0">
+            <item row="1" column="0" colspan="2">
+             <widget class="QPushButton" name="generate">
+              <property name="text">
+               <string>Generate</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
              <widget class="QPlainTextEdit" name="output">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -105,20 +245,20 @@
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QGroupBox" name="input_lo">
+          <widget class="QGroupBox" name="bound_lo">
            <property name="title">
-            <string>input</string>
+            <string>bounds</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="0" column="0">
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="QLineEdit" name="updateBound">
               <property name="placeholderText">
                <string>&lt;Editor Hit Object&gt;</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="updateBoundBtn">
               <property name="text">
                <string>Update Bounds</string>
               </property>
@@ -127,14 +267,45 @@
            </layout>
           </widget>
          </item>
-         <item row="3" column="0" colspan="2">
-          <widget class="QListWidget" name="listWidget">
+         <item row="0" column="2" rowspan="3">
+          <widget class="QGroupBox" name="vertzoom_lo">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="title">
+            <string>vertical_zoom</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="1" column="0" alignment="Qt::AlignHCenter">
+             <widget class="QSlider" name="vertzoom">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>50</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="vertzoomLabel">
+              <property name="text">
+               <string>1.0x</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>

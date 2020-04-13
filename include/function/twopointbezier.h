@@ -25,18 +25,35 @@ private slots:
     void mouseEventHandler(QMouseEvent *event);
     void on_interval_valueChanged(int arg1);
 
+    void on_bpmRadio_clicked();
+    void on_svRadio_clicked();
+    void on_startOffset_valueChanged(int arg1);
+    void on_endOffset_valueChanged(int arg1);
+    void on_startValue_valueChanged(double arg1);
+    void on_endValue_valueChanged(double arg1);
+
+    void on_vertzoom_valueChanged(int value);
+
+    void on_updateBoundBtn_clicked();
+
 private:
     bool live() const;
     void updatePlot();
     void setCustomPlot(const QVector<double>& x,
                        const QVector<double>& y);
     void setCustomPlot(const QVector<QVector2D>& p);
+    void updatePlotRange(double min, double max);
+    double getZoom(double min, double max);
+
+    void useSV();
+    void useBPM();
 
     void initP();
     QVector<QVector2D> p;
-    int interval;
     Ui::TwoPointBezier *ui;
 
+    const int ZOOM_DEFAULT = 50;
+    const double ZOOM = 10.0;
 };
 
 #endif // TWOPOINTBEZIER_H
