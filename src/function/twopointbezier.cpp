@@ -34,11 +34,6 @@ QVector<QVector2D> TwoPointBezier::createBezier(double start, double end) {
     int size = p.size();
     int interval = ui->interval->value();
 
-    auto factorial = [](int a) -> long long {
-        long long sum = 1;
-        for (int i = 2; i <= a; i ++) sum *= i;
-        return sum;
-    };
 
     QVector<QVector2D> out;
     QVector<QVector2D> p = QVector<QVector2D>(this->p);
@@ -50,7 +45,7 @@ QVector<QVector2D> TwoPointBezier::createBezier(double start, double end) {
         double sumX = 0.0;
         double sumY = 0.0;
         for (int n = 0; n < size; n ++) {
-            long long coeff = factorial(size - 1) / (factorial(n) * factorial(size - n - 1));
+            long long coeff = binomCoeff(size - 1, n);
             sumX += coeff * pow(1.0 - t, size - n - 1) * pow(t, n) * (double(p[n].x()) - start);
             sumY += coeff * pow(1.0 - t, size - n - 1) * pow(t, n) * double(p[n].y());
         }
@@ -71,11 +66,11 @@ QVector<QVector2D> TwoPointBezier::createBezier() {
 }
 
 void TwoPointBezier::addPoint(QMouseEvent * event) {
-    if (p.size() == 15) return; // Bezier Function Factorial is too large lol (possible to optimize)
+    if (p.size() == BEZIER_MAX_PTS) return;
 
-    qDebug() << float(ui->customplot->xAxis->pixelToCoord(event->pos().x())) << ","
-             << float(ui->customplot->yAxis->pixelToCoord(event->pos().y()));
-//    qDebug() << p.size();
+//    qDebug() << float(ui->customplot->xAxis->pixelToCoord(event->pos().x())) << ","
+//             << float(ui->customplot->yAxis->pixelToCoord(event->pos().y()));
+    qDebug() << p.size();
 
     auto x = float(ui->customplot->xAxis->pixelToCoord(event->pos().x()));
     auto y = float(ui->customplot->yAxis->pixelToCoord(event->pos().y()));
@@ -86,7 +81,7 @@ void TwoPointBezier::addPoint(QMouseEvent * event) {
 }
 
 void TwoPointBezier::popPoint() {
-    if (p.size() == 2) return;
+    if (p.size() == BEZIER_MIN_PTS) return;
     p.pop_back();
     updatePlot();
 }
@@ -104,7 +99,7 @@ void TwoPointBezier::updatePlot() {
     if (!live()) return;
     auto customplot = ui->customplot;
 
-    // Set Bezier
+    // Set Bezier Line
     auto vec = createBezier();
     QVector<double> x = QVector<double>();
     QVector<double> y = QVector<double>();
@@ -113,13 +108,15 @@ void TwoPointBezier::updatePlot() {
         y.push_back(double(i.y()));
     }
     customplot->graph(0)->setData(x, y, false);
+    customplot->graph(0)->setPen(ui->svRadio->isChecked() ?
+                                 Common::Color::GREEN : Common::Color::RED);
     auto xMinMax = std::minmax_element(x.begin(), x.end());
     auto yMinMax = std::minmax_element(y.begin(), y.end());
-    qDebug() << *xMinMax.first << "," << *xMinMax.second;
+    // qDebug() << *xMinMax.first << "," << *xMinMax.second;
     customplot->xAxis->setRange(*xMinMax.first,*xMinMax.second);
     updatePlotRange(*yMinMax.first, *yMinMax.second);
 
-    // Set Scatter
+    // Set Bezier Points
     QVector<double> xs = QVector<double>();
     QVector<double> ys = QVector<double>();
     for (auto i : p){
@@ -128,7 +125,7 @@ void TwoPointBezier::updatePlot() {
     }
 
     customplot->graph(1)->setData(xs, ys, false);
-    customplot->graph(1)->setPen(QColor(50, 50, 50, 120));
+    customplot->graph(1)->setPen(Common::Color::GREY);
     customplot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 5));
     customplot->replot();
 }
@@ -143,11 +140,21 @@ void TwoPointBezier::updatePlotRange(double min, double max){
 
     // Normalizes the range and multiplies the ends respectively
     // A buffer is used to prevent too small of a range
-    double minRange = (min - mean - ZOOM_BUFFER) * zoom + mean;
-    double maxRange = (max - mean + ZOOM_BUFFER) * zoom + mean;
-    minRange = minRange < 0 ? 0 : minRange;
-    if (ui->svRadio->isChecked())
-        maxRange = maxRange > Common::SV_MAX ? Common::SV_MAX : maxRange;
+
+    double minRange;
+    double maxRange;
+    if (ui->svRadio->isChecked()){
+        minRange = (min - mean - ZOOM_SV_BUFFER) * zoom + mean;
+        maxRange = (max - mean + ZOOM_SV_BUFFER) * zoom + mean;
+    } else {
+        minRange = (min - mean - ZOOM_BPM_BUFFER) * zoom + mean;
+        maxRange = (max - mean + ZOOM_BPM_BUFFER) * zoom + mean;
+    }
+
+    // Allow negative for easier bezier bending
+    //    minRange = minRange < 0 ? 0 : minRange;
+    //    if (ui->svRadio->isChecked())
+    //        maxRange = maxRange > Common::SV_MAX ? Common::SV_MAX : maxRange;
 
     ui->customplot->yAxis->setRange(minRange, maxRange);
 }
@@ -193,7 +200,6 @@ void TwoPointBezier::initP()
             float(ui->endValue->value())};
 }
 
-void TwoPointBezier::on_interval_valueChanged(int arg1) { updatePlot(); }
 void TwoPointBezier::on_vertzoom_valueChanged(int value){ updatePlot(); }
 void TwoPointBezier::on_bpmRadio_clicked() {
     initP();
@@ -217,19 +223,43 @@ void TwoPointBezier::on_startValue_valueChanged(double arg1) {
     p[0].setY(float(arg1));
     updatePlot();
 }
-void TwoPointBezier::on_endValue_valueChanged(double arg1){
+void TwoPointBezier::on_endValue_valueChanged(double arg1) {
     p[1].setY(float(arg1));
     updatePlot();
 }
-
-
-
-void TwoPointBezier::on_updateBoundBtn_clicked()
-{
+void TwoPointBezier::on_updateBoundBtn_clicked() {
     QString text = ui->updateBound->text();
     HitObjectV hoV = HitObjectV();
-    hoV.loadEditor(text);
+    if (!hoV.loadEditor(text)) return;
     ui->startOffset->setValue(int(hoV[0].getOffset()));
     ui->endOffset->setValue(int(hoV[1].getOffset()));
+    updatePlot();
+}
+
+long long TwoPointBezier::binomCoeff(int n, int k)
+{
+    // defined as n! / k! (n-k)!
+    // We find if k or n-k is larger
+
+    // e.g. 15 C 5
+    //       n   k
+
+    //    15!
+    // --------  = 15 * 14 * ... * 11 / (5!) = 15 / 5 * 14 / 4 ... 11 / 1
+    // 5! * 10!    We don't evaluate 15!
+
+    int n_k = n - k;
+    long double result = 1;
+    int smaller = n_k < k ? n_k : k; // find the smaller number
+    while (smaller >= 1) {
+        result *= static_cast<long double>(double(n) / double(smaller));
+        n--;
+        smaller--;
+    }
+    return static_cast<long long>(result);
+}
+
+void TwoPointBezier::on_interval_editingFinished()
+{
     updatePlot();
 }
