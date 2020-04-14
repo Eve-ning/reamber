@@ -53,7 +53,8 @@ private:
     Ui::TwoPointBezier *ui;
 
     const int ZOOM_DEFAULT = 50;
-    const double ZOOM = 10.0;
+    const double ZOOM_LIMIT = 10.0;
+    const double ZOOM_BUFFER = 5.0;
 };
 
 #endif // TWOPOINTBEZIER_H

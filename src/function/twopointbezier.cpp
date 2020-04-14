@@ -136,11 +136,15 @@ void TwoPointBezier::updatePlot() {
 void TwoPointBezier::updatePlotRange(double min, double max){
     // Zoom from 10 % to 1000 %
     double mean = (max - min) / 2 + min;
-    double invZoom = pow(ZOOM, double(ui->vertzoom->value() - ZOOM_DEFAULT) / ZOOM_DEFAULT);
-    ui->vertzoomLabel->setText(QString::number(1.0 / invZoom, 'f', 2) + "x");
 
-    double minRange = (min - mean) * invZoom + mean;
-    double maxRange = (max - mean) * invZoom + mean;
+    // This calculates zoom, zoom [0.1, 10.0]
+    double zoom = pow(ZOOM_LIMIT, - double(ui->vertzoom->value() - ZOOM_DEFAULT) / ZOOM_DEFAULT);
+    ui->vertzoomLabel->setText(QString::number(1.0 / zoom, 'f', 2) + "x");
+
+    // Normalizes the range and multiplies the ends respectively
+    // A buffer is used to prevent too small of a range
+    double minRange = (min - mean - ZOOM_BUFFER) * zoom + mean;
+    double maxRange = (max - mean + ZOOM_BUFFER) * zoom + mean;
     minRange = minRange < 0 ? 0 : minRange;
     if (ui->svRadio->isChecked())
         maxRange = maxRange > Common::SV_MAX ? Common::SV_MAX : maxRange;
@@ -176,8 +180,9 @@ void TwoPointBezier::useBPM()
 void TwoPointBezier::initP()
 {
     // Reset p
-    ui->interval   ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT));
     ui->startOffset->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
+    ui->startOffset->setValue(0);
+    ui->interval   ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT));
     ui->endOffset  ->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
     ui->endOffset  ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT) * 10);
 
