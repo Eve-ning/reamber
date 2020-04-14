@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <QColor>
+
 template <typename T>
 class QVector;
 
@@ -27,10 +29,18 @@ public:
     constexpr static double OFFSET_DEFAULT = 0.0;
     constexpr static double OFFSET_INTERVAL_DEFAULT = 1000.0;
 
-    long double MATH_PI = 3.14159265358979323846l;
+    class Color {
+    public:
+        const static QColor GREEN;
+        const static QColor RED  ;
+        const static QColor GREY ;
+    };
+
+    constexpr static long double MATH_PI = 3.14159265358979323846l;
 
     // This value is to convert vertical slider values to val
-    double VS_TO_VAL = 100.0;
+    constexpr static double VS_TO_VAL = 100.0;
+
 };
 
 #endif // COMMON_H
