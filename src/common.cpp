@@ -23,3 +23,7 @@ QVector<double> Common::clipValueV(QVector<double> valueV, bool isBpm)
 const QColor Common::Color::GREEN = QColor(15, 232, 0);
 const QColor Common::Color::RED   = QColor(214, 0, 68);
 const QColor Common::Color::GREY  = QColor(125, 125, 125);
+
+const QColor Common::Prefix::SV     = QString(" (SV)");
+const QColor Common::Prefix::BPM    = QString(" (BPM)");
+const QColor Common::Prefix::OFFSET = QString("ms");

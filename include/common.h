@@ -41,6 +41,12 @@ public:
     // This value is to convert vertical slider values to val
     constexpr static double VS_TO_VAL = 100.0;
 
+    class Suffix {
+    public:
+        const static QString SV;
+        const static QString BPM;
+        const static QString OFFSET;
+    };
 };
 
 #endif // COMMON_H

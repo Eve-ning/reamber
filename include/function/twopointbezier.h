@@ -40,7 +40,6 @@ private:
     QVector<QVector2D> createThisBezier(double start, double end);
     QVector<QVector2D> createThisBezier();
 
-
     bool isLive() const;
     void updatePlot();
     // Different from updatePlotDomain
@@ -55,6 +54,7 @@ private:
 
     QVector<QVector2D> p;
     Ui::TwoPointBezier *ui;
+
     const int ZOOM_DEFAULT = 50;
     const double ZOOM_LIMIT = 10.0;
     const double ZOOM_SV_BUFFER = 2.0;

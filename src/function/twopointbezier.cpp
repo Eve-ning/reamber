@@ -59,7 +59,7 @@ void TwoPointBezier::popPoint() {
 }
 
 void TwoPointBezier::mouseEventHandler(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton) addPoint(event);
+    if      (event->button() == Qt::LeftButton)  addPoint(event);
     else if (event->button() == Qt::RightButton) popPoint();
 }
 
@@ -139,22 +139,22 @@ void TwoPointBezier::updatePlotDomain(double min, double max) {
 void TwoPointBezier::useSV() {
     ui->startValue->setValue(Common::SV_DEFAULT);
     ui->startValue->setRange(Common::SV_MIN, Common::SV_MAX);
-    ui->startValue->setSuffix(" (SV)");
+    ui->startValue->setSuffix(Common::Suffix::SV);
     ui->startValue->setSingleStep(Common::SV_STEPSIZE);
     ui->endValue  ->setValue(Common::SV_DEFAULT);
     ui->endValue  ->setRange(Common::SV_MIN, Common::SV_MAX);
-    ui->endValue  ->setSuffix(" (SV)");
+    ui->endValue  ->setSuffix(Common::Suffix::SV);
     ui->endValue  ->setSingleStep(Common::SV_STEPSIZE);
 }
 
 void TwoPointBezier::useBPM() {
     ui->startValue->setRange(Common::BPM_MIN, Common::BPM_MAX);
     ui->startValue->setValue(Common::BPM_DEFAULT);
-    ui->startValue->setSuffix(" (BPM)");
+    ui->startValue->setSuffix(Common::Suffix::BPM);
     ui->startValue->setSingleStep(Common::BPM_STEPSIZE);
     ui->endValue  ->setRange(Common::BPM_MIN, Common::BPM_MAX);
     ui->endValue  ->setValue(Common::BPM_DEFAULT);
-    ui->endValue  ->setSuffix(" (BPM)");
+    ui->endValue  ->setSuffix(Common::Suffix::BPM);
     ui->endValue  ->setSingleStep(Common::BPM_STEPSIZE);
 }
 
@@ -164,7 +164,7 @@ void TwoPointBezier::resetSettings() {
     ui->startOffset->setValue(0);
     ui->interval   ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT));
     ui->endOffset  ->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
-    ui->endOffset  ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT) * 10);
+    ui->endOffset  ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT) * 100);
 
     p = QVector<QVector2D>(2);
     p[0] = {float(ui->startOffset->value()),
