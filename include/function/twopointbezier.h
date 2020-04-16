@@ -15,9 +15,8 @@ public:
     explicit TwoPointBezier(QWidget *parent = nullptr);
     ~TwoPointBezier();
 
-protected:
-    QVector<QVector2D> createBezier(double start, double end);
-    QVector<QVector2D> createBezier();
+    static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, double interval);
+    static QVector<QVector2D> createBezier(const QVector<QVector2D> &points, int interval);
 
 private slots:
     void addPoint(QMouseEvent *event);
@@ -38,18 +37,21 @@ private slots:
     static long long binomCoeff(int n, int k);
 
 private:
-    bool live() const;
+    QVector<QVector2D> createThisBezier(double start, double end);
+    QVector<QVector2D> createThisBezier();
+
+
+    bool isLive() const;
     void updatePlot();
-    void setCustomPlot(const QVector<double>& x,
-                       const QVector<double>& y);
-    void setCustomPlot(const QVector<QVector2D>& p);
+    // Different from updatePlotDomain
     void updatePlotRange(double min, double max);
+    void updatePlotDomain(double min, double max);
     double getZoom(double min, double max);
 
     void useSV();
     void useBPM();
 
-    void initP();
+    void resetSettings();
 
     QVector<QVector2D> p;
     Ui::TwoPointBezier *ui;
