@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    depend/qcustomplotmouse.cpp \
+    depend/qcustomplottpb.cpp \
     src/common.cpp \
     src/function/alter.cpp \
     src/function/copier.cpp \
@@ -37,7 +37,7 @@ SOURCES += \
     depend/qcustomplot.cpp
 
 HEADERS += \
-    depend/qcustomplotmouse.h \
+    depend/qcustomplottpb.h \
     include/common.h \
     include/function/alter.h \
     include/function/copier.h \

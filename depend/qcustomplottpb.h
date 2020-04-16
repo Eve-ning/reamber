@@ -16,12 +16,13 @@ public:
     void mousePressEvent(QMouseEvent * event) override;
     void keyPressEvent(QKeyEvent * event) override;
 
+
+
 protected:
 signals:
-    void doubleClickEvent(QMouseEvent * event);
-    void addAnchorEvent();
-    void addBezierEvent();
-    void removeEvent();
+    void addAnchorEvent(QVector2D pos);
+    void addBezierEvent(QVector2D pos);
+    void removeEvent   (QVector2D pos);
 
 };
 

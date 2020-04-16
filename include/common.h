@@ -3,8 +3,10 @@
 
 #include <QColor>
 
+
 template <typename T>
 class QVector;
+class QVector2D;
 
 class Common
 {
@@ -12,6 +14,7 @@ public:
     // Squeezes the value to the defined MIN and MAX limits below and returns it
     static double clipValue(double value, bool is_bpm);
     static QVector<double> clipValueV(QVector<double> valueV, bool isBpm);
+    static QVector<QVector2D> sortByX(QVector<QVector2D> v);
 
     // Define "global" variables
     constexpr static double SV_MIN = 0.01;
@@ -25,15 +28,25 @@ public:
     constexpr static double BPM_STEPSIZE = 1.0;
 
     constexpr static double OFFSET_MIN = 0.0;
-    constexpr static double OFFSET_MAX = 10000000; // 10,000,000
+    constexpr static double OFFSET_MAX = 100000; // 100,000
     constexpr static double OFFSET_DEFAULT = 0.0;
-    constexpr static double OFFSET_INTERVAL_DEFAULT = 1000.0;
+    constexpr static double OFFSET_INTERVAL_DEFAULT = 100.0;
 
     class Color {
     public:
         const static QColor GREEN;
         const static QColor RED  ;
         const static QColor GREY ;
+        const static QColor BLUE ;
+        const static QColor PURPLE;
+    };
+    class ColorFade {
+    public:
+        const static QColor GREEN ;
+        const static QColor RED   ;
+        const static QColor GREY  ;
+        const static QColor BLUE  ;
+        const static QColor PURPLE;
     };
 
     constexpr static long double MATH_PI = 3.14159265358979323846l;

@@ -2,6 +2,8 @@
 #define TWOPOINTBEZIER_H
 
 #include <QWidget>
+#include <QVector2D>
+
 
 namespace Ui {
 class TwoPointBezier;
@@ -15,14 +17,10 @@ public:
     explicit TwoPointBezier(QWidget *parent = nullptr);
     ~TwoPointBezier();
 
-    static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, double interval);
-    static QVector<QVector2D> createBezier(const QVector<QVector2D> &points, int interval);
+    static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, double interval, bool includeEnd = true);
+    static QVector<QVector2D> createBezier(const QVector<QVector2D> &points, int interval, bool includeEnd = true);
 
 private slots:
-    void addPoint(QMouseEvent *event);
-    void popPoint();
-    void mouseEventHandler(QMouseEvent *event);
-
     void on_bpmRadio_clicked();
     void on_svRadio_clicked();
     void on_interval_editingFinished();
@@ -31,23 +29,33 @@ private slots:
     void on_endOffset_valueChanged(int arg1);
     void on_startValue_valueChanged(double arg1);
     void on_endValue_valueChanged(double arg1);
-
     void on_updateBoundBtn_clicked();
+    void on_generate_clicked();
 
     static long long binomCoeff(int n, int k);
 
-    void on_generate_clicked();
+    // A and B will add points
+    // Right click removes nearest point
+    void addAnchor  (QVector2D pos);
+    void addBezier  (QVector2D pos);
+    void removePoint(QVector2D pos);
 
 private:
-    QString generateCode(const QVector<double> & offsets,
-                                  const QVector<double> & values,
-                                  bool isBPM);
 
-    QVector<QVector2D> createThisBezier(double start, double end);
-    QVector<QVector2D> createThisBezier();
+    QVector2D getMousePos();
+    QString generateCode(const QVector<double> & offsets,
+                         const QVector<double> & values,
+                         bool isBPM);
+
+    QVector<QVector2D> createPlot();
 
     bool isLive() const;
-    void updatePlot();
+    void plot();
+    void plotFunction();
+    void plotBezier();
+    void plotAnchor();
+    void plotAverage(QVector<QVector2D> & pts);
+
     // Different from updatePlotDomain
     void updatePlotRange(double min, double max);
     void updatePlotDomain(double min, double max);
@@ -58,7 +66,8 @@ private:
 
     void resetSettings();
 
-    QVector<QVector2D> p;
+    QVector<QVector2D> bezierPts;
+    QVector<QVector2D> anchorPts;
     Ui::TwoPointBezier *ui;
 
     const int ZOOM_DEFAULT = 50;
@@ -67,6 +76,7 @@ private:
     const double ZOOM_BPM_BUFFER = 100;
     const int BEZIER_MAX_PTS = 66;
     const int BEZIER_MIN_PTS = 2;
+    const double REMOVE_DISTANCE_MAX = 35;
 };
 
 #endif // TWOPOINTBEZIER_H
