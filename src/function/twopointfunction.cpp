@@ -130,9 +130,9 @@ void TwoPointFunction::on_generate_clicked() {
     tpV.sortByOffset(true);
 
     // Call update on the plot
-    tpfUpdateCustomplot(tpV.getOffsetV().toStdVector(),
-                          tpV.getValueV().toStdVector(),
-                          isBpm);
+    tpfUpdateCustomplot(tpV.getOffsetV(),
+                        tpV.getValueV(),
+                        isBpm);
 
     // Update Average SV
     ui->output_ave->setText(isBpm ?

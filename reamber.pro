@@ -24,27 +24,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    depend/qcustomplottpb.cpp \
     src/common.cpp \
     src/function/alter.cpp \
     src/function/copier.cpp \
     src/function/stutter.cpp \
     src/function/normalizer.cpp \
     src/function/twopointfunction.cpp \
+    src/function/twopointbezier.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     depend/qcustomplot.cpp
 
 HEADERS += \
+    depend/qcustomplottpb.h \
     include/common.h \
     include/function/alter.h \
     include/function/copier.h \
     include/function/normalizer.h \
     include/function/stutter.h \
     include/function/twopointfunction.h \
+    include/function/twopointbezier.h \
     include/mainwindow.h \
     depend/qcustomplot.h
 
 FORMS += \
+    ui/twopointbezier.ui \
     ui/alter.ui \
     ui/copier.ui \
     ui/normalizer.ui \
