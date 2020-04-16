@@ -268,3 +268,33 @@ long long TwoPointBezier::binomCoeff(int n, int k) {
     return static_cast<long long>(result);
 }
 
+QString TwoPointBezier::generateCode(const QVector<double> & offsets,
+                                     const QVector<double> & values,
+                                     bool isBPM){
+    TimingPointV tpV = TimingPointV();
+    if (offsets.size() != values.size()){
+        qDebug() << "offsets and values must be of the same size";
+        return "";
+    }
+    int size = offsets.size();
+
+    TimingPoint tp = TimingPoint();
+    for (int i = 0; i < size; i ++) {
+        tp.loadParameters(offsets[i], values[i], isBPM);
+        tpV.pushBack(tp);
+    }
+    return tpV.getStringRaw();
+}
+
+
+void TwoPointBezier::on_generate_clicked() {
+    auto bez = createThisBezier();
+    QVector<double> offsets = QVector<double>();
+    QVector<double> values  = QVector<double>();
+    bool isBpm = ui->bpmRadio->isChecked();
+    for (const auto & bezI : bez) {
+        offsets.push_back(double(bezI.x()));
+        values.push_back(Common::clipValue(double(bezI.y()), isBpm));
+    }
+    ui->output->setPlainText(generateCode(offsets, values, ui->bpmRadio->isChecked()));
+}

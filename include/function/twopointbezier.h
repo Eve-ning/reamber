@@ -36,7 +36,13 @@ private slots:
 
     static long long binomCoeff(int n, int k);
 
+    void on_generate_clicked();
+
 private:
+    QString generateCode(const QVector<double> & offsets,
+                                  const QVector<double> & values,
+                                  bool isBPM);
+
     QVector<QVector2D> createThisBezier(double start, double end);
     QVector<QVector2D> createThisBezier();
 
