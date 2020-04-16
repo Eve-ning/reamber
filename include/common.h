@@ -10,8 +10,8 @@ class Common
 {
 public:
     // Squeezes the value to the defined MIN and MAX limits below and returns it
-    double clipValue(double value, bool is_bpm);
-    QVector<double> clipValueV(QVector<double> valueV, bool isBpm);
+    static double clipValue(double value, bool is_bpm);
+    static QVector<double> clipValueV(QVector<double> valueV, bool isBpm);
 
     // Define "global" variables
     constexpr static double SV_MIN = 0.01;
