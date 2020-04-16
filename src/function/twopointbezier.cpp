@@ -7,7 +7,6 @@
 #include <QtGlobal>
 #include <QMouseEvent>
 
-
 TwoPointBezier::TwoPointBezier(QWidget *parent) :
     QWidget(parent),
     bezierPts(QVector<QVector2D>(0)),
@@ -64,68 +63,11 @@ QVector<QVector2D> TwoPointBezier::createPlot() {
     return points;
 }
 
-void TwoPointBezier::addAnchor(QVector2D pos) {
-    if (pos.x() > ui->endOffset->value() || pos.x() < ui->startOffset->value()) return; // Reject x out of bounds
-    anchorPts.push_back(pos);
-    plot();
-}
-
-void TwoPointBezier::addBezier(QVector2D pos) {
-    if (pos.x() > ui->endOffset->value() || pos.x() < ui->startOffset->value()) return; // Reject x out of bounds
-    bezierPts.push_back(pos);
-    plot();
-}
-
-void TwoPointBezier::removePoint(QVector2D pos) {
-    auto allPts = anchorPts + bezierPts;
-    allPts.removeFirst();
-    allPts.removeFirst(); // Don't remove the main anchors
-
-    if (allPts.empty()) return;
-
-    float min = std::numeric_limits<float>::max();
-    QVector2D minV = allPts[0];
-    for (auto pt : allPts){
-        QVector2D ptPixels;
-        // Recieved pos is in pixels
-        ptPixels.setX(float(ui->customplot->xAxis->coordToPixel(double(pt.x()))));
-        ptPixels.setY(float(ui->customplot->yAxis->coordToPixel(double(pt.y()))));
-
-        // Compare distance in pixels
-        auto dist = (pos - ptPixels).length();
-
-        // If smaller, we set
-        if (dist < min) {
-            min = dist;
-            minV = pt;
-        }
-    }
-    // don't remove if too far
-    if (double(min) > REMOVE_DISTANCE_MAX) return;
-    if (!anchorPts.removeOne(minV)) // Don't need to execute both
-        bezierPts.removeOne(minV);
-
-    plot();
-}
-
-QVector2D TwoPointBezier::getMousePos() {
-    auto x = float(ui->customplot->xAxis->pixelToCoord(ui->customplot->cursor().pos().x()));
-    auto y = float(ui->customplot->yAxis->pixelToCoord(ui->customplot->cursor().pos().y()));
-    return QVector2D(x, y);
-}
-
-
-bool TwoPointBezier::isLive() const {
-    return ui->liveCheck->isChecked();
-}
-
 void TwoPointBezier::plot() {
-    if (!isLive()) return;
     plotFunction();
     plotAnchor();
     plotBezier();
 }
-
 void TwoPointBezier::plotFunction() {
     auto customplot = ui->customplot;
 
@@ -152,7 +94,6 @@ void TwoPointBezier::plotFunction() {
     updatePlotDomain(*xMinMax.first,*xMinMax.second);
     updatePlotRange(*yMinMax.first, *yMinMax.second);
 }
-
 void TwoPointBezier::plotBezier()
 {
     auto customplot = ui->customplot;
@@ -171,7 +112,6 @@ void TwoPointBezier::plotBezier()
     customplot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlusCircle, 5));
     customplot->replot();
 }
-
 void TwoPointBezier::plotAnchor()
 {
     auto customplot = ui->customplot;
@@ -190,7 +130,6 @@ void TwoPointBezier::plotAnchor()
     customplot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssTriangleInverted, 5));
     customplot->replot();
 }
-
 void TwoPointBezier::plotAverage(QVector<QVector2D> & pts)
 {
     double sum = 0.0;
@@ -230,11 +169,9 @@ void TwoPointBezier::updatePlotRange(double min, double max){
 
     ui->customplot->yAxis->setRange(minRange, maxRange);
 }
-
 void TwoPointBezier::updatePlotDomain(double min, double max) {
     ui->customplot->xAxis->setRange(min, max);
 }
-
 
 void TwoPointBezier::useSV() {
     ui->startValue->setValue(Common::SV_DEFAULT);
@@ -246,7 +183,6 @@ void TwoPointBezier::useSV() {
     ui->endValue  ->setSuffix(Common::Suffix::SV);
     ui->endValue  ->setSingleStep(Common::SV_STEPSIZE);
 }
-
 void TwoPointBezier::useBPM() {
     ui->startValue->setRange(Common::BPM_MIN, Common::BPM_MAX);
     ui->startValue->setValue(Common::BPM_DEFAULT);
@@ -257,7 +193,6 @@ void TwoPointBezier::useBPM() {
     ui->endValue  ->setSuffix(Common::Suffix::BPM);
     ui->endValue  ->setSingleStep(Common::BPM_STEPSIZE);
 }
-
 void TwoPointBezier::resetSettings() {
     // Reset p
     ui->startOffset->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
@@ -272,7 +207,6 @@ void TwoPointBezier::resetSettings() {
                     float(ui->endValue->value())};
     bezierPts = QVector<QVector2D>();
 }
-
 
 QVector<QVector2D> TwoPointBezier::createBezier(QVector<QVector2D> points, double start, double end, double interval, bool includeEnd) {
     int size = points.size();
@@ -298,7 +232,6 @@ QVector<QVector2D> TwoPointBezier::createBezier(QVector<QVector2D> points, doubl
 
     return out;
 }
-
 QVector<QVector2D> TwoPointBezier::createBezier(const QVector<QVector2D>& points, int interval, bool includeEnd) {
     QVector<double> x = QVector<double>();
     for (const auto & i : points) x.push_back(double(i.x()));
@@ -308,7 +241,6 @@ QVector<QVector2D> TwoPointBezier::createBezier(const QVector<QVector2D>& points
                         interval,
                         includeEnd);
 }
-
 
 long long TwoPointBezier::binomCoeff(int n, int k) {
     // defined as n! / k! (n-k)!
@@ -331,7 +263,6 @@ long long TwoPointBezier::binomCoeff(int n, int k) {
     }
     return static_cast<long long>(result);
 }
-
 QString TwoPointBezier::generateCode(const QVector<double> & offsets,
                                      const QVector<double> & values,
                                      bool isBPM){
@@ -350,6 +281,53 @@ QString TwoPointBezier::generateCode(const QVector<double> & offsets,
     return tpV.getStringRaw();
 }
 
+void TwoPointBezier::addAnchor(QVector2D pos) {
+    if (pos.x() > ui->endOffset->value() || pos.x() < ui->startOffset->value()) return; // Reject x out of bounds
+    anchorPts.push_back(pos);
+    plot();
+}
+void TwoPointBezier::addBezier(QVector2D pos) {
+    if (pos.x() > ui->endOffset->value() || pos.x() < ui->startOffset->value()) return; // Reject x out of bounds
+    bezierPts.push_back(pos);
+    plot();
+}
+void TwoPointBezier::removePoint(QVector2D pos) {
+    auto allPts = anchorPts + bezierPts;
+    allPts.removeFirst();
+    allPts.removeFirst(); // Don't remove the main anchors
+
+    if (allPts.empty()) return;
+
+    float min = std::numeric_limits<float>::max();
+    QVector2D minV = allPts[0];
+    for (auto pt : allPts){
+        QVector2D ptPixels;
+        // Recieved pos is in pixels
+        ptPixels.setX(float(ui->customplot->xAxis->coordToPixel(double(pt.x()))));
+        ptPixels.setY(float(ui->customplot->yAxis->coordToPixel(double(pt.y()))));
+
+        // Compare distance in pixels
+        auto dist = (pos - ptPixels).length();
+
+        // If smaller, we set
+        if (dist < min) {
+            min = dist;
+            minV = pt;
+        }
+    }
+    // don't remove if too far
+    if (double(min) > REMOVE_DISTANCE_MAX) return;
+    if (!anchorPts.removeOne(minV)) // Don't need to execute both
+        bezierPts.removeOne(minV);
+
+    plot();
+}
+
+QVector2D TwoPointBezier::getMousePos() {
+    auto x = float(ui->customplot->xAxis->pixelToCoord(ui->customplot->cursor().pos().x()));
+    auto y = float(ui->customplot->yAxis->pixelToCoord(ui->customplot->cursor().pos().y()));
+    return QVector2D(x, y);
+}
 
 void TwoPointBezier::on_generate_clicked() {
     auto bez = createPlot();
@@ -362,8 +340,6 @@ void TwoPointBezier::on_generate_clicked() {
     }
     ui->output->setPlainText(generateCode(offsets, values, ui->bpmRadio->isChecked()));
 }
-
-
 void TwoPointBezier::on_vertzoom_valueChanged(int value){ plot(); }
 void TwoPointBezier::on_bpmRadio_clicked() {
     resetSettings();
@@ -408,4 +384,7 @@ void TwoPointBezier::on_updateBoundBtn_clicked() {
 }
 void TwoPointBezier::on_interval_editingFinished() {
     plot();
+}
+void TwoPointBezier::on_reset_clicked(){
+    resetSettings();
 }

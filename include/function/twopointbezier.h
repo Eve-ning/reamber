@@ -31,6 +31,7 @@ private slots:
     void on_endValue_valueChanged(double arg1);
     void on_updateBoundBtn_clicked();
     void on_generate_clicked();
+    void on_reset_clicked();
 
     static long long binomCoeff(int n, int k);
 
@@ -39,6 +40,7 @@ private slots:
     void addAnchor  (QVector2D pos);
     void addBezier  (QVector2D pos);
     void removePoint(QVector2D pos);
+
 
 private:
 
@@ -49,7 +51,6 @@ private:
 
     QVector<QVector2D> createPlot();
 
-    bool isLive() const;
     void plot();
     void plotFunction();
     void plotBezier();
@@ -59,6 +60,7 @@ private:
     // Different from updatePlotDomain
     void updatePlotRange(double min, double max);
     void updatePlotDomain(double min, double max);
+
     double getZoom(double min, double max);
 
     void useSV();
