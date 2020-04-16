@@ -24,6 +24,6 @@ const QColor Common::Color::GREEN = QColor(15, 232, 0);
 const QColor Common::Color::RED   = QColor(214, 0, 68);
 const QColor Common::Color::GREY  = QColor(125, 125, 125);
 
-const QColor Common::Prefix::SV     = QString(" (SV)");
-const QColor Common::Prefix::BPM    = QString(" (BPM)");
-const QColor Common::Prefix::OFFSET = QString("ms");
+const QString Common::Suffix::SV     = QString(" (SV)");
+const QString Common::Suffix::BPM    = QString(" (BPM)");
+const QString Common::Suffix::OFFSET = QString("ms");
