@@ -43,7 +43,7 @@ void Stutter::on_generateButton_clicked() {
                     hoV.getOffsetV(true),
                     ui->initSvLabel->text().toDouble(),
                     ui->thresholdLabel->text().toDouble(),
-                    ui->avesv->value(),
+                    ui->aveSv->value(),
                     false, true,
                     ui->skipLastCheck->isChecked());
     else if (ui->bpmRadio->isChecked())
@@ -51,7 +51,7 @@ void Stutter::on_generateButton_clicked() {
                     hoV.getOffsetV(true),
                     ui->initBpmLabel->text().toDouble(),
                     ui->thresholdLabel->text().toDouble(),
-                    ui->avebpm->value(),
+                    ui->aveBpm->value(),
                     true, true,
                     ui->skipLastCheck->isChecked());
 
@@ -71,7 +71,7 @@ void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
                 hoV.getOffsetV(true),
                 BPM_MIN,
                 BPM_MIN,
-                ui->avebpm->value(),
+                ui->aveBpm->value(),
                 true,
                 false,
                 true,
@@ -95,7 +95,7 @@ void Stutter::on_NormBackTelButton_clicked() { // Normalized Back Teleport
                 hoV.getOffsetV(true),
                 BPM_MIN,
                 BPM_MIN,
-                ui->avebpm->value(),
+                ui->aveBpm->value(),
                 true,
                 false,
                 true,
@@ -115,7 +115,7 @@ void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
     TimingPoint tpNormalized;
 
     tpTeleport.setValue(BPM_MAX);
-    tpNormalized.setValue(ui->avebpm->value());
+    tpNormalized.setValue(ui->aveBpm->value());
 
     tpTeleport.setOffset(0);
     tpNormalized.setOffset(1);
@@ -148,7 +148,7 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
     TimingPoint tpNormalized;
 
     tpTeleport.setValue(BPM_MAX);
-    tpNormalized.setValue(ui->avebpm->value());
+    tpNormalized.setValue(ui->aveBpm->value());
 
     tpTeleport.setOffset(0);
     tpNormalized.setOffset(1);
@@ -165,14 +165,14 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
                     hoV.getOffsetV(true),
                     true, true).getStringRaw("\n"));
 }
-void Stutter::on_avebpm_valueChanged(double) { stutterLimitUpdate(); }
-void Stutter::on_avesv_valueChanged(double) { stutterLimitUpdate(); }
+void Stutter::on_aveBpm_valueChanged(double) { stutterLimitUpdate(); }
+void Stutter::on_aveSv_valueChanged(double) { stutterLimitUpdate(); }
 void Stutter::stutterLimitUpdate() {
     if (ui->svRadio->isChecked()){
         // We limit the initial SV values
         QVector<double> initLim = algorithm::stutterRelInitLimits(
                     ui->thresholdLabel->text().toDouble(),
-                    ui->avesv->text().toDouble(), SV_MIN, SV_MAX);
+                    ui->aveSv->text().toDouble(), SV_MIN, SV_MAX);
 
         // If the lower limit is lower than SV_MIN we curb the setMinimum
         if (initLim[0] >= SV_MIN)
@@ -191,7 +191,7 @@ void Stutter::stutterLimitUpdate() {
         // We limit the initial BPM values
         QVector<double> initLim = algorithm::stutterRelInitLimits(
                     ui->thresholdLabel->text().toDouble(),
-                    ui->avebpm->text().toDouble(), BPM_MIN, BPM_MAX);
+                    ui->aveBpm->text().toDouble(), BPM_MIN, BPM_MAX);
 
         // If the lower limit is higher than BPM_MIN we curb the setMinimum
         if (initLim[0] >= BPM_MIN) {

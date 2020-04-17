@@ -27,14 +27,13 @@ private slots:
     void on_frequencyLabel_valueChanged(int value);
     void on_amplitudeSlider_valueChanged(int value);
     void on_generateButton_clicked();
-    void on_phaseLabelueChanged(int value);
+    void on_phaseLabel_valueChanged(int value);
     void on_powerLabel_valueChanged(int value);
     void on_resetButton_clicked();
 
-
     // Initializes and updates tpf's graph respectively
-    void tpfInitcustomPlot();
-    void tpfUpdatecustomPlot(QVector<double> offset_v, QVector<double> valueV, bool isBpm);
+    void tpfInitCustomPlot();
+    void tpfUpdateCustomPlot(QVector<double> offset_v, QVector<double> valueV, bool isBpm);
 
     void on_output_textChanged();
 

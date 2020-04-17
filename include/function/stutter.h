@@ -28,8 +28,8 @@ private slots:
     void on_thresholdSlider_valueChanged(int value);
     void on_generateButton_clicked();
     void on_initBpmSlider_valueChanged(int value);
-    void on_avebpm_valueChanged(double);
-    void on_avesv_valueChanged(double);
+    void on_aveBpm_valueChanged(double);
+    void on_aveSv_valueChanged(double);
     void on_NormFrontTelButton_clicked();
     void on_MaxFronTelButton_clicked();
     void on_NormBackTelButton_clicked();

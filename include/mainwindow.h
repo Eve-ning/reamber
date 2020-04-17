@@ -17,10 +17,10 @@ public:
 
 private slots:
 
-    void on_homeRepo_clicked();
-    void on_homeWiki_clicked();
-    void on_homeReport_clicked();
-    void on_homeReleases_clicked();
+    void on_homeRepoButton_clicked();
+    void on_homeWikiButton_clicked();
+    void on_homeReportButton_clicked();
+    void on_homeReleasesButton_clicked();
     void on_listWidget_currentRowChanged(int currentRow);
 
     // Trigger Clipboard

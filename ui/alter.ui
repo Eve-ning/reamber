@@ -45,7 +45,7 @@
          <item row="0" column="0">
           <widget class="QTabWidget" name="presetTab">
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="self">
             <attribute name="title">
@@ -193,7 +193,7 @@
                  </widget>
                 </item>
                 <item row="0" column="2">
-                 <widget class="QLabel" name="selfDelOffset_l">
+                 <widget class="QLabel" name="selfDelOffsetLabel">
                   <property name="layoutDirection">
                    <enum>Qt::LeftToRight</enum>
                   </property>
@@ -311,7 +311,7 @@
                  </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="crossLabel">
                   <property name="text">
                    <string>&lt;input&gt; crossed BY &lt;inputCross&gt;</string>
                   </property>

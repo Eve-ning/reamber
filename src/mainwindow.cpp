@@ -3,7 +3,6 @@
 #include "object/multiple/timingpointv.h"
 #include "object/multiple/hitobjectv.h"
 #include "algorithm/algorithm.h"
-#include <QString>
 #include <QDebug>
 #include <QDesktopServices>
 #include <QUrl>
@@ -27,16 +26,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::on_homeRepo_clicked() {
+void MainWindow::on_homeRepoButton_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber", QUrl::TolerantMode));
 }
-void MainWindow::on_homeWiki_clicked() {
+void MainWindow::on_homeWikiButton_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/wiki", QUrl::TolerantMode));
 }
-void MainWindow::on_homeReport_clicked() {
+void MainWindow::on_homeReportButton_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/issues/new", QUrl::TolerantMode));
 }
-void MainWindow::on_homeReleases_clicked() {
+void MainWindow::on_homeReleasesButton_clicked() {
     QDesktopServices::openUrl(QUrl("https://github.com/Eve-ning/reamber/releases", QUrl::TolerantMode));
 }
 
@@ -59,7 +58,6 @@ void MainWindow::stutterClipboardCopy(){
 void MainWindow::tpfClipboardCopy(){
     clipboardCopy(ui->widgetTpf->output());
 }
-
 
 void MainWindow::on_listWidget_currentRowChanged(int currentRow) {
     ui->stackedWidget->setCurrentIndex(currentRow);

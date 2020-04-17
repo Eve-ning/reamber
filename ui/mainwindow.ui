@@ -85,12 +85,12 @@
     <item row="0" column="1" rowspan="3">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageHome">
        <layout class="QGridLayout" name="gridLayout_52">
         <item row="1" column="0">
-         <widget class="QPushButton" name="homeWiki">
+         <widget class="QPushButton" name="homeWikiButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -113,7 +113,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QPushButton" name="homeReport">
+         <widget class="QPushButton" name="homeReportButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -136,7 +136,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QPushButton" name="homeRepo">
+         <widget class="QPushButton" name="homeRepoButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -159,7 +159,7 @@
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QPushButton" name="homeReleases">
+         <widget class="QPushButton" name="homeReleasesButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>0</horstretch>

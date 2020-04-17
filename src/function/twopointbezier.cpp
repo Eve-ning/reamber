@@ -1,7 +1,7 @@
 #include "include/function/twopointbezier.h"
 #include "ui_twopointbezier.h"
 #include "include/common.h"
-#include "depend/QCustomPlot.h"
+#include "depend/qcustomplot.h"
 #include "algorithm/algorithm.h"
 #include <QVector2D>
 #include <QtGlobal>
@@ -264,8 +264,8 @@ long long TwoPointBezier::binomCoeff(int n, int k) {
     return static_cast<long long>(result);
 }
 QString TwoPointBezier::generateButtonCode(const QVector<double> & offsets,
-                                     const QVector<double> & values,
-                                     bool isBPM){
+                                           const QVector<double> & values,
+                                           bool isBPM){
     TimingPointV tpV = TimingPointV();
     if (offsets.size() != values.size()){
         qDebug() << "offsets and values must be of the same size";

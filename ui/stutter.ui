@@ -146,13 +146,13 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QGroupBox" name="avebpmLO">
+          <widget class="QGroupBox" name="aveBpmLO">
            <property name="title">
             <string>average_bpm</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_37">
             <item row="0" column="0">
-             <widget class="QDoubleSpinBox" name="avebpm">
+             <widget class="QDoubleSpinBox" name="aveBpm">
               <property name="minimum">
                <double>0.000000000000000</double>
               </property>
@@ -168,13 +168,13 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QGroupBox" name="avesvLO">
+          <widget class="QGroupBox" name="aveSvLO">
            <property name="title">
             <string>average_sv</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_10">
             <item row="0" column="0">
-             <widget class="QDoubleSpinBox" name="avesv">
+             <widget class="QDoubleSpinBox" name="aveSv">
               <property name="minimum">
                <double>0.100000000000000</double>
               </property>
