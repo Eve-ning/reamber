@@ -21,7 +21,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_19">
       <item row="0" column="2" rowspan="2">
-       <widget class="QGroupBox" name="output_lo">
+       <widget class="QGroupBox" name="outputLO">
         <property name="title">
          <string>output</string>
         </property>
@@ -81,13 +81,13 @@
        </widget>
       </item>
       <item row="0" column="0" rowspan="2">
-       <widget class="QGroupBox" name="controls_lo">
+       <widget class="QGroupBox" name="controlsLO">
         <property name="title">
          <string>controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_17">
          <item row="0" column="0" colspan="3">
-          <widget class="QGroupBox" name="input_lo">
+          <widget class="QGroupBox" name="inputLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -109,7 +109,7 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QGroupBox" name="interpts_lo">
+          <widget class="QGroupBox" name="interptsLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -140,7 +140,7 @@
           </widget>
          </item>
          <item row="4" column="0" colspan="3">
-          <widget class="QGroupBox" name="type_lo">
+          <widget class="QGroupBox" name="typeLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -172,7 +172,7 @@
           </widget>
          </item>
          <item row="5" column="0" colspan="3">
-          <widget class="QGroupBox" name="curve_type_lo">
+          <widget class="QGroupBox" name="curve_typeLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -208,7 +208,7 @@
           </widget>
          </item>
          <item row="6" column="2" rowspan="3">
-          <widget class="QGroupBox" name="endbpm_lo">
+          <widget class="QGroupBox" name="endbpmLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -255,7 +255,7 @@
           </widget>
          </item>
          <item row="0" column="3" rowspan="8">
-          <widget class="QGroupBox" name="parameters_lo">
+          <widget class="QGroupBox" name="parametersLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -267,7 +267,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_28">
             <item row="0" column="6" rowspan="3">
-             <widget class="QGroupBox" name="ampl_lo">
+             <widget class="QGroupBox" name="amplLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -323,7 +323,7 @@
              </widget>
             </item>
             <item row="0" column="8" rowspan="3">
-             <widget class="QGroupBox" name="power_lo">
+             <widget class="QGroupBox" name="powerLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -379,7 +379,7 @@
              </widget>
             </item>
             <item row="0" column="4" rowspan="3">
-             <widget class="QGroupBox" name="endsv_lo">
+             <widget class="QGroupBox" name="endsvLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -435,7 +435,7 @@
              </widget>
             </item>
             <item row="0" column="5" rowspan="3">
-             <widget class="QGroupBox" name="freq_lo">
+             <widget class="QGroupBox" name="freqLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -494,7 +494,7 @@
              </widget>
             </item>
             <item row="0" column="2" rowspan="3">
-             <widget class="QGroupBox" name="initsv_lo">
+             <widget class="QGroupBox" name="initsvLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -550,7 +550,7 @@
              </widget>
             </item>
             <item row="0" column="7" rowspan="3">
-             <widget class="QGroupBox" name="phase_lo">
+             <widget class="QGroupBox" name="phaseLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -609,7 +609,7 @@
           </widget>
          </item>
          <item row="6" column="1" rowspan="3">
-          <widget class="QGroupBox" name="initbpm_lo">
+          <widget class="QGroupBox" name="initbpmLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -649,7 +649,7 @@
           </widget>
          </item>
          <item row="1" column="0" rowspan="2" colspan="3">
-          <widget class="QGroupBox" name="offset_lo">
+          <widget class="QGroupBox" name="offsetLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>

@@ -24,7 +24,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="3" rowspan="3">
-       <widget class="QGroupBox" name="output_lo">
+       <widget class="QGroupBox" name="outputLO">
         <property name="title">
          <string>output</string>
         </property>
@@ -43,7 +43,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QGroupBox" name="preset_lo">
+       <widget class="QGroupBox" name="presetLO">
         <property name="title">
          <string>presets</string>
         </property>
@@ -80,7 +80,7 @@
        </widget>
       </item>
       <item row="0" column="2" rowspan="3">
-       <widget class="QGroupBox" name="input_lo">
+       <widget class="QGroupBox" name="inputLO">
         <property name="title">
          <string>input</string>
         </property>
@@ -96,13 +96,13 @@
        </widget>
       </item>
       <item row="0" column="0" rowspan="3">
-       <widget class="QGroupBox" name="controls_lo">
+       <widget class="QGroupBox" name="controlsLO">
         <property name="title">
          <string>controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_5">
          <item row="0" column="1">
-          <widget class="QGroupBox" name="initsv_lo">
+          <widget class="QGroupBox" name="initsvLO">
            <property name="title">
             <string>initial_sv</string>
            </property>
@@ -146,7 +146,7 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QGroupBox" name="avebpm_lo">
+          <widget class="QGroupBox" name="avebpmLO">
            <property name="title">
             <string>average_bpm</string>
            </property>
@@ -168,7 +168,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QGroupBox" name="avesv_lo">
+          <widget class="QGroupBox" name="avesvLO">
            <property name="title">
             <string>average_sv</string>
            </property>
@@ -193,7 +193,7 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QGroupBox" name="initbpm_lo">
+          <widget class="QGroupBox" name="initbpmLO">
            <property name="title">
             <string>initial_bpm</string>
            </property>
@@ -237,7 +237,7 @@
           </widget>
          </item>
          <item row="2" column="2" colspan="2">
-          <widget class="QGroupBox" name="type_lo">
+          <widget class="QGroupBox" name="typeLO">
            <property name="title">
             <string>type</string>
            </property>
@@ -263,7 +263,7 @@
           </widget>
          </item>
          <item row="0" column="2" colspan="2">
-          <widget class="QGroupBox" name="threshold_lo">
+          <widget class="QGroupBox" name="thresholdLO">
            <property name="title">
             <string>threshold</string>
            </property>
@@ -323,7 +323,7 @@
        </spacer>
       </item>
       <item row="1" column="1">
-       <widget class="QGroupBox" name="settings_lo">
+       <widget class="QGroupBox" name="settingsLO">
         <property name="title">
          <string>settings</string>
         </property>

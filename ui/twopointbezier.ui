@@ -21,7 +21,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="2">
-       <widget class="QGroupBox" name="customplot_lo">
+       <widget class="QGroupBox" name="customplotLO">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -91,13 +91,13 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QGroupBox" name="options_lo">
+       <widget class="QGroupBox" name="optionsLO">
         <property name="title">
          <string>options</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0" colspan="2">
-          <widget class="QGroupBox" name="output_lo">
+          <widget class="QGroupBox" name="outputLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -129,7 +129,7 @@
           </widget>
          </item>
          <item row="2" column="0" colspan="2">
-          <widget class="QGroupBox" name="par_lo">
+          <widget class="QGroupBox" name="parLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -141,7 +141,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="0" column="2">
-             <widget class="QGroupBox" name="end_lo">
+             <widget class="QGroupBox" name="endLO">
               <property name="title">
                <string>end_anchor</string>
               </property>
@@ -229,7 +229,7 @@
              </spacer>
             </item>
             <item row="1" column="0" rowspan="3" colspan="3">
-             <widget class="QGroupBox" name="interval_lo">
+             <widget class="QGroupBox" name="intervalLO">
               <property name="title">
                <string>Interval</string>
               </property>
@@ -254,7 +254,7 @@
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
-             <widget class="QGroupBox" name="start_lo">
+             <widget class="QGroupBox" name="startLO">
               <property name="title">
                <string>start_anchor</string>
               </property>
@@ -322,7 +322,7 @@
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QGroupBox" name="bound_lo">
+          <widget class="QGroupBox" name="boundLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
