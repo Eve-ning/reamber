@@ -76,7 +76,7 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QCheckBox" name="clipboard_copy">
+     <widget class="QCheckBox" name="clipboardCopy">
       <property name="text">
        <string>auto clipboard copy</string>
       </property>
@@ -85,12 +85,12 @@
     <item row="0" column="1" rowspan="3">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="page_home">
+      <widget class="QWidget" name="pageHome">
        <layout class="QGridLayout" name="gridLayout_52">
         <item row="1" column="0">
-         <widget class="QPushButton" name="home_wiki">
+         <widget class="QPushButton" name="homeWikiButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -113,7 +113,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QPushButton" name="home_report">
+         <widget class="QPushButton" name="homeReportButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -136,7 +136,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QPushButton" name="home_repo">
+         <widget class="QPushButton" name="homeRepoButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -159,7 +159,7 @@
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QPushButton" name="home_releases">
+         <widget class="QPushButton" name="homeReleasesButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -182,45 +182,45 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_stutter">
+      <widget class="QWidget" name="pageStutter">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <widget class="Stutter" name="widget_stutter" native="true"/>
+         <widget class="Stutter" name="widgetStutter" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_copier">
+      <widget class="QWidget" name="pageCopier">
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
-         <widget class="Copier" name="widget_copier" native="true"/>
+         <widget class="Copier" name="widgetCopier" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_tpf">
+      <widget class="QWidget" name="pageTpf">
        <layout class="QGridLayout" name="gridLayout_16">
         <item row="0" column="0">
-         <widget class="TwoPointFunction" name="widget_tpf" native="true"/>
+         <widget class="TwoPointFunction" name="widgetTpf" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_tpb">
+      <widget class="QWidget" name="pageTpb">
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <widget class="TwoPointBezier" name="widget_tpb" native="true"/>
+         <widget class="TwoPointBezier" name="widgetTpb" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_norm">
+      <widget class="QWidget" name="pageNorm">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="Normalizer" name="widget_norm" native="true"/>
+         <widget class="Normalizer" name="widgetNorm" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_alter">
+      <widget class="QWidget" name="pageAlter">
        <layout class="QGridLayout" name="gridLayout_44">
         <item row="1" column="0">
-         <widget class="Alter" name="widget_alter" native="true"/>
+         <widget class="Alter" name="widgetAlter" native="true"/>
         </item>
        </layout>
       </widget>

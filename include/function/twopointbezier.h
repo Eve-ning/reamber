@@ -24,14 +24,14 @@ private slots:
     void on_bpmRadio_clicked();
     void on_svRadio_clicked();
     void on_interval_editingFinished();
-    void on_vertzoom_valueChanged(int value);
+    void on_vertZoom_valueChanged(int value);
     void on_startOffset_valueChanged(int arg1);
     void on_endOffset_valueChanged(int arg1);
     void on_startValue_valueChanged(double arg1);
     void on_endValue_valueChanged(double arg1);
     void on_updateBoundBtn_clicked();
-    void on_generate_clicked();
-    void on_reset_clicked();
+    void on_generateButton_clicked();
+    void on_resetButton_clicked();
 
     static long long binomCoeff(int n, int k);
 
@@ -45,7 +45,7 @@ private slots:
 private:
 
     QVector2D getMousePos();
-    QString generateCode(const QVector<double> & offsets,
+    QString generateButtonCode(const QVector<double> & offsets,
                          const QVector<double> & values,
                          bool isBPM);
 
@@ -66,7 +66,7 @@ private:
     void useSV();
     void useBPM();
 
-    void resetSettings();
+    void resetButtonSettings();
 
     QVector<QVector2D> bezierPts;
     QVector<QVector2D> anchorPts;

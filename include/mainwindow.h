@@ -17,10 +17,10 @@ public:
 
 private slots:
 
-    void on_home_repo_clicked();
-    void on_home_wiki_clicked();
-    void on_home_report_clicked();
-    void on_home_releases_clicked();
+    void on_homeRepoButton_clicked();
+    void on_homeWikiButton_clicked();
+    void on_homeReportButton_clicked();
+    void on_homeReleasesButton_clicked();
     void on_listWidget_currentRowChanged(int currentRow);
 
     // Trigger Clipboard
@@ -33,7 +33,7 @@ private slots:
 private:
 
     QClipboard *clipboard;
-    void clipboard_copy(QString str);
+    void clipboardCopy(QString str);
     Ui::MainWindow *ui;
 };
 

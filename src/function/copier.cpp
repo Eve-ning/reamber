@@ -19,7 +19,7 @@ QString Copier::output() const
     return ui->output->toPlainText();
 }
 
-void Copier::on_generate_clicked() {
+void Copier::on_generateButton_clicked() {
     // We need the tpV and hoV for copier
     // However, we don't actually need correct keys for hit_object
     TimingPointV tpV;

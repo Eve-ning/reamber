@@ -7,7 +7,7 @@ TwoPointFunction::TwoPointFunction(QWidget *parent) :
     ui(new Ui::TwoPointFunction)
 {
     ui->setupUi(this);
-    tpfInitCustomplot();
+    tpfInitCustomPlot();
 }
 
 TwoPointFunction::~TwoPointFunction()
@@ -20,37 +20,37 @@ QString TwoPointFunction::output() const
     return ui->output->toPlainText();
 }
 
-void TwoPointFunction::on_initsv_valueChanged(int value) {
-    ui->initsv_val->setText(QString::number(value/VS_TO_VAL));
-    if(ui->output_live->isChecked()) on_generate_clicked();
+void TwoPointFunction::on_initSvLabel_valueChanged(int value) {
+    ui->initSvLabel->setText(QString::number(value/VS_TO_VAL));
+    if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_endsv_valueChanged(int value) {
-    ui->endsv_val->setText(QString::number(value/VS_TO_VAL));
-    if(ui->output_live->isChecked()) on_generate_clicked();
+void TwoPointFunction::on_endSvLabel_valueChanged(int value) {
+    ui->endSvLabel->setText(QString::number(value/VS_TO_VAL));
+    if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_freq_valueChanged(int value) {
-    ui->freq_val->setText(QString::number(value/2.0));
-    if(ui->output_live->isChecked()) on_generate_clicked();
+void TwoPointFunction::on_frequencyLabel_valueChanged(int value) {
+    ui->frequencyLabel->setText(QString::number(value/2.0));
+    if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_ampl_valueChanged(int value) {
-    if (ui->type_bpm->isChecked())
-        // BPM amplitude will only scale [-1 ~ 1]
-        ui->ampl_val->setText(QString::number(value/(VS_TO_VAL * 10)));
+void TwoPointFunction::on_amplitudeSlider_valueChanged(int value) {
+    if (ui->bpmRadio->isChecked())
+        // BPM amplitudeSlideritude will only scale [-1 ~ 1]
+        ui->amplitudeLabel->setText(QString::number(value/(VS_TO_VAL * 10)));
     else
-        ui->ampl_val->setText(QString::number(value/VS_TO_VAL));
+        ui->amplitudeLabel->setText(QString::number(value/VS_TO_VAL));
 
 
-    if (ui->output_live->isChecked()) on_generate_clicked();
+    if (ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_phase_valueChanged(int value) {
-    ui->phase_val->setText(QString::number(value));
-    if(ui->output_live->isChecked()) on_generate_clicked();
+void TwoPointFunction::on_phaseLabel_valueChanged(int value) {
+    ui->phaseLabel->setText(QString::number(value));
+    if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_power_valueChanged(int value) {
-    ui->power_val->setText(QString::number(value/10.0));
-    if(ui->output_live->isChecked()) on_generate_clicked();
+void TwoPointFunction::on_powerLabel_valueChanged(int value) {
+    ui->powerLabel->setText(QString::number(value/10.0));
+    if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_generate_clicked() {
+void TwoPointFunction::on_generateButton_clicked() {
     HitObjectV hoV;
 
     // Break if fail
@@ -61,26 +61,26 @@ void TwoPointFunction::on_generate_clicked() {
     if (offsetV.size() < 2) return; // Needs to be at least 2
     if ((offsetV[1] - offsetV[0]) <= 0.0) return; // Needs to be > 0
 
-    bool isBpm = ui->type_bpm->isChecked();
+    bool isBpm = ui->bpmRadio->isChecked();
 
     // Extract all values from TpF
-    double initTp = isBpm ? ui->initbpm->value() : ui->initsv_val->text().toDouble();
-    double endTp = isBpm ? ui->endbpm->value() :ui->endsv_val->text().toDouble();
-    double ampl = ui->ampl_val->text().toDouble();
-    double freq = ui->freq_val->text().toDouble();
-    double phase = ui->phase_val->text().toDouble();
-    double power = ui->power_val->text().toDouble();
+    double initTp = isBpm ? ui->initBpm->value() : ui->initSvLabel->text().toDouble();
+    double endTp = isBpm ? ui->endbpm->value() :ui->endSvLabel->text().toDouble();
+    double amplitude = ui->amplitudeLabel->text().toDouble();
+    double freq = ui->frequencyLabel->text().toDouble();
+    double phase = ui->phaseLabel->text().toDouble();
+    double power = ui->powerLabel->text().toDouble();
     double interpts = ui->interpts->value();
 
-    bool curve_sine = ui->curve_type->currentText() == "sine";
-    bool curve_power = ui->curve_type->currentText() == "power";
+    bool curveSine = ui->curveType->currentText() == "sine";
+    bool curvePower = ui->curveType->currentText() == "power";
 
-    bool curve_invert_y = ui->curve_invert_y->isChecked();
+    bool curveInvertY = ui->curveInvertY->isChecked();
 
-    bool output_curb = ui->output_curb->isChecked();
+    bool outputTrimCheck = ui->outputTrimCheck->isChecked();
 
     // Adjust offset
-    double offset_adjust = ui->offset_val->value();
+    double offset_adjust = ui->offsetVal->value();
     offsetV[0] += offset_adjust;
     offsetV[1] += offset_adjust;
 
@@ -96,24 +96,24 @@ void TwoPointFunction::on_generate_clicked() {
 
     // The function should be
     // f(offset) =
-    // <PRIMARY>   <LINEAR> (mx + c) + ampl *
+    // <PRIMARY>   <LINEAR> (mx + c) + amplitudeSlider *
     // <SECONDARY> <SINE>   sin[(x * 2 * PI + phs) * freq]
     // <SECONDARY> <POWER>  x^pwr
-    auto tpf_function = [&](double progress) -> double {
+    auto tpfFunction = [&](double progress) -> double {
         double primary = 0;
         double gradient = (endTp - initTp);
         primary = (progress * gradient + initTp);
         double secondary = 0;
-        if (curve_sine)  secondary = ampl * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq);
-        else if (curve_power) secondary = pow(progress * ampl, power);
+        if (curveSine)  secondary = amplitude * sin(((progress + (phase/360.0)) * double(MATH_PI) * 2) * freq);
+        else if (curvePower) secondary = pow(progress * amplitude, power);
 
         // This is so that the curve scales relative to the average linear BPM
         if (isBpm) secondary *= ((endTp + initTp) / 2);
 
         // Curb values if needed
-        if (output_curb)  return clipValue(curve_invert_y ? (primary - secondary) : (primary + secondary), isBpm);
+        if (outputTrimCheck)  return clipValue(curveInvertY ? (primary - secondary) : (primary + secondary), isBpm);
 
-        return curve_invert_y ? (primary - secondary) : (primary + secondary);
+        return curveInvertY ? (primary - secondary) : (primary + secondary);
     };
 
     // Create all the timing points
@@ -122,7 +122,7 @@ void TwoPointFunction::on_generate_clicked() {
     for (double offset : offsetV) {
         TimingPoint tp;
         double progress = (offset - offsetV[0])/offset_difference;
-        tp.loadParameters(offset, tpf_function(progress), ui->type_bpm->isChecked(), false, 4);
+        tp.loadParameters(offset, tpfFunction(progress), ui->bpmRadio->isChecked(), false, 4);
         tpV.pushBack(tp);
     }
 
@@ -130,75 +130,75 @@ void TwoPointFunction::on_generate_clicked() {
     tpV.sortByOffset(true);
 
     // Call update on the plot
-    tpfUpdateCustomplot(tpV.getOffsetV(),
+    tpfUpdateCustomPlot(tpV.getOffsetV(),
                         tpV.getValueV(),
                         isBpm);
 
     // Update Average SV
-    ui->output_ave->setText(isBpm ?
+    ui->outputAverage->setText(isBpm ?
                                 QString::number(tpV.getAverageBpmValue()) :
                                 QString::number(tpV.getAverageSvValue()));
 
     ui->output->setPlainText(tpV.getStringRaw());
 }
-void TwoPointFunction::on_reset_clicked() {
-    ui->ampl->setValue(0);
-    ui->freq->setValue(1);
+void TwoPointFunction::on_resetButton_clicked() {
+    ui->amplitudeSlider->setValue(0);
+    ui->frequencySlider->setValue(1);
     // freq slider on 1 sets to 0.5 for some reason, will manually set this to 0.5
-    ui->freq_val->setText("1.0");
+    ui->frequencyLabel->setText("1.0");
 
     ui->interpts->setValue(50);
 
-    ui->phase->setValue(0);
-    ui->power->setValue(10);
+    ui->phaseSlider->setValue(0);
+    ui->powerSlider->setValue(10);
 
-    ui->initsv->setValue(100);
-    ui->endsv->setValue(100);
+    ui->initSv->setValue(100);
+    ui->endSv->setValue(100);
 
-    ui->initbpm->setValue(120);
+    ui->initBpm->setValue(120);
     ui->endbpm->setValue(120);
 
-    ui->offset_val->setValue(0);
+    ui->offsetVal->setValue(0);
 
-    ui->type_sv->setChecked(true);
-    ui->type_bpm->setChecked(false);
-    ui->curve_type->setCurrentIndex(0);
-    ui->curve_invert_y->setChecked(false);
-//    ui->output_curb->setChecked(true);
-//    ui->output_live->setChecked(false);
+    ui->svRadio->setChecked(true);
+    ui->bpmRadio->setChecked(false);
+    ui->curveType->setCurrentIndex(0);
+    ui->curveInvertY->setChecked(false);
+//    ui->outputTrimCheck->setChecked(true);
+//    ui->outputLive->setChecked(false);
 }
 
-void TwoPointFunction::tpfInitCustomplot() {
-    auto customplot = ui->customplot;
-    customplot->addGraph();
+void TwoPointFunction::tpfInitCustomPlot() {
+    auto customPlot = ui->customPlot;
+    customPlot->addGraph();
 
-    customplot->xAxis->setLabel("offset");
-    customplot->yAxis->setLabel("value");
+    customPlot->xAxis->setLabel("offset");
+    customPlot->yAxis->setLabel("value");
 
-    customplot->replot();
+    customPlot->replot();
 }
-void TwoPointFunction::tpfUpdateCustomplot(QVector<double> offsetV, QVector<double> valueV, bool isBpm) {
+void TwoPointFunction::tpfUpdateCustomPlot(QVector<double> offsetV, QVector<double> valueV, bool isBpm) {
 
-    auto customplot = ui->customplot;
-    customplot->graph(0)->setData(offsetV,valueV);
+    auto customPlot = ui->customPlot;
+    customPlot->graph(0)->setData(offsetV,valueV);
 
     // We'll have different curbing for BPM and SV
-    double value_rng_min;
-    double value_rng_max;
+    double valueRngMin;
+    double valueRngMax;
 
     if (isBpm) {
-        value_rng_min = *std::min_element(valueV.begin(), valueV.end());
-        value_rng_max = *std::max_element(valueV.begin(), valueV.end());
+        valueRngMin = *std::min_element(valueV.begin(), valueV.end());
+        valueRngMax = *std::max_element(valueV.begin(), valueV.end());
     } else {
-        value_rng_min = SV_MIN;
-        value_rng_max = SV_MAX;
+        valueRngMin = SV_MIN;
+        valueRngMax = SV_MAX;
     }
 
-    customplot->xAxis->setRange(*std::min_element(offsetV.begin(), offsetV.end()),
+    customPlot->xAxis->setRange(*std::min_element(offsetV.begin(), offsetV.end()),
                                 *std::max_element(offsetV.begin(), offsetV.end()));
-    customplot->yAxis->setRange(value_rng_min, value_rng_max);
+    customPlot->yAxis->setRange(valueRngMin, valueRngMax);
 
-    customplot->replot();
+    customPlot->replot();
 }
 
 void TwoPointFunction::on_output_textChanged() {

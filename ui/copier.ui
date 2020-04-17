@@ -21,7 +21,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_12">
       <item row="0" column="0" rowspan="2">
-       <widget class="QGroupBox" name="ho_lo">
+       <widget class="QGroupBox" name="hoLO">
         <property name="title">
          <string>hit_object_input</string>
         </property>
@@ -37,7 +37,7 @@
        </widget>
       </item>
       <item row="0" column="1" rowspan="2">
-       <widget class="QGroupBox" name="tp_lo">
+       <widget class="QGroupBox" name="tpLO">
         <property name="title">
          <string>timing_point_input</string>
         </property>
@@ -53,7 +53,7 @@
        </widget>
       </item>
       <item row="0" column="2" rowspan="2">
-       <widget class="QGroupBox" name="output_lo">
+       <widget class="QGroupBox" name="outputLO">
         <property name="title">
          <string>output</string>
         </property>
@@ -65,9 +65,9 @@
        </widget>
       </item>
       <item row="2" column="0" colspan="3">
-       <widget class="QPushButton" name="generate">
+       <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>Generate</string>
+         <string>generateButton</string>
         </property>
        </widget>
       </item>

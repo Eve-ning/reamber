@@ -22,7 +22,7 @@ signals:
     void outputChanged();
 
 private slots:
-    void on_generate_clicked();
+    void on_generateButton_clicked();
     void on_output_textChanged();
 
 private:

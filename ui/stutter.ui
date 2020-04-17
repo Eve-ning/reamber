@@ -24,7 +24,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="3" rowspan="3">
-       <widget class="QGroupBox" name="output_lo">
+       <widget class="QGroupBox" name="outputLO">
         <property name="title">
          <string>output</string>
         </property>
@@ -36,41 +36,41 @@
        </widget>
       </item>
       <item row="3" column="0" colspan="4">
-       <widget class="QPushButton" name="generate">
+       <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>Generate</string>
+         <string>generateButton</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QGroupBox" name="preset_lo">
+       <widget class="QGroupBox" name="presetLO">
         <property name="title">
          <string>presets</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_46">
          <item row="5" column="0">
-          <widget class="QPushButton" name="preset_nbt">
+          <widget class="QPushButton" name="NormBackTelButton">
            <property name="text">
             <string>Normalized Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QPushButton" name="preset_nft">
+          <widget class="QPushButton" name="NormFrontTelButton">
            <property name="text">
             <string>Normalized Front Teleport</string>
            </property>
           </widget>
          </item>
          <item row="7" column="0">
-          <widget class="QPushButton" name="preset_mbt">
+          <widget class="QPushButton" name="MaxBackTelButton">
            <property name="text">
             <string>Max Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QPushButton" name="preset_mft">
+          <widget class="QPushButton" name="MaxFronTelButton">
            <property name="text">
             <string>Max Front Teleport</string>
            </property>
@@ -80,7 +80,7 @@
        </widget>
       </item>
       <item row="0" column="2" rowspan="3">
-       <widget class="QGroupBox" name="input_lo">
+       <widget class="QGroupBox" name="inputLO">
         <property name="title">
          <string>input</string>
         </property>
@@ -96,13 +96,13 @@
        </widget>
       </item>
       <item row="0" column="0" rowspan="3">
-       <widget class="QGroupBox" name="controls_lo">
+       <widget class="QGroupBox" name="controlsLO">
         <property name="title">
          <string>controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_5">
          <item row="0" column="1">
-          <widget class="QGroupBox" name="initsv_lo">
+          <widget class="QGroupBox" name="initsvLO">
            <property name="title">
             <string>initial_sv</string>
            </property>
@@ -111,7 +111,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="1" column="0">
-             <widget class="QSlider" name="initsv_vs">
+             <widget class="QSlider" name="initSvVs">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -133,7 +133,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="initsv_val">
+             <widget class="QLabel" name="initSvLabel">
               <property name="text">
                <string>1.0</string>
               </property>
@@ -146,13 +146,13 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QGroupBox" name="avebpm_lo">
+          <widget class="QGroupBox" name="aveBpmLO">
            <property name="title">
             <string>average_bpm</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_37">
             <item row="0" column="0">
-             <widget class="QDoubleSpinBox" name="avebpm">
+             <widget class="QDoubleSpinBox" name="aveBpm">
               <property name="minimum">
                <double>0.000000000000000</double>
               </property>
@@ -168,15 +168,15 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QGroupBox" name="avesv_lo">
+          <widget class="QGroupBox" name="aveSvLO">
            <property name="title">
             <string>average_sv</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_10">
             <item row="0" column="0">
-             <widget class="QDoubleSpinBox" name="avesv">
+             <widget class="QDoubleSpinBox" name="aveSv">
               <property name="minimum">
-               <double>0.100000000000000</double>
+               <double>0.010000000000000</double>
               </property>
               <property name="maximum">
                <double>10.000000000000000</double>
@@ -193,7 +193,7 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QGroupBox" name="initbpm_lo">
+          <widget class="QGroupBox" name="initbpmLO">
            <property name="title">
             <string>initial_bpm</string>
            </property>
@@ -202,7 +202,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_36">
             <item row="0" column="0">
-             <widget class="QLabel" name="initbpm_val">
+             <widget class="QLabel" name="initBpmLabel">
               <property name="text">
                <string>120.0</string>
               </property>
@@ -212,7 +212,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QSlider" name="initbpm_vs">
+             <widget class="QSlider" name="initBpmSlider">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -237,13 +237,13 @@
           </widget>
          </item>
          <item row="2" column="2" colspan="2">
-          <widget class="QGroupBox" name="type_lo">
+          <widget class="QGroupBox" name="typeLO">
            <property name="title">
             <string>type</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_38">
             <item row="1" column="0">
-             <widget class="QRadioButton" name="type_sv">
+             <widget class="QRadioButton" name="svRadio">
               <property name="text">
                <string>SV</string>
               </property>
@@ -253,7 +253,7 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QRadioButton" name="type_bpm">
+             <widget class="QRadioButton" name="bpmRadio">
               <property name="text">
                <string>BPM</string>
               </property>
@@ -263,7 +263,7 @@
           </widget>
          </item>
          <item row="0" column="2" colspan="2">
-          <widget class="QGroupBox" name="threshold_lo">
+          <widget class="QGroupBox" name="thresholdLO">
            <property name="title">
             <string>threshold</string>
            </property>
@@ -272,7 +272,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_9">
             <item row="1" column="0">
-             <widget class="QSlider" name="threshold_vs">
+             <widget class="QSlider" name="thresholdSlider">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -294,7 +294,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="threshold_val">
+             <widget class="QLabel" name="thresholdLabel">
               <property name="text">
                <string>0.5</string>
               </property>
@@ -323,13 +323,13 @@
        </spacer>
       </item>
       <item row="1" column="1">
-       <widget class="QGroupBox" name="settings_lo">
+       <widget class="QGroupBox" name="settingsLO">
         <property name="title">
          <string>settings</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_59">
          <item row="0" column="0">
-          <widget class="QCheckBox" name="skip_last">
+          <widget class="QCheckBox" name="skipLastCheck">
            <property name="text">
             <string>Skip Last Point</string>
            </property>

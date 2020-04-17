@@ -22,17 +22,17 @@ signals:
 
 private slots:
 
-    void on_self_mv_b_clicked();
-    void on_self_av_b_clicked();
-    void on_self_mo_b_clicked();
-    void on_self_ao_b_clicked();
-    void on_self_del_b_clicked();
-    void on_convert_to_bpm_clicked();
-    void on_convert_to_sv_clicked();
-    void on_cross_mv_b_clicked();
-    void on_cross_av_b_clicked();
-    void on_self_subd_by_b_clicked();
-    void on_self_subd_to_b_clicked();
+    void on_selfMVButton_clicked();
+    void on_selfAVButton_clicked();
+    void on_selfMOButton_clicked();
+    void on_selfAOButton_clicked();
+    void on_selfDeleteButton_clicked();
+    void on_convertToBpm_clicked();
+    void on_convertToSv_clicked();
+    void on_crossMVButton_clicked();
+    void on_crossAVButton_clicked();
+    void on_selfSubdByButton_clicked();
+    void on_selfSubdToButton_clicked();
 
     void on_output_textChanged();
 

@@ -22,19 +22,18 @@ signals:
 
 private slots:
 
-    void on_initsv_valueChanged(int value);
-    void on_endsv_valueChanged(int value);
-    void on_freq_valueChanged(int value);
-    void on_ampl_valueChanged(int value);
-    void on_generate_clicked();
-    void on_phase_valueChanged(int value);
-    void on_power_valueChanged(int value);
-    void on_reset_clicked();
-
+    void on_initSvLabel_valueChanged(int value);
+    void on_endSvLabel_valueChanged(int value);
+    void on_frequencyLabel_valueChanged(int value);
+    void on_amplitudeSlider_valueChanged(int value);
+    void on_generateButton_clicked();
+    void on_phaseLabel_valueChanged(int value);
+    void on_powerLabel_valueChanged(int value);
+    void on_resetButton_clicked();
 
     // Initializes and updates tpf's graph respectively
-    void tpfInitCustomplot();
-    void tpfUpdateCustomplot(QVector<double> offset_v, QVector<double> valueV, bool isBpm);
+    void tpfInitCustomPlot();
+    void tpfUpdateCustomPlot(QVector<double> offset_v, QVector<double> valueV, bool isBpm);
 
     void on_output_textChanged();
 

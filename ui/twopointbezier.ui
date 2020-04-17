@@ -21,7 +21,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="2">
-       <widget class="QGroupBox" name="customplot_lo">
+       <widget class="QGroupBox" name="customPlotLO">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -33,7 +33,7 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
-          <widget class="QLabel" name="vertzoomLabel">
+          <widget class="QLabel" name="vertZoomLabel">
            <property name="text">
             <string>1.0x</string>
            </property>
@@ -53,7 +53,7 @@
           </widget>
          </item>
          <item row="1" column="1" alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="tipLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -66,7 +66,7 @@
           </widget>
          </item>
          <item row="1" column="0" rowspan="4">
-          <widget class="QSlider" name="vertzoom">
+          <widget class="QSlider" name="vertZoom">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -85,19 +85,19 @@
           </widget>
          </item>
          <item row="2" column="1" rowspan="3">
-          <widget class="QCustomPlotTPB" name="customplot" native="true"/>
+          <widget class="QCustomPlotTPB" name="customPlot" native="true"/>
          </item>
         </layout>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QGroupBox" name="options_lo">
+       <widget class="QGroupBox" name="optionsLO">
         <property name="title">
          <string>options</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0" colspan="2">
-          <widget class="QGroupBox" name="output_lo">
+          <widget class="QGroupBox" name="outputLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -109,9 +109,9 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_7">
             <item row="1" column="0" colspan="2">
-             <widget class="QPushButton" name="generate">
+             <widget class="QPushButton" name="generateButton">
               <property name="text">
-               <string>Generate</string>
+               <string>generateButton</string>
               </property>
              </widget>
             </item>
@@ -129,7 +129,7 @@
           </widget>
          </item>
          <item row="2" column="0" colspan="2">
-          <widget class="QGroupBox" name="par_lo">
+          <widget class="QGroupBox" name="parametersLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -141,7 +141,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="0" column="2">
-             <widget class="QGroupBox" name="end_lo">
+             <widget class="QGroupBox" name="endLO">
               <property name="title">
                <string>end_anchor</string>
               </property>
@@ -216,7 +216,7 @@
              </widget>
             </item>
             <item row="4" column="0" rowspan="3">
-             <spacer name="horizontalSpacer">
+             <spacer name="hs1">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -229,7 +229,7 @@
              </spacer>
             </item>
             <item row="1" column="0" rowspan="3" colspan="3">
-             <widget class="QGroupBox" name="interval_lo">
+             <widget class="QGroupBox" name="intervalLO">
               <property name="title">
                <string>Interval</string>
               </property>
@@ -254,7 +254,7 @@
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
-             <widget class="QGroupBox" name="start_lo">
+             <widget class="QGroupBox" name="startLO">
               <property name="title">
                <string>start_anchor</string>
               </property>
@@ -312,9 +312,9 @@
              </widget>
             </item>
             <item row="4" column="2" rowspan="3">
-             <widget class="QPushButton" name="reset">
+             <widget class="QPushButton" name="resetButton">
               <property name="text">
-               <string>Reset</string>
+               <string>resetButton</string>
               </property>
              </widget>
             </item>
@@ -322,7 +322,7 @@
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QGroupBox" name="bound_lo">
+          <widget class="QGroupBox" name="boundLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -362,7 +362,7 @@
   <customwidget>
    <class>QCustomPlotTPB</class>
    <extends>QWidget</extends>
-   <header>depend/qcustomplottpb.h</header>
+   <header>depend/QCustomPlottpb.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
