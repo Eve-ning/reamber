@@ -19,7 +19,7 @@ QString Normalizer::output() const
     return ui->output->toPlainText();
 }
 
-void Normalizer::on_generate_clicked() {
+void Normalizer::on_generateButton_clicked() {
     TimingPointV tpV;
 
     // Break if fail

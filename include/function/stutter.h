@@ -26,7 +26,7 @@ private slots:
 
     void on_initSvVs_valueChanged(int value);
     void on_thresholdSlider_valueChanged(int value);
-    void on_generate_clicked();
+    void on_generateButton_clicked();
     void on_initBpmSlider_valueChanged(int value);
     void on_avebpm_valueChanged(double);
     void on_avesv_valueChanged(double);

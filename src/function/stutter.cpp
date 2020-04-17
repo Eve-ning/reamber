@@ -26,7 +26,7 @@ void Stutter::on_thresholdSlider_valueChanged(int value) {
     ui->thresholdLabel->setText(QString::number(value/VS_TO_VAL));
     stutterLimitUpdate();
 }
-void Stutter::on_generate_clicked() {
+void Stutter::on_generateButton_clicked() {
     HitObjectV hoV;
     auto t = ui->input->toPlainText();
     // Break if fail
@@ -37,7 +37,7 @@ void Stutter::on_generate_clicked() {
 
     TimingPointV tpV;
 
-    // Depends on which radio is checked, we generate a different output
+    // Depends on which radio is checked, we generateButton a different output
     if (ui->svRadio->isChecked())
         tpV = algorithm::stutterRel(
                     hoV.getOffsetV(true),

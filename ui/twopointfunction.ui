@@ -27,14 +27,14 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_18">
          <item row="1" column="1">
-          <widget class="QLineEdit" name="output_ave">
+          <widget class="QLineEdit" name="outputAverage">
            <property name="readOnly">
             <bool>true</bool>
            </property>
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="output_ave_l">
+          <widget class="QLabel" name="outputAverageLabel">
            <property name="text">
             <string>Average SV</string>
            </property>
@@ -44,7 +44,7 @@
           <widget class="QPlainTextEdit" name="output"/>
          </item>
          <item row="3" column="0" colspan="2">
-          <widget class="QCustomPlot" name="customplot" native="true">
+          <widget class="QCustomPlot" name="customPlot" native="true">
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -54,7 +54,7 @@
           </widget>
          </item>
          <item row="4" column="0" colspan="2">
-          <widget class="QCheckBox" name="output_curb">
+          <widget class="QCheckBox" name="outputTrimCheck">
            <property name="text">
             <string>curb_values</string>
            </property>
@@ -74,9 +74,9 @@
        </widget>
       </item>
       <item row="3" column="0" colspan="4">
-       <widget class="QPushButton" name="generate">
+       <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>Generate</string>
+         <string>generateButton</string>
         </property>
        </widget>
       </item>
@@ -152,7 +152,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_27">
             <item row="0" column="0">
-             <widget class="QRadioButton" name="type_sv">
+             <widget class="QRadioButton" name="svRadio">
               <property name="text">
                <string>SV</string>
               </property>
@@ -162,7 +162,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QRadioButton" name="type_bpm">
+             <widget class="QRadioButton" name="bpmRadio">
               <property name="text">
                <string>BPM</string>
               </property>
@@ -172,7 +172,7 @@
           </widget>
          </item>
          <item row="5" column="0" colspan="3">
-          <widget class="QGroupBox" name="curve_typeLO">
+          <widget class="QGroupBox" name="curveTypeLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -180,18 +180,18 @@
             </sizepolicy>
            </property>
            <property name="title">
-            <string>curve_type</string>
+            <string>curveType</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_39">
             <item row="0" column="1">
-             <widget class="QCheckBox" name="curve_invert_y">
+             <widget class="QCheckBox" name="curveInvertY">
               <property name="text">
                <string>invert_y</string>
               </property>
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QComboBox" name="curve_type">
+             <widget class="QComboBox" name="curveType">
               <item>
                <property name="text">
                 <string>sine</string>
@@ -248,9 +248,9 @@
           </widget>
          </item>
          <item row="8" column="3">
-          <widget class="QPushButton" name="reset">
+          <widget class="QPushButton" name="resetButton">
            <property name="text">
-            <string>Reset Parameters</string>
+            <string>resetButton Parameters</string>
            </property>
           </widget>
          </item>
@@ -267,7 +267,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_28">
             <item row="0" column="6" rowspan="3">
-             <widget class="QGroupBox" name="amplLO">
+             <widget class="QGroupBox" name="amplitudeLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -288,7 +288,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_22">
                <item row="0" column="0">
-                <widget class="QLabel" name="ampl_val">
+                <widget class="QLabel" name="amplitudeLabel">
                  <property name="text">
                   <string>0.0</string>
                  </property>
@@ -298,7 +298,7 @@
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QSlider" name="ampl">
+                <widget class="QSlider" name="amplitudeSlider">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -344,7 +344,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_41">
                <item row="0" column="0">
-                <widget class="QLabel" name="power_val">
+                <widget class="QLabel" name="powerLabel">
                  <property name="text">
                   <string>1.0</string>
                  </property>
@@ -354,7 +354,7 @@
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QSlider" name="power">
+                <widget class="QSlider" name="powerSlider">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -379,7 +379,7 @@
              </widget>
             </item>
             <item row="0" column="4" rowspan="3">
-             <widget class="QGroupBox" name="endsvLO">
+             <widget class="QGroupBox" name="endSvLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -400,7 +400,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_23">
                <item row="1" column="0">
-                <widget class="QSlider" name="endsv">
+                <widget class="QSlider" name="endSv">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -422,7 +422,7 @@
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QLabel" name="endsv_val">
+                <widget class="QLabel" name="endSvLabel">
                  <property name="text">
                   <string>1.0</string>
                  </property>
@@ -435,7 +435,7 @@
              </widget>
             </item>
             <item row="0" column="5" rowspan="3">
-             <widget class="QGroupBox" name="freqLO">
+             <widget class="QGroupBox" name="frequencyLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -456,7 +456,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_20">
                <item row="0" column="0">
-                <widget class="QLabel" name="freq_val">
+                <widget class="QLabel" name="frequencyLabel">
                  <property name="text">
                   <string>1.0</string>
                  </property>
@@ -466,7 +466,7 @@
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QSlider" name="freq">
+                <widget class="QSlider" name="frequencySlider">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -494,7 +494,7 @@
              </widget>
             </item>
             <item row="0" column="2" rowspan="3">
-             <widget class="QGroupBox" name="initsvLO">
+             <widget class="QGroupBox" name="initSvLO">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -515,7 +515,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_24">
                <item row="0" column="0">
-                <widget class="QLabel" name="initsv_val">
+                <widget class="QLabel" name="initSvLabel">
                  <property name="text">
                   <string>1.0</string>
                  </property>
@@ -525,7 +525,7 @@
                 </widget>
                </item>
                <item row="2" column="0">
-                <widget class="QSlider" name="initsv">
+                <widget class="QSlider" name="initSv">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -564,14 +564,14 @@
                </size>
               </property>
               <property name="title">
-               <string>phase</string>
+               <string>phaseSlider</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
               <layout class="QGridLayout" name="gridLayout_40">
                <item row="0" column="0">
-                <widget class="QLabel" name="phase_val">
+                <widget class="QLabel" name="phaseLabel">
                  <property name="text">
                   <string>0.0</string>
                  </property>
@@ -581,7 +581,7 @@
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QSlider" name="phase">
+                <widget class="QSlider" name="phaseSlider">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -609,7 +609,7 @@
           </widget>
          </item>
          <item row="6" column="1" rowspan="3">
-          <widget class="QGroupBox" name="initbpmLO">
+          <widget class="QGroupBox" name="initBpmLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -630,7 +630,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_42">
             <item row="2" column="0">
-             <widget class="QDoubleSpinBox" name="initbpm">
+             <widget class="QDoubleSpinBox" name="initBpm">
               <property name="decimals">
                <number>2</number>
               </property>
@@ -667,7 +667,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_21">
             <item row="0" column="0">
-             <widget class="QSpinBox" name="offset_val">
+             <widget class="QSpinBox" name="offsetVal">
               <property name="suffix">
                <string>ms</string>
               </property>
@@ -691,7 +691,7 @@
   <customwidget>
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
-   <header location="global">depend/qcustomplot.h</header>
+   <header location="global">depend/QCustomPlot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
