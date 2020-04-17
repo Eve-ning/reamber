@@ -19,76 +19,76 @@ QString Alter::output() const
     return ui->output->toPlainText();
 }
 
-void Alter::on_self_mv_b_clicked() {
+void Alter::on_selfMVButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
 
-    tpV *= ui->self_mv->value();
+    tpV *= ui->selfMV->value();
     ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
-void Alter::on_self_av_b_clicked() {
+void Alter::on_selfAVButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
-    tpV += ui->self_av->value();
+    tpV += ui->selfAV->value();
     ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
-void Alter::on_self_mo_b_clicked() {
+void Alter::on_selfMOButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
 
-    auto newTpV = tpV.offsetArithmetic(ui->self_mo->value(), [](double offset, double parameter){
+    auto newTpV = tpV.offsetArithmetic(ui->selfMO->value(), [](double offset, double parameter){
         return offset * parameter;
     });
 
     ui->output->setPlainText(newTpV.getStringRaw("\n"));
 }
-void Alter::on_self_ao_b_clicked() {
+void Alter::on_selfAOButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
 
     auto newTpV = tpV.offsetArithmetic(
-                ui->self_ao->value(),
+                ui->selfAO->value(),
                 [](double offset, double parameter){
         return offset + parameter;
     });
     ui->output->setPlainText(newTpV.getStringRaw("\n"));
 }
-void Alter::on_self_del_b_clicked() {
+void Alter::on_selfDeleteButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
 
     auto delTpV = algorithm::deleteNth<TimingPoint>(QSPtr<TimingPointV>::create(tpV),
-                                         static_cast<unsigned int>(ui->self_del->value()),
-                                         static_cast<unsigned int>(ui->self_del_offset->value()));
+                                         static_cast<unsigned int>(ui->selfDel->value()),
+                                         static_cast<unsigned int>(ui->selfDelOffset->value()));
     ui->output->setPlainText(delTpV.getStringRaw("\n"));
 }
-void Alter::on_self_subd_by_b_clicked() {
+void Alter::on_selfSubdByButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
     auto subdTpV =
             algorithm::copySubdBy<TimingPoint>(
                 QSPtr<TimingPointV>::create(tpV),
-                static_cast<unsigned int>(ui->self_subd_by->value()), true);
+                static_cast<unsigned int>(ui->selfSubdBy->value()), true);
     ui->output->setPlainText(subdTpV.getStringRaw("\n"));
 }
-void Alter::on_self_subd_to_b_clicked() {
+void Alter::on_selfSubdToButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
     auto subdTpV =
             algorithm::copySubdTo<TimingPoint>(
                 QSPtr<TimingPointV>::create(tpV),
-                static_cast<unsigned int>(ui->self_subd_to->value()), true);
+                static_cast<unsigned int>(ui->selfSubdTo->value()), true);
     ui->output->setPlainText(subdTpV.getStringRaw("\n"));
 }
 
-void Alter::on_convert_to_bpm_clicked() {
+void Alter::on_convertToBpm_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
@@ -97,7 +97,7 @@ void Alter::on_convert_to_bpm_clicked() {
     TimingPointV tpVBpm = tpV.getBpmOnly();
 
     double value;
-    double reference = ui->convert_ref->value();
+    double reference = ui->convertRef->value();
 
     for (TimingPoint tp_sv : tpVSv){
         value = tp_sv.getValue();
@@ -110,7 +110,7 @@ void Alter::on_convert_to_bpm_clicked() {
 
     ui->output->setPlainText(tpVBpm.getStringRaw("\n"));
 }
-void Alter::on_convert_to_sv_clicked() {
+void Alter::on_convertToSv_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
@@ -119,7 +119,7 @@ void Alter::on_convert_to_sv_clicked() {
     TimingPointV tpVBpm = tpV.getBpmOnly();
 
     double value;
-    double reference = ui->convert_ref->value();
+    double reference = ui->convertRef->value();
 
     for (TimingPoint tpBpm : tpVBpm){
         value = tpBpm.getValue();
@@ -132,24 +132,24 @@ void Alter::on_convert_to_sv_clicked() {
 
     ui->output->setPlainText(tpVSv.getStringRaw("\n"));
 }
-void Alter::on_cross_mv_b_clicked() {
+void Alter::on_crossMVButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
 
     TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRaw(ui->input_cross->toPlainText(), '\n'))  return;
+    if (!tp_v_cross.loadRaw(ui->inputCross->toPlainText(), '\n'))  return;
 
     tpV.crossEffectMultiply(tp_v_cross);
     ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
-void Alter::on_cross_av_b_clicked() {
+void Alter::on_crossAVButton_clicked() {
     TimingPointV tpV;
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
 
     TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRaw(ui->input_cross->toPlainText(), '\n')) return;
+    if (!tp_v_cross.loadRaw(ui->inputCross->toPlainText(), '\n')) return;
 
     tpV.crossEffectAdd(tp_v_cross);
     ui->output->setPlainText(tpV.getStringRaw("\n"));
