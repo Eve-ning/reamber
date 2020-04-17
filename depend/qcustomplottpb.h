@@ -16,8 +16,6 @@ public:
     void mousePressEvent(QMouseEvent * event) override;
     void keyPressEvent(QKeyEvent * event) override;
 
-
-
 protected:
 signals:
     void addAnchorEvent(QVector2D pos);

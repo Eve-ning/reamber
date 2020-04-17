@@ -80,7 +80,7 @@ void Stutter::on_preset_nft_clicked() { // Normalized Front Teleport
     // We cannot directly omit since we need to stutter swap here
     tpV = algorithm::stutterSwap(tpV);
 
-    tpV.popBack();
+    if (ui->skip_last->isChecked()) tpV.popBack();
 
     ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
