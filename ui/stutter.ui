@@ -49,28 +49,28 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_46">
          <item row="5" column="0">
-          <widget class="QPushButton" name="preset_nbt">
+          <widget class="QPushButton" name="NormBackTelButton">
            <property name="text">
             <string>Normalized Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QPushButton" name="preset_nft">
+          <widget class="QPushButton" name="NormFrontTelButton">
            <property name="text">
             <string>Normalized Front Teleport</string>
            </property>
           </widget>
          </item>
          <item row="7" column="0">
-          <widget class="QPushButton" name="preset_mbt">
+          <widget class="QPushButton" name="MaxBackTelButton">
            <property name="text">
             <string>Max Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QPushButton" name="preset_mft">
+          <widget class="QPushButton" name="MaxFronTelButton">
            <property name="text">
             <string>Max Front Teleport</string>
            </property>
@@ -111,7 +111,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="1" column="0">
-             <widget class="QSlider" name="initsv_vs">
+             <widget class="QSlider" name="initSvVs">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -133,7 +133,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="initsv_val">
+             <widget class="QLabel" name="initSvLabel">
               <property name="text">
                <string>1.0</string>
               </property>
@@ -202,7 +202,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_36">
             <item row="0" column="0">
-             <widget class="QLabel" name="initbpm_val">
+             <widget class="QLabel" name="initBpmLabel">
               <property name="text">
                <string>120.0</string>
               </property>
@@ -212,7 +212,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QSlider" name="initbpm_vs">
+             <widget class="QSlider" name="initBpmSlider">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -243,7 +243,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_38">
             <item row="1" column="0">
-             <widget class="QRadioButton" name="type_sv">
+             <widget class="QRadioButton" name="svRadio">
               <property name="text">
                <string>SV</string>
               </property>
@@ -253,7 +253,7 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QRadioButton" name="type_bpm">
+             <widget class="QRadioButton" name="bpmRadio">
               <property name="text">
                <string>BPM</string>
               </property>
@@ -272,7 +272,7 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_9">
             <item row="1" column="0">
-             <widget class="QSlider" name="threshold_vs">
+             <widget class="QSlider" name="thresholdSlider">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -294,7 +294,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="threshold_val">
+             <widget class="QLabel" name="thresholdLabel">
               <property name="text">
                <string>0.5</string>
               </property>
@@ -329,7 +329,7 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_59">
          <item row="0" column="0">
-          <widget class="QCheckBox" name="skip_last">
+          <widget class="QCheckBox" name="skipLastCheck">
            <property name="text">
             <string>Skip Last Point</string>
            </property>
