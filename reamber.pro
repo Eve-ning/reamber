@@ -30,7 +30,6 @@ SOURCES += \
     src/function/copier.cpp \
     src/function/stutter.cpp \
     src/function/normalizer.cpp \
-    src/function/twopointfunction.cpp \
     src/function/twopointbezier.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
@@ -43,7 +42,6 @@ HEADERS += \
     include/function/copier.h \
     include/function/normalizer.h \
     include/function/stutter.h \
-    include/function/twopointfunction.h \
     include/function/twopointbezier.h \
     include/mainwindow.h \
     depend/qcustomplot.h
@@ -54,7 +52,6 @@ FORMS += \
     ui/copier.ui \
     ui/normalizer.ui \
     ui/stutter.ui \
-    ui/twopointfunction.ui \
     ui/mainwindow.ui \
     ui/stutter.ui
 
