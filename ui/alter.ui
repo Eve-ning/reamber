@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>918</width>
-    <height>585</height>
+    <width>966</width>
+    <height>653</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,12 +22,24 @@
      <layout class="QGridLayout" name="gridLayout_60">
       <item row="0" column="0">
        <widget class="QGroupBox" name="inputLO">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>input</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_48">
          <item row="0" column="0">
           <widget class="QPlainTextEdit" name="input">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="placeholderText">
             <string>&lt;Timing Point&gt;</string>
            </property>
@@ -38,6 +50,12 @@
       </item>
       <item row="0" column="1" rowspan="2">
        <widget class="QGroupBox" name="presetLO">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>presets</string>
         </property>
@@ -45,7 +63,7 @@
          <item row="0" column="0">
           <widget class="QTabWidget" name="presetTab">
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="self">
             <attribute name="title">
@@ -140,7 +158,7 @@
               </spacer>
              </item>
              <item row="1" column="0">
-              <widget class="QGroupBox" name="self_lo_2">
+              <widget class="QGroupBox" name="selfLO2">
                <property name="title">
                 <string>create/delete</string>
                </property>
@@ -187,6 +205,9 @@
                 </item>
                 <item row="1" column="0">
                  <widget class="QPushButton" name="selfDeleteButton">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;hee&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>Delete nth</string>
                   </property>
@@ -345,6 +366,12 @@
       </item>
       <item row="0" column="2" rowspan="2">
        <widget class="QGroupBox" name="outputLO">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>output</string>
         </property>
@@ -357,12 +384,24 @@
       </item>
       <item row="1" column="0">
        <widget class="QGroupBox" name="inputCrossLO">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>inputCross</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_53">
          <item row="0" column="0">
           <widget class="QPlainTextEdit" name="inputCross">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="placeholderText">
             <string>&lt;Timing Point&gt;</string>
            </property>

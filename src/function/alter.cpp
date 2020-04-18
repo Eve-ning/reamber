@@ -4,20 +4,12 @@
 
 Alter::Alter(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Alter)
-{
+    ui(new Ui::Alter) {
     ui->setupUi(this);
 }
 
-Alter::~Alter()
-{
-    delete ui;
-}
+Alter::~Alter() { delete ui; }
 
-QString Alter::output() const
-{
-    return ui->output->toPlainText();
-}
 
 void Alter::on_selfMVButton_clicked() {
     TimingPointV tpV;
@@ -99,11 +91,11 @@ void Alter::on_convertToBpm_clicked() {
     double value;
     double reference = ui->convertRef->value();
 
-    for (TimingPoint tp_sv : tpVSv){
-        value = tp_sv.getValue();
-        tp_sv.setValue(value * reference);
-        tp_sv.setIsBpm(true);
-        tpVBpm.pushBack(tp_sv);
+    for (TimingPoint tpSv : tpVSv){
+        value = tpSv.getValue();
+        tpSv.setValue(value * reference);
+        tpSv.setIsBpm(true);
+        tpVBpm.pushBack(tpSv);
     }
 
     tpVBpm.sortByOffset(true);
@@ -137,10 +129,10 @@ void Alter::on_crossMVButton_clicked() {
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
 
-    TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRaw(ui->inputCross->toPlainText(), '\n'))  return;
+    TimingPointV tpVCross;
+    if (!tpVCross.loadRaw(ui->inputCross->toPlainText(), '\n'))  return;
 
-    tpV.crossEffectMultiply(tp_v_cross);
+    tpV.crossEffectMultiply(tpVCross);
     ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
 void Alter::on_crossAVButton_clicked() {
@@ -148,13 +140,16 @@ void Alter::on_crossAVButton_clicked() {
     // Break if fail
     if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
 
-    TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRaw(ui->inputCross->toPlainText(), '\n')) return;
+    TimingPointV tpVCross;
+    if (!tpVCross.loadRaw(ui->inputCross->toPlainText(), '\n')) return;
 
-    tpV.crossEffectAdd(tp_v_cross);
+    tpV.crossEffectAdd(tpVCross);
     ui->output->setPlainText(tpV.getStringRaw("\n"));
 }
 
 void Alter::on_output_textChanged() {
     emit outputChanged();
+}
+QString Alter::output() const {
+    return ui->output->toPlainText();
 }
