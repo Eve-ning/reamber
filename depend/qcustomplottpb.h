@@ -7,8 +7,6 @@ class QCustomPlotTPB : public QCustomPlot
 {
 public:
     Q_OBJECT
-
-    public:
     explicit QCustomPlotTPB(QWidget* parent = nullptr);
 
     ~QCustomPlotTPB() override;
