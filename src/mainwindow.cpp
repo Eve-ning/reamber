@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     clipboard = QApplication::clipboard();
 
     connect(ui->widgetAlter,   SIGNAL(outputChanged()), this, SLOT(alterClipboardCopy()));
-    connect(ui->widgetTpf,     SIGNAL(outputChanged()), this, SLOT(tpfClipboardCopy()));
+    connect(ui->widgetTpb,     SIGNAL(outputChanged()), this, SLOT(tpbClipboardCopy()));
     connect(ui->widgetNorm,    SIGNAL(outputChanged()), this, SLOT(normalizerClipboardCopy()));
     connect(ui->widgetCopier,  SIGNAL(outputChanged()), this, SLOT(copierClipboardCopy()));
     connect(ui->widgetStutter, SIGNAL(outputChanged()), this, SLOT(stutterClipboardCopy()));
@@ -55,8 +55,8 @@ void MainWindow::normalizerClipboardCopy(){
 void MainWindow::stutterClipboardCopy(){
     clipboardCopy(ui->widgetStutter->output());
 }
-void MainWindow::tpfClipboardCopy(){
-    clipboardCopy(ui->widgetTpf->output());
+void MainWindow::tpbClipboardCopy(){
+    clipboardCopy(ui->widgetTpb->output());
 }
 
 void MainWindow::on_listWidget_currentRowChanged(int currentRow) {

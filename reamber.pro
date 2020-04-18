@@ -30,7 +30,6 @@ SOURCES += \
     src/function/copier.cpp \
     src/function/stutter.cpp \
     src/function/normalizer.cpp \
-    src/function/twopointfunction.cpp \
     src/function/twopointbezier.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
@@ -43,7 +42,6 @@ HEADERS += \
     include/function/copier.h \
     include/function/normalizer.h \
     include/function/stutter.h \
-    include/function/twopointfunction.h \
     include/function/twopointbezier.h \
     include/mainwindow.h \
     depend/qcustomplot.h
@@ -54,7 +52,6 @@ FORMS += \
     ui/copier.ui \
     ui/normalizer.ui \
     ui/stutter.ui \
-    ui/twopointfunction.ui \
     ui/mainwindow.ui \
     ui/stutter.ui
 
@@ -68,7 +65,7 @@ RESOURCES += \
 RC_ICONS = rsc/amber.ico
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-reamber_base-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/Debug/ -lreamber_base
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-reamber_base-Desktop_Qt_5_13_0_MSVC2017_32bit-Release/release/ -lreamber_base
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-reamber_base-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/ -lreamber_base
 else:unix: LIBS += -L$$PWD/../build-reamber_base-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/ -lreamber_base
 

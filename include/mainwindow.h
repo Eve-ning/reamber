@@ -28,7 +28,7 @@ private slots:
     void copierClipboardCopy();
     void normalizerClipboardCopy();
     void stutterClipboardCopy();
-    void tpfClipboardCopy();
+    void tpbClipboardCopy();
 
 private:
 
