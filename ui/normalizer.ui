@@ -27,11 +27,7 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_31">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="input">
-           <property name="placeholderText">
-            <string>&lt;Timing Point&gt;</string>
-           </property>
-          </widget>
+          <widget class="QPlainTextEdit" name="input"/>
          </item>
         </layout>
        </widget>
