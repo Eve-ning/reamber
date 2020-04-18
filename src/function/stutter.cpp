@@ -16,7 +16,7 @@ Stutter::~Stutter()
 }
 
 
-void Stutter::on_initSvVs_valueChanged(int value) {
+void Stutter::on_initSvSlider_valueChanged(int value) {
     ui->initSvLabel->setText(QString::number(value/VS_TO_VAL));
 }
 void Stutter::on_initBpmSlider_valueChanged(int value) {
@@ -176,16 +176,16 @@ void Stutter::stutterLimitUpdate() {
 
         // If the lower limit is lower than SV_MIN we curb the setMinimum
         if (initLim[0] >= SV_MIN)
-            ui->initSvVs->setMinimum(int(initLim[0] * VS_TO_VAL));
+            ui->initSvSlider->setMinimum(int(initLim[0] * VS_TO_VAL));
         else
-            ui->initSvVs->setMinimum(int(SV_MIN * VS_TO_VAL));
+            ui->initSvSlider->setMinimum(int(SV_MIN * VS_TO_VAL));
 
 
         // If the upper limit is higher than SV_MAX we curb the setMaximum
         if (initLim[1] <= SV_MAX)
-            ui->initSvVs->setMaximum(int(initLim[1] * VS_TO_VAL));
+            ui->initSvSlider->setMaximum(int(initLim[1] * VS_TO_VAL));
         else
-            ui->initSvVs->setMaximum(int(SV_MAX * VS_TO_VAL));
+            ui->initSvSlider->setMaximum(int(SV_MAX * VS_TO_VAL));
 
     } else if (ui->bpmRadio->isChecked()) {
         // We limit the initial BPM values

@@ -24,10 +24,10 @@ signals:
 
 private slots:
 
-    void on_initSvVs_valueChanged(int value);
+    void on_initSvSlider_valueChanged(int value);
     void on_thresholdSlider_valueChanged(int value);
-    void on_generateButton_clicked();
     void on_initBpmSlider_valueChanged(int value);
+    void on_generateButton_clicked();
     void on_aveBpm_valueChanged(double);
     void on_aveSv_valueChanged(double);
     void on_NormFrontTelButton_clicked();

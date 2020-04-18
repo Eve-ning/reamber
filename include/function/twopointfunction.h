@@ -22,13 +22,13 @@ signals:
 
 private slots:
 
-    void on_initSvLabel_valueChanged(int value);
-    void on_endSvLabel_valueChanged(int value);
-    void on_frequencyLabel_valueChanged(int value);
+    void on_initSvSlider_valueChanged(int value);
+    void on_endSvSlider_valueChanged(int value);
+    void on_frequencySlider_valueChanged(int value);
     void on_amplitudeSlider_valueChanged(int value);
     void on_generateButton_clicked();
-    void on_phaseLabel_valueChanged(int value);
-    void on_powerLabel_valueChanged(int value);
+    void on_phaseSlider_valueChanged(int value);
+    void on_powerSlider_valueChanged(int value);
     void on_resetButton_clicked();
 
     // Initializes and updates tpf's graph respectively

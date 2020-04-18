@@ -20,15 +20,15 @@ QString TwoPointFunction::output() const
     return ui->output->toPlainText();
 }
 
-void TwoPointFunction::on_initSvLabel_valueChanged(int value) {
+void TwoPointFunction::on_initSvSlider_valueChanged(int value) {
     ui->initSvLabel->setText(QString::number(value/VS_TO_VAL));
     if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_endSvLabel_valueChanged(int value) {
+void TwoPointFunction::on_endSvSlider_valueChanged(int value) {
     ui->endSvLabel->setText(QString::number(value/VS_TO_VAL));
     if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_frequencyLabel_valueChanged(int value) {
+void TwoPointFunction::on_frequencySlider_valueChanged(int value) {
     ui->frequencyLabel->setText(QString::number(value/2.0));
     if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
@@ -42,11 +42,11 @@ void TwoPointFunction::on_amplitudeSlider_valueChanged(int value) {
 
     if (ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_phaseLabel_valueChanged(int value) {
+void TwoPointFunction::on_phaseSlider_valueChanged(int value) {
     ui->phaseLabel->setText(QString::number(value));
     if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
-void TwoPointFunction::on_powerLabel_valueChanged(int value) {
+void TwoPointFunction::on_powerSlider_valueChanged(int value) {
     ui->powerLabel->setText(QString::number(value/10.0));
     if(ui->outputLive->isChecked()) on_generateButton_clicked();
 }
@@ -65,7 +65,7 @@ void TwoPointFunction::on_generateButton_clicked() {
 
     // Extract all values from TpF
     double initTp = isBpm ? ui->initBpm->value() : ui->initSvLabel->text().toDouble();
-    double endTp = isBpm ? ui->endbpm->value() :ui->endSvLabel->text().toDouble();
+    double endTp = isBpm ? ui->endBpm->value() :ui->endSvLabel->text().toDouble();
     double amplitude = ui->amplitudeLabel->text().toDouble();
     double freq = ui->frequencyLabel->text().toDouble();
     double phase = ui->phaseLabel->text().toDouble();
@@ -152,11 +152,11 @@ void TwoPointFunction::on_resetButton_clicked() {
     ui->phaseSlider->setValue(0);
     ui->powerSlider->setValue(10);
 
-    ui->initSv->setValue(100);
-    ui->endSv->setValue(100);
+    ui->initSvSlider->setValue(100);
+    ui->endSvSlider->setValue(100);
 
     ui->initBpm->setValue(120);
-    ui->endbpm->setValue(120);
+    ui->endBpm->setValue(120);
 
     ui->offsetVal->setValue(0);
 
