@@ -52,11 +52,6 @@
          </item>
          <item>
           <property name="text">
-           <string>2point_function</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>2point_bezier</string>
           </property>
          </item>
@@ -85,7 +80,7 @@
     <item row="0" column="1" rowspan="3">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="pageHome">
        <layout class="QGridLayout" name="gridLayout_52">
@@ -196,13 +191,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="pageTpf">
-       <layout class="QGridLayout" name="gridLayout_16">
-        <item row="0" column="0">
-         <widget class="TwoPointFunction" name="widgetTpf" native="true"/>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="pageTpb">
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
@@ -255,12 +243,6 @@
    <class>Normalizer</class>
    <extends>QWidget</extends>
    <header>include/function/normalizer.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TwoPointFunction</class>
-   <extends>QWidget</extends>
-   <header>include/function/twopointfunction.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

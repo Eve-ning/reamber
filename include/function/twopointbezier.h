@@ -20,6 +20,11 @@ public:
     static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, double interval, bool includeEnd = true);
     static QVector<QVector2D> createBezier(const QVector<QVector2D> &points, int interval, bool includeEnd = true);
 
+    QString output() const;
+
+signals:
+    void outputChanged();
+
 private slots:
     void on_bpmRadio_clicked();
     void on_svRadio_clicked();
@@ -32,6 +37,7 @@ private slots:
     void on_updateBoundBtn_clicked();
     void on_generateButton_clicked();
     void on_resetButton_clicked();
+    void on_output_textChanged();
 
     static long long binomCoeff(int n, int k);
 

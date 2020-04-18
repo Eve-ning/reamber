@@ -242,6 +242,7 @@ QVector<QVector2D> TwoPointBezier::createBezier(const QVector<QVector2D>& points
                         includeEnd);
 }
 
+
 long long TwoPointBezier::binomCoeff(int n, int k) {
     // defined as n! / k! (n-k)!
     // We find if k or n-k is larger
@@ -387,4 +388,11 @@ void TwoPointBezier::on_interval_editingFinished() {
 }
 void TwoPointBezier::on_resetButton_clicked(){
     resetButtonSettings();
+}
+
+void TwoPointBezier::on_output_textChanged() {
+    emit outputChanged();
+}
+QString TwoPointBezier::output() const {
+    return ui->output->toPlainText();
 }
