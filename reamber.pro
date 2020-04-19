@@ -37,14 +37,18 @@ SOURCES += \
     src/io/inputho.cpp \
     src/io/inputtp.cpp \
     src/io/outputho.cpp \
-    src/io/outputtp.cpp
+    src/io/outputtp.cpp \
+    src/io/inputeho.cpp \
+    src/io/outputeho.cpp
 
 HEADERS += \
     include/io/io.h \
     include/io/inputho.h \
     include/io/inputtp.h \
     include/io/outputho.h \
-    include/io/outputtp.h
+    include/io/outputtp.h \
+    include/io/inputeho.h \
+    include/io/outputeho.h
 
 SOURCES += \
     src/common.cpp \
