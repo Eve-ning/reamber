@@ -28,7 +28,7 @@ public:
     constexpr static double BPM_STEPSIZE = 1.0;
 
     constexpr static double OFFSET_MIN = 0.0;
-    constexpr static double OFFSET_MAX = 100000; // 100,000
+    constexpr static double OFFSET_MAX = 100000000; // 100,000,000
     constexpr static double OFFSET_DEFAULT = 0.0;
     constexpr static double OFFSET_INTERVAL_DEFAULT = 100.0;
 
