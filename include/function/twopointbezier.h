@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVector2D>
 
+class TimingPointV;
 
 namespace Ui {
 class TwoPointBezier;
@@ -51,9 +52,9 @@ private slots:
 private:
 
     QVector2D getMousePos();
-    QString generateButtonCode(const QVector<double> & offsets,
-                         const QVector<double> & values,
-                         bool isBPM);
+    TimingPointV generateCode(const QVector<double> & offsets,
+                              const QVector<double> & values,
+                              bool isBPM);
 
     QVector<QVector2D> createPlot();
 

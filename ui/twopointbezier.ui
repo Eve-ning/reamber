@@ -96,8 +96,8 @@
          <string>options</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0" colspan="2">
-          <widget class="QGroupBox" name="outputLO">
+         <item row="2" column="0" colspan="2">
+          <widget class="QGroupBox" name="boundLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -105,30 +105,23 @@
             </sizepolicy>
            </property>
            <property name="title">
-            <string>output</string>
+            <string>bounds</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_7">
-            <item row="1" column="0" colspan="2">
-             <widget class="QPushButton" name="generateButton">
-              <property name="text">
-               <string>generateButton</string>
-              </property>
-             </widget>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0" rowspan="2">
+             <widget class="IO" name="input" native="true"/>
             </item>
-            <item row="0" column="0" colspan="2">
-             <widget class="QPlainTextEdit" name="output">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="2" column="0">
+             <widget class="QPushButton" name="updateBoundBtn">
+              <property name="text">
+               <string>Update Bounds</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
-         <item row="2" column="0" colspan="2">
+         <item row="3" column="0" colspan="2">
           <widget class="QGroupBox" name="parametersLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -322,33 +315,14 @@
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QGroupBox" name="boundLO">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QPushButton" name="generateButton">
+           <property name="text">
+            <string>generate</string>
            </property>
-           <property name="title">
-            <string>bounds</string>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_6">
-            <item row="0" column="0">
-             <widget class="QLineEdit" name="updateBound">
-              <property name="placeholderText">
-               <string>&lt;Editor Hit Object&gt;</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="updateBoundBtn">
-              <property name="text">
-               <string>Update Bounds</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="OutputTP" name="output" native="true"/>
          </item>
         </layout>
        </widget>
@@ -359,6 +333,18 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IO</class>
+   <extends>QWidget</extends>
+   <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>QCustomPlotTPB</class>
    <extends>QWidget</extends>

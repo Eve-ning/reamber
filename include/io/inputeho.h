@@ -1,15 +1,17 @@
 #pragma once
 
-#include "io.h"
+#include "inputho.h"
 
 class HitObjectV;
 
-class InputEHO : public IO
+class InputEHO : public InputHO
 {
-public:
     Q_OBJECT
 
+public:
     explicit InputEHO(QWidget *parent = nullptr);
     ~InputEHO() override;
+
+    virtual HitObjectV read() const override;
 };
 

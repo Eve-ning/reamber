@@ -40,6 +40,8 @@ private slots:
 
 private:
 
+    QVector<double> readOffsets();
+
     Ui::Stutter *ui;
 };
 

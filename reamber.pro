@@ -22,44 +22,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-# Custom Plots
-SOURCES += \
-    depend/qcustomplottpb.cpp \
-    depend/qcustomplot.cpp
-
-HEADERS += \
-    depend/qcustomplottpb.h \
-    depend/qcustomplot.h
-
-# IO
-SOURCES += \
-    src/io/io.cpp \
-    src/io/inputho.cpp \
-    src/io/inputtp.cpp \
-    src/io/outputho.cpp \
-    src/io/outputtp.cpp \
-    src/io/inputeho.cpp \
-    src/io/outputeho.cpp
-
-HEADERS += \
-    include/io/io.h \
-    include/io/inputho.h \
-    include/io/inputtp.h \
-    include/io/outputho.h \
-    include/io/outputtp.h \
-    include/io/inputeho.h \
-    include/io/outputeho.h
-
-SOURCES += \
-    src/common.cpp \
-    src/function/alter.cpp \
-    src/function/copier.cpp \
-    src/function/stutter.cpp \
-    src/function/normalizer.cpp \
-    src/function/twopointbezier.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp
-
 HEADERS += \
     include/common.h \
     include/function/alter.h \
@@ -78,6 +40,45 @@ FORMS += \
     ui/stutter.ui \
     ui/mainwindow.ui \
     ui/stutter.ui
+
+
+# Custom Plots
+SOURCES += \
+    depend/qcustomplottpb.cpp \
+    depend/qcustomplot.cpp \
+
+HEADERS += \
+    depend/qcustomplottpb.h \
+    depend/qcustomplot.h \
+
+# IO
+SOURCES += \
+    src/io/io.cpp \
+    src/io/inputho.cpp \
+    src/io/inputtp.cpp \
+    src/io/outputho.cpp \
+    src/io/outputtp.cpp \
+    src/io/outputeho.cpp
+
+HEADERS += \
+    include/io/io.h \
+    include/io/inputho.h \
+    include/io/inputtp.h \
+    include/io/outputho.h \
+    include/io/outputtp.h \
+    include/io/outputeho.h
+
+SOURCES += \
+    src/common.cpp \
+    src/function/alter.cpp \
+    src/function/copier.cpp \
+    src/function/stutter.cpp \
+    src/function/normalizer.cpp \
+    src/function/twopointbezier.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp
+
+
 
 DISTFILES += \
     src/README.md \

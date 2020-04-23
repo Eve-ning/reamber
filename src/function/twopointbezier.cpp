@@ -13,6 +13,7 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     anchorPts(QVector<QVector2D>(2)),
     ui(new Ui::TwoPointBezier) {
     ui->setupUi(this);
+    ui->input->hideKeyWidget();
     ui->customPlot->addGraph(); // For the function
     ui->customPlot->addGraph(); // For the bezier
     ui->customPlot->addGraph(); // For the anchor
@@ -264,13 +265,13 @@ long long TwoPointBezier::binomCoeff(int n, int k) {
     }
     return static_cast<long long>(result);
 }
-QString TwoPointBezier::generateButtonCode(const QVector<double> & offsets,
-                                           const QVector<double> & values,
-                                           bool isBPM){
+TimingPointV TwoPointBezier::generateCode(const QVector<double> & offsets,
+                                          const QVector<double> & values,
+                                          bool isBPM){
     TimingPointV tpV = TimingPointV();
     if (offsets.size() != values.size()){
         qDebug() << "offsets and values must be of the same size";
-        return "";
+        return TimingPointV();
     }
     int size = offsets.size();
 
@@ -279,7 +280,7 @@ QString TwoPointBezier::generateButtonCode(const QVector<double> & offsets,
         tp.loadParameters(offsets[i], values[i], isBPM);
         tpV.pushBack(tp);
     }
-    return tpV.getStringRaw();
+    return tpV;
 }
 
 void TwoPointBezier::addAnchor(QVector2D pos) {
@@ -339,7 +340,7 @@ void TwoPointBezier::on_generateButton_clicked() {
         offsets.push_back(double(bezI.x()));
         values.push_back(Common::clipValue(double(bezI.y()), isBpm));
     }
-    ui->output->setPlainText(generateButtonCode(offsets, values, ui->bpmRadio->isChecked()));
+    ui->output->write(generateCode(offsets, values, ui->bpmRadio->isChecked()));
 }
 void TwoPointBezier::on_vertZoom_valueChanged(int value){ plot(); }
 void TwoPointBezier::on_bpmRadio_clicked() {
@@ -371,16 +372,17 @@ void TwoPointBezier::on_endValue_valueChanged(double arg1) {
     plot();
 }
 void TwoPointBezier::on_updateBoundBtn_clicked() {
-    QString text = ui->updateBound->text();
-    HitObjectV hoV = HitObjectV();
-    if (!hoV.loadEditor(text)) return;
+
+    auto offsets = ui->input->readOffsets(true);
+    if (offsets.length() < 2) return;
     resetButtonSettings();
-    if (hoV[0].getOffset() > ui->startOffset->value()) {
-        ui->endOffset->setValue(int(hoV[1].getOffset()));
-        ui->startOffset->setValue(int(hoV[0].getOffset()));
+
+    if (offsets[0] > ui->startOffset->value()) {
+        ui->endOffset->setValue(int(offsets[1]));
+        ui->startOffset->setValue(int(offsets[0]));
     } else {
-        ui->startOffset->setValue(int(hoV[0].getOffset()));
-        ui->endOffset->setValue(int(hoV[1].getOffset()));
+        ui->startOffset->setValue(int(offsets[0]));
+        ui->endOffset->setValue(int(offsets[1]));
     }
 }
 void TwoPointBezier::on_interval_editingFinished() {

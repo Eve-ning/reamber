@@ -23,23 +23,33 @@
       <string>stutter</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="3" rowspan="3">
-       <widget class="QGroupBox" name="outputLO">
-        <property name="title">
-         <string>output</string>
+      <item row="2" column="1">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-        <layout class="QGridLayout" name="gridLayout_7">
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="settingsLO">
+        <property name="title">
+         <string>settings</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_59">
          <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="output"/>
+          <widget class="QCheckBox" name="skipLastCheck">
+           <property name="text">
+            <string>Skip Last Point</string>
+           </property>
+          </widget>
          </item>
         </layout>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="4">
-       <widget class="QPushButton" name="generateButton">
-        <property name="text">
-         <string>generateButton</string>
-        </property>
        </widget>
       </item>
       <item row="0" column="1">
@@ -73,22 +83,6 @@
           <widget class="QPushButton" name="MaxFronTelButton">
            <property name="text">
             <string>Max Front Teleport</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="2" rowspan="3">
-       <widget class="QGroupBox" name="inputLO">
-        <property name="title">
-         <string>input</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="1" rowspan="2" colspan="2">
-          <widget class="QPlainTextEdit" name="input">
-           <property name="placeholderText">
-            <string>&lt;Editor Hit Object&gt;</string>
            </property>
           </widget>
          </item>
@@ -309,33 +303,31 @@
         </layout>
        </widget>
       </item>
-      <item row="2" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+      <item row="3" column="0" colspan="4">
+       <widget class="QPushButton" name="generateButton">
+        <property name="text">
+         <string>generateButton</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QGroupBox" name="settingsLO">
-        <property name="title">
-         <string>settings</string>
+      <item row="0" column="2" rowspan="3">
+       <widget class="IO" name="input" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <layout class="QGridLayout" name="gridLayout_59">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="skipLastCheck">
-           <property name="text">
-            <string>Skip Last Point</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       </widget>
+      </item>
+      <item row="0" column="3" rowspan="3">
+       <widget class="OutputTP" name="output" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
        </widget>
       </item>
      </layout>
@@ -343,6 +335,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IO</class>
+   <extends>QWidget</extends>
+   <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

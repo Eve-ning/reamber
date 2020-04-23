@@ -1,13 +1,16 @@
 #pragma once
 
-#include "io.h"
+#include "outputho.h"
 
-class OutputEHO : public IO
+class OutputEHO : public OutputHO
 {
-public:
     Q_OBJECT
 
+public:
     explicit OutputEHO(QWidget *parent = nullptr);
     ~OutputEHO() override;
+
+    // Not implemented yet in reamber_base
+    QVector<double> readOffsets(bool makeUnique = true) const override;
 };
 
