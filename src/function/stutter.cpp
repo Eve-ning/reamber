@@ -35,19 +35,21 @@ void Stutter::on_generateButton_clicked() {
 
     // Depends on which radio is checked, we generateButton a different output
     if (ui->svRadio->isChecked())
-        tpV = algorithm::stutterRel(offsets,
-                                    ui->initSvLabel->text().toDouble(),
-                                    ui->thresholdLabel->text().toDouble(),
-                                    ui->aveSv->value(),
-                                    false, true,
-                                    ui->skipLastCheck->isChecked());
+        tpV = algorithm::stutterRel(offsets,       // Offsets
+                                    initSv(),      // Initial
+                                    threshold(),   // Relativity
+                                    aveSv(),       // Average
+                                    false,         // Is BPM
+                                    true,          // Skip on Invalid
+                                    isSkipLast()); // Skip Last
     else if (ui->bpmRadio->isChecked())
-        tpV = algorithm::stutterRel(offsets,
-                                    ui->initBpmLabel->text().toDouble(),
-                                    ui->thresholdLabel->text().toDouble(),
-                                    ui->aveBpm->value(),
-                                    true, true,
-                                    ui->skipLastCheck->isChecked());
+        tpV = algorithm::stutterRel(offsets,       // Offsets
+                                    initBpm(),     // Initial
+                                    threshold(),   // Relativity
+                                    aveBpm(),      // Average
+                                    true,          // Is BPM
+                                    true,          // Skip on Invalid
+                                    isSkipLast()); // Skip Last
     ui->output->write(tpV);
 }
 void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
@@ -55,19 +57,20 @@ void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
     // Break if empty
     if (offsets.empty()) return;
 
-    TimingPointV tpV = algorithm::stutterAbs(offsets,
-                                             BPM_MIN,
-                                             BPM_MIN,
-                                             ui->aveBpm->value(),
-                                             true,
-                                             false,
-                                             true,
-                                             false);
+    TimingPointV tpV = algorithm::stutterAbs(
+                offsets,        // Offsets
+                BPM_MIN,        // Initial
+                BPM_MIN,        // Relativity
+                aveBpm(),       // Average
+                true,           // Is BPM
+                false,          // Relative From Front
+                true,           // Skip on Invalid
+                false);         // [*] Skip Last
 
-    // We cannot directly omit since we need to stutter swap here
+    // [*] We cannot directly omit since we need to stutter swap here
     tpV = algorithm::stutterSwap(tpV);
 
-    if (ui->skipLastCheck->isChecked()) tpV.popBack();
+    if (isSkipLast()) tpV.popBack();
 
     ui->output->write(tpV);
 }
@@ -77,14 +80,15 @@ void Stutter::on_NormBackTelButton_clicked() { // Normalized Back Teleport
     // Break if empty
     if (offsets.empty()) return;
 
-    TimingPointV tpV = algorithm::stutterAbs(offsets,
-                                             BPM_MIN,
-                                             BPM_MIN,
-                                             ui->aveBpm->value(),
-                                             true,
-                                             false,
-                                             true,
-                                             ui->skipLastCheck->isChecked());
+    TimingPointV tpV = algorithm::stutterAbs(
+                offsets,        // Offsets
+                BPM_MIN,        // Initial
+                BPM_MIN,        // Relativity
+                aveBpm(),       // Average
+                true,           // Is BPM
+                false,          // Relative From Front
+                true,           // Skip on Invalid
+                isSkipLast());  // Skip Last
 
     ui->output->write(tpV);
 }
@@ -99,7 +103,7 @@ void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
     TimingPoint tpNormalized;
 
     tpTeleport.loadParameters(0, BPM_MAX, true);
-    tpNormalized.loadParameters(1, ui->aveBpm->value(), true);
+    tpNormalized.loadParameters(1, aveBpm(), true);
 
     tpV.pushBack(tpTeleport);
     tpV.pushBack(tpNormalized);
@@ -124,7 +128,7 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
     TimingPoint tpNormalized;
 
     tpTeleport.loadParameters(0, BPM_MAX, true);
-    tpNormalized.loadParameters(1, ui->aveBpm->value(), true);
+    tpNormalized.loadParameters(1, aveBpm(), true);
 
     tpV.pushBack(tpTeleport);
     tpV.pushBack(tpNormalized);
@@ -157,9 +161,10 @@ void Stutter::stutterLimitUpdate() {
 
     } else if (ui->bpmRadio->isChecked()) {
         // We limit the initial BPM values
-        QVector<double> initLim = algorithm::stutterRelInitLimits(
-                    ui->thresholdLabel->text().toDouble(),
-                    ui->aveBpm->text().toDouble(), BPM_MIN, BPM_MAX);
+        QVector<double> initLim =
+                algorithm::stutterRelInitLimits(
+                    threshold(),
+                    aveBpm(), BPM_MIN, BPM_MAX);
 
         // If the lower limit is higher than BPM_MIN we curb the setMinimum
         if (initLim[0] >= BPM_MIN)
@@ -187,4 +192,23 @@ void Stutter::on_output_textChanged() {
 
 QVector<double> Stutter::readOffsets() {
     return ui->input->readOffsets(true);
+}
+
+bool Stutter::isSkipLast() const {
+    return ui->skipLastCheck->isChecked();
+}
+double Stutter::aveBpm() const {
+    return ui->aveBpm->value();
+}
+double Stutter::aveSv() const {
+    return ui->aveSv->value();
+}
+double Stutter::initSv() const {
+    return ui->initSvLabel->text().toDouble();
+}
+double Stutter::initBpm() const {
+    return ui->initBpmLabel->text().toDouble();
+}
+double Stutter::threshold() const {
+    return ui->thresholdLabel->text().toDouble();
 }

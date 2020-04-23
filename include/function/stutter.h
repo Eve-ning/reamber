@@ -34,14 +34,16 @@ private slots:
     void on_MaxFronTelButton_clicked();
     void on_NormBackTelButton_clicked();
     void on_MaxBackTelButton_clicked();
-
-
     void on_output_textChanged();
 
 private:
-
-    QVector<double> readOffsets();
-
+    QVector<double> readOffsets(); // Get offsets from input
+    bool isSkipLast() const;
+    double aveBpm() const;
+    double aveSv() const;
+    double initSv() const;
+    double initBpm() const;
+    double threshold() const;
     Ui::Stutter *ui;
 };
 
