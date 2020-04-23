@@ -29,7 +29,7 @@
       <item row="2" column="0" colspan="4">
        <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>generateButton</string>
+         <string>generate</string>
         </property>
        </widget>
       </item>

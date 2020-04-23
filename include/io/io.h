@@ -27,11 +27,12 @@ public:
 
     void setTitle(const QString &title);
     void setPlaceholderText(const QString &placeholder);
-
     void setPlainText(const QString &s);
 
     virtual QVector<double> readOffsets(bool makeUnique = true) const;
+
     QSize sizeHint() const override;
+
     void addKeyWidget();
     void hideKeyWidget();
 

@@ -307,7 +307,7 @@
             <item row="4" column="2" rowspan="3">
              <widget class="QPushButton" name="resetButton">
               <property name="text">
-               <string>resetButton</string>
+               <string>reset</string>
               </property>
              </widget>
             </item>
@@ -334,15 +334,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>OutputTP</class>
-   <extends>QWidget</extends>
-   <header>include/io/outputtp.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>IO</class>
    <extends>QWidget</extends>
    <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -52,7 +52,6 @@ void IO::setTitle(const QString & title) {
 void IO::setPlaceholderText(const QString & placeholder){
     ui->text->setPlaceholderText(placeholder);
 }
-
 void IO::setPlainText(const QString &s) {
     ui->text->setPlainText(s);
 }
@@ -66,14 +65,9 @@ QVector<double> IO::readOffsets(bool makeUnique) const {
     return QVector<double>();
 }
 
-QSize IO::sizeHint() const {
-    return QSize(150, 100);
-}
-
 void IO::on_text_textChanged() {
     emit textChanged(toPlainText());
 }
-
 
 QVariant IO::read() const {
     HitObjectV hoV;
@@ -90,4 +84,9 @@ void IO::write(const HitObjectV &o) {
 void IO::write(const TimingPointV &o) {
     ui->text->setPlainText(o.getStringRaw("\n"));
 }
+
+QSize IO::sizeHint() const {
+    return QSize(150, 100);
+}
+
 

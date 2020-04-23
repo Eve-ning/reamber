@@ -18,7 +18,9 @@ public:
     explicit TwoPointBezier(QWidget *parent = nullptr);
     ~TwoPointBezier();
 
+    // Creates a bezier vector with explicit start and ends
     static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, double interval, bool includeEnd = true);
+    // Creates a bezier vector with implicit start and ends calculated by min max of points
     static QVector<QVector2D> createBezier(const QVector<QVector2D> &points, int interval, bool includeEnd = true);
 
     QString output() const;
@@ -51,40 +53,37 @@ private slots:
 
 private:
 
-    QVector2D getMousePos();
     TimingPointV generateCode(const QVector<double> & offsets,
                               const QVector<double> & values,
                               bool isBPM);
 
     QVector<QVector2D> createPlot();
 
-    void plot();
-    void plotFunction();
-    void plotBezier();
-    void plotAnchor();
-    void plotAverage(QVector<QVector2D> & pts);
+    void plot();         // Plots Everything
+    void plotFunction(); // Plots the Function
+    void plotBezier();   // Plots the Bezier Points only
+    void plotAnchor();   // Plots the Anchor Points only
 
+    void updateAverage(QVector<QVector2D> & pts); // Updates the Average Value Label
     // Different from updatePlotDomain
     void updatePlotRange(double min, double max);
     void updatePlotDomain(double min, double max);
 
-    double getZoom(double min, double max);
+    void useSV();  // Switch to SV mode
+    void useBPM(); // Switch to BPM mode
 
-    void useSV();
-    void useBPM();
-
-    void resetButtonSettings();
+    void resetSettings(); // Resets all settings
 
     QVector<QVector2D> bezierPts;
     QVector<QVector2D> anchorPts;
     Ui::TwoPointBezier *ui;
 
-    const int ZOOM_DEFAULT = 50;
-    const double ZOOM_LIMIT = 10.0;
-    const double ZOOM_SV_BUFFER = 2.0;
-    const double ZOOM_BPM_BUFFER = 100;
-    const int BEZIER_MAX_PTS = 66;
-    const int BEZIER_MIN_PTS = 2;
+    const int    ZOOM_DEFAULT        = 50;
+    const double ZOOM_LIMIT          = 10.0;
+    const double ZOOM_SV_BUFFER      = 2.0;
+    const double ZOOM_BPM_BUFFER     = 100;
+    const int    BEZIER_MAX_PTS      = 66;
+    const int    BEZIER_MIN_PTS      = 2;
     const double REMOVE_DISTANCE_MAX = 35;
 };
 
