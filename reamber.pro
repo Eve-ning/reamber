@@ -32,7 +32,6 @@ HEADERS += \
     include/mainwindow.h
 
 FORMS += \
-    ui/io/io.ui \
     ui/twopointbezier.ui \
     ui/alter.ui \
     ui/copier.ui \
@@ -41,15 +40,38 @@ FORMS += \
     ui/mainwindow.ui \
     ui/stutter.ui
 
+SOURCES += \
+    src/common.cpp \
+    src/function/alter.cpp \
+    src/function/copier.cpp \
+    src/function/stutter.cpp \
+    src/function/normalizer.cpp \
+    src/function/twopointbezier.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp
+
+# BoxSliders
+HEADERS += \
+    include/boxslider/boxslider.h \
+    include/boxslider/boxslidersv.h \
+    include/boxslider/boxsliderbpm.h
+
+SOURCES += \
+    src/boxslider/boxslider.cpp \
+    src/boxslider/boxslidersv.cpp \
+    src/boxslider/boxsliderbpm.cpp
+
+FORMS += \
+    ui/boxslider/boxslider.ui
 
 # Custom Plots
 SOURCES += \
     depend/qcustomplottpb.cpp \
-    depend/qcustomplot.cpp \
+    depend/qcustomplot.cpp
 
 HEADERS += \
     depend/qcustomplottpb.h \
-    depend/qcustomplot.h \
+    depend/qcustomplot.h
 
 # IO
 SOURCES += \
@@ -68,17 +90,8 @@ HEADERS += \
     include/io/outputtp.h \
     include/io/outputeho.h
 
-SOURCES += \
-    src/common.cpp \
-    src/function/alter.cpp \
-    src/function/copier.cpp \
-    src/function/stutter.cpp \
-    src/function/normalizer.cpp \
-    src/function/twopointbezier.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp
-
-
+FORMS += \
+    ui/io/io.ui
 
 DISTFILES += \
     src/README.md \
