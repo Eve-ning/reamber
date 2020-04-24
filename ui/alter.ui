@@ -30,8 +30,8 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="InputTP" name="inputCross" native="true">
+      <item row="2" column="0">
+       <widget class="OutputTP" name="output" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -362,8 +362,8 @@
         </layout>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="OutputTP" name="output" native="true">
+      <item row="1" column="0">
+       <widget class="InputTP" name="inputCross" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
