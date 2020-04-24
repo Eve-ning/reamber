@@ -20,15 +20,29 @@
       <string>title</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0">
-       <widget class="QDoubleSpinBox" name="spinbox"/>
+      <item row="1" column="0" alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="max">
+        <property name="text">
+         <string>100</string>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="0" alignment="Qt::AlignHCenter">
+      <item row="4" column="0" alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="min">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" alignment="Qt::AlignHCenter">
        <widget class="QSlider" name="slider">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QDoubleSpinBox" name="spinBox"/>
       </item>
      </layout>
     </widget>
