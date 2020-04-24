@@ -52,14 +52,10 @@ SOURCES += \
 
 # BoxSliders
 HEADERS += \
-    include/boxslider/boxslider.h \
-    include/boxslider/boxslidersv.h \
-    include/boxslider/boxsliderbpm.h
+    include/boxslider/boxslider.h
 
 SOURCES += \
-    src/boxslider/boxslider.cpp \
-    src/boxslider/boxslidersv.cpp \
-    src/boxslider/boxsliderbpm.cpp
+    src/boxslider/boxslider.cpp
 
 FORMS += \
     ui/boxslider/boxslider.ui
