@@ -2,6 +2,9 @@
 
 #include <QWidget>
 
+class QSlider;
+class QDoubleSpinBox;
+
 namespace Ui {
 class BoxSlider;
 }
@@ -14,20 +17,29 @@ public:
     explicit BoxSlider(QWidget *parent = nullptr);
     ~BoxSlider();
     double value();
-    void setLimits(double min, double max);
-    void setStepSize(double factor);
+    virtual void setTitle(const QString & str);
 
-    void updateRange();
-    void updateSpinBox();
-    void updateSlider();
+    void setParameters(double min, double max, uint steps, double value);
+    virtual void setRange(double min, double max);
+    virtual void setSteps(uint steps);
+    virtual void setValue(double value);
+
+    virtual void updateSpinBox(double sliderValue);
+    virtual void updateSlider(double spinBoxValue);
+
+    QSlider * slider();
+    QDoubleSpinBox * spinBox();
+
+signals:
+    void valueChanged();
 
 protected slots:
-    void on_slider_sliderMoved();
-    void on_spinbox_valueChanged();
+    void on_slider_valueChanged(int value);
+    void on_spinBox_editingFinished();
 
-private:
+protected:
     Ui::BoxSlider *ui;
     double min;
     double max;
-    double stepSize;
+    uint steps;
 };

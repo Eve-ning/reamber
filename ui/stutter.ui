@@ -95,50 +95,6 @@
          <string>controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="1">
-          <widget class="QGroupBox" name="initsvLO">
-           <property name="title">
-            <string>initial_sv</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_8">
-            <item row="1" column="0">
-             <widget class="QSlider" name="initSvSlider">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>1000</number>
-              </property>
-              <property name="value">
-               <number>100</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="initSvLabel">
-              <property name="text">
-               <string>1.0</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QGroupBox" name="aveBpmLO">
            <property name="title">
@@ -186,50 +142,6 @@
            </layout>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QGroupBox" name="initbpmLO">
-           <property name="title">
-            <string>initial_bpm</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_36">
-            <item row="0" column="0">
-             <widget class="QLabel" name="initBpmLabel">
-              <property name="text">
-               <string>120.0</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QSlider" name="initBpmSlider">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>1000000</number>
-              </property>
-              <property name="value">
-               <number>120</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
          <item row="2" column="2" colspan="2">
           <widget class="QGroupBox" name="typeLO">
            <property name="title">
@@ -257,48 +169,13 @@
           </widget>
          </item>
          <item row="0" column="2" colspan="2">
-          <widget class="QGroupBox" name="thresholdLO">
-           <property name="title">
-            <string>threshold</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_9">
-            <item row="1" column="0">
-             <widget class="QSlider" name="thresholdSlider">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>99</number>
-              </property>
-              <property name="value">
-               <number>50</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="thresholdLabel">
-              <property name="text">
-               <string>0.5</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+          <widget class="BoxSlider" name="threshold" native="true"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="BoxSlider" name="initSv" native="true"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="BoxSlider" name="initBpm" native="true"/>
          </item>
         </layout>
        </widget>
@@ -306,7 +183,7 @@
       <item row="3" column="0" colspan="4">
        <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>generateButton</string>
+         <string>generate</string>
         </property>
        </widget>
       </item>
@@ -340,6 +217,12 @@
    <class>OutputTP</class>
    <extends>QWidget</extends>
    <header>include/io/outputtp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BoxSlider</class>
+   <extends>QWidget</extends>
+   <header>include/boxslider/boxslider.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

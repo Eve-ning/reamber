@@ -2,13 +2,12 @@
 #define STUTTER_H
 
 #include <QWidget>
-#include "common.h"
 
 namespace Ui {
 class Stutter;
 }
 
-class Stutter : public QWidget, public Common
+class Stutter : public QWidget
 {
     Q_OBJECT
 
@@ -24,9 +23,9 @@ signals:
 
 private slots:
 
-    void on_initSvSlider_valueChanged(int value);
-    void on_thresholdSlider_valueChanged(int value);
-    void on_initBpmSlider_valueChanged(int value);
+    // void on_initSv_valueChanged();
+    void on_threshold_valueChanged();
+    // void on_initBpm_valueChanged();
     void on_generateButton_clicked();
     void on_aveBpm_valueChanged(double);
     void on_aveSv_valueChanged(double);
@@ -37,6 +36,8 @@ private slots:
     void on_output_textChanged();
 
 private:
+    void initBoxSliders();
+
     QVector<double> readOffsets(); // Get offsets from input
     bool isSkipLast() const;
     double aveBpm() const;

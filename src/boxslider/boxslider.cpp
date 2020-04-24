@@ -1,58 +1,77 @@
 #include "include/boxslider/boxslider.h"
 #include "ui_boxslider.h"
 #include "common.h"
+#include <QDebug>
 
 BoxSlider::BoxSlider(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BoxSlider),
-    min(0.0), max(100.0), stepSize(1.0)
+    min(0.0), max(100.0), steps(100)
 {
     ui->setupUi(this);
-    updateRange();
+    slider()->setRange(0, steps);
+
+    spinBox()->setSingleStep((max / min) / steps);
+    setRange(min, max);
 }
 
-BoxSlider::~BoxSlider()
-{
-    delete ui;
+BoxSlider::~BoxSlider() { delete ui; }
+
+void BoxSlider::setParameters(double min, double max, uint steps, double value) {
+    setRange(min, max);
+    setSteps(steps);
+    setValue(value);
 }
 
-void BoxSlider::setLimits(double min, double max) {
+void BoxSlider::setRange(double min, double max) {
     this->min = min;
     this->max = max;
-    updateRange();
+    spinBox()->setRange(min, max);
+    ui->min->setText(QString::number(min, 'g', 4));
+    ui->max->setText(QString::number(max, 'g', 4));
+    updateSlider(spinBox()->value());
 }
 
-void BoxSlider::updateRange() {
-    // Note that slider operates in integers
-    // So we figure out the number of steps to reach the maximum according to stepSize
-    int steps = int((max - min) / stepSize);
-    ui->slider->setRange(0, steps);
-    ui->spinbox->setRange(min, max);
-
+void BoxSlider::setSteps(uint steps) {
+    this->steps = steps;
+    slider()->setRange(0, int(steps));
+    updateSlider(spinBox()->value());
 }
 
-void BoxSlider::updateSpinBox() {
-    double sliderValue = ui->slider->value();
-    ui->spinbox->setValue(sliderValue * stepSize + min);
+void BoxSlider::setValue(double value) {
+    spinBox()->setValue(value);
+    updateSlider(value);
 }
 
-void BoxSlider::updateSlider() {
-    double spinboxValue = ui->spinbox->value();
-    ui->slider->setValue(int((spinboxValue - min) / stepSize));
+void BoxSlider::updateSpinBox(double sliderValue) {
+    spinBox()->setValue(sliderValue / steps * (max - min) + min);
+}
+void BoxSlider::updateSlider(double spinBoxValue) {
+    slider()->setValue(int((spinBoxValue - min) / (max - min) * steps));
 }
 
-double BoxSlider::value()
-{
-    return ui->spinbox->value();
+double BoxSlider::value() {
+    return spinBox()->value();
 }
 
-
-void BoxSlider::on_slider_sliderMoved()
-{
-    updateSpinBox();
+void BoxSlider::setTitle(const QString &str) {
+    ui->lo->setTitle(str);
 }
 
-void BoxSlider::on_spinbox_valueChanged()
-{
-    updateSlider();
+QSlider *BoxSlider::slider() {
+    return ui->slider;
+}
+QDoubleSpinBox *BoxSlider::spinBox() {
+    return ui->spinBox;
+}
+
+void BoxSlider::on_slider_valueChanged(int value) {
+    //qDebug() << value;
+    updateSpinBox(value);
+    emit valueChanged();
+}
+
+void BoxSlider::on_spinBox_editingFinished() {
+    updateSlider(ui->spinBox->value());
+    emit valueChanged();
 }

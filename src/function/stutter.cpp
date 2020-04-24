@@ -1,6 +1,7 @@
 #include "function/stutter.h"
 #include "ui_stutter.h"
 #include "algorithm/algorithm.h"
+#include "common.h"
 
 Stutter::Stutter(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +10,8 @@ Stutter::Stutter(QWidget *parent) :
     ui->input->hideKeyWidget();
     ui->input->setTitle("input");
     ui->input->setPlaceholderText("Variant Input");
+
+    initBoxSliders();
     stutterLimitUpdate();
 }
 
@@ -16,16 +19,21 @@ Stutter::~Stutter() {
     delete ui;
 }
 
-void Stutter::on_initSvSlider_valueChanged(int value) {
-    ui->initSvLabel->setText(QString::number(value/VS_TO_VAL));
+void Stutter::initBoxSliders() {
+    ui->threshold->setParameters(0.01, 1.0, 1000, 0.5);
+    ui->threshold->setTitle("threshold");
+    ui->threshold->spinBox()->setDecimals(3);
+
+    ui->initSv->setParameters(Common::SV_MIN, Common::SV_MAX, 1000, Common::SV_DEFAULT);
+    ui->initSv->setTitle("init_sv");
+
+    ui->initBpm->setParameters(Common::BPM_MIN, Common::BPM_MAX, 1000, Common::BPM_DEFAULT);
+    ui->initBpm->setTitle("init_bpm");
 }
-void Stutter::on_initBpmSlider_valueChanged(int value) {
-    ui->initBpmLabel->setText(QString::number(value/VS_TO_VAL));
-}
-void Stutter::on_thresholdSlider_valueChanged(int value) {
-    ui->thresholdLabel->setText(QString::number(value/VS_TO_VAL));
+void Stutter::on_threshold_valueChanged() {
     stutterLimitUpdate();
 }
+
 void Stutter::on_generateButton_clicked() {
     auto offsets = readOffsets();
     // Break if empty
@@ -59,8 +67,8 @@ void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
 
     TimingPointV tpV = algorithm::stutterAbs(
                 offsets,        // Offsets
-                BPM_MIN,        // Initial
-                BPM_MIN,        // Relativity
+                Common::BPM_MIN,// Initial
+                Common::BPM_MIN,// Relativity
                 aveBpm(),       // Average
                 true,           // Is BPM
                 false,          // Relative From Front
@@ -82,8 +90,8 @@ void Stutter::on_NormBackTelButton_clicked() { // Normalized Back Teleport
 
     TimingPointV tpV = algorithm::stutterAbs(
                 offsets,        // Offsets
-                BPM_MIN,        // Initial
-                BPM_MIN,        // Relativity
+                Common::BPM_MIN,        // Initial
+                Common::BPM_MIN,        // Relativity
                 aveBpm(),       // Average
                 true,           // Is BPM
                 false,          // Relative From Front
@@ -102,7 +110,7 @@ void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
     TimingPoint tpTeleport;
     TimingPoint tpNormalized;
 
-    tpTeleport.loadParameters(0, BPM_MAX, true);
+    tpTeleport.loadParameters(0, Common::BPM_MAX, true);
     tpNormalized.loadParameters(1, aveBpm(), true);
 
     tpV.pushBack(tpTeleport);
@@ -127,7 +135,7 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
     TimingPoint tpTeleport;
     TimingPoint tpNormalized;
 
-    tpTeleport.loadParameters(0, BPM_MAX, true);
+    tpTeleport.loadParameters(0, Common::BPM_MAX, true);
     tpNormalized.loadParameters(1, aveBpm(), true);
 
     tpV.pushBack(tpTeleport);
@@ -141,45 +149,26 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
 void Stutter::on_aveBpm_valueChanged(double) { stutterLimitUpdate(); }
 void Stutter::on_aveSv_valueChanged(double) { stutterLimitUpdate(); }
 void Stutter::stutterLimitUpdate() {
-    if (ui->svRadio->isChecked()){
-        // We limit the initial SV values
-        QVector<double> initLim = algorithm::stutterRelInitLimits(
-                    ui->thresholdLabel->text().toDouble(),
-                    ui->aveSv->text().toDouble(), SV_MIN, SV_MAX);
-
-        // If the lower limit is lower than SV_MIN we curb the setMinimum
-        if (initLim[0] >= SV_MIN)
-            ui->initSvSlider->setMinimum(int(initLim[0] * VS_TO_VAL));
-        else
-            ui->initSvSlider->setMinimum(int(SV_MIN * VS_TO_VAL));
-
-        // If the upper limit is higher than SV_MAX we curb the setMaximum
-        if (initLim[1] <= SV_MAX)
-            ui->initSvSlider->setMaximum(int(initLim[1] * VS_TO_VAL));
-        else
-            ui->initSvSlider->setMaximum(int(SV_MAX * VS_TO_VAL));
-
-    } else if (ui->bpmRadio->isChecked()) {
-        // We limit the initial BPM values
-        QVector<double> initLim =
-                algorithm::stutterRelInitLimits(
-                    threshold(),
-                    aveBpm(), BPM_MIN, BPM_MAX);
-
-        // If the lower limit is higher than BPM_MIN we curb the setMinimum
-        if (initLim[0] >= BPM_MIN)
-            ui->initBpmSlider->setMinimum(int(initLim[0] * VS_TO_VAL));
-        else
-            ui->initBpmSlider->setMinimum(int(BPM_MIN * VS_TO_VAL));
+    QVector<double> initLim =
+            algorithm::stutterRelInitLimits(threshold(),
+                                            aveSv(),
+                                            Common::SV_MIN,
+                                            Common::SV_MAX);
+    qDebug() << initLim;
+    ui->initSv->setRange(initLim[0] >= Common::SV_MIN ? initLim[0] : Common::SV_MIN,
+                          initLim[1] <= Common::SV_MAX ? initLim[1] : Common::SV_MAX);
 
 
-        // If the upper limit is lower than BPM_MAX we curb the setMaximum
-        if (initLim[1] <= BPM_MAX)
-            ui->initBpmSlider->setMaximum(int(initLim[1] * VS_TO_VAL));
-        else
-            ui->initBpmSlider->setMaximum(int(BPM_MAX * VS_TO_VAL));
+    initLim =
+            algorithm::stutterRelInitLimits(threshold(),
+                                            aveBpm(),
+                                            Common::BPM_MIN,
+                                            Common::BPM_MAX);
 
-    }
+    ui->initBpm->setRange(initLim[0] >= Common::BPM_MIN ? initLim[0] : Common::BPM_MIN,
+                           initLim[1] <= Common::BPM_MAX ? initLim[1] : Common::BPM_MAX);
+
+
 }
 
 QString Stutter::output() const {
@@ -204,11 +193,11 @@ double Stutter::aveSv() const {
     return ui->aveSv->value();
 }
 double Stutter::initSv() const {
-    return ui->initSvLabel->text().toDouble();
+    return ui->initSv->value();
 }
 double Stutter::initBpm() const {
-    return ui->initBpmLabel->text().toDouble();
+    return ui->initBpm->value();
 }
 double Stutter::threshold() const {
-    return ui->thresholdLabel->text().toDouble();
+    return ui->threshold->value();
 }
