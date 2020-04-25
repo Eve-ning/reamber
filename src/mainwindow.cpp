@@ -40,7 +40,7 @@ void MainWindow::on_homeReleasesButton_clicked() {
 }
 
 void MainWindow::clipboardCopy(QString str) {
-    if (ui->clipboardCopy->isChecked()) clipboard->setText(str);
+    if (ui->actionClipboardCopy->isChecked()) clipboard->setText(str);
 }
 
 void MainWindow::alterClipboardCopy(){

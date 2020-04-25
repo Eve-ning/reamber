@@ -15,14 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QCheckBox" name="clipboardCopy">
-      <property name="text">
-       <string>auto clipboard copy</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" rowspan="2">
+    <item row="0" column="0" rowspan="2">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
        <number>4</number>
@@ -174,6 +167,8 @@
    <addaction name="actionTPB"/>
    <addaction name="actionNormalizer"/>
    <addaction name="actionAlter"/>
+   <addaction name="separator"/>
+   <addaction name="actionClipboardCopy"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionStutter">
@@ -202,8 +197,20 @@
    </property>
   </action>
   <action name="actionHome">
+   <property name="icon">
+    <iconset resource="../rsc.qrc">
+     <normaloff>:/rsc/amber.ico</normaloff>:/rsc/amber.ico</iconset>
+   </property>
    <property name="text">
     <string>Home</string>
+   </property>
+  </action>
+  <action name="actionClipboardCopy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Click to Enable Auto Clipboard Copy</string>
    </property>
   </action>
  </widget>
@@ -240,6 +247,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../rsc.qrc"/>
+ </resources>
  <connections/>
 </ui>
