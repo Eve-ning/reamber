@@ -28,11 +28,11 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     // Initializes Parameters
     ui->startOffset->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
     ui->endOffset  ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
-    ui->interval   ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->steps      ->setRange(BEZIER_MIN_STEPS, BEZIER_MAX_STEPS);
 
     ui->startOffset->setValue(0);
-    ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
-    ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
+    ui->endOffset  ->setValue(1000);
+    ui->steps      ->setValue(BEZIER_DEFAULT_STEPS);
 
     // Connects the double click event
     connect(ui->customPlot, SIGNAL(removeEvent(QVector2D)),
@@ -60,8 +60,7 @@ void TwoPointBezier::initToolTips() {
     ui->endOffset->setToolTip("Final Offset, cannot be more or equal to the Initial Offset");
     ui->startValue->setToolTip("Initial Value");
     ui->endValue->setToolTip("Final Value");
-    ui->interval->setToolTip("\"Gap\" between points, due to bezier x-axis squeezing, it will not be consistent.\n"
-                             "This value cannot be larger than the domain (end offset - start offset)");
+    ui->steps->setToolTip("Steps of Bezier calculation, more steps makes it smoother.");
     ui->svRadio->setToolTip("Change to SV Mode");
     ui->bpmRadio->setToolTip("Change to BPM Mode");
     ui->customPlot->setStatusTip("This is where you edit the function.\n"
@@ -90,7 +89,7 @@ QVector<QVector2D> TwoPointBezier::createPlot() {
 
         if (bezierPtsFilter.size() == 66) bezierPts.pop_back();
 
-        points.append(createBezier(bezierPtsFilter, ui->interval->value(), true));
+        points.append(createBezier(bezierPtsFilter, ui->steps->value(), true));
         // We remove the ends if it's not at the end
         if (anchorI + 2 != anchorPtsCopy.end()) points.pop_back();
     }
@@ -181,10 +180,6 @@ void TwoPointBezier::warning() {
     if (ui->endOffset->value() - ui->startOffset->value() <= 0)
         ui->startOffset->setStyleSheet(ColorStyleSheet::RED);
     else ui->startOffset->setStyleSheet(ColorStyleSheet::WHITE);
-
-    if (ui->endOffset->value() - ui->startOffset->value() <= ui->interval->value())
-        ui->interval->setStyleSheet(ColorStyleSheet::RED);
-    else ui->interval->setStyleSheet(ColorStyleSheet::WHITE);
 }
 
 void TwoPointBezier::updateAverage(QVector<QVector2D> & pts) {
@@ -202,6 +197,16 @@ void TwoPointBezier::updatePlotRange(double min, double max){
 }
 void TwoPointBezier::updatePlotDomain(double min, double max) {
     ui->customPlot->xAxis->setRange(min, max);
+}
+
+void TwoPointBezier::updatePointBounds(double newMin, double newMax) {
+    // This updates the point bounds relatively instead of removing it on bound update.
+    double oldMin = double(anchorPts[0].x());
+    double oldMax = double(anchorPts[1].x());
+    for (auto & bezierPt : bezierPts)
+        bezierPt.setX(float((double(bezierPt.x()) - oldMin) / (oldMax - oldMin) * (newMax - newMin) + newMin));
+    for (auto & anchorPt : anchorPts)
+        anchorPt.setX(float((double(anchorPt.x()) - oldMin) / (oldMax - oldMin) * (newMax - newMin) + newMin));
 }
 
 void TwoPointBezier::useSV() {
@@ -230,6 +235,7 @@ void TwoPointBezier::resetSettings() {
     // ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
     // ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
 
+    ui->steps->setValue(BEZIER_DEFAULT_STEPS);
     anchorPts = QVector<QVector2D>(2);
     anchorPts[0] = {float(ui->startOffset->value()),
                     float(ui->startValue->value())};
@@ -238,7 +244,7 @@ void TwoPointBezier::resetSettings() {
     bezierPts = QVector<QVector2D>();
 }
 
-QVector<QVector2D> TwoPointBezier::createBezier(QVector<QVector2D> points, double start, double end, double interval, bool includeEnd) {
+QVector<QVector2D> TwoPointBezier::createBezier(QVector<QVector2D> points, double start, double end, int steps, bool includeEnd) {
     int size = points.size();
 
     QVector<QVector2D> out;
@@ -256,19 +262,19 @@ QVector<QVector2D> TwoPointBezier::createBezier(QVector<QVector2D> points, doubl
             sumY += coeff * pow(1.0 - t, size - n - 1) * pow(t, n) * double(points[n].y());
         }
         out.push_back(QVector2D(float(sumX + start), float(sumY)));
-        t = (interval * step) / (end - start);
+        t = double(step) / steps;
     }
     if (includeEnd) out.push_back(QVector2D(float(end), float(points.last().y())));
 
     return out;
 }
-QVector<QVector2D> TwoPointBezier::createBezier(const QVector<QVector2D>& points, int interval, bool includeEnd) {
+QVector<QVector2D> TwoPointBezier::createBezier(const QVector<QVector2D>& points, int steps, bool includeEnd) {
     QVector<double> x = QVector<double>();
     for (const auto & i : points) x.push_back(double(i.x()));
     return createBezier(points,
                         *std::min_element(x.begin(), x.end()),
                         *std::max_element(x.begin(), x.end()),
-                        interval,
+                        steps,
                         includeEnd);
 }
 
@@ -357,12 +363,12 @@ void TwoPointBezier::on_svRadio_clicked() {
 }
 void TwoPointBezier::on_startOffset_valueChanged(int arg1) {
     if (arg1 >= ui->endOffset->value()) return;
-    anchorPts[0].setX(float(arg1));
+    updatePointBounds(arg1, ui->endOffset->value());
     plot();
 }
 void TwoPointBezier::on_endOffset_valueChanged(int arg1) {
     if (arg1 <= ui->startOffset->value()) return;
-    anchorPts[1].setX(float(arg1));
+    updatePointBounds(ui->startOffset->value(), arg1);
     plot();
 }
 void TwoPointBezier::on_startValue_valueChanged(double arg1) {
@@ -377,7 +383,8 @@ void TwoPointBezier::on_updateBoundBtn_clicked() {
 
     auto offsets = ui->input->readOffsets(true);
     if (offsets.length() < 2) return;
-    resetSettings();
+
+    updatePointBounds(offsets[0], offsets[1]);
 
     if (offsets[0] > ui->startOffset->value()) {
         ui->endOffset->setValue(int(offsets[1]));
@@ -386,8 +393,9 @@ void TwoPointBezier::on_updateBoundBtn_clicked() {
         ui->startOffset->setValue(int(offsets[0]));
         ui->endOffset->setValue(int(offsets[1]));
     }
+    plot();
 }
-void TwoPointBezier::on_interval_editingFinished() {
+void TwoPointBezier::on_steps_editingFinished() {
     plot();
 }
 void TwoPointBezier::on_resetButton_clicked(){

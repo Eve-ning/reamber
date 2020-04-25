@@ -20,7 +20,7 @@ public:
     ~TwoPointBezier();
 
     // Creates a bezier vector with explicit start and ends
-    static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, double interval, bool includeEnd = true);
+    static QVector<QVector2D> createBezier(QVector<QVector2D> points, double start, double end, int interval, bool includeEnd = true);
     // Creates a bezier vector with implicit start and ends calculated by min max of points
     static QVector<QVector2D> createBezier(const QVector<QVector2D> &points, int interval, bool includeEnd = true);
 
@@ -32,7 +32,7 @@ signals:
 private slots:
     void on_bpmRadio_clicked();
     void on_svRadio_clicked();
-    void on_interval_editingFinished();
+    void on_steps_editingFinished();
     void on_startOffset_valueChanged(int arg1);
     void on_endOffset_valueChanged(int arg1);
     void on_startValue_valueChanged(double arg1);
@@ -69,6 +69,8 @@ private:
     void updatePlotRange(double min, double max); // Different from updatePlotDomain
     void updatePlotDomain(double min, double max);
 
+    void updatePointBounds(double newMin, double newMax);
+
     void useSV();  // Switch to SV mode
     void useBPM(); // Switch to BPM mode
 
@@ -78,13 +80,16 @@ private:
     QVector<QVector2D> anchorPts;
     Ui::TwoPointBezier *ui;
 
-    const double RANGE_MIN_SV        = 0.0;
-    const double RANGE_MAX_SV        = 2.0;
-    const double RANGE_MIN_BPM       = 0.0;
-    const double RANGE_MAX_BPM       = 300.0;
-    const int    BEZIER_MAX_PTS      = 66;
-    const int    BEZIER_MIN_PTS      = 2;
-    const double REMOVE_DISTANCE_MAX = 35;
+    const double RANGE_MIN_SV         = 0.0;
+    const double RANGE_MAX_SV         = 2.0;
+    const double RANGE_MIN_BPM        = 0.0;
+    const double RANGE_MAX_BPM        = 300.0;
+    const int    BEZIER_MIN_STEPS     = 1;
+    const int    BEZIER_MAX_STEPS     = 10000;
+    const int    BEZIER_DEFAULT_STEPS = 25;
+    const int    BEZIER_MAX_PTS       = 66;
+    const int    BEZIER_MIN_PTS       = 2;
+    const double REMOVE_DISTANCE_MAX  = 35;
 };
 
 #endif // TWOPOINTBEZIER_H

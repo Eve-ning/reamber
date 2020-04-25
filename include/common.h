@@ -30,7 +30,6 @@ public:
     constexpr static double OFFSET_MIN = 0.0;
     constexpr static double OFFSET_MAX = 100000000.0; // 100,000,000
     constexpr static double OFFSET_DEFAULT = 0.0;
-    constexpr static double OFFSET_INTERVAL_DEFAULT = 100.0;
 
     class Color {
     public:
