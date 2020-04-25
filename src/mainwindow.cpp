@@ -40,7 +40,7 @@ void MainWindow::on_homeReleasesButton_clicked() {
 }
 
 void MainWindow::clipboardCopy(QString str) {
-    if (ui->clipboardCopy->isChecked()) clipboard->setText(str);
+    if (ui->actionClipboardCopy->isChecked()) clipboard->setText(str);
 }
 
 void MainWindow::alterClipboardCopy(){
@@ -59,6 +59,9 @@ void MainWindow::tpbClipboardCopy(){
     clipboardCopy(ui->widgetTpb->output());
 }
 
-void MainWindow::on_listWidget_currentRowChanged(int currentRow) {
-    ui->stackedWidget->setCurrentIndex(currentRow);
-}
+void MainWindow::on_actionHome_triggered()      {ui->stackedWidget->setCurrentIndex(0);}
+void MainWindow::on_actionAlter_triggered()     {ui->stackedWidget->setCurrentIndex(5);}
+void MainWindow::on_actionNormalizer_triggered(){ui->stackedWidget->setCurrentIndex(4);}
+void MainWindow::on_actionTPB_triggered()       {ui->stackedWidget->setCurrentIndex(3);}
+void MainWindow::on_actionCopier_triggered()    {ui->stackedWidget->setCurrentIndex(2);}
+void MainWindow::on_actionStutter_triggered()   {ui->stackedWidget->setCurrentIndex(1);}

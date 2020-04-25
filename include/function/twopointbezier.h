@@ -33,7 +33,6 @@ private slots:
     void on_bpmRadio_clicked();
     void on_svRadio_clicked();
     void on_interval_editingFinished();
-    void on_vertZoom_valueChanged(int value);
     void on_startOffset_valueChanged(int arg1);
     void on_endOffset_valueChanged(int arg1);
     void on_startValue_valueChanged(double arg1);
@@ -45,13 +44,12 @@ private slots:
 
     static long long binomCoeff(int n, int k);
 
-    // A and B will add points
-    // Right click removes nearest point
-    void addAnchor  (QVector2D pos);
-    void addBezier  (QVector2D pos);
+    void addAnchor  (QVector2D pos); // A and B will add points
+    void addBezier  (QVector2D pos); // Right click removes nearest point
     void removePoint(QVector2D pos);
 
 private:
+    void initToolTips();
 
     TimingPointV generateCode(const QVector<double> & offsets,
                               const QVector<double> & values,
@@ -67,8 +65,8 @@ private:
     void warning(); // Warns the user if the Interval is too small for bezier generation
 
     void updateAverage(QVector<QVector2D> & pts); // Updates the Average Value Label
-    // Different from updatePlotDomain
-    void updatePlotRange(double min, double max);
+
+    void updatePlotRange(double min, double max); // Different from updatePlotDomain
     void updatePlotDomain(double min, double max);
 
     void useSV();  // Switch to SV mode
@@ -80,10 +78,10 @@ private:
     QVector<QVector2D> anchorPts;
     Ui::TwoPointBezier *ui;
 
-    const int    ZOOM_DEFAULT        = 50;
-    const double ZOOM_LIMIT          = 10.0;
-    const double ZOOM_SV_BUFFER      = 2.0;
-    const double ZOOM_BPM_BUFFER     = 100;
+    const double RANGE_MIN_SV        = 0.0;
+    const double RANGE_MAX_SV        = 2.0;
+    const double RANGE_MIN_BPM       = 0.0;
+    const double RANGE_MAX_BPM       = 300.0;
     const int    BEZIER_MAX_PTS      = 66;
     const int    BEZIER_MIN_PTS      = 2;
     const double REMOVE_DISTANCE_MAX = 35;

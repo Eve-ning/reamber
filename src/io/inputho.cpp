@@ -4,7 +4,7 @@
 #include <QSpinBox>
 
 InputHO::InputHO(QWidget *parent) : IO(parent) {
-    setTitle("input");
+    setTitle("Input");
     setPlaceholderText("Hit Object Input");
 }
 InputHO::~InputHO() {}

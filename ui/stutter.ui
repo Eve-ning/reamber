@@ -20,7 +20,7 @@
       <number>-2</number>
      </property>
      <property name="title">
-      <string>stutter</string>
+      <string>Stutter</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="2" column="1">
@@ -39,7 +39,7 @@
       <item row="1" column="1">
        <widget class="QGroupBox" name="settingsLO">
         <property name="title">
-         <string>settings</string>
+         <string>Settings</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_59">
          <item row="0" column="0">
@@ -55,32 +55,32 @@
       <item row="0" column="1">
        <widget class="QGroupBox" name="presetLO">
         <property name="title">
-         <string>presets</string>
+         <string>Presets</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_46">
          <item row="5" column="0">
-          <widget class="QPushButton" name="NormBackTelButton">
+          <widget class="QPushButton" name="normBackTelButton">
            <property name="text">
             <string>Normalized Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QPushButton" name="NormFrontTelButton">
+          <widget class="QPushButton" name="normFrontTelButton">
            <property name="text">
             <string>Normalized Front Teleport</string>
            </property>
           </widget>
          </item>
          <item row="7" column="0">
-          <widget class="QPushButton" name="MaxBackTelButton">
+          <widget class="QPushButton" name="maxBackTelButton">
            <property name="text">
             <string>Max Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QPushButton" name="MaxFronTelButton">
+          <widget class="QPushButton" name="maxFrontTelButton">
            <property name="text">
             <string>Max Front Teleport</string>
            </property>
@@ -92,13 +92,13 @@
       <item row="0" column="0" rowspan="3">
        <widget class="QGroupBox" name="controlsLO">
         <property name="title">
-         <string>controls</string>
+         <string>Controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_5">
          <item row="2" column="0">
           <widget class="QGroupBox" name="aveBpmLO">
            <property name="title">
-            <string>average_bpm</string>
+            <string>Average BPM</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_37">
             <item row="0" column="0">
@@ -120,7 +120,7 @@
          <item row="2" column="1">
           <widget class="QGroupBox" name="aveSvLO">
            <property name="title">
-            <string>average_sv</string>
+            <string>Average SV</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_10">
             <item row="0" column="0">
@@ -145,7 +145,7 @@
          <item row="2" column="2" colspan="2">
           <widget class="QGroupBox" name="typeLO">
            <property name="title">
-            <string>type</string>
+            <string>Type</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_38">
             <item row="1" column="0">
@@ -183,7 +183,7 @@
       <item row="3" column="0" colspan="4">
        <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>generate</string>
+         <string>Generate</string>
         </property>
        </widget>
       </item>
@@ -214,6 +214,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IO</class>
+   <extends>QWidget</extends>
+   <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>OutputTP</class>
    <extends>QWidget</extends>
    <header>include/io/outputtp.h</header>
@@ -223,12 +229,6 @@
    <class>BoxSlider</class>
    <extends>QWidget</extends>
    <header>include/boxslider/boxslider.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>IO</class>
-   <extends>QWidget</extends>
-   <header>include/io/io.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

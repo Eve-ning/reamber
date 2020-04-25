@@ -6,7 +6,8 @@ Alter::Alter(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Alter) {
     ui->setupUi(this);
-    ui->inputCross->setTitle("input_cross");
+    ui->inputCross->setTitle("Cross Input");
+    initToolTips();
 }
 
 Alter::~Alter() { delete ui; }
@@ -134,6 +135,12 @@ void Alter::on_crossAVButton_clicked() {
 
 void Alter::on_output_textChanged() {
     emit outputChanged();
+}
+
+void Alter::initToolTips() {
+    ui->input->setToolTip("Input to be altered.");
+    ui->inputCross->setToolTip("Input to be crossed with");
+    ui->output->setToolTip("Altered Output goes here");
 }
 QString Alter::output() const {
     return ui->output->toPlainText();

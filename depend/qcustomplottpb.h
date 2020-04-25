@@ -11,7 +11,6 @@ public:
 
     ~QCustomPlotTPB() override;
 
-    void mousePressEvent(QMouseEvent * event) override;
     void keyPressEvent(QKeyEvent * event) override;
 
 protected:

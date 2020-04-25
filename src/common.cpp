@@ -2,23 +2,25 @@
 #include <QVector>
 #include <QVector2D>
 
-const QColor  Common::Color::GREEN      = QColor (15,  232, 0);
-const QColor  Common::Color::RED        = QColor (214, 0,   68);
-const QColor  Common::Color::GREY       = QColor (125, 125, 125);
-const QColor  Common::Color::BLUE       = QColor (23,  107, 232);
-const QColor  Common::Color::PURPLE     = QColor (163, 22,  245);
-const QColor  Common::Color::BLACK      = QColor (0,   0,   0);
-const QColor  Common::ColorFade::GREEN  = QColor (15,  232, 0  , 90);
-const QColor  Common::ColorFade::RED    = QColor (214, 0,   68 , 90);
-const QColor  Common::ColorFade::GREY   = QColor (125, 125, 125, 90);
-const QColor  Common::ColorFade::BLUE   = QColor (23,  107, 232, 90);
-const QColor  Common::ColorFade::PURPLE = QColor (163, 22,  245, 90);
-const QString Common::ColorStyleSheet::GREEN   = QString("color:rgb(15,  232, 0);");
-const QString Common::ColorStyleSheet::RED     = QString("color:rgb(214, 0,   68);");
-const QString Common::ColorStyleSheet::GREY    = QString("color:rgb(125, 125, 125);");
-const QString Common::ColorStyleSheet::BLUE    = QString("color:rgb(23,  107, 232);");
-const QString Common::ColorStyleSheet::PURPLE  = QString("color:rgb(163, 22,  245);");
-const QString Common::ColorStyleSheet::BLACK   = QString("color:rgb(0,   0,   0);");
+const QColor  Common::Color::GREEN             = QColor(100,250,100);
+const QColor  Common::ColorFade::GREEN         = QColor(100,250,100,90);
+const QString Common::ColorStyleSheet::GREEN   = QString("color:rgb(100,250,100);");
+const QColor  Common::Color::RED               = QColor(220,0,80);
+const QColor  Common::ColorFade::RED           = QColor(220,0,80,90);
+const QString Common::ColorStyleSheet::RED     = QString("color:rgb(220,0,80);");
+const QColor  Common::Color::GREY              = QColor(125,125,125);
+const QColor  Common::ColorFade::GREY          = QColor(125,125,125,90);
+const QString Common::ColorStyleSheet::GREY    = QString("color:rgb(125,125,125);");
+const QColor  Common::Color::BLUE              = QColor(0,200,240);
+const QColor  Common::ColorFade::BLUE          = QColor(0,200,240,90);
+const QString Common::ColorStyleSheet::BLUE    = QString("color:rgb(0,150,240);");
+const QColor  Common::Color::BLACK             = QColor(0,0,0);
+const QString Common::ColorStyleSheet::BLACK   = QString("color:rgb(0,0,0);");
+const QColor  Common::Color::WHITE             = QColor(255,255,255);
+const QString Common::ColorStyleSheet::WHITE   = QString("color:rgb(255,255,255);");
+const QColor  Common::Color::PURPLE            = QColor(200,20,240);
+const QColor  Common::ColorFade::PURPLE        = QColor(200,20,240,90);
+const QString Common::ColorStyleSheet::PURPLE  = QString("color:rgb(200,20,240);");
 
 const QString Common::Suffix::SV     = QString(" (SV)");
 const QString Common::Suffix::BPM    = QString(" (BPM)");
@@ -39,7 +41,7 @@ QVector<double> Common::clipValueV(QVector<double> valueV, bool isBpm)
 {
     QVector<double> output;
     output.reserve(valueV.size());
-    for (double value : valueV) output.push_back(clipValue(value, isBpm));
+    for(double value : valueV) output.push_back(clipValue(value, isBpm));
     return output;
 }
 

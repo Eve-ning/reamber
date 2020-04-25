@@ -18,6 +18,7 @@ public:
     explicit Normalizer(QWidget *parent = nullptr);
     ~Normalizer();
     QString output() const;
+
 signals:
     void outputChanged();
 
@@ -29,6 +30,7 @@ private slots:
 
 private:
     Ui::Normalizer *ui;
+    void initToolTips();
 };
 
 #endif // NORMALIZER_H

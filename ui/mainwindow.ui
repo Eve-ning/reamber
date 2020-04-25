@@ -2,111 +2,21 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1130</width>
-    <height>800</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>amber</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="2">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string>functions</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_29">
-       <item row="0" column="0">
-        <widget class="QListWidget" name="listWidget">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>home</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>stutter</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>copier</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>2point_bezier</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>normalizer</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>alter</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="clipboardCopy">
-      <property name="text">
-       <string>auto clipboard copy</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" rowspan="3">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageHome">
        <layout class="QGridLayout" name="gridLayout_52">
-        <item row="1" column="0">
-         <widget class="QPushButton" name="homeWikiButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial Narrow</family>
-            <pointsize>48</pointsize>
-            <weight>75</weight>
-            <italic>true</italic>
-            <bold>true</bold>
-            <underline>false</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>GITHUB WIKI</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0">
          <widget class="QPushButton" name="homeReportButton">
           <property name="sizePolicy">
@@ -117,16 +27,16 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial Narrow</family>
-            <pointsize>48</pointsize>
-            <weight>75</weight>
-            <italic>true</italic>
-            <bold>true</bold>
+            <family>Segoe UI Light</family>
+            <pointsize>26</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
             <underline>false</underline>
            </font>
           </property>
           <property name="text">
-           <string>REPORT AN ISSUE</string>
+           <string>ISSUES</string>
           </property>
          </widget>
         </item>
@@ -140,20 +50,43 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial Narrow</family>
-            <pointsize>48</pointsize>
-            <weight>75</weight>
-            <italic>true</italic>
-            <bold>true</bold>
+            <family>Segoe UI Light</family>
+            <pointsize>26</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
             <underline>false</underline>
            </font>
           </property>
           <property name="text">
-           <string>GITHUB REPOSITORY</string>
+           <string>REPOSITORY</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="homeWikiButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Segoe UI Light</family>
+            <pointsize>26</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+           </font>
+          </property>
+          <property name="text">
+           <string>WIKI</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
          <widget class="QPushButton" name="homeReleasesButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -163,11 +96,11 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial Narrow</family>
-            <pointsize>48</pointsize>
-            <weight>75</weight>
-            <italic>true</italic>
-            <bold>true</bold>
+            <family>Segoe UI Light</family>
+            <pointsize>26</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
           </property>
           <property name="text">
@@ -223,11 +156,56 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionHome"/>
+   <addaction name="actionStutter"/>
+   <addaction name="actionCopier"/>
+   <addaction name="actionTPB"/>
+   <addaction name="actionNormalizer"/>
+   <addaction name="actionAlter"/>
+   <addaction name="separator"/>
+   <addaction name="actionClipboardCopy"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionsettings">
+  <action name="actionStutter">
    <property name="text">
-    <string>settings</string>
+    <string>Stutter</string>
+   </property>
+  </action>
+  <action name="actionCopier">
+   <property name="text">
+    <string>Copier</string>
+   </property>
+  </action>
+  <action name="actionTPB">
+   <property name="text">
+    <string>TPB</string>
+   </property>
+  </action>
+  <action name="actionNormalizer">
+   <property name="text">
+    <string>Normalizer</string>
+   </property>
+  </action>
+  <action name="actionAlter">
+   <property name="text">
+    <string>Alter</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="icon">
+    <iconset resource="../rsc.qrc">
+     <normaloff>:/rsc/amber.ico</normaloff>:/rsc/amber.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Home</string>
+   </property>
+  </action>
+  <action name="actionClipboardCopy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Click to Enable Auto Clipboard Copy</string>
    </property>
   </action>
  </widget>
@@ -264,6 +242,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../rsc.qrc"/>
+ </resources>
  <connections/>
 </ui>
