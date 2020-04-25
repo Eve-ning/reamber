@@ -312,7 +312,7 @@ void TwoPointBezier::on_generateButton_clicked() {
     }
     ui->output->write(generateCode(offsets, values, ui->bpmRadio->isChecked()));
 }
-void TwoPointBezier::on_vertZoom_valueChanged(int value){ plot(); }
+void TwoPointBezier::on_vertZoom_valueChanged(int /* unused */){ plot(); }
 void TwoPointBezier::on_bpmRadio_clicked() {
     resetSettings();
     useBPM();

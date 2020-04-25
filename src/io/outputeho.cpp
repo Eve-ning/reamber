@@ -7,6 +7,8 @@ OutputEHO::OutputEHO(QWidget *parent) : OutputHO(parent) {
 }
 OutputEHO::~OutputEHO() {}
 
-QVector<double> OutputEHO::readOffsets(bool makeUnique) const {
+QVector<double> OutputEHO::readOffsets(bool makeUnique) const
+{
+    Q_UNUSED(makeUnique); // To be used next time.
     return QVector<double>();
 }
