@@ -30,6 +30,18 @@ private slots:
     void stutterClipboardCopy();
     void tpbClipboardCopy();
 
+    void on_actionHome_triggered();
+
+    void on_actionAlter_triggered();
+
+    void on_actionNormalizer_triggered();
+
+    void on_actionTPB_triggered();
+
+    void on_actionCopier_triggered();
+
+    void on_actionStutter_triggered();
+
 private:
 
     QClipboard *clipboard;

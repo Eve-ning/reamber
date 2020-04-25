@@ -15,72 +15,17 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string>functions</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_29">
-       <item row="0" column="0">
-        <widget class="QListWidget" name="listWidget">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>0</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>home</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>stutter</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>copier</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>2point_bezier</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>normalizer</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>alter</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0">
+    <item row="1" column="0">
      <widget class="QCheckBox" name="clipboardCopy">
       <property name="text">
        <string>auto clipboard copy</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="3">
+    <item row="0" column="1" rowspan="2">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="pageHome">
        <layout class="QGridLayout" name="gridLayout_52">
@@ -223,11 +168,42 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionHome"/>
+   <addaction name="actionStutter"/>
+   <addaction name="actionCopier"/>
+   <addaction name="actionTPB"/>
+   <addaction name="actionNormalizer"/>
+   <addaction name="actionAlter"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionsettings">
+  <action name="actionStutter">
    <property name="text">
-    <string>settings</string>
+    <string>Stutter</string>
+   </property>
+  </action>
+  <action name="actionCopier">
+   <property name="text">
+    <string>Copier</string>
+   </property>
+  </action>
+  <action name="actionTPB">
+   <property name="text">
+    <string>TPB</string>
+   </property>
+  </action>
+  <action name="actionNormalizer">
+   <property name="text">
+    <string>Normalizer</string>
+   </property>
+  </action>
+  <action name="actionAlter">
+   <property name="text">
+    <string>Alter</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="text">
+    <string>Home</string>
    </property>
   </action>
  </widget>
