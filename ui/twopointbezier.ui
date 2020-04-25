@@ -61,7 +61,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Anchor (A) Bezier (B) Delete (D or Del)</string>
+            <string>Anchor (A) Bezier (B) Delete (D or Del). If Bezier Points do not react, check if interval is too high</string>
            </property>
           </widget>
          </item>
@@ -334,15 +334,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>OutputTP</class>
-   <extends>QWidget</extends>
-   <header>include/io/outputtp.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>IO</class>
    <extends>QWidget</extends>
    <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
