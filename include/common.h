@@ -34,12 +34,23 @@ public:
 
     class Color {
     public:
-        const static QColor GREEN;
-        const static QColor RED  ;
-        const static QColor GREY ;
-        const static QColor BLUE ;
+        const static QColor GREEN ;
+        const static QColor RED   ;
+        const static QColor GREY  ;
+        const static QColor BLUE  ;
         const static QColor PURPLE;
+        const static QColor BLACK ;
     };
+    class ColorStyleSheet {
+    public:
+        const static QString GREEN ;
+        const static QString RED   ;
+        const static QString GREY  ;
+        const static QString BLUE  ;
+        const static QString PURPLE;
+        const static QString BLACK ;
+    };
+
     class ColorFade {
     public:
         const static QColor GREEN ;

@@ -2,15 +2,16 @@
 #define TWOPOINTBEZIER_H
 
 #include <QWidget>
-#include <QVector2D>
+#include "common.h"
 
+class QVector2D;
 class TimingPointV;
 
 namespace Ui {
 class TwoPointBezier;
 }
 
-class TwoPointBezier : public QWidget
+class TwoPointBezier : public QWidget, public Common
 {
     Q_OBJECT
 
@@ -50,7 +51,6 @@ private slots:
     void addBezier  (QVector2D pos);
     void removePoint(QVector2D pos);
 
-
 private:
 
     TimingPointV generateCode(const QVector<double> & offsets,
@@ -63,6 +63,8 @@ private:
     void plotFunction(); // Plots the Function
     void plotBezier();   // Plots the Bezier Points only
     void plotAnchor();   // Plots the Anchor Points only
+
+    void warning(); // Warns the user if the Interval is too small for bezier generation
 
     void updateAverage(QVector<QVector2D> & pts); // Updates the Average Value Label
     // Different from updatePlotDomain

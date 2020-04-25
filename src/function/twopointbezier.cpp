@@ -22,14 +22,18 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     ui->customPlot->addGraph(); // For the anchor
 
     // Connects the double click event
-    connect(ui->customPlot, SIGNAL   (removeEvent(QVector2D)),
-            this,           SLOT     (removePoint(QVector2D)));
+    connect(ui->customPlot, SIGNAL(removeEvent(QVector2D)),
+            this,           SLOT  (removePoint(QVector2D)));
     connect(ui->customPlot, SIGNAL(addAnchorEvent(QVector2D)),
-            this,           SLOT       (addAnchor(QVector2D)));
+            this,           SLOT  (addAnchor(QVector2D)));
     connect(ui->customPlot, SIGNAL(addBezierEvent(QVector2D)),
-            this,           SLOT       (addBezier(QVector2D)));
+            this,           SLOT  (addBezier(QVector2D)));
 
-    // Activate SV
+    ui->startOffset->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->endOffset  ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->interval   ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+
+    // Activate SV to initialize as SV
     useSV();
     resetSettings();
     plot();
@@ -39,7 +43,7 @@ TwoPointBezier::~TwoPointBezier() {
     delete ui;
 }
 QVector<QVector2D> TwoPointBezier::createPlot() {
-    auto anchorPtsCopy = Common::sortByX(anchorPts);
+    auto anchorPtsCopy = sortByX(anchorPts);
 
     QVector<QVector2D> points;
     // For each anchor pair
@@ -70,6 +74,7 @@ void TwoPointBezier::plot() {
     plotFunction();
     plotAnchor();
     plotBezier();
+    warning(); // Generates warnings
 }
 void TwoPointBezier::plotFunction() {
     auto customPlot = ui->customPlot;
@@ -88,7 +93,7 @@ void TwoPointBezier::plotFunction() {
     customPlot->graph(0)->setData(x, y, false);
     // Set color based on SV or BPM
     customPlot->graph(0)->setPen(ui->svRadio->isChecked() ?
-                                 Common::Color::GREEN : Common::Color::RED);
+                                 Color::GREEN : Color::RED);
 
     // Update range
     auto xMinMax = std::minmax_element(x.begin(), x.end());
@@ -109,7 +114,7 @@ void TwoPointBezier::plotBezier() {
     }
 
     customPlot->graph(1)->setData(xs, ys, false);
-    customPlot->graph(1)->setPen(Common::Color::PURPLE);
+    customPlot->graph(1)->setPen(Color::PURPLE);
     customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
     customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlusCircle, 5));
     customPlot->replot();
@@ -126,17 +131,27 @@ void TwoPointBezier::plotAnchor() {
     }
 
     customPlot->graph(2)->setData(xs, ys, false);
-    customPlot->graph(2)->setPen(Common::ColorFade::BLUE);
+    customPlot->graph(2)->setPen(ColorFade::BLUE);
     customPlot->graph(2)->setLineStyle(QCPGraph::lsImpulse);
     customPlot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssTriangleInverted, 5));
     customPlot->replot();
+}
+
+void TwoPointBezier::warning() {
+    if (ui->endOffset->value() - ui->startOffset->value() <= 0)
+        ui->startOffset->setStyleSheet(ColorStyleSheet::RED);
+    else ui->startOffset->setStyleSheet(ColorStyleSheet::BLACK);
+
+    if (ui->endOffset->value() - ui->startOffset->value() <= ui->interval->value())
+        ui->interval->setStyleSheet(ColorStyleSheet::RED);
+    else ui->interval->setStyleSheet(ColorStyleSheet::BLACK);
 }
 
 void TwoPointBezier::updateAverage(QVector<QVector2D> & pts) {
     double sum = 0.0;
     bool isBpm = ui->bpmRadio->isChecked();
     for (int i = 0; i < (pts.size() - 1); i ++)
-        sum += Common::clipValue(double(pts[i].y()),isBpm) * (double(pts[i + 1].x()) - double(pts[i].x()));
+        sum += clipValue(double(pts[i].y()),isBpm) * (double(pts[i + 1].x()) - double(pts[i].x()));
     double average = sum / (ui->endOffset->value() - ui->startOffset->value());
 
     ui->averageLabel->setText(QString("Average: %1x").arg(QString::number(average, 'f', 2)));
@@ -165,7 +180,7 @@ void TwoPointBezier::updatePlotRange(double min, double max){
     // Allow negative for easier bezier bending
     // minRange = minRange < 0 ? 0 : minRange;
     // if (ui->svRadio->isChecked())
-    //     maxRange = maxRange > Common::SV_MAX ? Common::SV_MAX : maxRange;
+    //     maxRange = maxRange > SV_MAX ? SV_MAX : maxRange;
 
     ui->customPlot->yAxis->setRange(minRange, maxRange);
 }
@@ -174,30 +189,29 @@ void TwoPointBezier::updatePlotDomain(double min, double max) {
 }
 
 void TwoPointBezier::useSV() {
-    ui->startValue->setValue(Common::SV_DEFAULT);
-    ui->startValue->setRange(Common::SV_MIN, Common::SV_MAX);
-    ui->startValue->setSuffix(Common::Suffix::SV);
-    ui->startValue->setSingleStep(Common::SV_STEPSIZE);
-    ui->endValue  ->setValue(Common::SV_DEFAULT);
-    ui->endValue  ->setRange(Common::SV_MIN, Common::SV_MAX);
-    ui->endValue  ->setSuffix(Common::Suffix::SV);
-    ui->endValue  ->setSingleStep(Common::SV_STEPSIZE);
+    ui->startValue->setValue(SV_DEFAULT);
+    ui->startValue->setRange(SV_MIN, SV_MAX);
+    ui->startValue->setSuffix(Suffix::SV);
+    ui->startValue->setSingleStep(SV_STEPSIZE);
+    ui->endValue  ->setValue(SV_DEFAULT);
+    ui->endValue  ->setRange(SV_MIN, SV_MAX);
+    ui->endValue  ->setSuffix(Suffix::SV);
+    ui->endValue  ->setSingleStep(SV_STEPSIZE);
 }
 void TwoPointBezier::useBPM() {
-    ui->startValue->setRange(Common::BPM_MIN, Common::BPM_MAX);
-    ui->startValue->setValue(Common::BPM_DEFAULT);
-    ui->startValue->setSuffix(Common::Suffix::BPM);
-    ui->startValue->setSingleStep(Common::BPM_STEPSIZE);
-    ui->endValue  ->setRange(Common::BPM_MIN, Common::BPM_MAX);
-    ui->endValue  ->setValue(Common::BPM_DEFAULT);
-    ui->endValue  ->setSuffix(Common::Suffix::BPM);
-    ui->endValue  ->setSingleStep(Common::BPM_STEPSIZE);
+    ui->startValue->setRange(BPM_MIN, BPM_MAX);
+    ui->startValue->setValue(BPM_DEFAULT);
+    ui->startValue->setSuffix(Suffix::BPM);
+    ui->startValue->setSingleStep(BPM_STEPSIZE);
+    ui->endValue  ->setRange(BPM_MIN, BPM_MAX);
+    ui->endValue  ->setValue(BPM_DEFAULT);
+    ui->endValue  ->setSuffix(Suffix::BPM);
+    ui->endValue  ->setSingleStep(BPM_STEPSIZE);
 }
 void TwoPointBezier::resetSettings() {
-    ui->startOffset->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
     ui->startOffset->setValue(0);
-    ui->endOffset  ->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
-    ui->endOffset  ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT) * 100);
+    ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
+    ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
 
     anchorPts = QVector<QVector2D>(2);
     anchorPts[0] = {float(ui->startOffset->value()),
@@ -308,7 +322,7 @@ void TwoPointBezier::on_generateButton_clicked() {
     bool isBpm = ui->bpmRadio->isChecked();
     for (const auto & bezI : bez) {
         offsets.push_back(double(bezI.x()));
-        values.push_back(Common::clipValue(double(bezI.y()), isBpm));
+        values.push_back(clipValue(double(bezI.y()), isBpm));
     }
     ui->output->write(generateCode(offsets, values, ui->bpmRadio->isChecked()));
 }
