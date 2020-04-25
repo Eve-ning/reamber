@@ -9,9 +9,9 @@ BoxSlider::BoxSlider(QWidget *parent) :
     min(0.0), max(100.0), steps(100)
 {
     ui->setupUi(this);
-    slider()->setRange(0, steps);
+    slider()->setRange(0, int(steps));
 
-    spinBox()->setSingleStep((max / min) / steps);
+    setSteps(steps);
     setRange(min, max);
 }
 
@@ -36,6 +36,7 @@ void BoxSlider::setSteps(uint steps) {
     this->steps = steps;
     slider()->setRange(0, int(steps));
     updateSlider(spinBox()->value());
+    spinBox()->setSingleStep((max / min) / steps);
 }
 
 void BoxSlider::setValue(double value) {

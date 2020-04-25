@@ -117,7 +117,7 @@ void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
     tpV.pushBack(tpNormalized);
 
     ui->output->write(TimingPointV(algorithm::copy<TimingPoint>(
-                                   QSPtr<TimingPointV>::create(tpV),
+                                   tpV.sptr(),
                                    offsets,
                                    true,
                                    true)));
@@ -142,7 +142,7 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
     tpV.pushBack(tpNormalized);
 
     ui->output->write(TimingPointV(algorithm::copy<TimingPoint>(
-                                   QSPtr<TimingPointV>::create(tpV),
+                                   tpV.sptr(),
                                    offsets,
                                    true, true)));
 }
@@ -154,16 +154,13 @@ void Stutter::stutterLimitUpdate() {
                                             aveSv(),
                                             Common::SV_MIN,
                                             Common::SV_MAX);
-    qDebug() << initLim;
     ui->initSv->setRange(initLim[0] >= Common::SV_MIN ? initLim[0] : Common::SV_MIN,
                           initLim[1] <= Common::SV_MAX ? initLim[1] : Common::SV_MAX);
 
-
-    initLim =
-            algorithm::stutterRelInitLimits(threshold(),
-                                            aveBpm(),
-                                            Common::BPM_MIN,
-                                            Common::BPM_MAX);
+    initLim = algorithm::stutterRelInitLimits(threshold(),
+                                              aveBpm(),
+                                              Common::BPM_MIN,
+                                              Common::BPM_MAX);
 
     ui->initBpm->setRange(initLim[0] >= Common::BPM_MIN ? initLim[0] : Common::BPM_MIN,
                            initLim[1] <= Common::BPM_MAX ? initLim[1] : Common::BPM_MAX);

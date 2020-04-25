@@ -49,7 +49,7 @@ void Alter::on_selfDeleteButton_clicked() {
     TimingPointV tpV = ui->input->read();
     if (tpV.empty()) return;
 
-    auto delTpV = algorithm::deleteNth<TimingPoint>(QSPtr<TimingPointV>::create(tpV),
+    auto delTpV = algorithm::deleteNth<TimingPoint>(tpV.sptr(),
                                          static_cast<unsigned int>(ui->selfDel->value()),
                                          static_cast<unsigned int>(ui->selfDelOffset->value()));
     ui->output->write(TimingPointV(delTpV));
@@ -57,14 +57,14 @@ void Alter::on_selfDeleteButton_clicked() {
 void Alter::on_selfSubdByButton_clicked() {
     TimingPointV tpV = ui->input->read();
     if (tpV.empty()) return;
-    auto subdTpV = algorithm::copySubdBy<TimingPoint>( QSPtr<TimingPointV>::create(tpV),
+    auto subdTpV = algorithm::copySubdBy<TimingPoint>(tpV.sptr(),
                             static_cast<unsigned int>(ui->selfSubdBy->value()), true);
     ui->output->write(TimingPointV(subdTpV));
 }
 void Alter::on_selfSubdToButton_clicked() {
     TimingPointV tpV = ui->input->read();
     if (tpV.empty()) return;
-    auto subdTpV =  algorithm::copySubdTo<TimingPoint>(QSPtr<TimingPointV>::create(tpV),
+    auto subdTpV =  algorithm::copySubdTo<TimingPoint>(tpV.sptr(),
                             static_cast<unsigned int>(ui->selfSubdTo->value()), true);
     ui->output->write(TimingPointV(subdTpV));
 }

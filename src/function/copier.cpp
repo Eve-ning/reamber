@@ -31,7 +31,7 @@ void Copier::on_generateButton_clicked() {
     if (copyFrom.canConvert<HitObjectV>()) {
         HitObjectV hoV = copyFrom.value<HitObjectV>();
         auto c = algorithm::copy<HitObject>(
-                    QSPtr<HitObjectV>::create(hoV),
+                    hoV.sptr(),
                     copyTo,
                     true,
                     true);
@@ -40,7 +40,7 @@ void Copier::on_generateButton_clicked() {
     } else if (copyFrom.canConvert<TimingPointV>()) {
         TimingPointV tpV = copyFrom.value<TimingPointV>();
         auto c = algorithm::copy<TimingPoint>(
-                    QSPtr<TimingPointV>::create(tpV),
+                    tpV.sptr(),
                     copyTo,
                     true,
                     true);
