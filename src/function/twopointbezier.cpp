@@ -25,10 +25,14 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     ui->customPlot->addGraph(); // For the bezier
     ui->customPlot->addGraph(); // For the anchor
 
-    // Initializes Box Plots
+    // Initializes Parameters
     ui->startOffset->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
     ui->endOffset  ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
     ui->interval   ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+
+    ui->startOffset->setValue(0);
+    ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
+    ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
 
     // Connects the double click event
     connect(ui->customPlot, SIGNAL(removeEvent(QVector2D)),
