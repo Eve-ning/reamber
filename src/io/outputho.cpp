@@ -2,7 +2,7 @@
 #include "object/multiple/hitobjectv.h"
 
 OutputHO::OutputHO(QWidget *parent) : IO(parent) {
-    setTitle("output");
+    setTitle("Output");
     setPlaceholderText("Hit Object Output");
     hideKeyWidget();
 }

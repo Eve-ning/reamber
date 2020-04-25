@@ -2,7 +2,7 @@
 #include "object/multiple/timingpointv.h"
 
 OutputTP::OutputTP(QWidget *parent) : IO(parent) {
-    setTitle("output");
+    setTitle("Output");
     setPlaceholderText("Timing Point Output");
     hideKeyWidget();
 }

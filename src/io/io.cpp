@@ -10,7 +10,7 @@ IO::IO(QWidget *parent) :
     ui(new Ui::IO) {
     ui->setupUi(this);
 
-    setTitle("input/output");
+    setTitle("Input/Output");
     setPlaceholderText("Variant Input/Output");
     addKeyWidget();
 }

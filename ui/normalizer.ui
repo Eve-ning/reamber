@@ -17,19 +17,19 @@
    <item row="0" column="0">
     <widget class="QGroupBox" name="lo">
      <property name="title">
-      <string>normalizer</string>
+      <string>Normalizer</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_33">
       <item row="0" column="1">
        <widget class="QGroupBox" name="controlsLO">
         <property name="title">
-         <string>controls</string>
+         <string>Controls</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_34">
          <item row="0" column="0">
           <widget class="QGroupBox" name="bpmLO">
            <property name="title">
-            <string>bpm</string>
+            <string>BPM</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_35">
             <item row="0" column="0">
@@ -51,7 +51,7 @@
       <item row="1" column="1">
        <widget class="QGroupBox" name="bpmlistLO">
         <property name="title">
-         <string>bpm list</string>
+         <string>BPM List</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_30">
          <item row="1" column="0">
@@ -63,7 +63,7 @@
       <item row="2" column="0" colspan="3">
        <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>generate</string>
+         <string>Generate</string>
         </property>
        </widget>
       </item>

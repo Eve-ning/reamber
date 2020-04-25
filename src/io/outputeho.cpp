@@ -1,7 +1,7 @@
 #include "include/io/outputeho.h"
 
 OutputEHO::OutputEHO(QWidget *parent) : OutputHO(parent) {
-    setTitle("output");
+    setTitle("Output");
     setPlaceholderText("Editor Hit Object Output");
     hideKeyWidget();
 }

@@ -7,13 +7,13 @@ Copier::Copier(QWidget *parent) :
     ui(new Ui::Copier)
 {
     ui->setupUi(this);
-    ui->inputCopyFrom->setTitle("input_copy_from");
+    ui->inputCopyFrom->setTitle("Input to Copy From");
     ui->inputCopyFrom->setPlaceholderText("Variant Input");
-    ui->inputCopyTo->setTitle("input_copy_to");
+    ui->inputCopyTo->setTitle("Input to Copy To");
     ui->inputCopyTo->setPlaceholderText("Variant Input");
     ui->inputCopyTo->hideKeyWidget();
     ui->output->hideKeyWidget();
-    ui->output->setTitle("output");
+    ui->output->setTitle("Output");
     ui->output->setPlaceholderText("Variant Output");
 
     initToolTips();

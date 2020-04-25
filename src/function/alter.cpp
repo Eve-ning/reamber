@@ -6,7 +6,7 @@ Alter::Alter(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Alter) {
     ui->setupUi(this);
-    ui->inputCross->setTitle("input_cross");
+    ui->inputCross->setTitle("Cross Input");
     initToolTips();
 }
 

@@ -8,7 +8,7 @@ Stutter::Stutter(QWidget *parent) :
     ui(new Ui::Stutter) {
     ui->setupUi(this);
     ui->input->hideKeyWidget();
-    ui->input->setTitle("input");
+    ui->input->setTitle("Input");
     ui->input->setPlaceholderText("Variant Input");
 
     initBoxSliders();
@@ -22,14 +22,14 @@ Stutter::~Stutter() {
 
 void Stutter::initBoxSliders() {
     ui->threshold->setParameters(0.01, 1.0, 1000, 0.5);
-    ui->threshold->setTitle("threshold");
+    ui->threshold->setTitle("Threshold");
     ui->threshold->spinBox()->setDecimals(3);
 
     ui->initSv->setParameters(SV_MIN, SV_MAX, 1000, SV_DEFAULT);
-    ui->initSv->setTitle("init_sv");
+    ui->initSv->setTitle("Init SV");
 
     ui->initBpm->setParameters(BPM_MIN, BPM_MAX, 1000, BPM_DEFAULT);
-    ui->initBpm->setTitle("init_bpm");
+    ui->initBpm->setTitle("Init BPM");
 }
 void Stutter::initToolTips()
 {
@@ -42,6 +42,7 @@ void Stutter::initToolTips()
     ui->aveBpm->setToolTip("Average BPM, this affects the average BPM of the whole effect");
     ui->svRadio->setToolTip("Switch to SV mode");
     ui->svRadio->setToolTip("Switch to BPM mode");
+    ui->input->setToolTip("Any osu! type with offset can go here");
     ui->output->setToolTip("Stutter Output goes here");
     ui->normFrontTelButton->setToolTip("Creates a very fast normalized front teleport using the sharpest possible BPM change.\n"
                                        "This is relative to the average BPM set.");

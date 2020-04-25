@@ -2,7 +2,7 @@
 #include "object/multiple/timingpointv.h"
 
 InputTP::InputTP(QWidget *parent) : IO(parent) {
-    setTitle("input");
+    setTitle("Input");
     setPlaceholderText("Timing Point Input");
     hideKeyWidget();
 }

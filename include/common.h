@@ -40,6 +40,7 @@ public:
         const static QColor BLUE  ;
         const static QColor PURPLE;
         const static QColor BLACK ;
+        const static QColor WHITE ;
     };
     class ColorStyleSheet {
     public:
@@ -49,6 +50,7 @@ public:
         const static QString BLUE  ;
         const static QString PURPLE;
         const static QString BLACK ;
+        const static QString WHITE ;
     };
 
     class ColorFade {
