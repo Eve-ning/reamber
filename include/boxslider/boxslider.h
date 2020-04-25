@@ -23,6 +23,7 @@ public:
     virtual void setRange(double min, double max);
     virtual void setSteps(uint steps);
     virtual void setValue(double value);
+    virtual void setDecimals(uint decimals);
 
     virtual void updateSpinBox(double sliderValue);
     virtual void updateSlider(double spinBoxValue);

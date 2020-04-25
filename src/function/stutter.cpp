@@ -23,13 +23,13 @@ Stutter::~Stutter() {
 void Stutter::initBoxSliders() {
     ui->threshold->setParameters(0.01, 1.0, 1000, 0.5);
     ui->threshold->setTitle("Threshold");
-    ui->threshold->spinBox()->setDecimals(3);
+    ui->threshold->setDecimals(3);
 
     ui->initSv->setParameters(SV_MIN, SV_MAX, 1000, SV_DEFAULT);
-    ui->initSv->setTitle("Init SV");
+    ui->initSv->setTitle("Initial SV");
 
     ui->initBpm->setParameters(BPM_MIN, BPM_MAX, 1000, BPM_DEFAULT);
-    ui->initBpm->setTitle("Init BPM");
+    ui->initBpm->setTitle("Initial BPM");
 }
 void Stutter::initToolTips()
 {
@@ -50,6 +50,7 @@ void Stutter::initToolTips()
                                       "This is relative to the average BPM set.");
     ui->maxFrontTelButton->setToolTip("Creates an instant high BPM front screen wipe.");
     ui->maxBackTelButton->setToolTip("Creates an instant high BPM back screen wipe.");
+    ui->skipLastCheck->setToolTip("Checking this will omit the last Timing Point generated.");
 }
 
 void Stutter::on_threshold_valueChanged() {

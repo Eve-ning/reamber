@@ -13,6 +13,7 @@ BoxSlider::BoxSlider(QWidget *parent) :
 
     setSteps(steps);
     setRange(min, max);
+    setDecimals(2);
 }
 
 BoxSlider::~BoxSlider() { delete ui; }
@@ -36,12 +37,16 @@ void BoxSlider::setSteps(uint steps) {
     this->steps = steps;
     slider()->setRange(0, int(steps));
     updateSlider(spinBox()->value());
-    spinBox()->setSingleStep((max / min) / steps);
 }
 
 void BoxSlider::setValue(double value) {
     spinBox()->setValue(value);
     updateSlider(value);
+}
+
+void BoxSlider::setDecimals(uint decimals) {
+    spinBox()->setDecimals(int(decimals));
+    spinBox()->setSingleStep(1.0 / pow(10, decimals));
 }
 
 void BoxSlider::updateSpinBox(double sliderValue) {

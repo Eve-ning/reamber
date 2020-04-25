@@ -5,7 +5,6 @@
 #include "algorithm/algorithm.h"
 #include <QVector2D>
 #include <QtGlobal>
-#include <QMouseEvent>
 
 TwoPointBezier::TwoPointBezier(QWidget *parent) :
     QWidget(parent),
@@ -64,7 +63,7 @@ void TwoPointBezier::initToolTips() {
     ui->customPlot->setStatusTip("This is where you edit the function.\n"
                                  "Hover your mouse over and press keys indicated at the top of the plot to create points.\n"
                                  "If it isn't working, click on the plot to focus it.");
-    ui->customPlot->setToolTipDuration(1000);
+    ui->resetButton->setToolTip("Resets most parameters to its original state.");
 }
 
 QVector<QVector2D> TwoPointBezier::createPlot() {
@@ -222,9 +221,10 @@ void TwoPointBezier::useBPM() {
     ui->endValue  ->setSingleStep(BPM_STEPSIZE);
 }
 void TwoPointBezier::resetSettings() {
-    ui->startOffset->setValue(0);
-    ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
-    ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
+    // I don't think resetting offsets is user friendly.
+    // ui->startOffset->setValue(0);
+    // ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
+    // ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
 
     anchorPts = QVector<QVector2D>(2);
     anchorPts[0] = {float(ui->startOffset->value()),
