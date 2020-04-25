@@ -29,7 +29,7 @@ private slots:
     void on_aveBpm_valueChanged(double);
     void on_aveSv_valueChanged(double);
     void on_normFrontTelButton_clicked();
-    void on_maxFronTelButton_clicked();
+    void on_maxFrontTelButton_clicked();
     void on_normBackTelButton_clicked();
     void on_maxBackTelButton_clicked();
     void on_output_textChanged();

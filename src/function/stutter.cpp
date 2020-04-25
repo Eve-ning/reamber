@@ -43,6 +43,12 @@ void Stutter::initToolTips()
     ui->svRadio->setToolTip("Switch to SV mode");
     ui->svRadio->setToolTip("Switch to BPM mode");
     ui->output->setToolTip("Stutter Output goes here");
+    ui->normFrontTelButton->setToolTip("Creates a very fast normalized front teleport using the sharpest possible BPM change.\n"
+                                       "This is relative to the average BPM set.");
+    ui->normBackTelButton->setToolTip("Creates a very fast normalized back teleport using the sharpest possible BPM change.\n"
+                                      "This is relative to the average BPM set.");
+    ui->maxFrontTelButton->setToolTip("Creates an instant high BPM front screen wipe.");
+    ui->maxBackTelButton->setToolTip("Creates an instant high BPM back screen wipe.");
 }
 
 void Stutter::on_threshold_valueChanged() {
@@ -114,7 +120,7 @@ void Stutter::on_normBackTelButton_clicked() { // Normalized Back Teleport
 
     ui->output->write(tpV);
 }
-void Stutter::on_maxFronTelButton_clicked() { // Max Front Teleport
+void Stutter::on_maxFrontTelButton_clicked() { // Max Front Teleport
     auto offsets = readOffsets();
 
     // Break if empty
