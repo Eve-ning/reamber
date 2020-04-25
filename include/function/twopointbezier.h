@@ -33,7 +33,6 @@ private slots:
     void on_bpmRadio_clicked();
     void on_svRadio_clicked();
     void on_interval_editingFinished();
-    void on_vertZoom_valueChanged(int value);
     void on_startOffset_valueChanged(int arg1);
     void on_endOffset_valueChanged(int arg1);
     void on_startValue_valueChanged(double arg1);
@@ -79,10 +78,10 @@ private:
     QVector<QVector2D> anchorPts;
     Ui::TwoPointBezier *ui;
 
-    const int    ZOOM_DEFAULT        = 50;
-    const double ZOOM_LIMIT          = 10.0;
-    const double ZOOM_SV_BUFFER      = 2.0;
-    const double ZOOM_BPM_BUFFER     = 100;
+    const double RANGE_MIN_SV        = 0.0;
+    const double RANGE_MAX_SV        = 2.0;
+    const double RANGE_MIN_BPM       = 0.0;
+    const double RANGE_MAX_BPM       = 300.0;
     const int    BEZIER_MAX_PTS      = 66;
     const int    BEZIER_MIN_PTS      = 2;
     const double REMOVE_DISTANCE_MAX = 35;
