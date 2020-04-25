@@ -45,10 +45,8 @@ private slots:
 
     static long long binomCoeff(int n, int k);
 
-    // A and B will add points
-    // Right click removes nearest point
-    void addAnchor  (QVector2D pos);
-    void addBezier  (QVector2D pos);
+    void addAnchor  (QVector2D pos); // A and B will add points
+    void addBezier  (QVector2D pos); // Right click removes nearest point
     void removePoint(QVector2D pos);
 
 private:
@@ -68,8 +66,8 @@ private:
     void warning(); // Warns the user if the Interval is too small for bezier generation
 
     void updateAverage(QVector<QVector2D> & pts); // Updates the Average Value Label
-    // Different from updatePlotDomain
-    void updatePlotRange(double min, double max);
+
+    void updatePlotRange(double min, double max); // Different from updatePlotDomain
     void updatePlotDomain(double min, double max);
 
     void useSV();  // Switch to SV mode

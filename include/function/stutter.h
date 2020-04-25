@@ -24,9 +24,7 @@ signals:
 
 private slots:
 
-    // void on_initSv_valueChanged();
     void on_threshold_valueChanged();
-    // void on_initBpm_valueChanged();
     void on_generateButton_clicked();
     void on_aveBpm_valueChanged(double);
     void on_aveSv_valueChanged(double);

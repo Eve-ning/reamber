@@ -31,7 +31,6 @@ void Stutter::initBoxSliders() {
     ui->initBpm->setParameters(BPM_MIN, BPM_MAX, 1000, BPM_DEFAULT);
     ui->initBpm->setTitle("init_bpm");
 }
-
 void Stutter::initToolTips()
 {
     ui->threshold->setToolTip("Threshold dictates where the middle Timing Point should be,\n"
@@ -45,10 +44,10 @@ void Stutter::initToolTips()
     ui->svRadio->setToolTip("Switch to BPM mode");
     ui->output->setToolTip("Stutter Output goes here");
 }
+
 void Stutter::on_threshold_valueChanged() {
     stutterLimitUpdate();
 }
-
 void Stutter::on_generateButton_clicked() {
     auto offsets = readOffsets();
     // Break if empty
@@ -163,6 +162,7 @@ void Stutter::on_maxBackTelButton_clicked() { // Max Back Teleport
 }
 void Stutter::on_aveBpm_valueChanged(double) { stutterLimitUpdate(); }
 void Stutter::on_aveSv_valueChanged(double) { stutterLimitUpdate(); }
+
 void Stutter::stutterLimitUpdate() {
     QVector<double> initLim =
             algorithm::stutterRelInitLimits(threshold(),
@@ -194,7 +194,6 @@ void Stutter::on_output_textChanged() {
 QVector<double> Stutter::readOffsets() {
     return ui->input->readOffsets(true);
 }
-
 bool Stutter::isSkipLast() const {
     return ui->skipLastCheck->isChecked();
 }

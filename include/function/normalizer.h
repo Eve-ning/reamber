@@ -18,6 +18,7 @@ public:
     explicit Normalizer(QWidget *parent = nullptr);
     ~Normalizer();
     QString output() const;
+
 signals:
     void outputChanged();
 
