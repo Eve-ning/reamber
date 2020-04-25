@@ -12,6 +12,7 @@ Stutter::Stutter(QWidget *parent) :
     ui->input->setPlaceholderText("Variant Input");
 
     initBoxSliders();
+    initToolTips();
     stutterLimitUpdate();
 }
 
@@ -29,6 +30,20 @@ void Stutter::initBoxSliders() {
 
     ui->initBpm->setParameters(BPM_MIN, BPM_MAX, 1000, BPM_DEFAULT);
     ui->initBpm->setTitle("init_bpm");
+}
+
+void Stutter::initToolTips()
+{
+    ui->threshold->setToolTip("Threshold dictates where the middle Timing Point should be,\n"
+                              "the value is relative to the front.\n"
+                              "e.g. 0.5 places the generated Timing Point right in the middle");
+    ui->initSv->setToolTip("Initial SV, bounded by the limits of the middle Timing Point");
+    ui->initBpm->setToolTip("Initial BPM, bounded by the limits of the middle Timing Point");
+    ui->aveSv->setToolTip("Average SV, this affects the average SV of the whole effect");
+    ui->aveBpm->setToolTip("Average BPM, this affects the average BPM of the whole effect");
+    ui->svRadio->setToolTip("Switch to SV mode");
+    ui->svRadio->setToolTip("Switch to BPM mode");
+    ui->output->setToolTip("Stutter Output goes here");
 }
 void Stutter::on_threshold_valueChanged() {
     stutterLimitUpdate();
@@ -60,7 +75,7 @@ void Stutter::on_generateButton_clicked() {
                                     isSkipLast()); // Skip Last
     ui->output->write(tpV);
 }
-void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
+void Stutter::on_normFrontTelButton_clicked() { // Normalized Front Teleport
     auto offsets = readOffsets();
     // Break if empty
     if (offsets.empty()) return;
@@ -82,7 +97,7 @@ void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
 
     ui->output->write(tpV);
 }
-void Stutter::on_NormBackTelButton_clicked() { // Normalized Back Teleport
+void Stutter::on_normBackTelButton_clicked() { // Normalized Back Teleport
     auto offsets = readOffsets();
 
     // Break if empty
@@ -100,7 +115,7 @@ void Stutter::on_NormBackTelButton_clicked() { // Normalized Back Teleport
 
     ui->output->write(tpV);
 }
-void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
+void Stutter::on_maxFronTelButton_clicked() { // Max Front Teleport
     auto offsets = readOffsets();
 
     // Break if empty
@@ -122,7 +137,7 @@ void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
                                    true,
                                    true)));
 }
-void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
+void Stutter::on_maxBackTelButton_clicked() { // Max Back Teleport
     auto offsets = readOffsets();
 
     // Break if empty

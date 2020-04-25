@@ -59,28 +59,28 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_46">
          <item row="5" column="0">
-          <widget class="QPushButton" name="NormBackTelButton">
+          <widget class="QPushButton" name="normBackTelButton">
            <property name="text">
             <string>Normalized Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QPushButton" name="NormFrontTelButton">
+          <widget class="QPushButton" name="normFrontTelButton">
            <property name="text">
             <string>Normalized Front Teleport</string>
            </property>
           </widget>
          </item>
          <item row="7" column="0">
-          <widget class="QPushButton" name="MaxBackTelButton">
+          <widget class="QPushButton" name="maxBackTelButton">
            <property name="text">
             <string>Max Back Teleport</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QPushButton" name="MaxFronTelButton">
+          <widget class="QPushButton" name="maxFronTelButton">
            <property name="text">
             <string>Max Front Teleport</string>
            </property>
@@ -214,6 +214,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>IO</class>
+   <extends>QWidget</extends>
+   <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>OutputTP</class>
    <extends>QWidget</extends>
    <header>include/io/outputtp.h</header>
@@ -223,12 +229,6 @@
    <class>BoxSlider</class>
    <extends>QWidget</extends>
    <header>include/boxslider/boxslider.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>IO</class>
-   <extends>QWidget</extends>
-   <header>include/io/io.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

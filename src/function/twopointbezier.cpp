@@ -13,13 +13,23 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     anchorPts(QVector<QVector2D>(2)),
     ui(new Ui::TwoPointBezier) {
     ui->setupUi(this);
+
+    initToolTips();
+
+    // Initializes IO
     ui->input->hideKeyWidget();
     ui->input->setTitle("input");
     ui->input->setPlaceholderText("Variant Input (2 Offsets)");
 
+    // Initializes CustomPlots
     ui->customPlot->addGraph(); // For the function
     ui->customPlot->addGraph(); // For the bezier
     ui->customPlot->addGraph(); // For the anchor
+
+    // Initializes Box Plots
+    ui->startOffset->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->endOffset  ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->interval   ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
 
     // Connects the double click event
     connect(ui->customPlot, SIGNAL(removeEvent(QVector2D)),
@@ -29,9 +39,6 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     connect(ui->customPlot, SIGNAL(addBezierEvent(QVector2D)),
             this,           SLOT  (addBezier(QVector2D)));
 
-    ui->startOffset->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
-    ui->endOffset  ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
-    ui->interval   ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
 
     // Activate SV to initialize as SV
     useSV();
@@ -42,6 +49,26 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
 TwoPointBezier::~TwoPointBezier() {
     delete ui;
 }
+
+void TwoPointBezier::initToolTips() {
+    ui->output->setToolTip("Generated Output goes here");
+    ui->input->setToolTip("Update Offset bounds here. Only the first 2 offsets are used");
+    ui->updateBoundBtn->setToolTip("Update Bounds with the above input");
+    ui->startOffset->setToolTip("Initial Offset, cannot be more or equal to the End Offset");
+    ui->endOffset->setToolTip("Final Offset, cannot be more or equal to the Initial Offset");
+    ui->startValue->setToolTip("Initial Value");
+    ui->endValue->setToolTip("Final Value");
+    ui->interval->setToolTip("\"Gap\" between points, due to bezier x-axis squeezing, it will not be consistent.\n"
+                             "This value cannot be larger than the domain (end offset - start offset)");
+    ui->svRadio->setToolTip("Change to SV Mode");
+    ui->bpmRadio->setToolTip("Change to BPM Mode");
+    ui->customPlot->setStatusTip("This is where you edit the function.\n"
+                                 "Hover your mouse over and press keys indicated at the top of the plot to create points.\n"
+                                 "If it isn't working, click on the plot to focus it.");
+    ui->customPlot->setToolTipDuration(1000);
+    ui->vertZoom->setToolTip("Adjusts the zoom of the plot");
+}
+
 QVector<QVector2D> TwoPointBezier::createPlot() {
     auto anchorPtsCopy = sortByX(anchorPts);
 

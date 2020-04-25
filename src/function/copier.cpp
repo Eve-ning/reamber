@@ -15,6 +15,8 @@ Copier::Copier(QWidget *parent) :
     ui->output->hideKeyWidget();
     ui->output->setTitle("output");
     ui->output->setPlaceholderText("Variant Output");
+
+    initToolTips();
 }
 
 Copier::~Copier() {
@@ -52,4 +54,10 @@ void Copier::on_generateButton_clicked() {
 
 void Copier::on_output_textChanged() {
     emit outputChanged();
+}
+
+void Copier::initToolTips() {
+    ui->inputCopyTo->setToolTip("Input offsets to be copied to, can be any osu type with offsets.");
+    ui->inputCopyFrom->setToolTip("Input objects to copy, keys MUST be specified in the case of HitObjects for correct conversion.");
+    ui->output->setToolTip("Copied Output Objects goes here");
 }

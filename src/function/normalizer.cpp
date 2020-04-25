@@ -6,6 +6,7 @@ Normalizer::Normalizer(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Normalizer) {
     ui->setupUi(this);
+    initToolTips();
 }
 
 Normalizer::~Normalizer() {
@@ -41,4 +42,11 @@ void Normalizer::on_bpmlist_itemClicked(QListWidgetItem *item) {
 
 void Normalizer::on_output_textChanged() {
     emit outputChanged();
+}
+
+void Normalizer::initToolTips() {
+    ui->input->setToolTip("BPM Timing Points to be normalized");
+    ui->bpmlist->setToolTip("Select a BPM to normalize to, then click generate again");
+    ui->bpm->setToolTip("Manually set a BPM here");
+    ui->output->setToolTip("Normalizing SVs outputs here");
 }

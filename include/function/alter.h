@@ -37,6 +37,8 @@ private slots:
     void on_output_textChanged();
 
 private:
+    void initToolTips();
+
     Ui::Alter *ui;
 };
 

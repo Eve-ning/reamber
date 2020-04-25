@@ -52,6 +52,7 @@ private slots:
     void removePoint(QVector2D pos);
 
 private:
+    void initToolTips();
 
     TimingPointV generateCode(const QVector<double> & offsets,
                               const QVector<double> & values,

@@ -29,6 +29,7 @@ private slots:
 
 private:
     Ui::Normalizer *ui;
+    void initToolTips();
 };
 
 #endif // NORMALIZER_H
