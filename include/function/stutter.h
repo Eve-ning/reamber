@@ -2,12 +2,13 @@
 #define STUTTER_H
 
 #include <QWidget>
+#include "common.h"
 
 namespace Ui {
 class Stutter;
 }
 
-class Stutter : public QWidget
+class Stutter : public QWidget, public Common
 {
     Q_OBJECT
 

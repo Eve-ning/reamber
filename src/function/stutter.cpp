@@ -24,10 +24,10 @@ void Stutter::initBoxSliders() {
     ui->threshold->setTitle("threshold");
     ui->threshold->spinBox()->setDecimals(3);
 
-    ui->initSv->setParameters(Common::SV_MIN, Common::SV_MAX, 1000, Common::SV_DEFAULT);
+    ui->initSv->setParameters(SV_MIN, SV_MAX, 1000, SV_DEFAULT);
     ui->initSv->setTitle("init_sv");
 
-    ui->initBpm->setParameters(Common::BPM_MIN, Common::BPM_MAX, 1000, Common::BPM_DEFAULT);
+    ui->initBpm->setParameters(BPM_MIN, BPM_MAX, 1000, BPM_DEFAULT);
     ui->initBpm->setTitle("init_bpm");
 }
 void Stutter::on_threshold_valueChanged() {
@@ -67,8 +67,8 @@ void Stutter::on_NormFrontTelButton_clicked() { // Normalized Front Teleport
 
     TimingPointV tpV = algorithm::stutterAbs(
                 offsets,        // Offsets
-                Common::BPM_MIN,// Initial
-                Common::BPM_MIN,// Relativity
+                BPM_MIN,// Initial
+                BPM_MIN,// Relativity
                 aveBpm(),       // Average
                 true,           // Is BPM
                 false,          // Relative From Front
@@ -90,8 +90,8 @@ void Stutter::on_NormBackTelButton_clicked() { // Normalized Back Teleport
 
     TimingPointV tpV = algorithm::stutterAbs(
                 offsets,        // Offsets
-                Common::BPM_MIN,        // Initial
-                Common::BPM_MIN,        // Relativity
+                BPM_MIN,        // Initial
+                BPM_MIN,        // Relativity
                 aveBpm(),       // Average
                 true,           // Is BPM
                 false,          // Relative From Front
@@ -110,7 +110,7 @@ void Stutter::on_MaxFronTelButton_clicked() { // Max Front Teleport
     TimingPoint tpTeleport;
     TimingPoint tpNormalized;
 
-    tpTeleport.loadParameters(0, Common::BPM_MAX, true);
+    tpTeleport.loadParameters(0, BPM_MAX, true);
     tpNormalized.loadParameters(1, aveBpm(), true);
 
     tpV.pushBack(tpTeleport);
@@ -135,7 +135,7 @@ void Stutter::on_MaxBackTelButton_clicked() { // Max Back Teleport
     TimingPoint tpTeleport;
     TimingPoint tpNormalized;
 
-    tpTeleport.loadParameters(0, Common::BPM_MAX, true);
+    tpTeleport.loadParameters(0, BPM_MAX, true);
     tpNormalized.loadParameters(1, aveBpm(), true);
 
     tpV.pushBack(tpTeleport);
@@ -152,18 +152,18 @@ void Stutter::stutterLimitUpdate() {
     QVector<double> initLim =
             algorithm::stutterRelInitLimits(threshold(),
                                             aveSv(),
-                                            Common::SV_MIN,
-                                            Common::SV_MAX);
-    ui->initSv->setRange(initLim[0] >= Common::SV_MIN ? initLim[0] : Common::SV_MIN,
-                          initLim[1] <= Common::SV_MAX ? initLim[1] : Common::SV_MAX);
+                                            SV_MIN,
+                                            SV_MAX);
+    ui->initSv->setRange(initLim[0] >= SV_MIN ? initLim[0] : SV_MIN,
+                          initLim[1] <= SV_MAX ? initLim[1] : SV_MAX);
 
     initLim = algorithm::stutterRelInitLimits(threshold(),
                                               aveBpm(),
-                                              Common::BPM_MIN,
-                                              Common::BPM_MAX);
+                                              BPM_MIN,
+                                              BPM_MAX);
 
-    ui->initBpm->setRange(initLim[0] >= Common::BPM_MIN ? initLim[0] : Common::BPM_MIN,
-                           initLim[1] <= Common::BPM_MAX ? initLim[1] : Common::BPM_MAX);
+    ui->initBpm->setRange(initLim[0] >= BPM_MIN ? initLim[0] : BPM_MIN,
+                           initLim[1] <= BPM_MAX ? initLim[1] : BPM_MAX);
 
 
 }
