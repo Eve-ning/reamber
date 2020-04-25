@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include "common.h"
+#include <QVector2D>
 
-class QVector2D;
 class TimingPointV;
 
 namespace Ui {

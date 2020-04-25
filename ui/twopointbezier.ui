@@ -61,7 +61,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Anchor (A) Bezier (B) Delete (D or Del)</string>
+            <string>Anchor (A) Bezier (B) Delete (D or Del), Bezier will not work when interval is too large</string>
            </property>
           </widget>
          </item>
