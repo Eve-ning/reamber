@@ -13,30 +13,37 @@ TwoPointBezier::TwoPointBezier(QWidget *parent) :
     anchorPts(QVector<QVector2D>(2)),
     ui(new Ui::TwoPointBezier) {
     ui->setupUi(this);
+    ui->input->hideKeyWidget();
+    ui->input->setTitle("input");
+    ui->input->setPlaceholderText("Variant Input (2 Offsets)");
+
     ui->customPlot->addGraph(); // For the function
     ui->customPlot->addGraph(); // For the bezier
     ui->customPlot->addGraph(); // For the anchor
 
     // Connects the double click event
-    connect(ui->customPlot, SIGNAL   (removeEvent(QVector2D)),
-            this,           SLOT     (removePoint(QVector2D)));
+    connect(ui->customPlot, SIGNAL(removeEvent(QVector2D)),
+            this,           SLOT  (removePoint(QVector2D)));
     connect(ui->customPlot, SIGNAL(addAnchorEvent(QVector2D)),
-            this,           SLOT       (addAnchor(QVector2D)));
+            this,           SLOT  (addAnchor(QVector2D)));
     connect(ui->customPlot, SIGNAL(addBezierEvent(QVector2D)),
-            this,           SLOT       (addBezier(QVector2D)));
+            this,           SLOT  (addBezier(QVector2D)));
 
-    // Activate SV
+    ui->startOffset->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->endOffset  ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+    ui->interval   ->setRange(int(OFFSET_MIN), int(OFFSET_MAX));
+
+    // Activate SV to initialize as SV
     useSV();
-    resetButtonSettings();
+    resetSettings();
     plot();
 }
 
 TwoPointBezier::~TwoPointBezier() {
     delete ui;
 }
-
 QVector<QVector2D> TwoPointBezier::createPlot() {
-    auto anchorPtsCopy = Common::sortByX(anchorPts);
+    auto anchorPtsCopy = sortByX(anchorPts);
 
     QVector<QVector2D> points;
     // For each anchor pair
@@ -67,13 +74,14 @@ void TwoPointBezier::plot() {
     plotFunction();
     plotAnchor();
     plotBezier();
+    warning(); // Generates warnings
 }
 void TwoPointBezier::plotFunction() {
     auto customPlot = ui->customPlot;
 
     // Set Bezier Function
     auto vec = createPlot();
-    plotAverage(vec);
+    updateAverage(vec);
     QVector<double> x = QVector<double>();
     QVector<double> y = QVector<double>();
 
@@ -85,7 +93,7 @@ void TwoPointBezier::plotFunction() {
     customPlot->graph(0)->setData(x, y, false);
     // Set color based on SV or BPM
     customPlot->graph(0)->setPen(ui->svRadio->isChecked() ?
-                                 Common::Color::GREEN : Common::Color::RED);
+                                 Color::GREEN : Color::RED);
 
     // Update range
     auto xMinMax = std::minmax_element(x.begin(), x.end());
@@ -94,8 +102,7 @@ void TwoPointBezier::plotFunction() {
     updatePlotDomain(*xMinMax.first,*xMinMax.second);
     updatePlotRange(*yMinMax.first, *yMinMax.second);
 }
-void TwoPointBezier::plotBezier()
-{
+void TwoPointBezier::plotBezier() {
     auto customPlot = ui->customPlot;
 
     // Set Bezier Points
@@ -107,13 +114,12 @@ void TwoPointBezier::plotBezier()
     }
 
     customPlot->graph(1)->setData(xs, ys, false);
-    customPlot->graph(1)->setPen(Common::Color::PURPLE);
+    customPlot->graph(1)->setPen(Color::PURPLE);
     customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
     customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlusCircle, 5));
     customPlot->replot();
 }
-void TwoPointBezier::plotAnchor()
-{
+void TwoPointBezier::plotAnchor() {
     auto customPlot = ui->customPlot;
 
     // Set Bezier Points
@@ -125,17 +131,27 @@ void TwoPointBezier::plotAnchor()
     }
 
     customPlot->graph(2)->setData(xs, ys, false);
-    customPlot->graph(2)->setPen(Common::ColorFade::BLUE);
+    customPlot->graph(2)->setPen(ColorFade::BLUE);
     customPlot->graph(2)->setLineStyle(QCPGraph::lsImpulse);
     customPlot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssTriangleInverted, 5));
     customPlot->replot();
 }
-void TwoPointBezier::plotAverage(QVector<QVector2D> & pts)
-{
+
+void TwoPointBezier::warning() {
+    if (ui->endOffset->value() - ui->startOffset->value() <= 0)
+        ui->startOffset->setStyleSheet(ColorStyleSheet::RED);
+    else ui->startOffset->setStyleSheet(ColorStyleSheet::BLACK);
+
+    if (ui->endOffset->value() - ui->startOffset->value() <= ui->interval->value())
+        ui->interval->setStyleSheet(ColorStyleSheet::RED);
+    else ui->interval->setStyleSheet(ColorStyleSheet::BLACK);
+}
+
+void TwoPointBezier::updateAverage(QVector<QVector2D> & pts) {
     double sum = 0.0;
     bool isBpm = ui->bpmRadio->isChecked();
     for (int i = 0; i < (pts.size() - 1); i ++)
-        sum += Common::clipValue(double(pts[i].y()),isBpm) * (double(pts[i + 1].x()) - double(pts[i].x()));
+        sum += clipValue(double(pts[i].y()),isBpm) * (double(pts[i + 1].x()) - double(pts[i].x()));
     double average = sum / (ui->endOffset->value() - ui->startOffset->value());
 
     ui->averageLabel->setText(QString("Average: %1x").arg(QString::number(average, 'f', 2)));
@@ -151,7 +167,6 @@ void TwoPointBezier::updatePlotRange(double min, double max){
 
     // Normalizes the range and multiplies the ends respectively
     // A buffer is used to prevent too small of a range
-
     double minRange;
     double maxRange;
     if (ui->svRadio->isChecked()){
@@ -163,9 +178,9 @@ void TwoPointBezier::updatePlotRange(double min, double max){
     }
 
     // Allow negative for easier bezier bending
-    //    minRange = minRange < 0 ? 0 : minRange;
-    //    if (ui->svRadio->isChecked())
-    //        maxRange = maxRange > Common::SV_MAX ? Common::SV_MAX : maxRange;
+    // minRange = minRange < 0 ? 0 : minRange;
+    // if (ui->svRadio->isChecked())
+    //     maxRange = maxRange > SV_MAX ? SV_MAX : maxRange;
 
     ui->customPlot->yAxis->setRange(minRange, maxRange);
 }
@@ -174,31 +189,29 @@ void TwoPointBezier::updatePlotDomain(double min, double max) {
 }
 
 void TwoPointBezier::useSV() {
-    ui->startValue->setValue(Common::SV_DEFAULT);
-    ui->startValue->setRange(Common::SV_MIN, Common::SV_MAX);
-    ui->startValue->setSuffix(Common::Suffix::SV);
-    ui->startValue->setSingleStep(Common::SV_STEPSIZE);
-    ui->endValue  ->setValue(Common::SV_DEFAULT);
-    ui->endValue  ->setRange(Common::SV_MIN, Common::SV_MAX);
-    ui->endValue  ->setSuffix(Common::Suffix::SV);
-    ui->endValue  ->setSingleStep(Common::SV_STEPSIZE);
+    ui->startValue->setValue(SV_DEFAULT);
+    ui->startValue->setRange(SV_MIN, SV_MAX);
+    ui->startValue->setSuffix(Suffix::SV);
+    ui->startValue->setSingleStep(SV_STEPSIZE);
+    ui->endValue  ->setValue(SV_DEFAULT);
+    ui->endValue  ->setRange(SV_MIN, SV_MAX);
+    ui->endValue  ->setSuffix(Suffix::SV);
+    ui->endValue  ->setSingleStep(SV_STEPSIZE);
 }
 void TwoPointBezier::useBPM() {
-    ui->startValue->setRange(Common::BPM_MIN, Common::BPM_MAX);
-    ui->startValue->setValue(Common::BPM_DEFAULT);
-    ui->startValue->setSuffix(Common::Suffix::BPM);
-    ui->startValue->setSingleStep(Common::BPM_STEPSIZE);
-    ui->endValue  ->setRange(Common::BPM_MIN, Common::BPM_MAX);
-    ui->endValue  ->setValue(Common::BPM_DEFAULT);
-    ui->endValue  ->setSuffix(Common::Suffix::BPM);
-    ui->endValue  ->setSingleStep(Common::BPM_STEPSIZE);
+    ui->startValue->setRange(BPM_MIN, BPM_MAX);
+    ui->startValue->setValue(BPM_DEFAULT);
+    ui->startValue->setSuffix(Suffix::BPM);
+    ui->startValue->setSingleStep(BPM_STEPSIZE);
+    ui->endValue  ->setRange(BPM_MIN, BPM_MAX);
+    ui->endValue  ->setValue(BPM_DEFAULT);
+    ui->endValue  ->setSuffix(Suffix::BPM);
+    ui->endValue  ->setSingleStep(BPM_STEPSIZE);
 }
-void TwoPointBezier::resetButtonSettings() {
-    // resetButton p
-    ui->startOffset->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
+void TwoPointBezier::resetSettings() {
     ui->startOffset->setValue(0);
-    ui->endOffset  ->setRange(int(Common::OFFSET_MIN), int(Common::OFFSET_MAX));
-    ui->endOffset  ->setValue(int(Common::OFFSET_INTERVAL_DEFAULT) * 100);
+    ui->endOffset  ->setValue(int(OFFSET_INTERVAL_DEFAULT) * 100);
+    ui->interval   ->setValue(int(OFFSET_INTERVAL_DEFAULT));
 
     anchorPts = QVector<QVector2D>(2);
     anchorPts[0] = {float(ui->startOffset->value()),
@@ -242,35 +255,13 @@ QVector<QVector2D> TwoPointBezier::createBezier(const QVector<QVector2D>& points
                         includeEnd);
 }
 
-
-long long TwoPointBezier::binomCoeff(int n, int k) {
-    // defined as n! / k! (n-k)!
-    // We find if k or n-k is larger
-
-    // e.g. 15 C 5
-    //       n   k
-
-    //    15!
-    // --------  = 15 * 14 * ... * 11 / (5!) = 15 / 5 * 14 / 4 ... 11 / 1
-    // 5! * 10!    We don't evaluate 15!
-
-    int n_k = n - k;
-    long double result = 1;
-    int smaller = n_k < k ? n_k : k; // find the smaller number
-    while (smaller >= 1) {
-        result *= static_cast<long double>(double(n) / double(smaller));
-        n--;
-        smaller--;
-    }
-    return static_cast<long long>(result);
-}
-QString TwoPointBezier::generateButtonCode(const QVector<double> & offsets,
-                                           const QVector<double> & values,
-                                           bool isBPM){
+TimingPointV TwoPointBezier::generateCode(const QVector<double> & offsets,
+                                          const QVector<double> & values,
+                                          bool isBPM){
     TimingPointV tpV = TimingPointV();
     if (offsets.size() != values.size()){
         qDebug() << "offsets and values must be of the same size";
-        return "";
+        return TimingPointV();
     }
     int size = offsets.size();
 
@@ -279,7 +270,7 @@ QString TwoPointBezier::generateButtonCode(const QVector<double> & offsets,
         tp.loadParameters(offsets[i], values[i], isBPM);
         tpV.pushBack(tp);
     }
-    return tpV.getStringRaw();
+    return tpV;
 }
 
 void TwoPointBezier::addAnchor(QVector2D pos) {
@@ -324,12 +315,6 @@ void TwoPointBezier::removePoint(QVector2D pos) {
     plot();
 }
 
-QVector2D TwoPointBezier::getMousePos() {
-    auto x = float(ui->customPlot->xAxis->pixelToCoord(ui->customPlot->cursor().pos().x()));
-    auto y = float(ui->customPlot->yAxis->pixelToCoord(ui->customPlot->cursor().pos().y()));
-    return QVector2D(x, y);
-}
-
 void TwoPointBezier::on_generateButton_clicked() {
     auto bez = createPlot();
     QVector<double> offsets = QVector<double>();
@@ -337,18 +322,18 @@ void TwoPointBezier::on_generateButton_clicked() {
     bool isBpm = ui->bpmRadio->isChecked();
     for (const auto & bezI : bez) {
         offsets.push_back(double(bezI.x()));
-        values.push_back(Common::clipValue(double(bezI.y()), isBpm));
+        values.push_back(clipValue(double(bezI.y()), isBpm));
     }
-    ui->output->setPlainText(generateButtonCode(offsets, values, ui->bpmRadio->isChecked()));
+    ui->output->write(generateCode(offsets, values, ui->bpmRadio->isChecked()));
 }
-void TwoPointBezier::on_vertZoom_valueChanged(int value){ plot(); }
+void TwoPointBezier::on_vertZoom_valueChanged(int /* unused */){ plot(); }
 void TwoPointBezier::on_bpmRadio_clicked() {
-    resetButtonSettings();
+    resetSettings();
     useBPM();
     plot();
 }
 void TwoPointBezier::on_svRadio_clicked() {
-    resetButtonSettings();
+    resetSettings();
     useSV();
     plot();
 }
@@ -371,23 +356,25 @@ void TwoPointBezier::on_endValue_valueChanged(double arg1) {
     plot();
 }
 void TwoPointBezier::on_updateBoundBtn_clicked() {
-    QString text = ui->updateBound->text();
-    HitObjectV hoV = HitObjectV();
-    if (!hoV.loadEditor(text)) return;
-    resetButtonSettings();
-    if (hoV[0].getOffset() > ui->startOffset->value()) {
-        ui->endOffset->setValue(int(hoV[1].getOffset()));
-        ui->startOffset->setValue(int(hoV[0].getOffset()));
+
+    auto offsets = ui->input->readOffsets(true);
+    if (offsets.length() < 2) return;
+    resetSettings();
+
+    if (offsets[0] > ui->startOffset->value()) {
+        ui->endOffset->setValue(int(offsets[1]));
+        ui->startOffset->setValue(int(offsets[0]));
     } else {
-        ui->startOffset->setValue(int(hoV[0].getOffset()));
-        ui->endOffset->setValue(int(hoV[1].getOffset()));
+        ui->startOffset->setValue(int(offsets[0]));
+        ui->endOffset->setValue(int(offsets[1]));
     }
 }
 void TwoPointBezier::on_interval_editingFinished() {
     plot();
 }
 void TwoPointBezier::on_resetButton_clicked(){
-    resetButtonSettings();
+    resetSettings();
+    plot();
 }
 
 void TwoPointBezier::on_output_textChanged() {
@@ -395,4 +382,26 @@ void TwoPointBezier::on_output_textChanged() {
 }
 QString TwoPointBezier::output() const {
     return ui->output->toPlainText();
+}
+
+long long TwoPointBezier::binomCoeff(int n, int k) {
+    // defined as n! / k! (n-k)!
+    // We find if k or n-k is larger
+
+    // e.g. 15 C 5
+    //       n   k
+
+    //    15!
+    // --------  = 15 * 14 * ... * 11 / (5!) = 15 / 5 * 14 / 4 ... 11 / 1
+    // 5! * 10!    We don't evaluate 15!
+
+    int n_k = n - k;
+    long double result = 1;
+    int smaller = n_k < k ? n_k : k; // find the smaller number
+    while (smaller >= 1) {
+        result *= static_cast<long double>(double(n) / double(smaller));
+        n--;
+        smaller--;
+    }
+    return static_cast<long long>(result);
 }

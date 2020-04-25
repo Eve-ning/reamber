@@ -20,22 +20,6 @@
       <string>normalizer</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_33">
-      <item row="0" column="0" rowspan="2">
-       <widget class="QGroupBox" name="inputLO">
-        <property name="title">
-         <string>input</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_31">
-         <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="input">
-           <property name="placeholderText">
-            <string>&lt;Timing Point&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QGroupBox" name="controlsLO">
         <property name="title">
@@ -76,22 +60,30 @@
         </layout>
        </widget>
       </item>
-      <item row="0" column="2" rowspan="2">
-       <widget class="QGroupBox" name="outputLO">
-        <property name="title">
-         <string>output</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_32">
-         <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="output"/>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item row="2" column="0" colspan="3">
        <widget class="QPushButton" name="generateButton">
         <property name="text">
-         <string>generateButton</string>
+         <string>generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="2">
+       <widget class="InputTP" name="input" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="2">
+       <widget class="OutputTP" name="output" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
        </widget>
       </item>
@@ -100,6 +92,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>InputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/inputtp.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

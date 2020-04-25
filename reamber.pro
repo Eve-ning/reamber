@@ -22,29 +22,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-
-SOURCES += \
-    depend/qcustomplottpb.cpp \
-    src/common.cpp \
-    src/function/alter.cpp \
-    src/function/copier.cpp \
-    src/function/stutter.cpp \
-    src/function/normalizer.cpp \
-    src/function/twopointbezier.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp \
-    depend/qcustomplot.cpp
-
 HEADERS += \
-    depend/qcustomplottpb.h \
     include/common.h \
     include/function/alter.h \
     include/function/copier.h \
     include/function/normalizer.h \
     include/function/stutter.h \
     include/function/twopointbezier.h \
-    include/mainwindow.h \
-    depend/qcustomplot.h
+    include/mainwindow.h
 
 FORMS += \
     ui/twopointbezier.ui \
@@ -54,6 +39,55 @@ FORMS += \
     ui/stutter.ui \
     ui/mainwindow.ui \
     ui/stutter.ui
+
+SOURCES += \
+    src/common.cpp \
+    src/function/alter.cpp \
+    src/function/copier.cpp \
+    src/function/stutter.cpp \
+    src/function/normalizer.cpp \
+    src/function/twopointbezier.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp
+
+# BoxSliders
+HEADERS += \
+    include/boxslider/boxslider.h
+
+SOURCES += \
+    src/boxslider/boxslider.cpp
+
+FORMS += \
+    ui/boxslider/boxslider.ui
+
+# Custom Plots
+SOURCES += \
+    depend/qcustomplottpb.cpp \
+    depend/qcustomplot.cpp
+
+HEADERS += \
+    depend/qcustomplottpb.h \
+    depend/qcustomplot.h
+
+# IO
+SOURCES += \
+    src/io/io.cpp \
+    src/io/inputho.cpp \
+    src/io/inputtp.cpp \
+    src/io/outputho.cpp \
+    src/io/outputtp.cpp \
+    src/io/outputeho.cpp
+
+HEADERS += \
+    include/io/io.h \
+    include/io/inputho.h \
+    include/io/inputtp.h \
+    include/io/outputho.h \
+    include/io/outputtp.h \
+    include/io/outputeho.h
+
+FORMS += \
+    ui/io/io.ui
 
 DISTFILES += \
     src/README.md \

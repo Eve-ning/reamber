@@ -4,94 +4,74 @@
 
 Alter::Alter(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Alter)
-{
+    ui(new Ui::Alter) {
     ui->setupUi(this);
+    ui->inputCross->setTitle("input_cross");
 }
 
-Alter::~Alter()
-{
-    delete ui;
-}
-
-QString Alter::output() const
-{
-    return ui->output->toPlainText();
-}
+Alter::~Alter() { delete ui; }
 
 void Alter::on_selfMVButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
     tpV *= ui->selfMV->value();
-    ui->output->setPlainText(tpV.getStringRaw("\n"));
+    ui->output->write(tpV);
 }
 void Alter::on_selfAVButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
     tpV += ui->selfAV->value();
-    ui->output->setPlainText(tpV.getStringRaw("\n"));
+    ui->output->write(tpV);
 }
 void Alter::on_selfMOButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
     auto newTpV = tpV.offsetArithmetic(ui->selfMO->value(), [](double offset, double parameter){
         return offset * parameter;
     });
 
-    ui->output->setPlainText(newTpV.getStringRaw("\n"));
+    ui->output->write(TimingPointV(newTpV));
 }
 void Alter::on_selfAOButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
     auto newTpV = tpV.offsetArithmetic(
                 ui->selfAO->value(),
                 [](double offset, double parameter){
         return offset + parameter;
     });
-    ui->output->setPlainText(newTpV.getStringRaw("\n"));
+    ui->output->write(TimingPointV(newTpV));
 }
 void Alter::on_selfDeleteButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
-    auto delTpV = algorithm::deleteNth<TimingPoint>(QSPtr<TimingPointV>::create(tpV),
+    auto delTpV = algorithm::deleteNth<TimingPoint>(tpV.sptr(),
                                          static_cast<unsigned int>(ui->selfDel->value()),
                                          static_cast<unsigned int>(ui->selfDelOffset->value()));
-    ui->output->setPlainText(delTpV.getStringRaw("\n"));
+    ui->output->write(TimingPointV(delTpV));
 }
 void Alter::on_selfSubdByButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
-    auto subdTpV =
-            algorithm::copySubdBy<TimingPoint>(
-                QSPtr<TimingPointV>::create(tpV),
-                static_cast<unsigned int>(ui->selfSubdBy->value()), true);
-    ui->output->setPlainText(subdTpV.getStringRaw("\n"));
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
+    auto subdTpV = algorithm::copySubdBy<TimingPoint>(tpV.sptr(),
+                            static_cast<unsigned int>(ui->selfSubdBy->value()), true);
+    ui->output->write(TimingPointV(subdTpV));
 }
 void Alter::on_selfSubdToButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
-    auto subdTpV =
-            algorithm::copySubdTo<TimingPoint>(
-                QSPtr<TimingPointV>::create(tpV),
-                static_cast<unsigned int>(ui->selfSubdTo->value()), true);
-    ui->output->setPlainText(subdTpV.getStringRaw("\n"));
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
+    auto subdTpV =  algorithm::copySubdTo<TimingPoint>(tpV.sptr(),
+                            static_cast<unsigned int>(ui->selfSubdTo->value()), true);
+    ui->output->write(TimingPointV(subdTpV));
 }
 
 void Alter::on_convertToBpm_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
     TimingPointV tpVSv = tpV.getSvOnly();
     TimingPointV tpVBpm = tpV.getBpmOnly();
@@ -99,21 +79,20 @@ void Alter::on_convertToBpm_clicked() {
     double value;
     double reference = ui->convertRef->value();
 
-    for (TimingPoint tp_sv : tpVSv){
-        value = tp_sv.getValue();
-        tp_sv.setValue(value * reference);
-        tp_sv.setIsBpm(true);
-        tpVBpm.pushBack(tp_sv);
+    for (TimingPoint tpSv : tpVSv) {
+        value = tpSv.getValue();
+        tpSv.setValue(value * reference);
+        tpSv.setIsBpm(true);
+        tpVBpm.pushBack(tpSv);
     }
 
     tpVBpm.sortByOffset(true);
 
-    ui->output->setPlainText(tpVBpm.getStringRaw("\n"));
+    ui->output->write(tpVBpm);
 }
 void Alter::on_convertToSv_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
     TimingPointV tpVSv = tpV.getSvOnly();
     TimingPointV tpVBpm = tpV.getBpmOnly();
@@ -130,31 +109,32 @@ void Alter::on_convertToSv_clicked() {
 
     tpVSv.sortByOffset(true);
 
-    ui->output->setPlainText(tpVSv.getStringRaw("\n"));
+    ui->output->write(tpVSv);
 }
 void Alter::on_crossMVButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
-    TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRaw(ui->inputCross->toPlainText(), '\n'))  return;
+    TimingPointV tpVCross = ui->inputCross->read();
+    if (tpVCross.empty()) return;
 
-    tpV.crossEffectMultiply(tp_v_cross);
-    ui->output->setPlainText(tpV.getStringRaw("\n"));
+    tpV.crossEffectMultiply(tpVCross);
+    ui->output->write(tpV);
 }
 void Alter::on_crossAVButton_clicked() {
-    TimingPointV tpV;
-    // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n'))  return;
+    TimingPointV tpV = ui->input->read();
+    if (tpV.empty()) return;
 
-    TimingPointV tp_v_cross;
-    if (!tp_v_cross.loadRaw(ui->inputCross->toPlainText(), '\n')) return;
+    TimingPointV tpVCross = ui->inputCross->read();
+    if (tpVCross.empty()) return;
 
-    tpV.crossEffectAdd(tp_v_cross);
-    ui->output->setPlainText(tpV.getStringRaw("\n"));
+    tpV.crossEffectAdd(tpVCross);
+    ui->output->write(tpV);
 }
 
 void Alter::on_output_textChanged() {
     emit outputChanged();
+}
+QString Alter::output() const {
+    return ui->output->toPlainText();
 }

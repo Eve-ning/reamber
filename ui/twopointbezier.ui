@@ -61,7 +61,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Anchor (A) Bezier (B) Delete (D or Del)</string>
+            <string>Anchor (A) Bezier (B) Delete (D or Del), Bezier will not work when interval is too large</string>
            </property>
           </widget>
          </item>
@@ -97,38 +97,16 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0" colspan="2">
-          <widget class="QGroupBox" name="outputLO">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="OutputTP" name="output" native="true"/>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QPushButton" name="generateButton">
+           <property name="text">
+            <string>generate</string>
            </property>
-           <property name="title">
-            <string>output</string>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_7">
-            <item row="1" column="0" colspan="2">
-             <widget class="QPushButton" name="generateButton">
-              <property name="text">
-               <string>generateButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" colspan="2">
-             <widget class="QPlainTextEdit" name="output">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </widget>
          </item>
-         <item row="2" column="0" colspan="2">
+         <item row="3" column="0" colspan="2">
           <widget class="QGroupBox" name="parametersLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -140,6 +118,32 @@
             <string>parameters</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
+            <item row="1" column="0" rowspan="3" colspan="3">
+             <widget class="QGroupBox" name="intervalLO">
+              <property name="title">
+               <string>Interval</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_9">
+               <item row="0" column="0">
+                <widget class="QSpinBox" name="interval">
+                 <property name="suffix">
+                  <string>ms</string>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="4" column="2" rowspan="3">
+             <widget class="QPushButton" name="resetButton">
+              <property name="text">
+               <string>reset</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="2">
              <widget class="QGroupBox" name="endLO">
               <property name="title">
@@ -198,6 +202,19 @@
               </layout>
              </widget>
             </item>
+            <item row="4" column="0" rowspan="3">
+             <spacer name="hs1">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item row="4" column="1">
              <widget class="QRadioButton" name="svRadio">
               <property name="text">
@@ -213,44 +230,6 @@
               <property name="text">
                <string>BPM</string>
               </property>
-             </widget>
-            </item>
-            <item row="4" column="0" rowspan="3">
-             <spacer name="hs1">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="0" rowspan="3" colspan="3">
-             <widget class="QGroupBox" name="intervalLO">
-              <property name="title">
-               <string>Interval</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_9">
-               <item row="0" column="0">
-                <widget class="QSpinBox" name="interval">
-                 <property name="suffix">
-                  <string>ms</string>
-                 </property>
-                 <property name="minimum">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <number>10000</number>
-                 </property>
-                 <property name="value">
-                  <number>100</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
@@ -311,17 +290,10 @@
               </layout>
              </widget>
             </item>
-            <item row="4" column="2" rowspan="3">
-             <widget class="QPushButton" name="resetButton">
-              <property name="text">
-               <string>resetButton</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
-         <item row="1" column="0" colspan="2">
+         <item row="2" column="0" colspan="2">
           <widget class="QGroupBox" name="boundLO">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -333,19 +305,15 @@
             <string>bounds</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_6">
-            <item row="0" column="0">
-             <widget class="QLineEdit" name="updateBound">
-              <property name="placeholderText">
-               <string>&lt;Editor Hit Object&gt;</string>
+            <item row="2" column="0">
+             <widget class="QPushButton" name="updateBoundBtn">
+              <property name="text">
+               <string>update bounds</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="updateBoundBtn">
-              <property name="text">
-               <string>Update Bounds</string>
-              </property>
-             </widget>
+            <item row="0" column="0" rowspan="2">
+             <widget class="IO" name="input" native="true"/>
             </item>
            </layout>
           </widget>
@@ -359,6 +327,18 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>IO</class>
+   <extends>QWidget</extends>
+   <header>include/io/io.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>QCustomPlotTPB</class>
    <extends>QWidget</extends>

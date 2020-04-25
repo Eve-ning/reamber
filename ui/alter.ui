@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>918</width>
-    <height>585</height>
+    <width>966</width>
+    <height>653</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,29 +21,45 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_60">
       <item row="0" column="0">
-       <widget class="QGroupBox" name="inputLO">
-        <property name="title">
-         <string>input</string>
+       <widget class="InputTP" name="input" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <layout class="QGridLayout" name="gridLayout_48">
-         <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="input">
-           <property name="placeholderText">
-            <string>&lt;Timing Point&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
-      <item row="0" column="1" rowspan="2">
+      <item row="2" column="0">
+       <widget class="OutputTP" name="output" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" rowspan="4">
        <widget class="QGroupBox" name="presetLO">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>presets</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_45">
          <item row="0" column="0">
           <widget class="QTabWidget" name="presetTab">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="currentIndex">
             <number>2</number>
            </property>
@@ -140,7 +156,7 @@
               </spacer>
              </item>
              <item row="1" column="0">
-              <widget class="QGroupBox" name="self_lo_2">
+              <widget class="QGroupBox" name="selfLO2">
                <property name="title">
                 <string>create/delete</string>
                </property>
@@ -187,6 +203,9 @@
                 </item>
                 <item row="1" column="0">
                  <widget class="QPushButton" name="selfDeleteButton">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;hee&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="text">
                    <string>Delete nth</string>
                   </property>
@@ -343,32 +362,14 @@
         </layout>
        </widget>
       </item>
-      <item row="0" column="2" rowspan="2">
-       <widget class="QGroupBox" name="outputLO">
-        <property name="title">
-         <string>output</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_47">
-         <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="output"/>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item row="1" column="0">
-       <widget class="QGroupBox" name="inputCrossLO">
-        <property name="title">
-         <string>inputCross</string>
+       <widget class="InputTP" name="inputCross" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <layout class="QGridLayout" name="gridLayout_53">
-         <item row="0" column="0">
-          <widget class="QPlainTextEdit" name="inputCross">
-           <property name="placeholderText">
-            <string>&lt;Timing Point&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
      </layout>
@@ -376,6 +377,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OutputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/outputtp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>InputTP</class>
+   <extends>QWidget</extends>
+   <header>include/io/inputtp.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

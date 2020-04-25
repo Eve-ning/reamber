@@ -4,29 +4,22 @@
 
 Normalizer::Normalizer(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Normalizer)
-{
+    ui(new Ui::Normalizer) {
     ui->setupUi(this);
 }
 
-Normalizer::~Normalizer()
-{
+Normalizer::~Normalizer() {
     delete ui;
 }
 
-QString Normalizer::output() const
-{
+QString Normalizer::output() const {
     return ui->output->toPlainText();
 }
 
 void Normalizer::on_generateButton_clicked() {
-    TimingPointV tpV;
-
+    TimingPointV tpV = ui->input->read();
     // Break if fail
-    if (!tpV.loadRaw(ui->input->toPlainText(), '\n')) return;
-
-    // Break if empty
-    if (tpV.getBpmOnly().size() == 0) return;
+    if (tpV.empty()) return;
 
     // Remove Items
     ui->bpmlist->clear();
@@ -40,10 +33,7 @@ void Normalizer::on_generateButton_clicked() {
     // Add Items
     ui->bpmlist->addItems(bpmTpVStr);
 
-    ui->output->setPlainText(
-                algorithm::normalize(tpV,
-                                     ui->bpm->value(),
-                                     false).getStringRaw());
+    ui->output->write(algorithm::normalize(tpV, ui->bpm->value(), false));
 }
 void Normalizer::on_bpmlist_itemClicked(QListWidgetItem *item) {
     ui->bpm->setValue(item->text().toDouble());
