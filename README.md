@@ -4,7 +4,7 @@
 re:amber is a rework of amber, which was discontinued.
 
 **status of project**
-back to refactor
+hiatus, focusing on reamberPy
 
 ## resources
 ### other parts of the project
@@ -12,6 +12,7 @@ back to refactor
  - [reamber_base_test_unit](https://github.com/Eve-ning/reamber_base_test)
 
 ### :bar_chart: [amber Wiki](https://github.com/Eve-ning/amber/wiki)
+### Read this at the very least [Input Type](https://github.com/Eve-ning/reamber/wiki/Input-Type)
 
 ## :star: releases
 
